@@ -1,0 +1,8119 @@
+/*******************************************************************************
+ * Copyright (c) 2016-2021 Institute of Legal Information and Judicial Systems IGSG-CNR (formerly ITTIG-CNR)
+ * 
+ * This program and the accompanying materials  are made available under the terms of the GNU General Public
+ * License as published by the Free Software Foundation; either version 3 of the License, or (at your option)
+ * any later version. 
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at: https://www.gnu.org/licenses/gpl-3.0.txt
+ * Unless required by applicable law or agreed to in writing, software distributed under the Licence is 
+ * distributed on an "AS IS" basis, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and limitations under the Licence.
+ *  
+ * Authors: Lorenzo Bacci (IGSG-CNR)
+ ******************************************************************************/
+A001 abano terme
+A004 abbadia cerreto
+A005 abbadia lariana
+A006 abbadia san salvatore
+A007 abbasanta
+A008 abbateggio
+A010 abbiategrasso
+A012 abetone
+A013 abriola
+A014 acate
+A015 accadia
+A016 acceglio
+A017 accettura
+A018 acciano
+A019 accumoli
+A020 acerenza
+A023 acerno
+A024 acerra
+A025 aci bonaccorsi
+A026 aci castello
+A027 aci catena
+A029 aci san antonio
+A028 acireale
+A031 acquacanina
+A032 acquafondata
+A033 acquaformosa
+A034 acquafredda
+A035 acqualagna
+A039 acquanegra cremonese
+A038 acquanegra chiese
+A040 acquapendente
+A041 acquappesa
+A042 acquarica capo
+A043 acquaro
+A044 acquasanta terme
+A045 acquasparta
+A050 acquaviva collecroce
+A048 acquaviva fonti
+A051 acquaviva isernia
+A047 acquaviva picena
+A049 acquaviva platani
+M211 acquedolci
+A052 acqui terme
+A053 acri
+A054 acuto
+A055 adelfia
+A056 adrano
+A057 adrara san martino
+A058 adrara san rocco
+A059 adria
+A060 adro
+A061 affi
+A062 affile
+A064 afragola
+A065 africo
+A067 agazzano
+A068 agerola
+A069 aggius
+A070 agira
+A071 agliana
+A072 agliano terme
+A074 aglie
+H848 aglientu
+A075 agna
+A076 agnadello
+A077 agnana calabra
+A080 agnone
+A082 agnosine
+A083 agordo
+A084 agosta
+A085 agra
+A087 agrate brianza
+A088 agrate conturbia
+A089 agrigento
+A091 agropoli
+A092 agugliano
+A093 agugliaro
+A096 aicurzio
+A097 aidomaggiore
+A098 aidone
+A100 aielli
+A102 aiello calabro
+A103 aiello friuli
+A101 aiello sabato
+A105 aieta
+A106 ailano
+A107 ailoche
+A109 airasca
+A110 airola
+A111 airole
+A112 airuno
+A113 aisone
+A116 ala
+A115 ala sardi
+A117 ala stura
+A118 alagna
+A119 alagna valsesia
+A120 alanno
+A121 alano piave
+A122 alassio
+A123 alatri
+A124 alba
+A125 alba adriatica
+A126 albagiara
+A127 albairate
+A128 albanella
+A131 albano lucania
+A132 albano laziale
+A129 albano san alessandro
+A130 albano vercellese
+A134 albaredo arnaboldi
+A137 albaredo adige
+A135 albaredo san marco
+A138 albareto
+A139 albaretto torre
+A143 albavilla
+A145 albenga
+A146 albera ligure
+A149 alberobello
+A150 alberona
+A153 albese cassano
+A154 albettone
+A155 albi
+A158 albiano
+A157 albiano ivrea
+A159 albiate
+A160 albidona
+A161 albignasego
+A162 albinea
+A163 albino
+A164 albiolo
+A166 albisola superiore
+A165 albissola marina
+A167 albizzate
+A171 albonese
+A172 albosaggia
+A173 albugnano
+A175 albuzzano
+A176 alcamo
+A177 alcara li fusi
+A178 aldeno
+A179 aldino
+A180 ales
+A182 alessandria
+A183 alessandria carretto
+A181 alessandria rocca
+A184 alessano
+A185 alezio
+A186 alfano
+A187 alfedena
+A188 alfianello
+A189 alfiano natta
+A191 alfonsine
+A192 alghero
+A193 algua
+A194 ali
+A201 ali terme
+A195 alia
+A196 aliano
+A197 alice bel colle
+A198 alice castello
+A199 alice superiore
+A200 alife
+A202 alimena
+A203 aliminusa
+A204 allai
+A206 alleghe
+A205 allein
+A207 allerona
+A208 alliste
+A210 allumiere
+A211 alluvioni cambio
+A214 alme
+A216 almenno san bartolomeo
+A217 almenno san salvatore
+A218 almese
+A220 alonte
+A221 alpette
+A222 alpignano
+A223 alseno
+A224 alserio
+A225 altamura
+A226 altare
+A228 altavilla irpina
+A229 altavilla milicia
+A227 altavilla monferrato
+A230 altavilla silentina
+A231 altavilla vicentina
+A233 altidona
+A234 altilia
+A235 altino
+A236 altissimo
+A237 altivole
+A238 alto
+A239 altofonte
+A240 altomonte
+A241 altopascio
+A242 alviano
+A243 alvignano
+A244 alvito
+A246 alzano lombardo
+A245 alzano scrivia
+A249 alzate brianza
+A251 amalfi
+A252 amandola
+A253 amantea
+A254 amaro
+A255 amaroni
+A256 amaseno
+A257 amato
+A258 amatrice
+A259 ambivere
+A260 amblar
+A261 ameglia
+A262 amelia
+A263 amendolara
+A264 ameno
+A265 amorosi
+A267 ampezzo
+A268 anacapri
+A269 anagni
+A270 ancarano
+A271 ancona
+A272 andali
+A274 andalo
+A273 andalo valtellino
+A275 andezeno
+A278 andora
+A280 andorno micca
+A281 andrano
+A282 andrate
+A283 andreis
+A284 andretta
+A285 andria
+A286 andriano
+A287 anela
+A288 anfo
+A290 angera
+A291 anghiari
+A292 angiari
+A293 angolo terme
+A294 angri
+A295 angrogna
+A297 anguillara sabazia
+A296 anguillara veneta
+A299 annicco
+A301 annone brianza
+A302 annone veneto
+A303 anoia
+A304 antegnate
+A306 anterivo
+A305 antey-saint-andre
+A309 anticoli corrado
+A312 antignano
+A313 antillo
+A314 antonimina
+A315 antrodoco
+A317 antrona schieranco
+A318 anversa abruzzi
+A319 anzano parco
+A320 anzano puglia
+A321 anzi
+A323 anzio
+A324 anzola emilia
+A325 anzola ossola
+A326 aosta
+A327 apecchio
+A328 apice
+A329 apiro
+A330 apollosa
+A333 appiano gentile
+A332 appiano strada vino
+A334 appignano
+A335 appignano tronto
+A337 aprica
+A338 apricale
+A339 apricena
+A340 aprigliano
+A341 aprilia
+A343 aquara
+A344 aquila arroscia
+A346 aquileia
+A347 aquilonia
+A348 aquino
+A350 aradeo
+A351 aragona
+A352 aramengo
+A354 arba
+A357 arborea
+A358 arborio
+A359 arbus
+A360 arcade
+A363 arce
+A365 arcene
+A366 arcevia
+A367 archi
+A369 arcidosso
+A370 arcinazzo romano
+A371 arcisate
+A372 arco
+A373 arcola
+A374 arcole
+A375 arconate
+A376 arcore
+A377 arcugnano
+A379 ardara
+A380 ardauli
+M213 ardea
+A382 ardenno
+A383 ardesio
+A385 ardore
+A386 arena
+A387 arena po
+A388 arenzano
+A389 arese
+A390 arezzo
+A391 argegno
+A392 argelato
+A393 argenta
+A394 argentera
+A396 arguello
+A397 argusto
+A398 ari
+A399 ariano irpino
+A400 ariano polesine
+A401 ariccia
+A402 arielli
+A403 arienzo
+A405 arignano
+A407 aritzo
+A409 arizzano
+A412 arlena castro
+A413 arluno
+A414 armeno
+A415 armento
+A418 armo
+A419 armungia
+A424 arnad
+A421 arnara
+A422 arnasco
+A425 arnesano
+A427 arola
+A429 arona
+A430 arosio
+A431 arpaia
+A432 arpaise
+A433 arpino
+A434 arqua petrarca
+A435 arqua polesine
+A437 arquata tronto
+A436 arquata scrivia
+A438 arre
+A439 arrone
+A441 arsago seprio
+A443 arsie
+A444 arsiero
+A445 arsita
+A446 arsoli
+A447 arta terme
+A448 artegna
+A449 artena
+A451 artogne
+A452 arvier
+A453 arzachena
+A440 arzago adda
+A454 arzana
+A455 arzano
+A456 arzene
+A458 arzergrande
+A459 arzignano
+A460 ascea
+A461 asciano
+A462 ascoli piceno
+A463 ascoli satriano
+A464 ascrea
+A465 asiago
+A467 asigliano veneto
+A466 asigliano vercellese
+A470 asola
+A471 asolo
+A473 assago
+A474 assemini
+A475 assisi
+A476 asso
+A477 assolo
+A478 assoro
+A479 asti
+A480 asuni
+A481 ateleta
+A482 atella
+A484 atena lucana
+A485 atessa
+A486 atina
+A487 atrani
+A488 atri
+A489 atripalda
+A490 attigliano
+A491 attimis
+A492 atzara
+A493 auditore
+A494 augusta
+A495 auletta
+A496 aulla
+A497 aurano
+A499 aurigo
+A501 auronzo cadore
+A502 ausonia
+A503 austis
+A506 avegno
+A507 avelengo
+A508 avella
+A509 avellino
+A511 averara
+A512 aversa
+A514 avetrana
+A515 avezzano
+A516 aviano
+A517 aviatico
+A518 avigliana
+A519 avigliano
+M258 avigliano umbro
+A520 avio
+A521 avise
+A522 avola
+A523 avolasca
+A094 ayas
+A108 aymavilles
+A525 azeglio
+A526 azzanello
+A527 azzano asti
+A530 azzano decimo
+A529 azzano mella
+A528 azzano san paolo
+A531 azzate
+A532 azzio
+A533 azzone
+A534 baceno
+A535 bacoli
+A536 badalucco
+M214 badesi
+A537 badia
+A540 badia calavena
+A538 badia pavese
+A539 badia polesine
+A541 badia tedalda
+A542 badolato
+A544 bagaladi
+A546 bagheria
+A547 bagnacavallo
+A552 bagnara calabra
+A551 bagnara romagna
+A550 bagnaria
+A553 bagnaria arsa
+A555 bagnasco
+A557 bagnatica
+A560 bagni lucca
+A564 bagno ripoli
+A565 bagno romagna
+A567 bagnoli trigno
+A568 bagnoli sopra
+A566 bagnoli irpino
+A570 bagnolo cremasco
+A572 bagnolo salento
+A574 bagnolo po
+A573 bagnolo piano
+A569 bagnolo mella
+A571 bagnolo piemonte
+A575 bagnolo san vito
+A576 bagnone
+A577 bagnoregio
+A578 bagolino
+A579 baia latina
+A580 baiano
+A581 baiardo
+A584 bairo
+A586 baiso
+A587 balangero
+A588 baldichieri asti
+A590 baldissero canavese
+A589 baldissero alba
+A591 baldissero torinese
+A592 balestrate
+A593 balestrino
+A594 ballabio
+A597 ballao
+A599 balme
+A600 balmuccia
+A601 balocco
+A603 balsorano
+A604 balvano
+A605 balzola
+A606 banari
+A607 banchette
+A610 bannio anzino
+A612 banzi
+A613 baone
+A614 baradili
+A615 baragiano
+A616 baranello
+A617 barano ischia
+A618 baranzate
+A619 barasso
+A621 baratili san pietro
+A625 barbania
+A626 barbara
+A628 barbarano romano
+A627 barbarano vicentino
+A629 barbaresco
+A630 barbariga
+A631 barbata
+A632 barberino mugello
+A633 barberino val elsa
+A634 barbianello
+A635 barbiano
+A637 barbona
+A638 barcellona pozzo gotto
+A639 barchi
+A640 barcis
+A643 bard
+A645 bardello
+A646 bardi
+A647 bardineto
+A650 bardolino
+A651 bardonecchia
+A652 bareggio
+A653 barengo
+A655 baressa
+A656 barete
+A657 barga
+A658 bargagli
+A660 barge
+A661 barghe
+A662 bari
+A663 bari sardo
+A664 bariano
+A665 baricella
+A666 barile
+A667 barisciano
+A668 barlassina
+A669 barletta
+A670 barni
+A671 barolo
+A673 barone canavese
+A674 baronissi
+A676 barrafranca
+A677 barrali
+A678 barrea
+A681 barumini
+A683 barzago
+A684 barzana
+A686 barzano
+A687 barzio
+A689 basaluzzo
+A690 bascape
+A691 baschi
+A692 basciano
+A694 baselga pine
+A696 baselice
+A697 basiano
+A698 basico
+A699 basiglio
+A700 basiliano
+A702 bassano bresciano
+A703 bassano grappa
+A706 bassano teverina
+A704 bassano romano
+A707 bassiano
+A708 bassignana
+A709 bastia mondovi
+A710 bastia umbra
+A711 bastida de dossi
+A712 bastida pancarana
+A713 bastiglia
+A714 battaglia terme
+A716 battifollo
+A717 battipaglia
+A718 battuda
+A719 baucina
+A721 bauladu
+A722 baunei
+A725 baveno
+A726 bazzano
+A728 bedero valcuvia
+A729 bedizzole
+A730 bedollo
+A731 bedonia
+A732 bedulita
+A733 bee
+A734 beinasco
+A735 beinette
+A736 belcastro
+A737 belfiore
+A740 belforte isauro
+A739 belforte chienti
+A738 belforte monferrato
+A741 belgioioso
+A742 belgirate
+A743 bella
+A744 bellagio
+A745 bellano
+A746 bellante
+A747 bellaria-igea marina
+A749 bellegra
+A750 bellino
+A751 bellinzago lombardo
+A752 bellinzago novarese
+M294 bellizzi
+A755 bellona
+A756 bellosguardo
+A757 belluno
+A759 bellusco
+A762 belmonte calabro
+A763 belmonte castello
+A761 belmonte sannio
+A765 belmonte sabina
+A764 belmonte mezzagno
+A760 belmonte piceno
+A766 belpasso
+A768 belsito
+A772 belvedere spinello
+A774 belvedere langhe
+A773 belvedere marittimo
+A769 belvedere ostrense
+A770 belveglio
+A776 belvi
+A777 bema
+A778 bene lario
+A779 bene vagienna
+A780 benestare
+A781 benetutti
+A782 benevello
+A783 benevento
+A784 benna
+A785 bentivoglio
+A786 berbenno
+A787 berbenno valtellina
+A788 berceto
+A789 berchidda
+A791 beregazzo figliaro
+A792 bereguardo
+A793 bergamasco
+A794 bergamo
+A795 bergantino
+A796 bergeggi
+A798 bergolo
+A799 berlingo
+A801 bernalda
+A802 bernareggio
+A804 bernate ticino
+A805 bernezzo
+A806 berra
+A808 bersone
+A809 bertinoro
+A810 bertiolo
+A811 bertonico
+A812 berzano san pietro
+A813 berzano tortona
+A816 berzo demo
+A817 berzo inferiore
+A815 berzo san fermo
+A818 besana brianza
+A819 besano
+A820 besate
+A821 besenello
+A823 besenzone
+A825 besnate
+A826 besozzo
+A827 bessude
+A831 bettola
+A832 bettona
+A834 beura-cardezza
+A835 bevagna
+A836 beverino
+A837 bevilacqua
+A839 bezzecca
+A841 biancavilla
+A842 bianchi
+A843 bianco
+A844 biandrate
+A845 biandronno
+A846 bianzano
+A847 bianze
+A848 bianzone
+A849 biassono
+A850 bibbiano
+A851 bibbiena
+A852 bibbona
+A853 bibiana
+A854 biccari
+A855 bicinicco
+A856 bidoni
+A859 biella
+A861 bienno
+A863 bieno
+A864 bientina
+A866 bigarello
+A870 binago
+A872 binasco
+A874 binetto
+A876 bioglio
+A877 bionaz
+A878 bione
+A880 birori
+A881 bisaccia
+A882 bisacquino
+A883 bisceglie
+A884 bisegna
+A885 bisenti
+A887 bisignano
+A889 bistagno
+A891 bisuschio
+A892 bitetto
+A893 bitonto
+A894 bitritto
+A895 bitti
+A896 bivona
+A897 bivongi
+A898 bizzarone
+A901 bleggio inferiore
+A902 bleggio superiore
+A903 blello
+A857 blera
+A904 blessagno
+A905 blevio
+M268 blufi
+A906 boara pisani
+A909 bobbio
+A910 bobbio pellice
+A911 boca
+A912 bocchigliero
+A914 boccioleto
+A916 bocenago
+A918 bodio lomnago
+A919 boffalora adda
+A920 boffalora sopra ticino
+A922 bogliasco
+A925 bognanco
+A929 bogogno
+A931 boissano
+A930 bojano
+A932 bolano
+A933 bolbeno
+A937 bolgare
+A940 bollate
+A941 bollengo
+A944 bologna
+A945 bolognano
+A946 bolognetta
+A947 bolognola
+A948 bolotana
+A949 bolsena
+A950 boltiere
+A952 bolzano
+A953 bolzano novarese
+A954 bolzano vicentino
+A955 bomarzo
+A956 bomba
+A957 bompensiere
+A958 bompietro
+A959 bomporto
+A960 bonarcado
+A961 bonassola
+A963 bonate sopra
+A962 bonate sotto
+A964 bonavigo
+A965 bondeno
+A967 bondo
+A968 bondone
+A970 bonea
+A971 bonefro
+A972 bonemerse
+A973 bonifati
+A975 bonito
+A976 bonnanaro
+A977 bono
+A978 bonorva
+A979 bonvicino
+A981 borbona
+A982 borca cadore
+A983 bordano
+A984 bordighera
+A986 bordolano
+A987 bore
+A988 boretto
+A989 borgarello
+A990 borgaro torinese
+A991 borgetto
+A993 borghetto arroscia
+A998 borghetto borbera
+A992 borghetto vara
+A995 borghetto lodigiano
+A999 borghetto san spirito
+B001 borghi
+B002 borgia
+B003 borgiallo
+B005 borgio verezzi
+B007 borgo mozzano
+B009 borgo ale
+B010 borgo terzo
+B026 borgo pace
+B028 borgo priolo
+B033 borgo san dalmazzo
+B035 borgo san giacomo
+B017 borgo san giovanni
+B036 borgo san lorenzo
+B037 borgo san martino
+B038 borgo san siro
+B043 borgo ticino
+B044 borgo tossignano
+B042 borgo val taro
+B006 borgo valsugana
+A996 borgo velino
+B046 borgo vercelli
+B011 borgoforte
+B015 borgofranco ivrea
+B013 borgofranco po
+B016 borgolavezzaro
+B018 borgomale
+B019 borgomanero
+B020 borgomaro
+B021 borgomasino
+B024 borgone susa
+B025 borgonovo val tidone
+B029 borgoratto alessandrino
+B030 borgoratto mormorolo
+B031 borgoricco
+B008 borgorose
+B040 borgosatollo
+B041 borgosesia
+B048 bormida
+B049 bormio
+B051 bornasco
+B054 borno
+B055 boroneddu
+B056 borore
+B057 borrello
+B058 borriana
+B061 borso grappa
+B062 bortigali
+B063 bortigiadas
+B064 borutta
+B067 borzonasca
+B068 bosa
+B069 bosaro
+B070 boschi san anna
+B073 bosco chiesanuova
+B071 bosco marengo
+B075 bosconero
+B076 boscoreale
+B077 boscotrecase
+B078 bosentino
+B079 bosia
+B080 bosio
+B081 bosisio parini
+B082 bosnasco
+B083 bossico
+B084 bossolasco
+B085 botricello
+B086 botrugno
+B088 bottanuco
+B091 botticino
+B094 bottidda
+B097 bova
+B099 bova marina
+B098 bovalino
+B100 bovegno
+B101 boves
+B102 bovezzo
+A720 boville ernica
+B104 bovino
+B105 bovisio-masciago
+B106 bovolenta
+B107 bovolone
+B109 bozzole
+B110 bozzolo
+B111 bra
+B112 bracca
+B114 bracciano
+B115 bracigliano
+B116 braies
+B117 brallo pregola
+B118 brancaleone
+B120 brandico
+B121 brandizzo
+B123 branzi
+B124 braone
+B126 brebbia
+B128 breda piave
+B131 bregano
+B132 breganze
+B134 bregnano
+B135 breguzzo
+B136 breia
+B137 brembate
+B138 brembate sopra
+B140 brembilla
+B141 brembio
+B142 breme
+B143 brendola
+B144 brenna
+B145 brennero
+B149 breno
+B150 brenta
+B152 brentino belluno
+B153 brentonico
+B154 brenzone
+B156 brescello
+B157 brescia
+B158 bresimo
+B159 bressana bottarone
+B160 bressanone
+B161 bressanvido
+B162 bresso
+B165 brez
+B166 brezzo bedero
+B167 briaglia
+B169 briatico
+B171 bricherasio
+B172 brienno
+B173 brienza
+B175 briga alta
+B176 briga novarese
+B178 brignano gera adda
+B179 brignano-frascata
+B180 brindisi
+B181 brindisi montagna
+B182 brinzio
+B183 briona
+B185 brione
+B184 brione
+B187 briosco
+B188 brisighella
+B191 brissago-valtravaglia
+B192 brissogne
+B193 brittoli
+B194 brivio
+B195 broccostella
+B196 brogliano
+B197 brognaturo
+B198 brolo
+B200 brondello
+B201 broni
+B202 bronte
+B203 bronzolo
+B204 brossasco
+B205 brosso
+B207 brovello-carpugnino
+B209 brozolo
+B212 brugherio
+B213 brugine
+B214 brugnato
+B215 brugnera
+B216 bruino
+B217 brumano
+B218 brunate
+B219 brunello
+B220 brunico
+B221 bruno
+B223 brusaporto
+B225 brusasco
+B227 brusciano
+B228 brusimpiano
+B229 brusnengo
+B230 brusson
+B232 bruzolo
+B234 bruzzano zeffirio
+B235 bubbiano
+B236 bubbio
+B237 buccheri
+B238 bucchianico
+B239 bucciano
+B240 buccinasco
+B242 buccino
+B243 bucine
+B246 budduso
+B247 budoia
+B248 budoni
+B249 budrio
+B250 buggerru
+B251 buggiano
+B255 buglio monte
+B256 bugnara
+B258 buguggiate
+B259 buja
+B261 bulciago
+B262 bulgarograsso
+B264 bultei
+B265 bulzi
+B266 buonabitacolo
+B267 buonalbergo
+B269 buonconvento
+B270 buonvicino
+B272 burago molgora
+B274 burcei
+B275 burgio
+B276 burgos
+B278 buriasco
+B279 burolo
+B280 buronzo
+B281 busachi
+B282 busalla
+B283 busana
+B284 busano
+B285 busca
+B286 buscate
+B287 buscemi
+B288 buseto palizzolo
+B289 busnago
+B292 bussero
+B293 busseto
+B294 bussi tirino
+B295 busso
+B296 bussolengo
+B297 bussoleno
+B300 busto arsizio
+B301 busto garolfo
+B302 butera
+B303 buti
+B304 buttapietra
+B305 buttigliera alta
+B306 buttigliera asti
+B309 buttrio
+B320 ca andrea
+B311 cabella ligure
+B313 cabiate
+B314 cabras
+B315 caccamo
+B319 caccuri
+B326 cadegliano-viconago
+B328 cadelbosco sopra
+B332 cadeo
+B335 caderzone terme
+B345 cadoneghe
+B346 cadorago
+B347 cadrezzate
+B349 caerano san marco
+B350 cafasse
+B351 caggiano
+B352 cagli
+B354 cagliari
+B355 caglio
+B358 cagnano amiterno
+B357 cagnano varano
+B360 cagno
+B359 cagno
+B361 caianello
+B362 caiazzo
+B364 caines
+B365 caino
+B366 caiolo
+B367 cairano
+B368 cairate
+B369 cairo montenotte
+B371 caivano
+B374 calabritto
+B375 calalzo cadore
+B376 calamandrana
+B377 calamonaci
+B378 calangianus
+B379 calanna
+B380 calasca-castiglione
+B381 calascibetta
+B382 calascio
+B383 calasetta
+B384 calatabiano
+B385 calatafimi segesta
+B386 calavino
+B388 calcata
+B389 calceranica lago
+B390 calci
+B391 calciano
+B392 calcinaia
+B393 calcinate
+B394 calcinato
+B395 calcio
+B396 calco
+B397 caldaro strada vino
+B398 caldarola
+B399 calderara reno
+B400 caldes
+B402 caldiero
+B403 caldogno
+B404 caldonazzo
+B405 calendasco
+B406 calenzano
+B408 calestano
+B410 calice cornoviglio
+B409 calice ligure
+B413 calimera
+B415 calitri
+B416 calizzano
+B417 callabiana
+B418 calliano
+B419 calliano
+B423 calolziocorte
+B424 calopezzati
+B425 calosso
+B426 caloveto
+B427 caltabellotta
+B428 caltagirone
+B429 caltanissetta
+B430 caltavuturo
+B431 caltignaga
+B432 calto
+B433 caltrano
+B434 calusco adda
+B435 caluso
+B436 calvagese riviera
+B437 calvanico
+B439 calvatone
+B440 calvello
+B441 calvene
+B442 calvenzano
+B443 calvera
+B444 calvi
+B446 calvi umbria
+B445 calvi risorta
+B447 calvignano
+B448 calvignasco
+B450 calvisano
+B452 calvizzano
+B453 camagna monferrato
+B455 camaiore
+B456 camairago
+B457 camandona
+B460 camastra
+B461 cambiago
+B462 cambiano
+B463 cambiasca
+B465 camburzano
+B467 camerana
+B468 camerano
+B469 camerano casasco
+B471 camerata cornello
+B472 camerata nuova
+B470 camerata picena
+B473 cameri
+B474 camerino
+B476 camerota
+B477 camigliano
+B479 caminata
+B481 camini
+B482 camino
+B483 camino tagliamento
+B484 camisano
+B485 camisano vicentino
+B486 cammarata
+B489 camo
+B490 camogli
+B492 campagna
+B493 campagna lupia
+B496 campagnano roma
+B497 campagnatico
+B498 campagnola cremasca
+B499 campagnola emilia
+B500 campana
+B501 camparada
+B502 campegine
+B504 campello clitunno
+B505 campertogno
+B507 campi bisenzio
+B506 campi salentina
+B508 campiglia cervo
+B511 campiglia berici
+B509 campiglia marittima
+B512 campiglione fenile
+B513 campione italia
+B514 campitello fassa
+B515 campli
+B516 campo calabro
+B526 campo giove
+B529 campo trens
+B538 campo ligure
+B553 campo elba
+B564 campo san martino
+B570 campo tures
+B519 campobasso
+B520 campobello licata
+B521 campobello mazara
+B522 campochiaro
+B524 campodarsego
+B525 campodenno
+B527 campodimele
+B528 campodipietra
+B530 campodolcino
+B531 campodoro
+B533 campofelice fitalia
+B532 campofelice roccella
+B534 campofilone
+B535 campofiorito
+B536 campoformido
+B537 campofranco
+B539 campogalliano
+B541 campolattaro
+B543 campoli appennino
+B542 campoli monte taburno
+B544 campolieto
+B545 campolongo torre
+B546 campolongo maggiore
+B547 campolongo brenta
+M311 campolongo tapogliano
+B549 campomaggiore
+B550 campomarino
+B551 campomorone
+B554 camponogara
+B555 campora
+B556 camporeale
+B557 camporgiano
+B559 camporosso
+B562 camporotondo fiastrone
+B561 camporotondo etneo
+B563 camposampiero
+B565 camposano
+B566 camposanto
+B567 campospinoso
+B569 campotosto
+B572 camugnano
+B577 canal san bovo
+B573 canale
+B574 canale agordo
+B576 canale monterano
+B578 canaro
+B579 canazei
+B580 cancellara
+B581 cancello arnone
+B582 canda
+B584 candela
+B586 candelo
+B588 candia canavese
+B587 candia lomellina
+B589 candiana
+B590 candida
+B591 candidoni
+B592 candiolo
+B593 canegrate
+B594 canelli
+B597 canepina
+B598 caneva
+B599 canevino
+B602 canicatti
+B603 canicattini bagni
+B604 canino
+B605 canischio
+B606 canistro
+B607 canna
+B608 cannalonga
+B609 cannara
+B610 cannero riviera
+B613 canneto pavese
+B612 canneto oglio
+B615 cannobio
+B616 cannole
+B617 canolo
+B618 canonica adda
+B619 canosa puglia
+B620 canosa sannita
+B621 canosio
+C669 canossa
+B624 cansano
+B626 cantagallo
+B627 cantalice
+B628 cantalupa
+B631 cantalupo sabina
+B629 cantalupo ligure
+B630 cantalupo sannio
+B633 cantarana
+B634 cantello
+B635 canterano
+B636 cantiano
+B637 cantoira
+B639 cantu
+B640 canzano
+B641 canzo
+B642 caorle
+B643 caorso
+B644 capaccio
+B645 capaci
+B646 capalbio
+B647 capannoli
+B648 capannori
+B649 capena
+B650 capergnanica
+B651 capestrano
+B653 capiago intimiano
+B655 capistrano
+B656 capistrello
+B658 capitignano
+B660 capizzi
+B661 capizzone
+B664 capo ponte
+B666 capo orlando
+B663 capodimonte
+B667 capodrise
+B669 capoliveri
+B670 capolona
+B671 caponago
+B672 caporciano
+B674 caposele
+B675 capoterra
+B676 capovalle
+B677 cappadocia
+B679 cappella cantone
+B680 cappella de picenardi
+B678 cappella maggiore
+B681 cappelle tavo
+B682 capracotta
+B684 capraia limite
+B685 capraia isola
+B686 capralba
+B688 capranica
+B687 capranica prenestina
+B690 caprarica lecce
+B691 caprarola
+B692 caprauna
+B693 caprese michelangelo
+B694 caprezzo
+B696 capri
+B695 capri leone
+B697 capriana
+B698 capriano colle
+B701 capriata orba
+B703 capriate san gervasio
+B704 capriati volturno
+B705 caprie
+B706 capriglia irpina
+B707 capriglio
+B708 caprile
+B710 caprino bergamasco
+B709 caprino veronese
+B711 capriolo
+B712 capriva friuli
+B715 capua
+B716 capurso
+B718 caraffa bianco
+B717 caraffa catanzaro
+B719 caraglio
+B720 caramagna piemonte
+B722 caramanico terme
+B723 carano
+B724 carapelle
+B725 carapelle calvisio
+B726 carasco
+B727 carassai
+B729 carate brianza
+B730 carate urio
+B731 caravaggio
+B732 caravate
+B733 caravino
+B734 caravonica
+B735 carbognano
+B741 carbonara ticino
+B740 carbonara nola
+B739 carbonara po
+B736 carbonara scrivia
+B742 carbonate
+B743 carbone
+B744 carbonera
+B745 carbonia
+B748 carcare
+B749 carceri
+B752 carcoforo
+B754 cardano campo
+B755 carde
+M285 cardedu
+B756 cardeto
+B758 cardinale
+B759 cardito
+B760 careggine
+B762 carema
+B763 carenno
+B765 carentino
+B766 careri
+B767 caresana
+B768 caresanablot
+B769 carezzano
+B771 carfizzi
+B772 cargeghe
+B774 cariati
+B776 carife
+B777 carignano
+B778 carimate
+B779 carinaro
+B780 carini
+B781 carinola
+B782 carisio
+B783 carisolo
+B784 carlantino
+B785 carlazzo
+B787 carlentini
+B788 carlino
+B789 carloforte
+B790 carlopoli
+B791 carmagnola
+B792 carmiano
+B794 carmignano
+B795 carmignano brenta
+B796 carnago
+B798 carnate
+B801 carobbio angeli
+B802 carolei
+B803 carona
+B804 caronia
+B805 caronno pertusella
+B807 caronno varesino
+B808 carosino
+B809 carovigno
+B810 carovilli
+B812 carpaneto piacentino
+B813 carpanzano
+B814 carpasio
+B816 carpegna
+B817 carpenedolo
+B818 carpeneto
+B819 carpi
+B820 carpiano
+B822 carpignano salentino
+B823 carpignano sesia
+B825 carpineti
+B827 carpineto nora
+B828 carpineto romano
+B826 carpineto sinello
+B829 carpino
+B830 carpinone
+B832 carrara
+B835 carre
+B836 carrega ligure
+B838 carro
+B839 carrodano
+B840 carrosio
+B841 carru
+B842 carsoli
+B844 cartigliano
+B845 cartignano
+B846 cartoceto
+B847 cartosio
+B848 cartura
+B850 carugate
+B851 carugo
+B853 carunchio
+B854 carvico
+B856 carzano
+B857 casabona
+B858 casacalenda
+B859 casacanditella
+B860 casagiove
+B870 casal cermelli
+B872 casal principe
+B895 casal velino
+B861 casalanguida
+B862 casalattico
+B864 casalbeltrame
+B865 casalbordino
+B866 casalbore
+B867 casalborgone
+B868 casalbuono
+B869 casalbuttano uniti
+B871 casalciprano
+B873 casalduni
+B876 casale corte cerro
+B881 casale cremasco-vidolasco
+B877 casale scodosia
+B875 casale litta
+B878 casale marittimo
+B885 casale monferrato
+B879 casale sile
+B880 casalecchio reno
+B882 casaleggio boiro
+B883 casaleggio novara
+B886 casaleone
+B889 casaletto ceredano
+B890 casaletto sopra
+B887 casaletto lodigiano
+B888 casaletto spartano
+B891 casaletto vaprio
+B892 casalfiumanese
+B893 casalgrande
+B894 casalgrasso
+B896 casalincontrada
+B897 casalino
+B898 casalmaggiore
+B899 casalmaiocco
+B900 casalmorano
+B901 casalmoro
+B902 casalnoceto
+B905 casalnuovo napoli
+B904 casalnuovo monterotaro
+B907 casaloldo
+B910 casalpusterlengo
+B911 casalromano
+B912 casalserugo
+B916 casaluce
+B917 casalvecchio puglia
+B918 casalvecchio siculo
+B919 casalvieri
+B920 casalvolone
+B921 casalzuigno
+B922 casamarciano
+B923 casamassima
+B924 casamicciola terme
+B925 casandrino
+B928 casanova elvo
+B927 casanova lerrone
+B929 casanova lonati
+B932 casape
+M260 casapesenna
+B933 casapinta
+B934 casaprota
+B935 casapulla
+B936 casarano
+B937 casargo
+B938 casarile
+B940 casarsa delizia
+B939 casarza ligure
+B941 casasco
+B942 casasco intelvi
+B943 casatenovo
+B945 casatisma
+B946 casavatore
+B947 casazza
+B948 cascia
+B949 casciago
+A559 casciana terme
+B950 cascina
+B953 cascinette ivrea
+B954 casei gerola
+B955 caselette
+B956 casella
+B959 caselle pittari
+B961 caselle landi
+B958 caselle lurani
+B960 caselle torinese
+B963 caserta
+B965 casier
+B966 casignana
+B967 casina
+B971 casirate adda
+B974 caslino erba
+B977 casnate bernate
+B978 casnigo
+B980 casola napoli
+B979 casola lunigiana
+B982 casola valsenio
+B983 casole bruzio
+B984 casole elsa
+B985 casoli
+B988 casorate primo
+B987 casorate sempione
+B989 casorezzo
+B990 casoria
+B991 casorzo
+A472 casperia
+B993 caspoggio
+B994 cassacco
+B996 cassago brianza
+C002 cassano ionio
+C003 cassano adda
+B998 cassano murge
+B997 cassano irpino
+C004 cassano magnago
+C005 cassano spinola
+B999 cassano valcuvia
+C006 cassaro
+C007 cassiglio
+C014 cassina de pecchi
+C020 cassina rizzardi
+C024 cassina valsassina
+C022 cassinasco
+C027 cassine
+C030 cassinelle
+C033 cassinetta lugagnano
+C034 cassino
+C037 cassola
+C038 cassolnovo
+C041 castagnaro
+C044 castagneto carducci
+C045 castagneto po
+C046 castagnito
+C049 castagnole lanze
+C047 castagnole monferrato
+C048 castagnole piemonte
+C050 castana
+C052 castano primo
+C053 casteggio
+C055 castegnato
+C056 castegnero
+C058 castel baronia
+C064 castel boglione
+C065 castel bolognese
+B494 castel campagnano
+C040 castel castagna
+C071 castel colonna
+C183 castel condino
+C075 castel aiano
+C076 castel ario
+C078 castel azzano
+C082 castel giudice
+C083 castel monte
+C085 castel piano
+C086 castel rio
+B969 castel casio
+C090 castel ieri
+C091 castel iudica
+C093 castel lama
+C094 castel lucio
+C096 castel sangro
+C097 castel sasso
+C098 castel tora
+C102 castel focognano
+C114 castel frentano
+C115 castel gabbiano
+C116 castel gandolfo
+C117 castel giorgio
+C118 castel goffredo
+C121 castel guelfo bologna
+C203 castel madama
+C204 castel maggiore
+C208 castel mella
+C211 castel morrone
+C252 castel ritaldi
+C253 castel rocchero
+C255 castel rozzone
+C259 castel san giorgio
+C261 castel san giovanni
+C262 castel san lorenzo
+C263 castel san niccolo
+C266 castel san pietro romano
+C265 castel san pietro terme
+C270 castel san vincenzo
+C268 castel san angelo
+C269 castel san elia
+C289 castel viscardo
+C110 castel vittorio
+C291 castel volturno
+C057 castelbaldo
+C059 castelbelforte
+C060 castelbellino
+C062 castelbello ciardes
+C063 castelbianco
+C066 castelbottaccio
+C067 castelbuono
+C069 castelcivita
+C072 castelcovati
+C073 castelcucco
+C074 casteldaccia
+C080 casteldelci
+C081 casteldelfino
+C089 casteldidone
+C100 castelfidardo
+C101 castelfiorentino
+C103 castelfondo
+C104 castelforte
+C105 castelfranci
+C112 castelfranco sopra
+C113 castelfranco sotto
+C107 castelfranco emilia
+C106 castelfranco miscano
+C111 castelfranco veneto
+C119 castelgomberto
+C120 castelgrande
+C122 castelguglielmo
+C123 castelguidone
+C125 castellabate
+C126 castellafiume
+C127 castell'alfero
+C128 castellalto
+C130 castellammare golfo
+C129 castellammare stabia
+C133 castellamonte
+C134 castellana grotte
+C135 castellana sicula
+C136 castellaneta
+C137 castellania
+C139 castellanza
+C140 castellar
+C142 castellar guidobono
+C141 castellarano
+C143 castellaro
+C145 castell'arquato
+C146 castellavazzo
+C147 castell'azzara
+C148 castellazzo bormida
+C149 castellazzo novarese
+C153 castelleone
+C152 castelleone suasa
+C154 castellero
+C155 castelletto cervo
+C156 castelletto erro
+C157 castelletto branduzzo
+C158 castelletto orba
+C160 castelletto merli
+C161 castelletto molina
+C162 castelletto monferrato
+C166 castelletto sopra ticino
+C165 castelletto stura
+C167 castelletto uzzone
+C169 castelli
+C079 castelli calepio
+C172 castellina chianti
+C174 castellina marittima
+C173 castellinaldo
+C175 castellino biferno
+C176 castellino tanaro
+C177 castelliri
+B312 castello cabiaglio
+C184 castello agogna
+C185 castello argile
+C178 castello matese
+C186 castello acqua
+A300 castello annone
+C187 castello brianza
+C188 castello cisterna
+C190 castello godego
+C191 castello serravalle
+C194 castello tesino
+C189 castello-molina fiemme
+C195 castellucchio
+C198 castelluccio sauri
+C199 castelluccio inferiore
+C201 castelluccio superiore
+C202 castelluccio valmaggiore
+C051 castell'umberto
+C205 castelmagno
+C206 castelmarte
+C207 castelmassa
+C197 castelmauro
+C209 castelmezzano
+C210 castelmola
+C213 castelnovetto
+C215 castelnovo bariano
+C217 castelnovo friuli
+C218 castelnovo sotto
+C219 castelnovo ne monti
+C216 castelnuovo
+C226 castelnuovo belbo
+C227 castelnuovo berardenga
+C228 castelnuovo bocca adda
+C229 castelnuovo bormida
+C220 castelnuovo bozzente
+C230 castelnuovo calcea
+C231 castelnuovo cilento
+C225 castelnuovo garda
+C222 castelnuovo daunia
+C214 castelnuovo ceva
+C235 castelnuovo conza
+C224 castelnuovo farfa
+C236 castelnuovo garfagnana
+C237 castelnuovo porto
+C232 castelnuovo don bosco
+C240 castelnuovo magra
+C241 castelnuovo nigra
+C223 castelnuovo parano
+C242 castelnuovo rangone
+C243 castelnuovo scrivia
+C244 castelnuovo val cecina
+C245 castelpagano
+C246 castelpetroso
+C247 castelpizzuto
+C248 castelplanio
+C250 castelpoto
+C251 castelraimondo
+C254 castelrotto
+C267 castelsantangelo nera
+C271 castelsaraceno
+C272 castelsardo
+C273 castelseprio
+B968 castelsilano
+C274 castelspina
+C275 casteltermini
+C181 castelveccana
+C278 castelvecchio calvisio
+C276 castelvecchio rocca barbena
+C279 castelvecchio subequo
+C280 castelvenere
+B129 castelverde
+C200 castelverrino
+C284 castelvetere val fortore
+C283 castelvetere calore
+C286 castelvetrano
+C287 castelvetro modena
+C288 castelvetro piacentino
+C290 castelvisconti
+C292 castenaso
+C293 castenedolo
+M288 castiadas
+C318 castiglion fibocchi
+C319 castiglion fiorentino
+C308 castiglione casauria
+C302 castiglione chiavarese
+C301 castiglione cosentino
+C304 castiglione adda
+C296 castiglione pepoli
+C306 castiglione genovesi
+C309 castiglione lago
+C310 castiglione pescaia
+C312 castiglione stiviere
+C303 castiglione garfagnana
+C297 castiglione sicilia
+C299 castiglione intelvi
+C313 castiglione orcia
+C314 castiglione falletto
+C315 castiglione teverina
+C298 castiglione messer marino
+C316 castiglione messer raimondo
+C300 castiglione olona
+C317 castiglione tinella
+C307 castiglione torinese
+C321 castignano
+C322 castilenti
+C323 castino
+C325 castione andevenno
+C324 castione presolana
+C327 castions strada
+C329 castiraga vidardo
+C330 casto
+C331 castorano
+C332 castrezzato
+C334 castri lecce
+C335 castrignano de greci
+C336 castrignano capo
+C337 castro
+M261 castro
+C338 castro volsci
+C339 castrocaro terme terra sole
+C340 castrocielo
+C341 castrofilippo
+C108 castrolibero
+C343 castronno
+C344 castronovo sicilia
+C345 castronuovo sant'andrea
+C346 castropignano
+C347 castroreale
+C348 castroregio
+C349 castrovillari
+C351 catania
+C352 catanzaro
+C353 catenanuova
+C354 catignano
+C357 cattolica
+C356 cattolica eraclea
+C285 caulonia
+C359 cautano
+C361 cava de tirreni
+C360 cava manara
+C362 cavacurta
+C363 cavaglia
+C364 cavaglietto
+C365 cavaglio agogna
+C367 cavaglio-spoccia
+C369 cavagnolo
+C370 cavaion veronese
+C372 cavalese
+C374 cavallasca
+C375 cavallerleone
+C376 cavallermaggiore
+C377 cavallino
+M308 cavallino-treporti
+C378 cavallirio
+C380 cavareno
+C381 cavargna
+C382 cavaria premezzo
+C383 cavarzere
+C384 cavaso tomba
+C385 cavasso nuovo
+C387 cavatore
+C389 cavazzo carnico
+C390 cave
+C392 cavedago
+C393 cavedine
+C394 cavenago adda
+C395 cavenago brianza
+C396 cavernago
+C398 cavezzo
+C400 cavizzana
+C404 cavour
+C405 cavriago
+C406 cavriana
+C407 cavriglia
+C409 cazzago brabbia
+C408 cazzago san martino
+C412 cazzano tramigna
+C410 cazzano san andrea
+C413 ceccano
+C414 cecima
+C415 cecina
+C417 cedegolo
+C418 cedrasco
+C420 cefala diana
+C421 cefalu
+C422 ceggia
+C424 ceglie messapica
+C426 celano
+C428 celenza trigno
+C429 celenza valfortore
+C430 celico
+C435 cella dati
+C432 cella monte
+C436 cellamare
+C437 cellara
+C438 cellarengo
+C439 cellatica
+C444 celle bulgheria
+C441 celle macra
+C442 celle san vito
+C440 celle enomondo
+C443 celle ligure
+C446 celleno
+C447 cellere
+C449 cellino attanasio
+C448 cellino san marco
+C450 cellio
+M262 cellole
+C452 cembra
+C453 cenadi
+C456 cenate sopra
+C457 cenate sotto
+C458 cencenighe agordino
+C459 cene
+C461 ceneselli
+C463 cengio
+C467 centa san nicolo
+C466 centallo
+C469 cento
+C470 centola
+C472 centrache
+C471 centuripe
+C474 cepagatti
+C476 ceppaloni
+C478 ceppo morelli
+C479 ceprano
+C480 cerami
+C481 ceranesi
+C483 cerano
+C482 cerano intelvi
+C484 ceranova
+C485 ceraso
+C486 cercemaggiore
+C487 cercenasco
+C488 cercepiccola
+C489 cerchiara calabria
+C492 cerchio
+C493 cercino
+C494 cercivento
+C495 cercola
+C496 cerda
+C498 cerea
+C500 ceregnano
+C501 cerenzia
+C497 ceres
+C502 ceresara
+C503 cereseto
+C504 ceresole alba
+C505 ceresole reale
+C506 cerete
+C508 ceretto lomellina
+C509 cergnago
+C510 ceriale
+C511 ceriana
+C512 ceriano laghetto
+C513 cerignale
+C514 cerignola
+C515 cerisano
+C516 cermenate
+A022 cermes
+C517 cermignano
+C520 cernobbio
+C521 cernusco lombardone
+C523 cernusco naviglio
+C526 cerreto castello
+C528 cerreto asti
+C524 cerreto esi
+C527 cerreto spoleto
+C507 cerreto grue
+C529 cerreto guidi
+C518 cerreto laziale
+C525 cerreto sannita
+C530 cerretto langhe
+C531 cerrina monferrato
+C532 cerrione
+C536 cerro lambro
+C534 cerro volturno
+C537 cerro maggiore
+C533 cerro tanaro
+C538 cerro veronese
+C539 cersosimo
+C540 certaldo
+C541 certosa pavia
+C542 cerva
+C543 cervara roma
+C544 cervarese san croce
+C545 cervaro
+C547 cervasca
+C548 cervatto
+C549 cerveno
+C550 cervere
+C551 cervesina
+C552 cerveteri
+C553 cervia
+C554 cervicati
+C555 cervignano adda
+C556 cervignano friuli
+C557 cervinara
+C558 cervino
+C559 cervo
+C560 cerzeto
+C561 cesa
+C563 cesana brianza
+C564 cesana torinese
+C565 cesano boscone
+C566 cesano maderno
+C567 cesara
+C568 cesaro
+C569 cesate
+C573 cesena
+C574 cesenatico
+C576 cesinali
+C578 cesio
+C577 cesiomaggiore
+C580 cessalto
+C581 cessaniti
+C582 cessapalombo
+C583 cessole
+C584 cetara
+C585 ceto
+C587 cetona
+C588 cetraro
+C589 ceva
+C591 cevo
+C593 challand-saint-anselme
+C594 challand-saint-victor
+C595 chambave
+B491 chamois
+C596 champdepraz
+B540 champorcher
+C598 charvensod
+C294 chatillon
+C599 cherasco
+C600 cheremule
+C604 chialamberto
+C605 chiampo
+C606 chianche
+C608 chianciano terme
+C609 chianni
+C610 chianocco
+C612 chiaramonte gulfi
+C613 chiaramonti
+C614 chiarano
+C615 chiaravalle
+C616 chiaravalle centrale
+C618 chiari
+C619 chiaromonte
+C620 chiauci
+C621 chiavari
+C623 chiavenna
+C624 chiaverano
+C625 chienes
+C627 chieri
+C630 chies alpago
+C628 chiesa valmalenco
+C629 chiesanuova
+C631 chiesina uzzanese
+C632 chieti
+C633 chieuti
+C634 chieve
+C635 chignolo isola
+C637 chignolo po
+C638 chioggia
+C639 chiomonte
+C640 chions
+C641 chiopris viscone
+C648 chitignano
+C649 chiuduno
+C650 chiuppano
+C651 chiuro
+C653 chiusa pesio
+C655 chiusa san michele
+C652 chiusa
+C654 chiusa sclafani
+C656 chiusaforte
+C657 chiusanico
+C658 chiusano asti
+C659 chiusano san domenico
+C660 chiusavecchia
+C661 chiusdino
+C662 chiusi
+C663 chiusi verna
+C665 chivasso
+M272 ciampino
+C668 cianciana
+C672 cibiana cadore
+C673 cicagna
+C674 cicala
+C675 cicciano
+C676 cicerale
+C677 ciciliano
+C678 cicognolo
+C679 ciconio
+C680 cigliano
+C681 ciglie
+C684 cigognola
+C685 cigole
+C686 cilavegna
+C689 cimadolmo
+C691 cimbergo
+C694 cimego
+C695 cimina
+C696 ciminna
+C697 cimitile
+C699 cimolais
+C700 cimone
+C701 cinaglio
+C702 cineto romano
+C703 cingia de botti
+C704 cingoli
+C705 cinigiano
+C707 cinisello balsamo
+C708 cinisi
+C709 cino
+C710 cinquefrondi
+C711 cintano
+C712 cinte tesino
+C714 cinto caomaggiore
+C713 cinto euganeo
+C715 cinzano
+C716 ciorlano
+C718 cipressa
+C719 circello
+C722 cirie
+C723 cirigliano
+C724 cirimido
+C725 ciro
+C726 ciro marina
+C727 cis
+C728 cisano bergamasco
+C729 cisano neva
+C730 ciserano
+C732 cislago
+C733 cisliano
+C734 cismon grappa
+C735 cison valmarino
+C738 cissone
+C739 cisterna asti
+C740 cisterna latina
+C741 cisternino
+C742 citerna
+C744 citta pieve
+C745 citta castello
+C750 citta san angelo
+C743 cittadella
+C746 cittaducale
+C747 cittanova
+C749 cittareale
+C751 cittiglio
+C752 civate
+C754 civenna
+C755 civezza
+C756 civezzano
+C757 civiasco
+C758 cividale friuli
+C759 cividate piano
+C760 cividate camuno
+C763 civita
+C765 civita castellana
+C766 civita antino
+C764 civitacampomarano
+C768 civitaluparella
+C769 civitanova sannio
+C770 civitanova marche
+C771 civitaquana
+C773 civitavecchia
+C778 civitella alfedena
+C779 civitella casanova
+C780 civitella agliano
+C781 civitella tronto
+C777 civitella romagna
+C774 civitella val chiana
+C776 civitella messer raimondo
+C782 civitella paganico
+C783 civitella roveto
+C784 civitella san paolo
+C785 civo
+C787 claino osteno
+C790 claut
+C791 clauzetto
+C792 clavesana
+C793 claviere
+C794 cles
+C795 cleto
+C796 clivio
+C797 cloz
+C800 clusone
+C801 coassolo torinese
+C803 coazze
+C804 coazzolo
+C806 coccaglio
+C807 cocconato
+C810 cocquio-trevisago
+C811 cocullo
+C812 codevigo
+C813 codevilla
+C814 codigoro
+C815 codogne
+C816 codogno
+C817 codroipo
+C818 codrongianos
+C819 coggiola
+C820 cogliate
+C821 cogne
+C823 cogoleto
+C824 cogollo cengio
+C826 cogorno
+C829 colazza
+C830 colbordolo
+C835 colere
+C836 colfelice
+C838 coli
+C839 colico
+C840 collagna
+C841 collalto sabino
+C844 collarmele
+C845 collazzone
+C851 colle brianza
+C854 colle anchise
+C857 colle tora
+C847 colle val elsa
+C870 colle san magno
+C846 colle sannita
+C872 colle san lucia
+C848 colle umberto
+C850 collebeato
+C852 collecchio
+C853 collecorvino
+C311 colledara
+C855 colledimacine
+C856 colledimezzo
+C858 colleferro
+C859 collegiove
+C860 collegno
+C862 collelongo
+C864 collepardo
+C865 collepasso
+C866 collepietro
+C867 colleretto castelnuovo
+C868 colleretto giacosa
+C869 collesalvetti
+C871 collesano
+C875 colletorto
+C876 collevecchio
+C878 colli volturno
+C877 colli tronto
+C880 colli velino
+C879 colliano
+C882 collinas
+C883 collio
+C884 collobiano
+C885 colloredo monte albano
+C886 colmurano
+C888 colobraro
+C890 cologna veneta
+C893 cologne
+C894 cologno serio
+C895 cologno monzese
+C897 colognola colli
+C900 colonna
+C901 colonnella
+C902 colonno
+C903 colorina
+C904 colorno
+C905 colosimi
+C908 colturano
+C910 colzate
+C911 comabbio
+C912 comacchio
+C914 comano
+M314 comano terme
+C917 comazzo
+C918 comeglians
+C920 comelico superiore
+C922 comerio
+C925 comezzano-cizzago
+C926 comignago
+C927 comiso
+C928 comitini
+C929 comiziano
+C930 commessaggio
+C931 commezzadura
+C933 como
+C934 compiano
+C937 comun nuovo
+C935 comunanza
+C938 cona
+C941 conca casale
+C940 conca marini
+C939 conca campania
+C943 concamarise
+C944 concei
+C946 concerviano
+C948 concesio
+C949 conco
+C950 concordia sagittaria
+C951 concordia secchia
+C952 concorezzo
+C953 condino
+C954 condofuri
+C955 condove
+C956 condro
+C957 conegliano
+C958 confienza
+C959 configni
+C960 conflenti
+C962 coniolo
+C963 conselice
+C964 conselve
+C965 consiglio rumo
+C968 contessa entellina
+C969 contigliano
+C971 contrada
+C972 controguerra
+C973 controne
+C974 contursi terme
+C975 conversano
+C976 conza campania
+C977 conzano
+C978 copertino
+C979 copiano
+C980 copparo
+C982 corana
+C983 corato
+C984 corbara
+C986 corbetta
+C987 corbola
+C988 corchiano
+C990 corciano
+C991 cordenons
+C992 cordignano
+C993 cordovado
+C994 coredo
+C996 coreglia antelminelli
+C995 coreglia ligure
+C998 coreno ausonio
+C999 corfinio
+D003 cori
+D004 coriano
+D005 corigliano calabro
+D006 corigliano otranto
+D007 corinaldo
+D008 corio
+D009 corleone
+D011 corleto monforte
+D010 corleto perticara
+D013 cormano
+D014 cormons
+D015 corna imagna
+D016 cornalba
+D017 cornale
+D018 cornaredo
+D019 cornate adda
+B799 cornedo isarco
+D020 cornedo vicentino
+D021 cornegliano laudense
+D022 corneliano alba
+D026 corniglio
+D027 corno rosazzo
+D028 corno giovine
+D029 cornovecchio
+D030 cornuda
+D037 correggio
+D038 correzzana
+D040 correzzola
+D041 corrido
+D042 corridonia
+D043 corropoli
+D044 corsano
+D045 corsico
+D046 corsione
+D048 cortaccia strada vino
+D049 cortale
+D050 cortandone
+D051 cortanze
+D052 cortazzone
+D054 corte brugnatella
+D056 corte de cortesi cignone
+D057 corte de frati
+D058 corte franca
+D068 corte palasio
+D061 cortemaggiore
+D062 cortemilia
+D064 corteno golgi
+D065 cortenova
+D066 cortenuova
+D067 corteolona
+D072 cortiglione
+A266 cortina ampezzo
+D075 cortina strada vino
+D076 cortino
+D077 cortona
+D078 corvara
+D079 corvara badia
+D081 corvino san quirico
+D082 corzano
+D085 coseano
+D086 cosenza
+D087 cosio arroscia
+D088 cosio valtellino
+D089 cosoleto
+D093 cossano belbo
+D092 cossano canavese
+D094 cossato
+D095 cosseria
+D096 cossignano
+D099 cossogno
+D100 cossoine
+D101 cossombrato
+D109 costa de nobili
+D110 costa mezzate
+D105 costa rovigo
+D112 costa masnaga
+D111 costa serina
+D103 costa valle imagna
+D102 costa vescovato
+D117 costa volpino
+D107 costabissara
+D108 costacciaro
+D113 costanzana
+D114 costarainera
+D118 costermano
+D119 costigliole asti
+D120 costigliole saluzzo
+D121 cotignola
+D123 cotronei
+D124 cottanello
+D012 courmayeur
+D126 covo
+D127 cozzo
+D128 craco
+D131 crandola valsassina
+D132 cravagliana
+D133 cravanzana
+D134 craveggia
+D136 creazzo
+D137 crecchio
+D139 credaro
+D141 credera rubbiano
+D142 crema
+D143 cremella
+D144 cremenaga
+D145 cremeno
+D147 cremia
+D149 cremolino
+D150 cremona
+D151 cremosano
+D154 crescentino
+D156 crespadoro
+D157 crespano grappa
+D158 crespellano
+D159 crespiatica
+D160 crespina
+D161 crespino
+D162 cressa
+D165 crevacuore
+D166 crevalcore
+D168 crevoladossola
+D170 crispano
+D171 crispiano
+D172 crissolo
+D175 crocefieschi
+C670 crocetta montello
+D177 crodo
+D179 crognaleto
+D180 cropalati
+D181 cropani
+D182 crosa
+D184 crosia
+D185 crosio valle
+D122 crotone
+D186 crotta adda
+D187 crova
+D188 croviana
+D189 crucoli
+D192 cuasso monte
+D194 cuccaro monferrato
+D195 cuccaro vetere
+D196 cucciago
+D197 cuceglio
+D198 cuggiono
+D199 cugliate-fabiasco
+D200 cuglieri
+D201 cugnoli
+D202 cumiana
+D203 cumignano naviglio
+D204 cunardo
+D205 cuneo
+D206 cunevo
+D207 cunico
+D208 cuorgne
+D209 cupello
+D210 cupra marittima
+D211 cupramontana
+B824 cura carpignano
+D214 curcuris
+D216 cureggio
+D217 curiglia monteviasco
+D218 curinga
+D219 curino
+D221 curno
+D222 curon venosta
+D223 cursi
+D225 cursolo-orasso
+D226 curtarolo
+D227 curtatone
+D228 curti
+D229 cusago
+D231 cusano milanino
+D230 cusano mutri
+D232 cusino
+D233 cusio
+D234 custonaci
+D235 cutigliano
+D236 cutro
+D237 cutrofiano
+D238 cuveglio
+D239 cuvio
+D243 daiano
+D244 dairago
+D245 dalmine
+D246 dambel
+D247 danta cadore
+D248 daone
+D250 dare
+D251 darfo boario terme
+D253 dasa
+D255 davagna
+D256 daverio
+D257 davoli
+D258 dazio
+D259 decimomannu
+D260 decimoputzu
+D261 decollatura
+D264 dego
+D265 deiva marina
+D266 delebio
+D267 delia
+D268 delianuova
+D269 deliceto
+D270 dello
+D271 demonte
+D272 denice
+D273 denno
+D277 dernice
+D278 derovere
+D279 deruta
+D280 dervio
+D281 desana
+D284 desenzano garda
+D286 desio
+D287 desulo
+D289 diamante
+D293 diano arentino
+D296 diano castello
+D291 diano alba
+D297 diano marina
+D298 diano san pietro
+D299 dicomano
+D300 dignano
+D302 dimaro
+D303 dinami
+D304 dipignano
+D305 diso
+D309 divignano
+D310 dizzasco
+D311 dobbiaco
+D312 doberdo lago
+D314 dogliani
+D315 dogliola
+D316 dogna
+D317 dolce
+D318 dolceacqua
+D319 dolcedo
+D321 dolegna collio
+D323 dolianova
+D325 dolo
+D327 dolzago
+D328 domanico
+D329 domaso
+D330 domegge cadore
+D331 domicella
+D332 domodossola
+D333 domus de maria
+D334 domusnovas
+D336 don
+D339 donato
+D341 dongo
+D338 donnas
+D344 donori
+D345 dorgali
+D346 dorio
+D347 dormelletto
+D348 dorno
+D349 dorsino
+D350 dorzano
+D351 dosolo
+D352 dossena
+D355 dosso liro
+D356 doues
+D357 dovadola
+D358 dovera
+D360 dozza
+D361 dragoni
+D364 drapia
+D365 drena
+D366 drenchia
+D367 dresano
+D369 drezzo
+D370 drizzona
+D371 dro
+D372 dronero
+D373 druento
+D374 druogno
+D376 dualchi
+D377 dubino
+M300 due carrare
+D379 dueville
+D380 dugenta
+D383 duino-aurisina
+D384 dumenza
+D385 duno
+D386 durazzano
+C772 duronia
+D388 dusino san michele
+D390 eboli
+D391 edolo
+D392 egna
+D394 elice
+D395 elini
+D398 ello
+D399 elmas
+D401 elva
+D402 emarese
+D403 empoli
+D406 endine gaiano
+D407 enego
+D408 enemonzo
+C342 enna
+D410 entracque
+D411 entratico
+D412 envie
+D414 episcopia
+D415 eraclea
+D416 erba
+D419 erbe
+D420 erbezzo
+D421 erbusco
+D422 erchie
+H243 ercolano
+D423 erice
+D424 erli
+D426 erto casso
+M292 erula
+D428 erve
+D429 esanatoglia
+D430 escalaplano
+D431 escolca
+D434 esine
+D436 esino lario
+D440 esperia
+D441 esporlatu
+D442 este
+D443 esterzili
+D444 etroubles
+D445 eupilio
+D433 exilles
+D447 fabbrica curone
+D449 fabbriche vallico
+D450 fabbrico
+D451 fabriano
+D452 fabrica roma
+D453 fabrizia
+D454 fabro
+D455 faedis
+D457 faedo
+D456 faedo valtellino
+D458 faenza
+D459 faeto
+D461 fagagna
+D462 faggeto lario
+D463 faggiano
+D465 fagnano alto
+D464 fagnano castello
+D467 fagnano olona
+D468 fai paganella
+D469 faicchio
+D470 falcade
+D471 falciano massico
+D473 falconara albanese
+D472 falconara marittima
+D474 falcone
+D475 faleria
+D476 falerna
+D477 falerone
+D480 fallo
+D481 falmenta
+D482 faloppio
+D483 falvaterra
+D484 falzes
+D486 fanano
+D487 fanna
+D488 fano
+D489 fano adriano
+D494 fara filiorum petri
+D490 fara gera adda
+D493 fara sabina
+D492 fara novarese
+D491 fara olivana sola
+D495 fara san martino
+D496 fara vicentino
+D497 fardella
+D499 farigliano
+D501 farindola
+D502 farini
+D503 farnese
+D506 farra alpago
+D505 farra soligo
+D504 farra isonzo
+D508 fasano
+D509 fascia
+D510 fauglia
+D511 faule
+D512 favale malvaro
+D514 favara
+D516 faver
+D518 favignana
+D520 favria
+D523 feisoglio
+D524 feletto
+D526 felino
+D527 felitto
+D528 felizzano
+D529 felonica
+D530 feltre
+D531 fenegro
+D532 fenestrelle
+D537 fenis
+D538 ferentillo
+D539 ferentino
+D540 ferla
+D541 fermignano
+D542 fermo
+D543 ferno
+D544 feroleto antico
+D545 feroleto chiesa
+D547 ferrandina
+D548 ferrara
+D549 ferrara monte baldo
+D550 ferrazzano
+D551 ferrera varese
+D552 ferrera erbognone
+D554 ferrere
+D555 ferriere
+D557 ferruzzano
+D560 fiamignano
+D562 fiano
+D561 fiano romano
+D564 fiastra
+D565 fiave
+D567 ficarazzi
+D568 ficarolo
+D569 ficarra
+D570 ficulle
+B034 fidenza
+D571 fie sciliar
+D572 fiera primiero
+D573 fierozzo
+D574 fiesco
+D575 fiesole
+D576 fiesse
+D578 fiesso artico
+D577 fiesso umbertiano
+D579 figino serenza
+D583 figline valdarno
+D582 figline vegliaturo
+D586 filacciano
+D587 filadelfia
+D588 filago
+D589 filandari
+D590 filattiera
+D591 filettino
+D592 filetto
+D593 filiano
+D594 filighera
+D595 filignano
+D596 filogaso
+D597 filottrano
+D599 finale emilia
+D600 finale ligure
+D604 fino monte
+D605 fino mornasco
+D606 fiorano serio
+D608 fiorano canavese
+D607 fiorano modenese
+D609 fiordimonte
+D611 fiorenzuola arda
+D612 firenze
+D613 firenzuola
+D614 firmo
+D615 fisciano
+A310 fiuggi
+D617 fiumalbo
+D619 fiumara
+D621 fiume veneto
+D622 fiumedinisi
+D624 fiumefreddo bruzio
+D623 fiumefreddo sicilia
+D627 fiumicello
+M297 fiumicino
+D628 fiuminata
+D629 fivizzano
+D630 flaibano
+D631 flavon
+D634 flero
+D635 floresta
+D636 floridia
+D637 florinas
+D638 flumeri
+D639 fluminimaggiore
+D640 flussio
+D641 fobello
+D643 foggia
+D644 foglianise
+D645 fogliano redipuglia
+D646 foglizzo
+D649 foiano chiana
+D650 foiano val fortore
+D651 folgaria
+D652 folignano
+D653 foligno
+D654 follina
+D655 follo
+D656 follonica
+D660 fombio
+D661 fondachelli-fantina
+D662 fondi
+D663 fondo
+D665 fonni
+D666 fontainemore
+D667 fontana liri
+D670 fontanafredda
+D671 fontanarosa
+D668 fontanelice
+D672 fontanella
+D673 fontanellato
+D674 fontanelle
+D675 fontaneto agogna
+D676 fontanetto po
+D677 fontanigorda
+D678 fontanile
+D679 fontaniva
+D680 fonte
+M309 fonte nuova
+D681 fontecchio
+D682 fontechiari
+D683 fontegreca
+D684 fonteno
+D685 fontevivo
+D686 fonzaso
+D688 foppolo
+D689 forano
+D691 force
+D693 forchia
+D694 forcola
+D695 fordongianus
+D696 forenza
+D697 foresto sparso
+D700 forgaria friuli
+D701 forino
+D702 forio
+D704 forli
+D703 forli sannio
+D705 forlimpopoli
+D706 formazza
+D707 formello
+D708 formia
+D709 formicola
+D710 formigara
+D711 formigine
+D712 formigliana
+D713 formignana
+D714 fornace
+D715 fornelli
+D718 forni avoltri
+D719 forni sopra
+D720 forni sotto
+D725 forno canavese
+D726 forno zoldo
+D728 fornovo taro
+D727 fornovo san giovanni
+D730 forte marmi
+D731 fortezza
+D732 fortunago
+D733 forza agro
+D734 fosciandora
+D735 fosdinovo
+D736 fossa
+D738 fossacesia
+D740 fossalta piave
+D741 fossalta portogruaro
+D737 fossalto
+D742 fossano
+D745 fossato vico
+D744 fossato serralta
+D748 fosso
+D749 fossombrone
+D750 foza
+D751 frabosa soprana
+D752 frabosa sottana
+D559 fraconalto
+D754 fragagnano
+D755 fragneto abate
+D756 fragneto monforte
+D757 fraine
+D758 framura
+D763 francavilla mare
+D762 francavilla angitola
+D759 francavilla bisio
+D760 francavilla ete
+D765 francavilla sicilia
+D761 francavilla fontana
+D766 francavilla sinni
+D764 francavilla marittima
+D767 francica
+D768 francofonte
+D769 francolise
+D770 frascaro
+D771 frascarolo
+D773 frascati
+D774 frascineto
+D775 frassilongo
+D776 frassinelle polesine
+D777 frassinello monferrato
+D780 frassineto po
+D781 frassinetto
+D782 frassino
+D783 frassinoro
+D785 frasso sabino
+D784 frasso telesino
+D788 fratta polesine
+D787 fratta todina
+D789 frattamaggiore
+D790 frattaminore
+D791 fratte rosa
+D793 frazzano
+D794 fregona
+D796 fresagrandinaria
+D797 fresonara
+D798 frigento
+D799 frignano
+D802 frinco
+D803 frisa
+D804 frisanco
+D805 front
+D807 frontino
+D808 frontone
+D810 frosinone
+D811 frosolone
+D812 frossasco
+D813 frugarolo
+D814 fubine
+D815 fucecchio
+D817 fuipiano valle imagna
+D818 fumane
+D819 fumone
+D821 funes
+D823 furci
+D824 furci siculo
+D825 furnari
+D826 furore
+D827 furtei
+D828 fuscaldo
+D829 fusignano
+D830 fusine
+D832 futani
+D834 gabbioneta binanuova
+D835 gabiano
+D836 gabicce mare
+D839 gaby
+D841 gadesco pieve delmona
+D842 gadoni
+D843 gaeta
+D844 gaggi
+D845 gaggiano
+D847 gaggio montano
+D848 gaglianico
+D850 gagliano aterno
+D849 gagliano castelferrato
+D851 gagliano capo
+D852 gagliato
+D853 gagliole
+D854 gaiarine
+D855 gaiba
+D856 gaiola
+D858 gaiole chianti
+D859 gairo
+D860 gais
+D861 galati mamertino
+D862 galatina
+D863 galatone
+D864 galatro
+D865 galbiate
+D867 galeata
+D868 galgagnano
+D869 gallarate
+D870 gallese
+D872 galliate
+D871 galliate lombardo
+D873 galliavola
+D874 gallicano
+D875 gallicano lazio
+D876 gallicchio
+D878 galliera
+D879 galliera veneta
+D881 gallinaro
+D882 gallio
+D883 gallipoli
+D884 gallo matese
+D885 gallodoro
+D886 galluccio
+D888 galtelli
+D889 galzignano terme
+D890 gamalero
+D891 gambara
+D892 gambarana
+D894 gambasca
+D895 gambassi terme
+D896 gambatesa
+D897 gambellara
+D898 gamberale
+D899 gambettola
+D901 gambolo
+D902 gambugliano
+D903 gandellino
+D905 gandino
+D906 gandosso
+D907 gangi
+D909 garaguso
+D910 garbagna
+D911 garbagna novarese
+D912 garbagnate milanese
+D913 garbagnate monastero
+D915 garda
+D917 gardone riviera
+D918 gardone val trompia
+D920 garessio
+D921 gargallo
+D923 gargazzone
+D924 gargnano
+D925 garlasco
+D926 garlate
+D927 garlenda
+D928 garniga terme
+D930 garzeno
+D931 garzigliana
+D932 gasperina
+D933 gassino torinese
+D934 gattatico
+D935 gatteo
+D937 gattico
+D938 gattinara
+D940 gavardo
+D941 gavazzana
+D942 gavello
+D943 gaverina terme
+D944 gavi
+D945 gavignano
+D946 gavirate
+D947 gavoi
+D948 gavorrano
+D949 gazoldo ippoliti
+D951 gazzada schianno
+D952 gazzaniga
+D956 gazzo
+D957 gazzo veronese
+D958 gazzola
+D959 gazzuolo
+D960 gela
+D961 gemmano
+D962 gemona friuli
+D963 gemonio
+D964 genazzano
+D965 genga
+D966 genivolta
+D967 genola
+D968 genoni
+D969 genova
+D970 genuri
+D971 genzano lucania
+D972 genzano roma
+D973 genzone
+D974 gera lario
+D975 gerace
+D977 geraci siculo
+D978 gerano
+D980 gerenzago
+D981 gerenzano
+D982 gergei
+D983 germagnano
+D984 germagno
+D986 germasino
+D987 germignaga
+D988 gerocarne
+D990 gerola alta
+D991 gerosa
+D993 gerre de caprioli
+D994 gesico
+D995 gessate
+D996 gessopalena
+D997 gesturi
+D998 gesualdo
+D999 ghedi
+E001 ghemme
+E003 ghiffa
+E004 ghilarza
+E006 ghisalba
+E007 ghislarengo
+E008 giacciano baruchella
+E009 giaglione
+E010 gianico
+E012 giano umbria
+E011 giano vetusto
+E013 giardinello
+E014 giardini-naxos
+E015 giarole
+E016 giarratana
+E017 giarre
+E019 giave
+E020 giaveno
+E021 giavera montello
+E022 giba
+E023 gibellina
+E024 gifflenga
+E025 giffone
+E026 giffoni sei casali
+E027 giffoni valle piana
+E028 gignese
+E029 gignod
+E030 gildone
+E031 gimigliano
+E033 ginestra
+E034 ginestra schiavoni
+E036 ginosa
+E037 gioi
+E040 gioia marsi
+E038 gioia colle
+E039 gioia sannitica
+E041 gioia tauro
+E044 gioiosa ionica
+E043 gioiosa marea
+E045 giove
+E047 giovinazzo
+E048 giovo
+E049 girasole
+E050 girifalco
+E051 gironico
+E052 gissi
+E053 giuggianello
+E054 giugliano campania
+E055 giuliana
+E057 giuliano roma
+E056 giuliano teatino
+E058 giulianova
+E059 giuncugnano
+E060 giungano
+E061 giurdignano
+E062 giussago
+E063 giussano
+E064 giustenice
+E065 giustino
+E066 giusvalla
+E067 givoletto
+E068 gizzeria
+E069 glorenza
+E071 godega sant'urbano
+E072 godiasco salice terme
+E074 godrano
+E078 goito
+E079 golasecca
+E081 golferenzo
+M274 golfo aranci
+E082 gombito
+E083 gonars
+E084 goni
+E086 gonnesa
+E087 gonnoscodina
+E085 gonnosfanadiga
+D585 gonnosno
+E088 gonnostramatza
+E089 gonzaga
+E090 gordona
+E091 gorga
+E092 gorgo monticano
+E093 gorgoglione
+E094 gorgonzola
+E096 goriano sicoli
+E098 gorizia
+E101 gorla maggiore
+E102 gorla minore
+E100 gorlago
+E103 gorle
+E104 gornate-olona
+E106 gorno
+E107 goro
+E109 gorreto
+E111 gorzegno
+E113 gosaldo
+E114 gossolengo
+E115 gottasecca
+E116 gottolengo
+E118 govone
+E120 gozzano
+E122 gradara
+E124 gradisca isonzo
+E125 grado
+E126 gradoli
+E127 graffignana
+E128 graffignano
+E130 graglia
+E131 gragnano
+E132 gragnano trebbiense
+E133 grammichele
+E134 grana
+E135 granaglione
+E136 granarolo emilia
+E138 grancona
+E139 grandate
+E141 grandola uniti
+E142 graniti
+E143 granozzo monticello
+E144 grantola
+E145 grantorto
+E146 granze
+E147 grassano
+E148 grassobbio
+E149 gratteri
+E150 grauno
+E151 gravedona
+M315 gravedona uniti
+E152 gravellona lomellina
+E153 gravellona toce
+E154 gravere
+E156 gravina catania
+E155 gravina puglia
+E158 grazzanise
+E159 grazzano badoglio
+E160 greccio
+E161 greci
+E163 greggio
+E164 gremiasco
+E165 gressan
+E167 gressoney-la-trinite
+E168 gressoney-saint-jean
+E169 greve chianti
+E170 grezzago
+E171 grezzana
+E172 griante
+E173 gricignano aversa
+E177 grignasco
+E178 grigno
+E179 grimacco
+E180 grimaldi
+E182 grinzane cavour
+E184 grisignano zocco
+E185 grisolia
+E187 grizzana morandi
+E188 grognardo
+E189 gromo
+E191 grondona
+E192 grone
+E193 grontardo
+E195 gropello cairoli
+E196 gropparello
+E199 groscavallo
+E200 grosio
+E201 grosotto
+E202 grosseto
+E203 grosso
+E204 grottaferrata
+E205 grottaglie
+E206 grottaminarda
+E207 grottammare
+E208 grottazzolina
+E209 grotte
+E210 grotte castro
+E212 grotteria
+E213 grottole
+E214 grottolella
+E215 gruaro
+E216 grugliasco
+E217 grumello cremonese uniti
+E219 grumello monte
+E221 grumento nova
+E222 grumes
+E223 grumo appula
+E224 grumo nevano
+E226 grumolo abbadesse
+E227 guagnano
+E228 gualdo
+E229 gualdo cattaneo
+E230 gualdo tadino
+E232 gualtieri
+E233 gualtieri sicamino
+E234 guamaggiore
+E235 guanzate
+E236 guarcino
+E240 guarda veneta
+E237 guardabosone
+E238 guardamiglio
+E239 guardavalle
+E241 guardea
+E245 guardia lombardi
+E246 guardia perticara
+E242 guardia piemontese
+E249 guardia sanframondi
+E243 guardiagrele
+E244 guardialfiera
+E248 guardiaregia
+E250 guardistallo
+E251 guarene
+E252 guasila
+E253 guastalla
+E255 guazzora
+E256 gubbio
+E258 gudo visconti
+E259 guglionesi
+E261 guidizzolo
+E263 guidonia montecelio
+E264 guiglia
+E266 guilmi
+E269 gurro
+E270 guspini
+E271 gussago
+E272 gussola
+E273 hone
+E280 idro
+E281 iglesias
+E282 igliano
+E283 ilbono
+E284 illasi
+E285 illorai
+E287 imbersago
+E288 imer
+E289 imola
+E290 imperia
+E291 impruneta
+E292 inarzo
+E296 incisa val arno
+E295 incisa scapaccino
+E297 incudine
+E299 induno olona
+E301 ingria
+E304 intragna
+E305 introbio
+E306 introd
+E307 introdacqua
+E308 introzzo
+E309 inverigo
+E310 inverno monteleone
+E311 inverso pinasca
+E313 inveruno
+E314 invorio
+E317 inzago
+E321 ionadi
+E323 irgoli
+E325 irma
+E326 irsina
+E327 isasca
+E328 isca ionio
+E329 ischia
+E330 ischia castro
+E332 ischitella
+E333 iseo
+E334 isera
+E335 isernia
+E336 isili
+E337 isnello
+E338 isola asti
+E341 isola cantone
+E348 isola giglio
+E343 isola gran sasso italia
+E340 isola liri
+E351 isola piano
+E349 isola scala
+E350 isola femmine
+E339 isola capo rizzuto
+E353 isola fondra
+E356 isola dovarese
+E358 isola rizza
+E360 isola san antonio
+E354 isola vicentina
+E345 isolabella
+E346 isolabona
+E363 isole tremiti
+E364 isorella
+E365 ispani
+E366 ispica
+E367 ispra
+E368 issiglio
+E369 issime
+E370 isso
+E371 issogne
+E373 istrana
+E374 itala
+E375 itri
+E376 ittireddu
+E377 ittiri
+E378 ivano fracena
+E379 ivrea
+E380 izano
+E274 jacurso
+E381 jelsi
+E382 jenne
+E386 jerago orago
+E387 jerzu
+E388 jesi
+C388 jesolo
+E320 jolanda savoia
+E389 joppolo
+E390 joppolo giancaxio
+E391 jovencan
+E394 la cassa
+E423 la loggia
+E425 la maddalena
+A308 la magdeleine
+E430 la morra
+E458 la salle
+E463 la spezia
+E470 la thuile
+E490 la valle agordina
+E491 la valle
+E392 labico
+E393 labro
+E395 lacchiarella
+E396 lacco ameno
+E397 lacedonia
+E398 laces
+E400 laconi
+M212 ladispoli
+E401 laerru
+E402 laganadi
+E403 laghi
+E405 laglio
+E406 lagnasco
+E407 lago
+E409 lagonegro
+E410 lagosanto
+E412 lagundo
+E414 laigueglia
+E415 lainate
+E416 laino
+E417 laino borgo
+E419 laino castello
+E420 laion
+E421 laives
+E413 lajatico
+E422 lallio
+E424 lama peligni
+E426 lama mocogno
+E428 lambrugo
+M208 lamezia terme
+E429 lamon
+E431 lampedusa linosa
+E432 lamporecchio
+E433 lamporo
+E434 lana
+E435 lanciano
+E436 landiona
+E437 landriano
+E438 langhirano
+E439 langosco
+E441 lanusei
+C767 lanuvio
+E443 lanzada
+E444 lanzo intelvi
+E445 lanzo torinese
+E447 lapedona
+E448 lapio
+E450 lappano
+A345 l'aquila
+E451 larciano
+E452 lardaro
+E454 lardirago
+E455 lari
+M207 lariano
+E456 larino
+E464 las plassas
+E457 lasa
+E459 lascari
+E461 lasino
+E462 lasnigo
+E465 lastebasse
+E466 lastra signa
+E467 latera
+E468 laterina
+E469 laterza
+E471 latiano
+E472 latina
+E473 latisana
+E474 latronico
+E475 lattarico
+E476 lauco
+E480 laureana cilento
+E479 laureana borrello
+E481 lauregno
+E482 laurenzana
+E483 lauria
+E484 lauriano
+E485 laurino
+E486 laurito
+E487 lauro
+E488 lavagna
+E489 lavagno
+E492 lavarone
+E493 lavello
+E494 lavena ponte tresa
+E496 laveno mombello
+E497 lavenone
+E498 laviano
+E500 lavis
+E502 lazise
+E504 lazzate
+E506 lecce
+E505 lecce marsi
+E507 lecco
+M313 ledro
+E509 leffe
+E510 leggiuno
+E512 legnago
+E514 legnano
+E515 legnaro
+E517 lei
+E518 leini
+E519 leivi
+E520 lemie
+E522 lendinara
+E523 leni
+E524 lenna
+E525 lenno
+E526 leno
+E527 lenola
+E528 lenta
+E530 lentate seveso
+E531 lentella
+C562 lentiai
+E532 lentini
+E535 leonessa
+E536 leonforte
+E537 leporano
+E538 lequile
+E540 lequio berria
+E539 lequio tanaro
+E541 lercara friddi
+E542 lerici
+E543 lerma
+E544 lesa
+E546 lesegno
+E547 lesignano de bagni
+E549 lesina
+E550 lesmo
+E551 lessolo
+E552 lessona
+E553 lestizza
+E554 letino
+E555 letojanni
+E557 lettere
+E558 lettomanoppello
+E559 lettopalena
+E560 levanto
+E562 levate
+E563 leverano
+E564 levice
+E565 levico terme
+E566 levone
+E569 lezzeno
+E570 liberi
+E571 librizzi
+E573 licata
+E574 licciana nardi
+E576 licenza
+E578 licodia eubea
+E581 lierna
+E583 lignana
+E584 lignano sabbiadoro
+E585 ligonchio
+E586 ligosullo
+E587 lillianes
+E588 limana
+E589 limatola
+E590 limbadi
+E591 limbiate
+E592 limena
+E593 limido comasco
+E594 limina
+E597 limone piemonte
+E596 limone garda
+E599 limosano
+E600 linarolo
+E602 linguaglossa
+E605 lioni
+E606 lipari
+E607 lipomo
+E608 lirio
+E610 liscate
+E611 liscia
+E613 lisciano niccone
+E614 lisignago
+E615 lisio
+E617 lissone
+E620 liveri
+E621 livigno
+E622 livinallongo col lana
+E623 livo
+E624 livo
+E625 livorno
+E626 livorno ferraris
+E627 livraga
+E629 lizzanello
+E630 lizzano
+A771 lizzano belvedere
+E632 loano
+E633 loazzolo
+E635 locana
+E639 locate triulzi
+E638 locate varesino
+E640 locatello
+E644 loceri
+E645 locorotondo
+D976 locri
+E646 loculi
+E647 lode
+E648 lodi
+E651 lodi vecchio
+E649 lodine
+E652 lodrino
+E654 lograto
+E655 loiano
+M275 loiri porto san paolo
+E656 lomagna
+E658 lomaso
+E659 lomazzo
+E660 lombardore
+E661 lombriasco
+E662 lomello
+E664 lona lases
+E665 lonate ceppino
+E666 lonate pozzolo
+E667 lonato
+M312 lonato garda
+E668 londa
+E669 longano
+E671 longare
+E672 longarone
+E673 longhena
+E674 longi
+E675 longiano
+E677 longobardi
+E678 longobucco
+E679 longone segrino
+E681 longone sabino
+E682 lonigo
+E683 loranze
+E684 loreggia
+E685 loreglia
+E687 lorenzago cadore
+E688 lorenzana
+E689 loreo
+E690 loreto
+E691 loreto aprutino
+E692 loria
+E693 loro ciuffenna
+E694 loro piceno
+E695 lorsica
+E698 losine
+E700 lotzorai
+E704 lovere
+E705 lovero
+E706 lozio
+E707 lozza
+E709 lozzo atestino
+E708 lozzo cadore
+E711 lozzolo
+E712 lu
+E713 lubriano
+E715 lucca
+E714 lucca sicula
+E716 lucera
+E718 lucignano
+E719 lucinasco
+E722 lucito
+E723 luco marsi
+E724 lucoli
+E726 lugagnano val arda
+E727 lugnacco
+E729 lugnano teverina
+E730 lugo
+E731 lugo vicenza
+E734 luino
+E735 luisago
+E736 lula
+E737 lumarzo
+E738 lumezzane
+E742 lunamatrona
+E743 lunano
+B387 lungavilla
+E745 lungro
+E746 luogosano
+E747 luogosanto
+E748 lupara
+E749 lurago erba
+E750 lurago marinone
+E751 lurano
+E752 luras
+E753 lurate caccivio
+E754 lusciano
+E757 luserna
+E758 luserna san giovanni
+E759 lusernetta
+E760 lusevera
+E761 lusia
+E762 lusiana
+E763 lusiglie
+E764 luson
+E767 lustra
+E769 luvinate
+E770 luzzana
+E772 luzzara
+E773 luzzi
+E775 maccagno
+E777 maccastorna
+E778 macchia isernia
+E780 macchia valfortore
+E779 macchiagodena
+E782 macello
+E783 macerata
+E784 macerata campania
+E785 macerata feltria
+E786 macherio
+E787 maclodio
+E788 macomer
+E789 macra
+E790 macugnaga
+E791 maddaloni
+E342 madesimo
+E793 madignano
+E794 madone
+E795 madonna sasso
+E798 maenza
+E799 mafalda
+E800 magasa
+E801 magenta
+E803 maggiora
+E804 magherno
+E805 magione
+E806 magisano
+E809 magliano alfieri
+E808 magliano alpi
+E811 magliano de marsi
+E807 magliano tenna
+E810 magliano toscana
+E813 magliano romano
+E812 magliano sabina
+E814 magliano vetere
+E815 maglie
+E816 magliolo
+E817 maglione
+E818 magnacavallo
+E819 magnago
+E821 magnano
+E820 magnano riviera
+E825 magomadas
+E829 magre strada vino
+E830 magreglio
+E834 maida
+E835 maiera
+E836 maierato
+E837 maiolati spontini
+E838 maiolo
+E839 maiori
+E840 mairago
+E841 mairano
+E842 maissana
+E833 majano
+E843 malagnino
+E844 malalbergo
+E847 malborghetto-valbruna
+E848 malcesine
+E850 male
+E851 malegno
+E852 maleo
+E853 malesco
+E854 maletto
+E855 malfa
+E856 malgesso
+E858 malgrate
+E859 malito
+E860 mallare
+E862 malles venosta
+E863 malnate
+E864 malo
+E865 malonno
+E866 malosco
+E868 maltignano
+E869 malvagna
+E870 malvicino
+E872 malvito
+E873 mammola
+E874 mamoiada
+E875 manciano
+E876 mandanici
+E877 mandas
+E878 mandatoriccio
+B632 mandela
+E879 mandello lario
+E880 mandello vitta
+E882 manduria
+E883 manerba garda
+E884 manerbio
+E885 manfredonia
+E887 mango
+E888 mangone
+M283 maniace
+E889 maniago
+E891 manocalzati
+E892 manoppello
+E893 mansue
+E894 manta
+E896 mantello
+E897 mantova
+E899 manzano
+E900 manziana
+E901 mapello
+E902 mara
+E903 maracalagonis
+E904 maranello
+E906 marano napoli
+E911 marano valpolicella
+E908 marano equo
+E910 marano lagunare
+E914 marano marchesato
+E915 marano principato
+E905 marano panaro
+E907 marano ticino
+E912 marano vicentino
+E917 maranzana
+E919 maratea
+E921 marcallo casone
+E922 marcaria
+E923 marcedusa
+E924 marcellina
+E925 marcellinara
+E927 marcetelli
+E928 marcheno
+E929 marchirolo
+E930 marciana
+E931 marciana marina
+E932 marcianise
+E933 marciano chiana
+E934 marcignago
+E936 marcon
+E938 marebbe
+E939 marene
+E940 mareno piave
+E941 marentino
+E944 maretto
+E945 margarita
+E946 margherita savoia
+E947 margno
+E949 mariana mantovana
+E951 mariano comense
+E952 mariano friuli
+E953 marianopoli
+E954 mariglianella
+E955 marigliano
+E956 marina gioiosa ionica
+E957 marineo
+E958 marino
+E959 marlengo
+E960 marliana
+E961 marmentino
+E962 marmirolo
+E963 marmora
+E965 marnate
+E967 marone
+E968 maropati
+E970 marostica
+E971 marradi
+E972 marrubiu
+E973 marsaglia
+E974 marsala
+E975 marsciano
+E976 marsico nuovo
+E977 marsicovetere
+E978 marta
+E979 martano
+E980 martellago
+E981 martello
+E982 martignacco
+E983 martignana po
+E984 martignano
+E986 martina franca
+E987 martinengo
+E988 martiniana po
+E989 martinsicuro
+E990 martirano
+E991 martirano lombardo
+E992 martis
+E993 martone
+E994 marudo
+E995 maruggio
+B689 marzabotto
+E999 marzano
+E998 marzano appio
+E997 marzano nola
+F001 marzi
+F002 marzio
+M270 masainas
+F003 masate
+F004 mascali
+F005 mascalucia
+F006 maschito
+F007 masciago primo
+F009 maser
+F010 masera
+F011 masera padova
+F012 maserada piave
+F013 masi
+F016 masi torello
+F015 masio
+F017 maslianico
+F019 mason vicentino
+F020 masone
+F023 massa
+F022 massa albe
+M289 massa somma
+F025 massa cozzile
+F021 massa fermana
+F026 massa fiscaglia
+F029 massa lombarda
+F030 massa lubrense
+F032 massa marittima
+F024 massa martana
+F027 massafra
+F028 massalengo
+F033 massanzago
+F035 massarosa
+F037 massazza
+F041 massello
+F042 masserano
+F044 massignano
+F045 massimeno
+F046 massimino
+F047 massino visconti
+F048 massiola
+F050 masullas
+F051 matelica
+F052 matera
+F053 mathi
+F054 matino
+F055 matrice
+F058 mattie
+F059 mattinata
+F061 mazara vallo
+F063 mazzano
+F064 mazzano romano
+F065 mazzarino
+F066 mazzarra san andrea
+M271 mazzarrone
+F067 mazze
+F068 mazzin
+F070 mazzo valtellina
+F074 meana susa
+F073 meana sardo
+F078 meda
+F080 mede
+F081 medea
+F082 medesano
+F083 medicina
+F084 mediglia
+F085 medolago
+F086 medole
+F087 medolla
+F088 meduna livenza
+F089 meduno
+F091 megliadino san fidenzio
+F092 megliadino san vitale
+F093 meina
+F094 mel
+F095 melara
+F096 melazzo
+F097 meldola
+F098 mele
+F100 melegnano
+F101 melendugno
+F102 meleti
+F104 melfi
+F105 melicucca
+F106 melicucco
+F107 melilli
+F108 melissa
+F109 melissano
+F111 melito napoli
+F112 melito porto salvo
+F110 melito irpino
+F113 melizzano
+F114 melle
+F115 mello
+F117 melpignano
+F118 meltina
+F119 melzo
+F120 menaggio
+F121 menarola
+F122 menconico
+F123 mendatica
+F125 mendicino
+F126 menfi
+F127 mentana
+F130 meolo
+F131 merana
+F132 merano
+F133 merate
+F134 mercallo
+F135 mercatello metauro
+F136 mercatino conca
+F138 mercato san severino
+F139 mercato saraceno
+F140 mercenasco
+F141 mercogliano
+F144 mereto tomba
+F145 mergo
+F146 mergozzo
+F147 meri
+F148 merlara
+F149 merlino
+F151 merone
+F152 mesagne
+F153 mese
+F154 mesenzana
+F155 mesero
+F156 mesola
+F157 mesoraca
+F158 messina
+F161 mestrino
+F162 meta
+F164 meugliano
+F165 mezzago
+F168 mezzana
+F170 mezzana bigli
+F167 mezzana mortigliengo
+F171 mezzana rabattone
+F172 mezzane sotto
+F173 mezzanego
+F174 mezzani
+F175 mezzanino
+F176 mezzano
+F181 mezzegra
+F182 mezzenile
+F183 mezzocorona
+F184 mezzojuso
+F186 mezzoldo
+F187 mezzolombardo
+F188 mezzomerico
+F189 miagliano
+F190 miane
+F191 miasino
+F192 miazzina
+F193 micigliano
+F194 miggiano
+F196 miglianico
+F198 migliarino
+F199 migliaro
+F200 miglierina
+F201 miglionico
+F202 mignanego
+F203 mignano monte lungo
+F205 milano
+F206 milazzo
+E618 milena
+F207 mileto
+F208 milis
+F209 militello val catania
+F210 militello rosmarino
+F213 millesimo
+F214 milo
+F216 milzano
+F217 mineo
+F218 minerbe
+F219 minerbio
+F221 minervino lecce
+F220 minervino murge
+F224 minturno
+F225 minucciano
+F226 mioglia
+F229 mira
+F230 mirabella eclano
+F231 mirabella imbaccari
+F235 mirabello
+F232 mirabello monferrato
+F233 mirabello sannitico
+F238 miradolo terme
+F239 miranda
+F240 mirandola
+F241 mirano
+F242 mirto
+F244 misano adriatico
+F243 misano gera adda
+F246 misilmeri
+F247 misinto
+F248 missaglia
+F249 missanello
+F250 misterbianco
+F251 mistretta
+F254 moasca
+F256 moconesi
+F257 modena
+F258 modica
+F259 modigliana
+F261 modolo
+F262 modugno
+F263 moena
+F265 moggio
+F266 moggio udinese
+F267 moglia
+F268 mogliano
+F269 mogliano veneto
+F270 mogorella
+F272 mogoro
+F274 moiano
+F275 moimacco
+F277 moio alcantara
+F276 moio de calvi
+F278 moio civitella
+F279 moiola
+F280 mola bari
+F281 molare
+F283 molazzana
+F284 molfetta
+M255 molina aterno
+F286 molina ledro
+F287 molinara
+F288 molinella
+F290 molini triora
+F293 molino torti
+F294 molise
+F295 moliterno
+F297 mollia
+F301 molochio
+F304 molteno
+F305 moltrasio
+F306 molvena
+F307 molveno
+F308 mombaldone
+F309 mombarcaro
+F310 mombaroccio
+F311 mombaruzzo
+F312 mombasiglio
+F315 mombello torino
+F313 mombello monferrato
+F316 mombercelli
+F317 momo
+F318 mompantero
+F319 mompeo
+F320 momperone
+F322 monacilioni
+F323 monale
+F324 monasterace
+F325 monastero bormida
+F327 monastero lanzo
+F326 monastero vasco
+F329 monasterolo casotto
+F328 monasterolo castello
+F330 monasterolo savigliano
+F332 monastier treviso
+F333 monastir
+F335 moncalieri
+F336 moncalvo
+D553 moncenisio
+F337 moncestino
+F338 monchiero
+F340 monchio corti
+F341 monclassico
+F342 moncrivello
+F343 moncucco torinese
+F346 mondaino
+F347 mondavio
+F348 mondolfo
+F351 mondovi
+F352 mondragone
+F354 moneglia
+F355 monesiglio
+F356 monfalcone
+F358 monforte alba
+F359 monforte san giorgio
+F360 monfumo
+F361 mongardino
+F363 monghidoro
+F364 mongiana
+F365 mongiardino ligure
+F368 mongiuffi melia
+F369 mongrando
+F370 mongrassano
+F371 monguelfo-tesido
+F372 monguzzo
+F373 moniga garda
+F374 monleale
+F375 monno
+F376 monopoli
+F377 monreale
+F378 monrupino
+F379 monsampietro morico
+F380 monsampolo tronto
+F381 monsano
+F382 monselice
+F383 monserrato
+F384 monsummano terme
+F385 monta
+F386 montabone
+F387 montacuto
+F390 montafia
+F391 montagano
+F393 montagna valtellina
+F392 montagna
+F394 montagnana
+F395 montagnareale
+F396 montagne
+F397 montaguto
+F398 montaione
+F400 montalbano elicona
+F399 montalbano jonico
+F402 montalcino
+F403 montaldeo
+F404 montaldo bormida
+F405 montaldo mondovi
+F408 montaldo roero
+F409 montaldo scarampi
+F407 montaldo torinese
+F410 montale
+F411 montalenghe
+F414 montallegro
+F415 montalto marche
+F419 montalto castro
+F420 montalto dora
+F406 montalto ligure
+F417 montalto pavese
+F416 montalto uffugo
+F422 montanaro
+F423 montanaso lombardo
+F424 montanera
+F426 montano antilia
+F427 montano lucino
+F428 montappone
+F429 montaquila
+F430 montasola
+F432 montauro
+F433 montazzoli
+F437 monte argentario
+F456 monte castello vibio
+F460 monte cavallo
+F467 monte cerignone
+F476 monte colombo
+F477 monte compatri
+F434 monte cremasco
+F486 monte malo
+F488 monte procida
+F517 monte giberto
+F524 monte grimano terme
+F532 monte isola
+F561 monte marenzo
+F589 monte porzio
+F590 monte porzio catone
+F599 monte rinaldo
+F600 monte roberto
+F603 monte romano
+F616 monte san biagio
+F618 monte san giacomo
+F620 monte san giovanni campano
+F619 monte san giovanni sabina
+F621 monte san giusto
+F622 monte san martino
+F626 monte san pietrangeli
+F627 monte san pietro
+F628 monte san savino
+F634 monte san vito
+F629 monte san maria tiberina
+F631 monte san angelo
+F653 monte urano
+F664 monte vidon combatte
+F665 monte vidon corrado
+F440 montebello battaglia
+F441 montebello bertona
+D746 montebello ionico
+B268 montebello sangro
+F442 montebello vicentino
+F443 montebelluna
+F445 montebruno
+F446 montebuono
+F450 montecalvo foglia
+F448 montecalvo irpino
+F449 montecalvo versiggia
+F452 montecarlo
+F453 montecarotto
+F454 montecassiano
+F455 montecastello
+F457 montecastrilli
+A561 montecatini terme
+F458 montecatini val cecina
+F461 montecchia crosara
+F462 montecchio
+F463 montecchio emilia
+F464 montecchio maggiore
+F465 montecchio precalcino
+F469 montechiaro acqui
+F468 montechiaro asti
+F473 montechiarugolo
+F474 monteciccardo
+F475 montecilfone
+F478 montecopiolo
+F479 montecorice
+F480 montecorvino pugliano
+F481 montecorvino rovella
+F482 montecosaro
+F483 montecrestese
+F484 montecreto
+F487 montedinove
+F489 montedoro
+F491 montefalcione
+F492 montefalco
+F493 montefalcone appennino
+F494 montefalcone val fortore
+F495 montefalcone sannio
+F496 montefano
+F497 montefelcino
+F498 monteferrante
+F499 montefiascone
+F500 montefino
+F502 montefiore conca
+F501 montefiore aso
+F503 montefiorino
+F504 monteflavio
+F507 monteforte cilento
+F508 monteforte alpone
+F506 monteforte irpino
+F509 montefortino
+F510 montefranco
+F511 montefredane
+F512 montefusco
+F513 montegabbione
+F514 montegalda
+F515 montegaldella
+F516 montegallo
+F518 montegioco
+F519 montegiordano
+F520 montegiorgio
+F522 montegranaro
+F523 montegridolfo
+F526 montegrino valtravaglia
+F527 montegrosso asti
+F528 montegrosso pian latte
+F529 montegrotto terme
+F531 monteiasi
+F533 montelabbate
+F534 montelanico
+F535 montelapiano
+F536 monteleone fermo
+F538 monteleone puglia
+F540 monteleone spoleto
+F543 monteleone orvieto
+F542 monteleone rocca doria
+F541 monteleone sabino
+F544 montelepre
+F545 montelibretti
+F546 montella
+F547 montello
+F548 montelongo
+F549 montelparo
+F550 montelupo albese
+F551 montelupo fiorentino
+F552 montelupone
+F555 montemaggiore metauro
+F553 montemaggiore belsito
+F556 montemagno
+F558 montemale cuneo
+F559 montemarano
+F560 montemarciano
+F562 montemarzino
+F563 montemesola
+F564 montemezzo
+F565 montemignaio
+F566 montemiletto
+F568 montemilone
+F569 montemitro
+F570 montemonaco
+F572 montemurlo
+F573 montemurro
+F574 montenars
+F576 montenero bisaccia
+F579 montenero sabino
+F580 montenero val cocchiara
+F578 montenerodomo
+F582 monteodorisio
+F586 montepaone
+F587 monteparano
+F591 monteprandone
+F592 montepulciano
+F593 monterado
+F594 monterchi
+F595 montereale
+F596 montereale valcellina
+F597 monterenzio
+F598 monteriggioni
+F601 monteroduni
+F605 monteroni arbia
+F604 monteroni lecce
+F606 monterosi
+F609 monterosso mare
+F610 monterosso almo
+F607 monterosso calabro
+F608 monterosso grana
+F611 monterotondo
+F612 monterotondo marittimo
+F614 monterubbiano
+F623 montesano salentino
+F625 montesano marcellana
+F636 montesarchio
+F637 montescaglioso
+F638 montescano
+F639 montescheno
+F640 montescudaio
+F641 montescudo
+F642 montese
+F644 montesegale
+F646 montesilvano
+F648 montespertoli
+F651 monteu po
+F654 monteu roero
+F655 montevago
+F656 montevarchi
+F657 montevecchia
+F659 monteveglio
+F660 monteverde
+F661 monteverdi marittimo
+F662 monteviale
+F666 montezemolo
+F667 monti
+F668 montiano
+F672 monticelli brusati
+F671 monticelli ongina
+F670 monticelli pavese
+F674 monticello brianza
+F675 monticello conte otto
+F669 monticello alba
+F471 montichiari
+F676 monticiano
+F677 montieri
+M302 montiglio monferrato
+F679 montignoso
+F680 montirone
+F367 montjovet
+F681 montodine
+F682 montoggio
+F685 montone
+F687 montopoli sabina
+F686 montopoli val arno
+F688 montorfano
+F690 montorio vomano
+F689 montorio frentani
+F692 montorio romano
+F693 montoro inferiore
+F694 montoro superiore
+F696 montorso vicentino
+F697 montottone
+F698 montresta
+F701 montu beccaria
+F703 monvalle
+F704 monza
+F705 monzambano
+F706 monzuno
+F708 morano calabro
+F707 morano po
+F709 moransengo
+F710 moraro
+F711 morazzone
+F712 morbegno
+F713 morbello
+F716 morciano leuca
+F715 morciano romagna
+F717 morcone
+F718 mordano
+F720 morengo
+F721 mores
+F722 moresco
+F723 moretta
+F724 morfasso
+F725 morgano
+F726 morgex
+F727 morgongiori
+F728 mori
+F729 moriago battaglia
+F730 moricone
+F731 morigerati
+D033 morimondo
+F732 morino
+F733 moriondo torinese
+F734 morlupo
+F735 mormanno
+F736 mornago
+F737 mornese
+F738 mornico serio
+F739 mornico losana
+F740 morolo
+F743 morozzo
+F744 morra de sanctis
+F745 morro alba
+F747 morro oro
+F746 morro reatino
+F748 morrone sannio
+F749 morrovalle
+F750 morsano tagliamento
+F751 morsasco
+F754 mortara
+F756 mortegliano
+F758 morterone
+F760 moruzzo
+F761 moscazzano
+F762 moschiano
+F764 mosciano san angelo
+F765 moscufo
+F766 moso passiria
+F767 mossa
+F768 mossano
+M304 mosso
+F771 motta baluffi
+F772 motta camastra
+F773 motta affermo
+F774 motta de conti
+F770 motta livenza
+F777 motta montecorvino
+F779 motta san giovanni
+F780 motta san lucia
+F781 motta san anastasia
+F783 motta visconti
+F775 mottafollone
+F776 mottalciata
+B012 motteggiana
+F784 mottola
+F785 mozzagrogna
+F786 mozzanica
+F788 mozzate
+F789 mozzecane
+F791 mozzo
+F793 muccia
+F795 muggia
+F797 muggio
+F798 mugnano cardinale
+F799 mugnano napoli
+F801 mulazzano
+F802 mulazzo
+F806 mura
+F808 muravera
+F809 murazzano
+F811 murello
+F813 murialdo
+F814 murisengo
+F815 murlo
+F816 muro leccese
+F817 muro lucano
+F818 muros
+F820 muscoline
+F822 musei
+F826 musile piave
+F828 musso
+F829 mussolente
+F830 mussomeli
+F832 muzzana turgnano
+F833 muzzano
+F835 nago-torbole
+F836 nalles
+F837 nanno
+F838 nanto
+F839 napoli
+F840 narbolia
+F841 narcao
+F842 nardo
+F843 nardodipace
+F844 narni
+F845 naro
+F846 narzole
+F847 nasino
+F848 naso
+F849 naturno
+F851 nave
+F853 nave san rocco
+F852 navelli
+F856 naz sciaves
+F857 nazzano
+F858 ne
+F859 nebbiuno
+F861 negrar
+F862 neirone
+F863 neive
+F864 nembro
+F865 nemi
+F866 nemoli
+F867 neoneli
+F868 nepi
+F870 nereto
+F871 nerola
+F872 nervesa battaglia
+F874 nerviano
+F876 nespolo
+F877 nesso
+F878 netro
+F880 nettuno
+F881 neviano
+F882 neviano arduini
+F883 neviglie
+F884 niardo
+F885 nibbiano
+F886 nibbiola
+F887 nibionno
+F889 nichelino
+F890 nicolosi
+F891 nicorvo
+F892 nicosia
+F893 nicotera
+F894 niella belbo
+F895 niella tanaro
+F898 nimis
+F899 niscemi
+F900 nissoria
+F901 nizza sicilia
+F902 nizza monferrato
+F904 noale
+F906 noasca
+F907 nocara
+F908 nocciano
+F912 nocera inferiore
+F913 nocera superiore
+F910 nocera terinese
+F911 nocera umbra
+F914 noceto
+F915 noci
+F916 nociglia
+F917 noepoli
+F918 nogara
+F920 nogaredo
+F921 nogarole rocca
+F922 nogarole vicentino
+F923 noicattaro
+F924 nola
+F925 nole
+F926 noli
+F927 nomaglio
+F929 nomi
+F930 nonantola
+F931 none
+F932 nonio
+F933 noragugume
+F934 norbello
+F935 norcia
+F937 norma
+F939 nosate
+F942 notaresco
+F943 noto
+F949 nova levante
+F944 nova milanese
+F950 nova ponente
+A942 nova siri
+F137 novafeltria
+F947 novaledo
+F948 novalesa
+F952 novara
+F951 novara sicilia
+F956 novate mezzola
+F955 novate milanese
+F957 nove
+F958 novedrate
+F960 novellara
+F961 novello
+F963 noventa piave
+F962 noventa padovana
+F964 noventa vicentina
+F966 novi modena
+F965 novi ligure
+F967 novi velia
+F968 noviglio
+F970 novoli
+F972 nucetto
+F975 nughedu san nicolo
+F974 nughedu san vittoria
+F976 nule
+F977 nulvi
+F978 numana
+F979 nuoro
+F980 nurachi
+F981 nuragus
+F982 nurallao
+F983 nuraminis
+F985 nureci
+F986 nurri
+F987 nus
+F988 nusco
+F989 nuvolento
+F990 nuvolera
+F991 nuxis
+F992 occhieppo inferiore
+F993 occhieppo superiore
+F994 occhiobello
+F995 occimiano
+F996 ocre
+F997 odalengo grande
+F998 odalengo piccolo
+F999 oderzo
+G001 odolo
+G002 ofena
+G003 offagna
+G004 offanengo
+G005 offida
+G006 offlaga
+G007 oggebbio
+G008 oggiona santo stefano
+G009 oggiono
+G010 oglianico
+G011 ogliastro cilento
+G015 olbia
+G016 olcenengo
+G018 oldenico
+G019 oleggio
+G020 oleggio castello
+G021 olevano lomellina
+G022 olevano romano
+G023 olevano tusciano
+G025 olgiate comasco
+G026 olgiate molgora
+G028 olgiate olona
+G030 olginate
+G031 oliena
+G032 oliva gessi
+G034 olivadi
+G036 oliveri
+G039 oliveto citra
+G040 oliveto lario
+G037 oliveto lucano
+G041 olivetta san michele
+G042 olivola
+G043 ollastra
+G044 ollolai
+G045 ollomont
+G046 olmedo
+G047 olmeneta
+G049 olmo brembo
+G048 olmo gentile
+G050 oltre il colle
+G054 oltressenda alta
+G056 oltrona san mamette
+G058 olzai
+G061 ome
+G062 omegna
+G063 omignano
+G064 onani
+G065 onano
+G066 oncino
+G068 oneta
+G070 onifai
+G071 oniferi
+G074 ono san pietro
+G075 onore
+G076 onzo
+G078 opera
+G079 opi
+G080 oppeano
+G081 oppido lucano
+G082 oppido mamertina
+G083 ora
+G084 orani
+G086 oratino
+G087 orbassano
+G088 orbetello
+G089 orciano pesaro
+G090 orciano pisano
+D522 orco feglino
+M266 ordona
+G093 orero
+G095 orgiano
+G097 orgosolo
+G098 oria
+G102 oricola
+G103 origgio
+G105 orino
+G108 orio serio
+G109 orio canavese
+G107 orio litta
+G110 oriolo
+G111 oriolo romano
+G113 oristano
+G114 ormea
+G115 ormelle
+G116 ornago
+G117 ornavasso
+G118 ornica
+G119 orosei
+G120 orotelli
+G121 orria
+G122 orroli
+G123 orsago
+G124 orsara bormida
+G125 orsara puglia
+G126 orsenigo
+G128 orsogna
+G129 orsomarso
+G130 orta atella
+G131 orta nova
+G134 orta san giulio
+G133 ortacesus
+G135 orte
+G136 ortelle
+G137 ortezzano
+G139 ortignano raggiolo
+G140 ortisei
+G141 ortona
+G142 ortona marsi
+G143 ortonovo
+G144 ortovero
+G145 ortucchio
+G146 ortueri
+G147 orune
+G148 orvieto
+B595 orvinio
+G149 orzinuovi
+G150 orzivecchi
+G151 osasco
+G152 osasio
+G153 oschiri
+G154 osidda
+G155 osiglia
+G156 osilo
+G157 osimo
+G158 osini
+G159 osio sopra
+G160 osio sotto
+E529 osmate
+G161 osnago
+G163 osoppo
+G164 ospedaletti
+G168 ospedaletto
+G165 ospedaletto alpinolo
+G167 ospedaletto euganeo
+G166 ospedaletto lodigiano
+G169 ospitale cadore
+G170 ospitaletto
+G171 ossago lodigiano
+G173 ossana
+G178 ossi
+G179 ossimo
+G181 ossona
+G182 ossuccio
+G183 ostana
+G184 ostellato
+G185 ostiano
+G186 ostiglia
+F401 ostra
+F581 ostra vetere
+G187 ostuni
+G188 otranto
+G189 otricoli
+G191 ottana
+G192 ottati
+G190 ottaviano
+G193 ottiglio
+G194 ottobiano
+G195 ottone
+G196 oulx
+G197 ovada
+G198 ovaro
+G199 oviglio
+G200 ovindoli
+G201 ovodda
+G012 oyace
+G202 ozegna
+G203 ozieri
+G205 ozzano emilia
+G204 ozzano monferrato
+G206 ozzero
+G207 pabillonis
+G209 pace mela
+G208 paceco
+G210 pacentro
+G211 pachino
+G212 paciano
+G213 padenghe garda
+G214 padergnone
+G215 paderna
+G218 paderno adda
+G221 paderno grappa
+G220 paderno dugnano
+G217 paderno franciacorta
+G222 paderno ponchielli
+G224 padova
+G225 padria
+M301 padru
+G226 padula
+G227 paduli
+G228 paesana
+G229 paese
+G230 pagani
+G232 paganico sabino
+G233 pagazzano
+G234 pagliara
+G237 paglieta
+G238 pagnacco
+G240 pagno
+G241 pagnona
+G242 pago vallo lauro
+G243 pago veiano
+G247 paisco loveno
+G248 paitone
+G249 paladina
+G250 palagano
+G251 palagianello
+G252 palagiano
+G253 palagonia
+G254 palaia
+G255 palanzano
+G257 palata
+G258 palau
+G259 palazzago
+G263 palazzo adriano
+G262 palazzo canavese
+G260 palazzo pignano
+G261 palazzo san gervasio
+G267 palazzolo acreide
+G268 palazzolo stella
+G264 palazzolo oglio
+G266 palazzolo vercellese
+G270 palazzuolo senio
+G271 palena
+G272 palermiti
+G273 palermo
+G274 palestrina
+G275 palestro
+G276 paliano
+G277 palizzi
+G278 pallagorio
+G280 pallanzeno
+G281 pallare
+G283 palma campania
+G282 palma montechiaro
+G284 palmanova
+G285 palmariggi
+G286 palmas arborea
+G288 palmi
+G289 palmiano
+G290 palmoli
+G291 palo colle
+G293 palombara sabina
+G294 palombaro
+G292 palomonte
+G295 palosco
+G297 palu
+G296 palu fersina
+G298 paludi
+G300 paluzza
+G302 pamparato
+G303 pancalieri
+G304 pancarana
+G305 panchia
+G306 pandino
+G307 panettieri
+G308 panicale
+G311 pannarano
+G312 panni
+G315 pantelleria
+G316 pantigliate
+G317 paola
+G318 paolisi
+G320 papasidero
+G323 papozze
+G324 parabiago
+G325 parabita
+G327 paratico
+G328 parcines
+G329 pare
+G330 parella
+G331 parenti
+G333 parete
+G334 pareto
+G335 parghelia
+G336 parlasco
+G337 parma
+G338 parodi ligure
+G339 paroldo
+G340 parolise
+G342 parona
+G344 parrano
+G346 parre
+G347 partanna
+G348 partinico
+G349 paruzzaro
+G350 parzanica
+G352 pasian prato
+G353 pasiano pordenone
+G354 paspardo
+G358 passerano marmorito
+G359 passignano trasimeno
+G361 passirano
+G362 pastena
+G364 pastorano
+G365 pastrengo
+G367 pasturana
+G368 pasturo
+G371 paterno
+M269 paterno
+G372 paterno calabro
+G370 paternopoli
+G374 patrica
+G376 pattada
+G377 patti
+G378 patu
+G379 pau
+G381 paularo
+G382 pauli arbarei
+G384 paulilatino
+G385 paullo
+G386 paupisi
+G387 pavarolo
+G388 pavia
+G389 pavia udine
+G392 pavone canavese
+G391 pavone mella
+G393 pavullo frignano
+G394 pazzano
+G395 peccioli
+G396 pecco
+G397 pecetto valenza
+G398 pecetto torinese
+G399 pecorara
+G400 pedace
+G402 pedara
+G403 pedaso
+G404 pedavena
+G406 pedemonte
+G408 pederobba
+G410 pedesina
+G411 pedivigliano
+G412 pedrengo
+G416 peglio
+G415 peglio
+G417 pegognaga
+G418 peia
+G419 peio
+G420 pelago
+G421 pella
+G424 pellegrino parmense
+G426 pellezzano
+G427 pellio intelvi
+G428 pellizzano
+G429 pelugo
+G430 penango
+G432 penna teverina
+G436 penna san giovanni
+G437 penna san andrea
+G433 pennabilli
+G434 pennadomo
+G435 pennapiedimonte
+G438 penne
+G439 pentone
+G441 perano
+G442 perarolo cadore
+G443 perca
+G444 percile
+G445 perdasdefogu
+G446 perdaxius
+G447 perdifumo
+G448 perego
+G449 pereto
+G450 perfugas
+G451 pergine valdarno
+G452 pergine valsugana
+G453 pergola
+G454 perinaldo
+G455 perito
+G456 perledo
+G457 perletto
+G458 perlo
+G459 perloz
+G461 pernumia
+C013 pero
+G463 perosa argentina
+G462 perosa canavese
+G465 perrero
+G469 persico dosimo
+G471 pertengo
+G474 pertica alta
+G475 pertica bassa
+G476 pertosa
+G477 pertusio
+G478 perugia
+G479 pesaro
+G480 pescaglia
+G481 pescantina
+G482 pescara
+G483 pescarolo uniti
+G484 pescasseroli
+G485 pescate
+G486 pesche
+G487 peschici
+G488 peschiera borromeo
+G489 peschiera garda
+G491 pescia
+G492 pescina
+G494 pesco sannita
+G493 pescocostanzo
+G495 pescolanciano
+G496 pescopagano
+G497 pescopennataro
+G498 pescorocchiano
+G499 pescosansonesco
+G500 pescosolido
+G502 pessano bornago
+G504 pessina cremonese
+G505 pessinetto
+G506 petacciato
+G508 petilia policastro
+G509 petina
+G510 petralia soprana
+G511 petralia sottana
+G513 petrella salto
+G512 petrella tifernina
+G514 petriano
+G515 petriolo
+G516 petritoli
+G517 petrizzi
+G518 petrona
+M281 petrosino
+G519 petruro irpino
+G520 pettenasco
+G521 pettinengo
+G522 pettineo
+G523 pettoranello molise
+G524 pettorano gizio
+G525 pettorazza grimani
+G526 peveragno
+G528 pezzana
+G529 pezzaze
+G532 pezzolo valle uzzone
+G535 piacenza
+G534 piacenza adige
+G536 piadena
+G537 piagge
+G538 piaggine
+G546 pian camuno
+G552 pian sco
+G542 piana crixia
+G543 piana albanesi
+G541 piana monte verna
+G547 piancastagnaio
+G549 piancogno
+G551 piandimeleto
+G553 piane crati
+G555 pianella
+G556 pianello lario
+G557 pianello val tidone
+G558 pianengo
+G559 pianezza
+G560 pianezze
+G561 pianfei
+G564 pianico
+G565 pianiga
+G568 piano sorrento
+D546 pianopoli
+G570 pianoro
+G571 piansano
+G572 piantedo
+G574 piario
+G575 piasco
+G576 piateda
+G577 piatto
+G582 piazza serchio
+G580 piazza armerina
+G579 piazza brembana
+G583 piazzatorre
+G587 piazzola brenta
+G588 piazzolo
+G589 picciano
+G590 picerno
+G591 picinisco
+G592 pico
+G593 piea
+G594 piedicavallo
+G597 piedimonte etneo
+G596 piedimonte matese
+G598 piedimonte san germano
+G600 piedimulera
+G601 piegaro
+G602 pienza
+G603 pieranica
+G612 pietra de giorgi
+G605 pietra ligure
+G619 pietra marazzi
+G606 pietrabbondante
+G607 pietrabruna
+G608 pietracamela
+G609 pietracatella
+G610 pietracupa
+G611 pietradefusi
+G613 pietraferrazzana
+G615 pietrafitta
+G616 pietragalla
+G618 pietralunga
+G620 pietramelara
+G604 pietramontecorvino
+G621 pietranico
+G622 pietrapaola
+G623 pietrapertosa
+G624 pietraperzia
+G625 pietraporzio
+G626 pietraroja
+G627 pietrarubbia
+G628 pietrasanta
+G629 pietrastornina
+G630 pietravairano
+G631 pietrelcina
+G636 pieve nievole
+G635 pieve albignola
+G638 pieve alpago
+G639 pieve cairo
+G641 pieve bono
+G642 pieve cadore
+G643 pieve cento
+G633 pieve coriano
+G644 pieve ledro
+G645 pieve soligo
+G632 pieve teco
+G647 pieve olmi
+G634 pieve emanuele
+G096 pieve fissiraga
+G648 pieve fosciana
+G646 pieve ligure
+G650 pieve porto morone
+G651 pieve san giacomo
+G653 pieve san stefano
+G656 pieve tesino
+G657 pieve torina
+G658 pieve vergonte
+G637 pievebovigliana
+G649 pievepelago
+G659 piglio
+G660 pigna
+G662 pignataro interamna
+G661 pignataro maggiore
+G663 pignola
+G664 pignone
+G665 pigra
+G666 pila
+G669 pimentel
+G670 pimonte
+G671 pinarolo po
+G672 pinasca
+G673 pincara
+G674 pinerolo
+F831 pineto
+G676 pino asti
+G677 pino sponda lago maggiore
+G678 pino torinese
+G680 pinzano tagliamento
+G681 pinzolo
+G682 piobbico
+G683 piobesi alba
+G684 piobesi torinese
+G685 piode
+G686 pioltello
+G687 piombino
+G688 piombino dese
+G690 pioraco
+G691 piossasco
+G692 piova massaia
+G693 piove sacco
+G694 piovene rocchette
+G695 piovera
+G696 piozzano
+G697 piozzo
+G699 piraino
+G702 pisa
+G703 pisano
+G705 piscina
+M291 piscinas
+G707 pisciotta
+G710 pisogne
+G704 pisoniano
+G712 pisticci
+G713 pistoia
+G715 piteglio
+G716 pitigliano
+G717 piubega
+G718 piuro
+G719 piverone
+G720 pizzale
+G721 pizzighettone
+G722 pizzo
+G724 pizzoferrato
+G726 pizzoli
+G727 pizzone
+G728 pizzoni
+G729 placanica
+G733 plataci
+G734 platania
+G735 plati
+G299 plaus
+G737 plesio
+G740 ploaghe
+G741 plodio
+G742 pocapaglia
+G743 pocenia
+G746 podenzana
+G747 podenzano
+G749 pofi
+G751 poggiardo
+G752 poggibonsi
+G754 poggio caiano
+G755 poggio berni
+G756 poggio bustone
+G757 poggio catino
+G761 poggio imperiale
+G763 poggio mirteto
+G764 poggio moiano
+G765 poggio nativo
+G766 poggio picenze
+G768 poggio renatico
+G753 poggio rusco
+G770 poggio san lorenzo
+G771 poggio san marcello
+D566 poggio san vicino
+B317 poggio sannita
+G758 poggiodomo
+G760 poggiofiorito
+G762 poggiomarino
+G767 poggioreale
+G769 poggiorsini
+G431 poggiridenti
+G772 pogliano milanese
+G773 pognana lario
+G774 pognano
+G775 pogno
+G777 poirino
+G776 pojana maggiore
+G779 polaveno
+G780 polcenigo
+G782 polesella
+G783 polesine parmense
+G784 poli
+G785 polia
+G786 policoro
+G787 polignano mare
+G789 polinago
+G790 polino
+G791 polistena
+G792 polizzi generosa
+G793 polla
+G794 pollein
+G795 pollena trocchia
+F567 pollenza
+G796 pollica
+G797 pollina
+G798 pollone
+G799 pollutri
+G800 polonghera
+G801 polpenazze garda
+G802 polverara
+G803 polverigi
+G804 pomarance
+G805 pomaretto
+G806 pomarico
+G807 pomaro monferrato
+G808 pomarolo
+G809 pombia
+G811 pomezia
+G812 pomigliano arco
+G813 pompei
+G814 pompeiana
+G815 pompiano
+G816 pomponesco
+G817 pompu
+G818 poncarale
+G820 ponderano
+G821 ponna
+G822 ponsacco
+G823 ponso
+G826 pont canavese
+G825 pontassieve
+G545 pontboset
+G827 ponte
+G833 ponte buggianese
+G842 ponte olio
+G844 ponte legno
+G846 ponte piave
+G830 ponte gardena
+G829 ponte valtellina
+G847 ponte lambro
+B662 ponte alpi
+G851 ponte nizza
+F941 ponte nossa
+G855 ponte san nicolo
+G856 ponte san pietro
+G831 pontebba
+G834 pontecagnano faiano
+G836 pontecchio polesine
+G837 pontechianale
+G838 pontecorvo
+G839 pontecurone
+G840 pontedassio
+G843 pontedera
+G848 pontelandolfo
+G849 pontelatone
+G850 pontelongo
+G852 pontenure
+G853 ponteranica
+G858 pontestura
+G859 pontevico
+G860 pontey
+G861 ponti
+G862 ponti mincio
+G864 pontida
+G865 pontinia
+G866 pontinvrea
+G867 pontirolo nuovo
+G869 pontoglio
+G870 pontremoli
+G854 pont-saint-martin
+G871 ponza
+G873 ponzano fermo
+G872 ponzano monferrato
+G874 ponzano romano
+G875 ponzano veneto
+G877 ponzone
+G878 popoli
+G879 poppi
+G881 porano
+G882 porcari
+G886 porcia
+G888 pordenone
+G889 porlezza
+G890 pornassio
+G891 porpetto
+A558 porretta terme
+G894 portacomaro
+G895 portalbera
+G900 porte
+G902 portici
+G903 portico caserta
+G904 portico san benedetto
+G905 portigliola
+E680 porto azzurro
+G906 porto ceresio
+M263 porto cesareo
+F299 porto empedocle
+G917 porto mantovano
+G919 porto recanati
+G920 porto san giorgio
+G921 porto san elpidio
+G923 porto tolle
+G924 porto torres
+G907 porto valtravaglia
+G926 porto viro
+G909 portobuffole
+G910 portocannone
+G912 portoferraio
+G913 portofino
+G914 portogruaro
+G916 portomaggiore
+M257 portopalo capo passero
+G922 portoscuso
+G925 portovenere
+G927 portula
+G929 posada
+G931 posina
+G932 positano
+G933 possagno
+G934 posta
+G935 posta fibreno
+G936 postal
+G937 postalesio
+G939 postiglione
+G940 postua
+G942 potenza
+F632 potenza picena
+G943 pove grappa
+G944 povegliano
+G945 povegliano veronese
+G947 poviglio
+G949 povoletto
+G950 pozza fassa
+G951 pozzaglia sabina
+B914 pozzaglio uniti
+G953 pozzallo
+G954 pozzilli
+G955 pozzo adda
+G960 pozzol groppo
+G959 pozzolengo
+G957 pozzoleone
+G961 pozzolo formigaro
+G962 pozzomaggiore
+G963 pozzonovo
+G964 pozzuoli
+G966 pozzuolo friuli
+G965 pozzuolo martesana
+G968 pradalunga
+G969 pradamano
+G970 pradleves
+G973 pragelato
+G975 praia mare
+G976 praiano
+G977 pralboino
+G978 prali
+G979 pralormo
+G980 pralungo
+G981 pramaggiore
+G982 pramollo
+G985 prarolo
+G986 prarostino
+G987 prasco
+G988 prascorsano
+G989 praso
+G993 prata camportaccio
+G992 prata ansidonia
+G994 prata pordenone
+G990 prata principato ultra
+G991 prata sannita
+G995 pratella
+G997 pratiglione
+G999 prato
+H004 prato stelvio
+H002 prato carnico
+H001 prato sesia
+H007 pratola peligna
+H006 pratola serra
+H008 pratovecchio
+H010 pravisdomini
+G974 pray
+H011 prazzo
+H014 precenicco
+H015 preci
+H017 predappio
+H018 predazzo
+H019 predoi
+H020 predore
+H021 predosa
+H022 preganziol
+H026 pregnana milanese
+H027 prela
+H028 premana
+H029 premariacco
+H030 premeno
+H033 premia
+H034 premilcuore
+H036 premolo
+H037 premosello-chiovenda
+H038 preone
+H039 preore
+H040 prepotto
+H042 pre-saint-didier
+H043 preseglie
+H045 presenzano
+H046 presezzo
+H047 presicce
+H048 pressana
+H050 prestine
+H052 pretoro
+H055 prevalle
+H056 prezza
+H057 prezzo
+H059 priero
+H062 prignano cilento
+H061 prignano secchia
+H063 primaluna
+H068 priocca
+H069 priola
+M279 priolo gargallo
+G698 priverno
+H070 prizzi
+H071 proceno
+H072 procida
+H073 propata
+H074 proserpio
+H076 prossedi
+H078 provaglio iseo
+H077 provaglio val sabbia
+H081 proves
+H083 provvidenti
+H085 prunetto
+H086 puegnago garda
+H087 puglianello
+H088 pula
+H089 pulfero
+H090 pulsano
+H091 pumenengo
+H092 puos alpago
+H094 pusiano
+H095 putifigari
+H096 putignano
+H097 quadrelle
+H098 quadri
+H100 quagliuzzo
+H101 qualiano
+H102 quaranti
+H103 quaregna
+H104 quargnento
+H106 quarna sopra
+H107 quarna sotto
+H108 quarona
+H109 quarrata
+H110 quart
+H114 quarto
+H117 quarto altino
+H118 quartu san elena
+H119 quartucciu
+H120 quassolo
+H121 quattordio
+H122 quattro castella
+H124 quero
+H126 quiliano
+H127 quincinetto
+H128 quindici
+H129 quingentole
+H130 quintano
+H131 quinto treviso
+H132 quinto vercellese
+H134 quinto vicentino
+H140 quinzano oglio
+H143 quistello
+H145 quittengo
+H146 rabbi
+H147 racale
+H148 racalmuto
+H150 racconigi
+H151 raccuja
+H152 racines
+H153 radda chianti
+H154 raddusa
+H156 radicofani
+H157 radicondoli
+H159 raffadali
+M287 ragalna
+H161 ragogna
+H162 ragoli
+H163 ragusa
+H166 raiano
+H168 ramacca
+G654 ramiseto
+H171 ramponio verna
+H173 rancio valcuvia
+H174 ranco
+H175 randazzo
+H176 ranica
+H177 ranzanico
+H180 ranzo
+H182 rapagnano
+H183 rapallo
+H184 rapino
+H185 rapolano terme
+H186 rapolla
+H187 rapone
+H188 rassa
+H189 rasun anterselva
+H192 rasura
+H194 ravanusa
+H195 ravarino
+H196 ravascletto
+H198 ravello
+H199 ravenna
+H200 raveo
+H202 raviscanina
+H203 re
+H204 rea
+H205 realmonte
+H206 reana rojale
+H207 reano
+H210 recale
+H211 recanati
+H212 recco
+H213 recetto
+H214 recoaro terme
+H216 redavalle
+H218 redondesco
+H219 refrancore
+H220 refrontolo
+H221 regalbuto
+H222 reggello
+H224 reggio calabria
+H223 reggio emilia
+H225 reggiolo
+H227 reino
+H228 reitano
+H229 remanzacco
+H230 remedello
+H233 renate
+H235 rende
+H236 renon
+H238 resana
+H240 rescaldina
+H242 resia
+H244 resiutta
+H245 resuttano
+H246 retorbido
+H247 revello
+H248 revere
+H250 revigliasco asti
+H253 revine lago
+H254 revo
+H255 rezzago
+H256 rezzato
+H257 rezzo
+H258 rezzoaglio
+H262 rhemes-notre-dame
+H263 rhemes-saint-georges
+H264 rho
+H265 riace
+H266 rialto
+H267 riano
+H268 riardo
+H269 ribera
+H270 ribordone
+H271 ricadi
+H272 ricaldone
+H273 riccia
+H274 riccione
+H275 ricco golfo spezia
+H276 ricengo
+H277 ricigliano
+H280 riese pio x
+H281 riesi
+H282 rieti
+H284 rifiano
+H285 rifreddo
+H288 rignano flaminio
+H287 rignano garganico
+H286 rignano arno
+H289 rigolato
+H291 rima san giuseppe
+H292 rimasco
+H293 rimella
+H294 rimini
+H299 rio pusteria
+H305 rio marina
+H297 rio elba
+H298 rio saliceto
+H300 riofreddo
+H301 riola sardo
+H302 riolo terme
+H303 riolunato
+H304 riomaggiore
+H307 rionero vulture
+H308 rionero sannitico
+H320 ripa teatina
+H311 ripabottoni
+H312 ripacandida
+H313 ripalimosani
+H314 ripalta arpina
+H315 ripalta cremasca
+H316 ripalta guerina
+H319 riparbella
+H321 ripatransone
+H322 ripe
+H323 ripe san ginesio
+H324 ripi
+H325 riposto
+H326 rittana
+H330 riva garda
+H331 riva solto
+H328 riva ligure
+H337 riva presso chieri
+H329 riva valdobbia
+H333 rivalba
+H334 rivalta bormida
+H335 rivalta torino
+H327 rivamonte agordino
+H336 rivanazzano terme
+H338 rivara
+H340 rivarolo canavese
+H341 rivarolo re uniti
+H342 rivarolo mantovano
+H343 rivarone
+H344 rivarossa
+H346 rive
+H347 rive arcano
+H348 rivello
+H350 rivergaro
+H352 rivignano
+H353 rivisondoli
+H354 rivodutri
+H355 rivoli
+H356 rivoli veronese
+H357 rivolta adda
+H359 rizziconi
+H360 ro
+H361 roana
+H362 roaschia
+H363 roascio
+H365 roasio
+H366 roatto
+H367 robassomero
+G223 robbiate
+H369 robbio
+H371 robecchetto induno
+H372 robecco oglio
+H375 robecco pavese
+H373 robecco naviglio
+H376 robella
+H377 robilante
+H378 roburent
+H386 rocca canavese
+H387 rocca canterano
+H391 rocca ciglie
+H392 rocca arazzo
+H395 rocca de baldi
+H396 rocca de giorgi
+H398 rocca evandro
+H399 rocca botte
+H400 rocca cambio
+H401 rocca cave
+H402 rocca mezzo
+H403 rocca neto
+H404 rocca papa
+H414 rocca grimalda
+H416 rocca imperiale
+H421 rocca massima
+H429 rocca pia
+H379 rocca pietore
+H432 rocca priora
+H437 rocca san casciano
+H438 rocca san felice
+H439 rocca san giovanni
+H440 rocca san maria
+H441 rocca san stefano
+H446 rocca sinibalda
+H450 rocca susella
+H382 roccabascerana
+H383 roccabernarda
+H384 roccabianca
+H385 roccabruna
+H389 roccacasale
+H393 roccadarce
+H394 roccadaspide
+H405 roccafiorita
+H390 roccafluvione
+H408 roccaforte greco
+H406 roccaforte ligure
+H407 roccaforte mondovi
+H409 roccaforzata
+H410 roccafranca
+H411 roccagiovine
+H412 roccagloriosa
+H413 roccagorga
+H417 roccalbegna
+H418 roccalumera
+H420 roccamandolfi
+H422 roccamena
+H423 roccamonfina
+H424 roccamontepiano
+H425 roccamorice
+H426 roccanova
+H427 roccantica
+H428 roccapalumba
+H431 roccapiemonte
+H433 roccarainola
+H434 roccaraso
+H436 roccaromana
+H442 roccascalegna
+H443 roccasecca
+H444 roccasecca volsci
+H445 roccasicura
+H447 roccasparvera
+H448 roccaspinalveti
+H449 roccastrada
+H380 roccavaldina
+H451 roccaverano
+H452 roccavignale
+H453 roccavione
+H454 roccavivara
+H456 roccella ionica
+H455 roccella valdemone
+H458 rocchetta volturno
+H462 rocchetta belbo
+H461 rocchetta vara
+H459 rocchetta croce
+H465 rocchetta ligure
+H460 rocchetta nervina
+H466 rocchetta palafea
+H467 rocchetta san antonio
+H468 rocchetta tanaro
+H470 rodano
+H472 roddi
+H473 roddino
+H474 rodello
+H475 rodengo
+H477 rodengo saiano
+H478 rodero
+H480 rodi garganico
+H479 rodi milici
+H481 rodigo
+H484 roe volciano
+H485 rofrano
+H486 rogeno
+H488 roggiano gravina
+H489 roghudi
+H490 rogliano
+H491 rognano
+H492 rogno
+H493 rogolo
+H494 roiate
+H495 roio sangro
+H497 roisan
+H498 roletto
+H500 rolo
+H501 roma
+H503 romagnano monte
+H502 romagnano sesia
+H505 romagnese
+H506 romallo
+H507 romana
+H508 romanengo
+H511 romano canavese
+H512 romano ezzelino
+H509 romano lombardia
+H514 romans isonzo
+H516 rombiolo
+H517 romeno
+H518 romentino
+H519 rometta
+H521 ronago
+H522 ronca
+H523 roncade
+H525 roncadelle
+H527 roncaro
+H528 roncegno terme
+H529 roncello
+H531 ronchi legionari
+H532 ronchi valsugana
+H533 ronchis
+H534 ronciglione
+H540 ronco adige
+H538 ronco biellese
+H537 ronco briantino
+H539 ronco canavese
+H536 ronco scrivia
+H535 roncobello
+H541 roncoferraro
+H542 roncofreddo
+H544 roncola
+H545 roncone
+H546 rondanina
+H547 rondissone
+H549 ronsecco
+M303 ronzo-chienis
+H552 ronzone
+H553 roppolo
+H554 rora
+H556 rosa
+H558 rosarno
+H559 rosasco
+H560 rosate
+H561 rosazza
+H562 rosciano
+H564 roscigno
+H565 rose
+H566 rosello
+H572 roseto capo spulico
+F585 roseto abruzzi
+H568 roseto valfortore
+H570 rosignano marittimo
+H569 rosignano monferrato
+H573 rosolina
+H574 rosolini
+H575 rosora
+H577 rossa
+H578 rossana
+H579 rossano
+H580 rossano veneto
+H581 rossiglione
+H583 rosta
+H584 rota imagna
+H585 rota greca
+H588 rotella
+H589 rotello
+H590 rotonda
+H591 rotondella
+H592 rotondi
+H593 rottofreno
+H594 rotzo
+H555 roure
+H596 rovagnate
+H364 rovasenda
+H598 rovato
+H599 rovegno
+H601 rovellasca
+H602 rovello porro
+H604 roverbella
+H606 roverchiara
+H607 rovere luna
+H608 rovere veronese
+H610 roveredo gua
+H609 roveredo piano
+H612 rovereto
+H614 rovescala
+H615 rovetta
+H618 roviano
+H620 rovigo
+H621 rovito
+H622 rovolon
+H623 rozzano
+H625 rubano
+H627 rubiana
+H628 rubiera
+H629 ruda
+H630 rudiano
+H631 rueglio
+H632 ruffano
+H633 ruffia
+H634 ruffre-mendola
+H635 rufina
+F271 ruinas
+H637 ruino
+H639 rumo
+H641 ruoti
+H642 russi
+H643 rutigliano
+H644 rutino
+H165 ruviano
+H646 ruvo monte
+H645 ruvo puglia
+H647 sabaudia
+H648 sabbia
+H650 sabbio chiese
+H652 sabbioneta
+H654 sacco
+H655 saccolongo
+H657 sacile
+H658 sacrofano
+H659 sadali
+H661 sagama
+H662 sagliano micca
+H665 sagrado
+H666 sagron mis
+H669 saint-christophe
+H670 saint-denis
+H671 saint-marcel
+H672 saint-nicolas
+H673 saint-oyen
+H674 saint-pierre
+H675 saint-rhemy-en-bosses
+H676 saint-vincent
+H682 sala baganza
+H681 sala biellese
+H678 sala bolognese
+H679 sala comacina
+H683 sala consilina
+H677 sala monferrato
+H687 salandra
+H688 salaparuta
+H689 salara
+H690 salasco
+H691 salassa
+H684 salbertrand
+F810 salcedo
+H693 salcito
+H694 sale
+H695 sale langhe
+H699 sale marasino
+H704 sale san giovanni
+H700 salemi
+H686 salento
+H702 salerano canavese
+H701 salerano lambro
+H703 salerno
+H705 saletto
+H706 salgareda
+H707 sali vercellese
+H708 salice salentino
+H710 saliceto
+H713 salisano
+H714 salizzole
+H715 salle
+H716 salmour
+H717 salo
+H719 salorno
+H720 salsomaggiore terme
+H721 saltara
+H723 saltrio
+H724 saludecio
+H725 saluggia
+H726 salussola
+H727 saluzzo
+H729 salve
+H731 salvirola
+H732 salvitelle
+H734 salza pinerolo
+H733 salza irpina
+H735 salzano
+H736 samarate
+H738 samassi
+H739 samatzai
+H743 sambuca sicilia
+H744 sambuca pistoiese
+H745 sambuci
+H746 sambuco
+H749 sammichele bari
+H013 samo
+H752 samolaco
+H754 samone
+H753 samone
+H755 sampeyre
+H756 samugheo
+H763 san bartolomeo mare
+H764 san bartolomeo galdo
+H760 san bartolomeo val cavargna
+H765 san basile
+H766 san basilio
+H767 san bassano
+H768 san bellino
+H770 san benedetto belbo
+H772 san benedetto marsi
+H769 san benedetto tronto
+H773 san benedetto perillis
+H771 san benedetto po
+H774 san benedetto ullano
+G566 san benedetto val sambro
+H775 san benigno canavese
+H777 san bernardino verbano
+H780 san biagio cima
+H781 san biagio callalta
+H778 san biagio platani
+H779 san biagio saracinisco
+H782 san biase
+H783 san bonifacio
+H784 san buono
+H785 san calogero
+H786 san candido
+H787 san canzian isonzo
+H789 san carlo canavese
+H790 san casciano bagni
+H791 san casciano val pesa
+M264 san cassiano
+H792 san cataldo
+M295 san cesareo
+H793 san cesario lecce
+H794 san cesario panaro
+H795 san chirico nuovo
+H796 san chirico raparo
+H797 san cipirello
+H798 san cipriano aversa
+H800 san cipriano picentino
+H799 san cipriano po
+H801 san clemente
+H803 san colombano lambro
+H804 san colombano belmonte
+H802 san colombano certenoli
+H805 san cono
+H806 san cosmo albanese
+H808 san costantino albanese
+H807 san costantino calabro
+H809 san costanzo
+H810 san cristoforo
+H814 san damiano colle
+H811 san damiano asti
+H812 san damiano macra
+H816 san daniele friuli
+H815 san daniele po
+H818 san demetrio corone
+H819 san demetrio ne vestini
+H820 san didero
+H823 san dona piave
+H822 san donaci
+H826 san donato lecce
+H825 san donato ninea
+H827 san donato milanese
+H824 san donato val comino
+D324 san dorligo valle
+H830 san fedele intelvi
+H831 san fele
+H834 san felice cancello
+H836 san felice circeo
+H838 san felice benaco
+H833 san felice molise
+H835 san felice panaro
+M277 san ferdinando
+H839 san ferdinando puglia
+H840 san fermo battaglia
+H841 san fili
+H842 san filippo mela
+H843 san fior
+H844 san fiorano
+H845 san floriano collio
+H846 san floro
+H847 san francesco campo
+H850 san fratello
+H856 san gavino monreale
+H857 san gemini
+H858 san genesio atesino
+H859 san genesio uniti
+H860 san gennaro vesuviano
+H862 san germano chisone
+H863 san germano berici
+H861 san germano vercellese
+H865 san gervasio bresciano
+H867 san giacomo schiavoni
+H870 san giacomo segnate
+H868 san giacomo filippo
+B952 san giacomo vercellese
+H873 san gillio
+H875 san gimignano
+H876 san ginesio
+H892 san giorgio cremano
+H880 san giorgio liri
+H881 san giorgio albanese
+H890 san giorgio canavese
+H894 san giorgio sannio
+H891 san giorgio richinvelda
+H893 san giorgio pertiche
+H885 san giorgio lomellina
+H883 san giorgio mantova
+H895 san giorgio nogaro
+H886 san giorgio pesaro
+H896 san giorgio piano
+H897 san giorgio bosco
+H882 san giorgio ionico
+H898 san giorgio la molara
+H888 san giorgio lucano
+H878 san giorgio monferrato
+H889 san giorgio morgeto
+H887 san giorgio piacentino
+H899 san giorgio scarampi
+H884 san giorgio legnano
+H900 san giorio susa
+H907 san giovanni piro
+H906 san giovanni natisone
+H910 san giovanni bianco
+H911 san giovanni asso
+H912 san giovanni dosso
+H903 san giovanni gerace
+H914 san giovanni gemini
+H916 san giovanni ilarione
+H918 san giovanni croce
+H919 san giovanni fiore
+H920 san giovanni galdo
+H921 san giovanni marignano
+G467 san giovanni persiceto
+H917 san giovanni incarico
+H922 san giovanni la punta
+H923 san giovanni lipioni
+H924 san giovanni lupatoto
+H926 san giovanni rotondo
+G287 san giovanni suergiu
+D690 san giovanni teatino
+H901 san giovanni valdarno
+H928 san giuliano sannio
+H929 san giuliano puglia
+H930 san giuliano milanese
+A562 san giuliano terme
+H933 san giuseppe jato
+H931 san giuseppe vesuviano
+H935 san giustino
+H936 san giusto canavese
+H937 san godenzo
+H942 san gregorio sassola
+H940 san gregorio catania
+H941 san gregorio ippona
+H943 san gregorio magno
+H939 san gregorio matese
+H938 san gregorio alpi
+H945 san lazzaro savena
+H949 san leo
+H951 san leonardo
+H952 san leonardo passiria
+H953 san leucio sannio
+H955 san lorenzello
+H959 san lorenzo
+H957 san lorenzo mare
+H961 san lorenzo bellizzi
+H962 san lorenzo vallo
+H956 san lorenzo sebato
+H966 san lorenzo banale
+H958 san lorenzo campo
+H964 san lorenzo isontino
+H967 san lorenzo maggiore
+H969 san lorenzo nuovo
+H970 san luca
+H971 san lucido
+H973 san lupo
+H976 san mango aquino
+H977 san mango piemonte
+H975 san mango calore
+H978 san marcellino
+H979 san marcello
+H980 san marcello pistoiese
+H981 san marco argentano
+H982 san marco alunzio
+H984 san marco cavoti
+F043 san marco evangelista
+H985 san marco lamis
+H986 san marco la catola
+H999 san martino tagliamento
+H987 san martino alfieri
+I003 san martino buon albergo
+H997 san martino canavese
+H994 san martino agri
+I005 san martino argine
+I007 san martino lago
+H992 san martino finita
+I008 san martino lupari
+H996 san martino venezze
+H988 san martino badia
+H989 san martino passiria
+H990 san martino pensilis
+I011 san martino rio
+I012 san martino strada
+I002 san martino sannita
+I014 san martino siccomario
+H991 san martino marrucina
+I016 san martino valle caudina
+I018 san marzano san giuseppe
+I017 san marzano oliveto
+I019 san marzano sarno
+I023 san massimo
+I024 san maurizio canavese
+I025 san maurizio opaglio
+I028 san mauro castelverde
+I031 san mauro cilento
+H712 san mauro saline
+I029 san mauro forte
+I032 san mauro la bruca
+I026 san mauro marchesato
+I027 san mauro pascoli
+I030 san mauro torinese
+I040 san michele tagliamento
+I042 san michele adige
+I035 san michele ganzaria
+I034 san michele serino
+I037 san michele mondovi
+I045 san michele salentino
+I046 san miniato
+I047 san nazario
+I049 san nazzaro
+I052 san nazzaro sesia
+I051 san nazzaro val cavargna
+I054 san nicandro garganico
+I060 san nicola arcella
+I061 san nicola baronia
+I058 san nicola crissa
+I057 san nicola alto
+I056 san nicola la strada
+I062 san nicola manfredi
+A368 san nicolo arcidano
+I063 san nicolo comelico
+G383 san nicolo gerrei
+I066 san pancrazio salentino
+I065 san pancrazio
+G407 san paolo
+B906 san paolo albanese
+I073 san paolo bel sito
+I074 san paolo cervo
+B310 san paolo argon
+I072 san paolo civitate
+I071 san paolo jesi
+I076 san paolo solbrito
+I079 san pellegrino terme
+I082 san pier isonzo
+I084 san pier niceto
+I085 san piero sieve
+I086 san piero patti
+I093 san pietro maida
+I092 san pietro natisone
+I089 san pietro tanagro
+I095 san pietro apostolo
+I096 san pietro avellana
+I098 san pietro clarenza
+I088 san pietro cadore
+I102 san pietro carida
+I103 san pietro feletto
+I105 san pietro morubio
+I108 san pietro amantea
+I109 san pietro cariano
+I110 san pietro casale
+G788 san pietro cerro
+I107 san pietro gu
+I114 san pietro guarano
+I115 san pietro lama
+I113 san pietro infine
+I116 san pietro mosezzo
+I117 san pietro mussolino
+I090 san pietro val lemina
+I119 san pietro vernotico
+I120 san pietro viminario
+I121 san pio camere
+I125 san polo cavalieri
+I123 san polo enza
+I124 san polo piave
+I122 san polo matese
+I126 san ponso
+I128 san possidonio
+I130 san potito sannitico
+I129 san potito ultra
+I131 san prisco
+I132 san procopio
+I133 san prospero
+I135 san quirico orcia
+I136 san quirino
+I137 san raffaele cimena
+I139 san roberto
+I140 san rocco porto
+I142 san romano garfagnana
+I143 san rufo
+I147 san salvatore fitalia
+I144 san salvatore monferrato
+I145 san salvatore telesino
+I148 san salvo
+I151 san sebastiano vesuvio
+I150 san sebastiano curone
+I152 san sebastiano po
+I154 san secondo pinerolo
+I153 san secondo parmense
+I157 san severino lucano
+I156 san severino marche
+I158 san severo
+I162 san siro
+I163 san sossio baronia
+I164 san sostene
+I165 san sosti
+I166 san sperate
+I373 san stino livenza
+I261 san tammaro
+I329 san teodoro
+I328 san teodoro
+I347 san tomaso agordino
+I376 san valentino abruzzo citeriore
+I377 san valentino torio
+I381 san venanzo
+I382 san vendemiano
+I384 san vero milis
+I390 san vincenzo
+I388 san vincenzo la costa
+I389 san vincenzo valle roveto
+I391 san vitaliano
+I402 san vito
+I403 san vito tagliamento
+I404 san vito torre
+I394 san vito chietino
+I396 san vito normanni
+I392 san vito cadore
+I405 san vito fagagna
+I401 san vito leguzzano
+I407 san vito lo capo
+I400 san vito romano
+I393 san vito ionio
+I408 san vittore lazio
+I409 san vittore olona
+I414 san zeno montagna
+I412 san zeno naviglio
+I415 san zenone lambro
+I416 san zenone po
+I417 san zenone ezzelini
+H757 sanarica
+H821 sandigliano
+H829 sandrigo
+H851 sanfre
+H852 sanfront
+H855 sangano
+H872 sangiano
+H877 sangineto
+H944 sanguinetto
+H974 sanluri
+I048 sannazzaro de burgondi
+I053 sannicandro bari
+I059 sannicola
+I138 sanremo
+I155 sansepolcro
+I168 santa brigida
+I171 santa caterina albanese
+I170 santa caterina ionio
+I169 santa caterina villarmosa
+I172 santa cesarea terme
+I176 santa cristina aspromonte
+I175 santa cristina bissone
+I174 santa cristina gela
+I173 santa cristina valgardena
+I178 santa croce camerina
+I179 santa croce sannio
+I181 santa croce magliano
+I177 santa croce arno
+I183 santa domenica talao
+I184 santa domenica vittoria
+I185 santa elisabetta
+I187 santa fiora
+I188 santa flavia
+I203 santa giuletta
+I205 santa giusta
+I206 santa giustina
+I207 santa giustina colle
+I217 santa luce
+I220 santa lucia mela
+I221 santa lucia piave
+I219 santa lucia serino
+I226 santa margherita adige
+I224 santa margherita belice
+I230 santa margherita staffora
+I225 santa margherita ligure
+I232 santa maria monte
+I233 santa maria vico
+I234 santa maria capua vetere
+M284 santa maria coghinas
+C717 santa maria cedro
+I238 santa maria molise
+I237 santa maria versa
+I240 santa maria licodia
+I242 santa maria sala
+I243 santa maria hoe
+I244 santa maria imbaro
+M273 santa maria la carita
+I247 santa maria la fossa
+I248 santa maria la longa
+I249 santa maria maggiore
+I251 santa maria nuova
+I253 santa marina
+I254 santa marina salina
+I255 santa marinella
+I291 santa ninfa
+I301 santa paolina
+I308 santa severina
+I310 santa sofia
+I309 santa sofia epiro
+I311 santa teresa riva
+I312 santa teresa gallura
+I314 santa venerina
+I316 santa vittoria alba
+I315 santa vittoria matenano
+I182 santadi
+I189 sant'agapito
+I191 sant'agata bolognese
+I197 sant'agata de goti
+I198 sant'agata bianco
+I192 sant'agata esaro
+I199 sant'agata militello
+I193 sant'agata puglia
+I201 sant'agata feltria
+I190 sant'agata fossili
+I202 sant'agata li battiati
+I196 sant'agata santerno
+I208 sant'agnello
+I209 sant'agostino
+I210 sant'albano stura
+I213 sant'alessio vialone
+I214 sant'alessio aspromonte
+I215 sant'alessio siculo
+I216 sant'alfio
+I258 sant'ambrogio torino
+I259 sant'ambrogio valpolicella
+I256 sant'ambrogio garigliano
+I262 sant'anastasia
+I263 sant'anatolia narco
+I266 sant'andrea apostolo ionio
+I265 sant'andrea garigliano
+I264 sant'andrea conza
+I271 sant'andrea frius
+I277 sant'angelo cupolo
+I278 sant'angelo fasanella
+I280 sant'angelo scala
+I279 sant'angelo esca
+I273 sant'angelo alife
+I281 sant'angelo lombardi
+I282 sant'angelo pesco
+I283 sant'angelo brolo
+I275 sant'angelo piove sacco
+I285 sant'angelo lizzola
+I286 sant'angelo pontano
+I287 sant'angelo vado
+I288 sant'angelo le fratte
+I289 sant'angelo limosano
+I274 sant'angelo lodigiano
+I276 sant'angelo lomellina
+I290 sant'angelo muxaro
+I284 sant'angelo romano
+M209 sant'anna arresi
+I292 sant'anna alfaedo
+I293 sant'antimo
+I294 sant'antioco
+I296 sant'antonino susa
+I300 sant'antonio abate
+M276 sant'antonio gallura
+I302 sant'apollinare
+I305 sant'arcangelo
+I304 santarcangelo romagna
+F557 sant'arcangelo trimonte
+I306 sant'arpino
+I307 sant'arsenio
+I326 sante marie
+I318 sant'egidio vibrata
+I317 sant'egidio monte albino
+I319 sant'elena
+B466 sant'elena sannita
+I320 sant'elia pianisi
+I321 sant'elia fiumerapido
+I324 sant'elpidio mare
+I327 santena
+I330 santeramo colle
+I332 sant'eufemia maiella
+I333 sant'eufemia aspromonte
+I335 sant'eusanio sangro
+I336 sant'eusanio forconese
+I337 santhia
+I339 santi cosma damiano
+I341 sant'ilario ionio
+I342 sant'ilario enza
+I344 sant'ippolito
+I365 santo stefano mare
+I367 santo stefano belbo
+I368 santo stefano aveto
+I357 santo stefano sole
+C919 santo stefano cadore
+I370 santo stefano camastra
+I363 santo stefano magra
+I359 santo stefano rogliano
+I360 santo stefano sessanio
+I371 santo stefano aspromonte
+I362 santo stefano lodigiano
+I356 santo stefano quisquina
+I372 santo stefano roero
+I361 santo stefano ticino
+I346 sant'olcese
+I260 santomenna
+I348 sant'omero
+I349 sant'omobono terme
+I350 sant'onofrio
+I351 santopadre
+I352 sant'oreste
+I353 santorso
+I354 sant'orsola terme
+I374 santu lussurgiu
+I375 sant'urbano
+I410 sanza
+I411 sanzeno
+I418 saonara
+I420 saponara
+I421 sappada
+I422 sapri
+I423 saracena
+I424 saracinesco
+I425 sarcedo
+I426 sarconi
+I428 sardara
+I429 sardigliano
+I430 sarego
+I431 sarentino
+I432 sarezzano
+I433 sarezzo
+I434 sarmato
+I435 sarmede
+I436 sarnano
+I437 sarnico
+I438 sarno
+I439 sarnonico
+I441 saronno
+I442 sarre
+I443 sarroch
+I444 sarsina
+I445 sarteano
+I447 sartirana lomellina
+I448 sarule
+I449 sarzana
+I451 sassano
+I452 sassari
+I453 sassello
+I454 sassetta
+I455 sassinoro
+I457 sasso castalda
+G972 sasso marconi
+I459 sassocorvaro
+I460 sassofeltrio
+I461 sassoferrato
+I462 sassuolo
+I463 satriano
+G614 satriano lucania
+I464 sauris
+I465 sauze cesana
+I466 sauze oulx
+I467 sava
+I468 savelli
+I469 saviano
+I470 savigliano
+I471 savignano irpino
+I473 savignano panaro
+I472 savignano rubicone
+I474 savigno
+I475 savignone
+I476 saviore adamello
+I477 savoca
+I478 savogna
+I479 savogna isonzo
+H730 savoia lucania
+I480 savona
+I482 scafa
+I483 scafati
+I484 scagnello
+I486 scala
+I485 scala coeli
+I487 scaldasole
+I489 scalea
+I490 scalenghe
+I492 scaletta zanclea
+I493 scampitella
+I494 scandale
+I496 scandiano
+B962 scandicci
+I497 scandolara ravara
+I498 scandolara ripa oglio
+I499 scandriglia
+I501 scanno
+I503 scano montiferro
+I504 scansano
+M256 scanzano jonico
+I506 scanzorosciate
+I507 scapoli
+I510 scarlino
+I511 scarmagno
+I512 scarnafigi
+I514 scarperia
+I519 scena
+I520 scerni
+I522 scheggia pascelupo
+I523 scheggino
+I526 schiavi abruzzo
+I527 schiavon
+I529 schignano
+I530 schilpario
+I531 schio
+I532 schivenoglia
+I533 sciacca
+I534 sciara
+I535 scicli
+I536 scido
+D290 scigliano
+I537 scilla
+I538 scillato
+I539 sciolze
+I540 scisciano
+I541 sclafani bagni
+I543 scontrone
+I544 scopa
+I545 scopello
+I546 scoppito
+I548 scordia
+I549 scorrano
+I551 scorze
+I553 scurcola marsicana
+I554 scurelle
+I555 scurzolengo
+I556 seborga
+I558 secinaro
+I559 secli
+I561 secugnago
+I562 sedegliano
+I563 sedico
+I564 sedilo
+I565 sedini
+I566 sedriano
+I567 sedrina
+I569 sefro
+I570 segariu
+I571 seggiano
+I573 segni
+I576 segonzano
+I577 segrate
+I578 segusino
+I580 selargius
+I581 selci
+I582 selegas
+I585 sellano
+I588 sellero
+I589 sellia
+I590 sellia marina
+I593 selva molini
+I592 selva cadore
+I594 selva progno
+I591 selva val gardena
+I595 selvazzano dentro
+I596 selve marcone
+I597 selvino
+I598 semestene
+I599 semiana
+I600 seminara
+I601 semproniano
+I602 senago
+I604 senales
+I603 senale san felice
+I605 seneghe
+I606 senerchia
+I607 seniga
+I608 senigallia
+I609 senis
+I610 senise
+I611 senna comasco
+I612 senna lodigiana
+I613 sennariolo
+I614 sennori
+I615 senorbi
+I618 sepino
+I619 seppiana
+I621 sequals
+I622 seravezza
+I624 serdiana
+I625 seregno
+I626 seren grappa
+I627 sergnano
+I628 seriate
+I629 serina
+I630 serino
+I631 serle
+I632 sermide
+I634 sermoneta
+I635 sernaglia battaglia
+I636 sernio
+I637 serole
+I642 serra aiello
+I643 serra de conti
+I650 serra pedace
+I640 serra ricco
+I639 serra san bruno
+I653 serra san quirico
+I654 serra san abbondio
+I641 serracapriola
+I644 serradifalco
+I646 serralunga alba
+I645 serralunga crea
+I647 serramanna
+F357 serramazzoni
+I648 serramezzana
+I649 serramonacesca
+I651 serrapetrona
+I652 serrara fontana
+I655 serrastretta
+I656 serrata
+I662 serravalle po
+I661 serravalle chienti
+I659 serravalle langhe
+I660 serravalle pistoiese
+I657 serravalle scrivia
+I663 serravalle sesia
+I666 serre
+I667 serrenti
+I668 serri
+I669 serrone
+I670 serrungarina
+I671 sersale
+C070 servigliano
+I676 sessa aurunca
+I677 sessa cilento
+I678 sessame
+I679 sessano molise
+E070 sesta godano
+I681 sestino
+I686 sesto reghena
+I688 sesto calende
+I682 sesto campano
+I683 sesto uniti
+I684 sesto fiorentino
+I690 sesto san giovanni
+I687 sesto
+I689 sestola
+I693 sestri levante
+I692 sestriere
+I695 sestu
+I696 settala
+I697 settefrati
+I698 settime
+I700 settimo milanese
+I701 settimo rottaro
+I699 settimo san pietro
+I703 settimo torinese
+I702 settimo vittone
+I704 settingiano
+I705 setzu
+I706 seui
+I707 seulo
+I709 seveso
+I711 sezzadio
+I712 sezze
+I714 sfruz
+I715 sgonico
+I716 sgurgola
+I717 siamaggiore
+I718 siamanna
+I720 siano
+I721 siapiccia
+M253 sicignano alburni
+I723 siculiana
+I724 siddi
+I725 siderno
+I726 siena
+I727 sigillo
+I728 signa
+I729 silandro
+I730 silanus
+F116 silea
+I732 siligo
+I734 siliqua
+I735 silius
+I737 sillano
+I736 sillavengo
+I738 silvano orba
+I739 silvano pietra
+I741 silvi
+I742 simala
+I743 simaxis
+I744 simbario
+I745 simeri crichi
+I747 sinagra
+A468 sinalunga
+I748 sindia
+I749 sini
+I750 sinio
+I751 siniscola
+I752 sinnai
+I753 sinopoli
+I754 siracusa
+I756 sirignano
+I757 siris
+I633 sirmione
+I758 sirolo
+I759 sirone
+I760 siror
+I761 sirtori
+I763 sissa
+I765 siurgus donigala
+E265 siziano
+I767 sizzano
+I771 sluderno
+I772 smarano
+I774 smerillo
+I775 soave
+I777 socchieve
+I778 soddi
+I779 sogliano rubicone
+I780 sogliano cavour
+I781 soglio
+I782 soiano lago
+I783 solagna
+I785 solarino
+I786 solaro
+I787 solarolo
+I790 solarolo rainerio
+I791 solarussa
+I792 solbiate
+I793 solbiate arno
+I794 solbiate olona
+I796 soldano
+I797 soleminis
+I798 solero
+I799 solesino
+I800 soleto
+I801 solferino
+I802 soliera
+I803 solignano
+I805 solofra
+I808 solonghello
+I809 solopaca
+I812 solto collina
+I813 solza
+I815 somaglia
+I817 somano
+I819 somma lombardo
+I820 somma vesuviana
+I821 sommacampagna
+I822 sommariva bosco
+I823 sommariva perno
+I824 sommatino
+I825 sommo
+I826 sona
+I827 soncino
+I828 sondalo
+I829 sondrio
+I830 songavazzo
+I831 sonico
+I832 sonnino
+I835 soprana
+I838 sora
+I839 soraga
+I840 soragna
+I841 sorano
+I844 sorbo san basile
+I843 sorbo serpico
+I845 sorbolo
+I847 sordevolo
+I848 sordio
+I849 soresina
+I850 sorga
+I851 sorgono
+I852 sori
+I853 sorianello
+I854 soriano calabro
+I855 soriano cimino
+I856 sorico
+I857 soriso
+I858 sorisole
+I860 sormano
+I861 sorradile
+I862 sorrento
+I863 sorso
+I864 sortino
+I865 sospiro
+I866 sospirolo
+I867 sossano
+I868 sostegno
+I869 sotto il monte giovanni xxiii
+I871 sover
+I872 soverato
+I873 sovere
+I874 soveria mannelli
+I875 soveria simeri
+I876 soverzene
+I877 sovicille
+I878 sovico
+I879 sovizzo
+I673 sovramonte
+I880 sozzago
+I881 spadafora
+I884 spadola
+I885 sparanise
+I886 sparone
+I887 specchia
+I888 spello
+I889 spera
+I891 sperlinga
+I892 sperlonga
+I893 sperone
+I894 spessa
+I895 spezzano albanese
+I896 spezzano sila
+I898 spezzano piccolo
+I899 spiazzo
+I901 spigno monferrato
+I902 spigno saturnia
+I903 spilamberto
+I904 spilimbergo
+I905 spilinga
+I906 spinadesco
+I907 spinazzola
+I908 spinea
+I909 spineda
+I910 spinete
+I911 spineto scrivia
+I912 spinetoli
+I914 spino adda
+I916 spinone lago
+I917 spinoso
+I919 spirano
+I921 spoleto
+I922 spoltore
+I923 spongano
+I924 spormaggiore
+I925 sporminore
+I926 spotorno
+I927 spresiano
+I928 spriana
+I929 squillace
+I930 squinzano
+I932 staffolo
+I935 stagno lombardo
+I936 staiti
+I937 staletti
+I938 stanghella
+I939 staranzano
+M298 statte
+I941 stazzano
+I942 stazzema
+I943 stazzona
+I945 stefanaconi
+I946 stella
+G887 stella cilento
+I947 stellanello
+I948 stelvio
+I949 stenico
+I950 sternatia
+I951 stezzano
+I952 stia
+I953 stienta
+I954 stigliano
+I955 stignano
+I956 stilo
+I959 stimigliano
+M290 stintino
+I960 stio
+I962 stornara
+I963 stornarella
+I964 storo
+I965 stra
+I968 stradella
+I969 strambinello
+I970 strambino
+I973 strangolagalli
+I974 stregna
+I975 strembo
+I976 stresa
+I977 strevi
+I978 striano
+I979 strigno
+I980 strona
+I981 stroncone
+I982 strongoli
+I984 stroppiana
+I985 stroppo
+I986 strozza
+I990 sturno
+B014 suardi
+I991 subbiano
+I992 subiaco
+I993 succivo
+I994 sueglio
+I995 suelli
+I996 suello
+I997 suisio
+I998 sulbiate
+I804 sulmona
+L002 sulzano
+L003 sumirago
+L004 summonte
+L006 suni
+L007 suno
+L008 supersano
+L009 supino
+L010 surano
+L011 surbo
+L013 susa
+L014 susegana
+L015 sustinente
+L016 sutera
+L017 sutri
+L018 sutrio
+L019 suvereto
+L020 suzzara
+L022 taceno
+L023 tadasuni
+L024 taggia
+L025 tagliacozzo
+L026 taglio po
+L027 tagliolo monferrato
+L030 taibon agordino
+L032 taino
+L033 taio
+G736 taipana
+L034 talamello
+L035 talamona
+L036 talana
+L037 taleggio
+L038 talla
+L039 talmassons
+L040 tambre
+L042 taormina
+L044 tapogliano
+L046 tarano
+L047 taranta peligna
+L048 tarantasca
+L049 taranto
+L050 tarcento
+D024 tarquinia
+L055 tarsia
+L056 tartano
+L057 tarvisio
+L058 tarzo
+L059 tassarolo
+L060 tassullo
+L061 taurano
+L062 taurasi
+L063 taurianova
+L064 taurisano
+L065 tavagnacco
+L066 tavagnasco
+L067 tavarnelle val pesa
+F260 tavazzano villavesco
+L069 tavenna
+L070 taverna
+L071 tavernerio
+L073 tavernola bergamasca
+C698 tavernole mella
+L074 taviano
+L075 tavigliano
+L078 tavoleto
+L081 tavullia
+L082 teana
+L083 teano
+D292 teggiano
+L084 teglio
+L085 teglio veneto
+L086 telese terme
+L087 telgate
+L088 telti
+L089 telve
+L090 telve sopra
+L093 tempio pausania
+L094 temu
+L096 tenna
+L097 tenno
+L100 teolo
+L101 teor
+L102 teora
+L103 teramo
+L104 terdobbiate
+L105 terelle
+L106 terento
+E548 terenzo
+M282 tergu
+L107 terlago
+L108 terlano
+L109 terlizzi
+M210 terme vigliatore
+L111 termeno strada vino
+L112 termini imerese
+L113 termoli
+L115 ternate
+L116 ternengo
+L117 terni
+L118 terno isola
+L120 terracina
+L121 terragnolo
+L122 terralba
+L124 terranova sibari
+L125 terranova passerini
+L126 terranova pollino
+L127 terranova sappo minulio
+L123 terranuova bracciolini
+L131 terrasini
+L132 terrassa padovana
+L134 terravecchia
+L136 terrazzo
+L137 terres
+L138 terricciola
+L139 terruggia
+L140 tertenia
+L142 terzigno
+L143 terzo
+L144 terzo aquileia
+L145 terzolas
+L146 terzorio
+L147 tesero
+L149 tesimo
+L150 tessennano
+L152 testico
+L153 teti
+L154 teulada
+L155 teverola
+L156 tezze brenta
+L157 thiene
+L158 thiesi
+L160 tiana
+L162 tiarno sopra
+L163 tiarno sotto
+L164 ticengo
+L165 ticineto
+L166 tiggiano
+L167 tiglieto
+L168 tigliole
+L169 tignale
+L172 tinnura
+L173 tione abruzzi
+L174 tione trento
+L175 tirano
+L176 tires
+L177 tiriolo
+L178 tirolo
+L180 tissi
+L181 tito
+L182 tivoli
+L183 tizzano val parma
+L184 toano
+L185 tocco caudio
+L186 tocco casauria
+L187 toceno
+L188 todi
+L189 toffia
+L190 toirano
+L191 tolentino
+L192 tolfa
+L193 tollegno
+L194 tollo
+L195 tolmezzo
+L197 tolve
+L199 tombolo
+L200 ton
+L201 tonadico
+L202 tonara
+L203 tonco
+L204 tonengo
+D717 tonezza cimone
+L205 tora piccilli
+L206 torano castello
+L207 torano nuovo
+L210 torbole casaglia
+L211 torcegno
+L212 torchiara
+L213 torchiarolo
+L214 torella lombardi
+L215 torella sannio
+L216 torgiano
+L217 torgnon
+L219 torino
+L218 torino sangro
+L220 toritto
+L221 torlino vimercati
+L223 tornaco
+L224 tornareccio
+L225 tornata
+L227 tornimparte
+L228 torno
+L229 tornolo
+L230 toro
+L231 torpe
+L233 torraca
+L235 torralba
+L237 torrazza coste
+L238 torrazza piemonte
+L239 torrazzo
+L245 torre annunziata
+L250 torre beretti castellaro
+L251 torre boldone
+L252 torre bormida
+L243 torre cajetani
+L247 torre canavese
+L256 torre arese
+L257 torre de busi
+L262 torre de negri
+L263 torre de passeri
+L258 torre de picenardi
+L265 torre de roveri
+L259 torre greco
+L267 torre mosto
+L240 torre ruggiero
+L244 torre santa maria
+L269 torre isola
+L272 torre le nocelle
+L241 torre mondovi
+L274 torre orsaia
+L276 torre pallavicina
+L277 torre pellice
+L278 torre san giorgio
+L279 torre san patrizio
+L280 torre san susanna
+L246 torreano
+L248 torrebelvicino
+L253 torrebruna
+L254 torrecuso
+L270 torreglia
+L271 torregrotta
+L273 torremaggiore
+M286 torrenova
+L281 torresina
+L282 torretta
+L285 torrevecchia pia
+L284 torrevecchia teatina
+L287 torri benaco
+L297 torri quartesolo
+L286 torri sabina
+I550 torriana
+L290 torrice
+L294 torricella
+L296 torricella pizzo
+L293 torricella sabina
+L291 torricella peligna
+L295 torricella sicura
+L292 torricella verzate
+L298 torriglia
+L299 torrile
+L301 torrioni
+L303 torrita siena
+L302 torrita tiberina
+A355 tortoli
+L304 tortona
+L305 tortora
+L306 tortorella
+L307 tortoreto
+L308 tortorici
+L309 torviscosa
+L312 toscolano maderno
+L314 tossicia
+L316 tovo sant'agata
+L315 tovo san giacomo
+L317 trabia
+L319 tradate
+L321 tramatza
+L322 trambileno
+L323 tramonti
+L324 tramonti sopra
+L325 tramonti sotto
+L326 tramutola
+L327 trana
+L328 trani
+L329 transacqua
+L330 traona
+L331 trapani
+L332 trappeto
+L333 trarego viggiona
+L334 trasacco
+L335 trasaghis
+L336 trasquera
+L337 tratalias
+L338 trausella
+I236 travaco siccomario
+L339 travagliato
+L342 travedona-monate
+L345 traversella
+L346 traversetolo
+L340 traves
+L347 travesio
+L348 travo
+L349 trebaseleghe
+L353 trebisacce
+L354 trecasali
+M280 trecase
+L355 trecastagni
+L356 trecate
+L357 trecchina
+L359 trecenta
+L361 tredozio
+L363 treglio
+L364 tregnago
+L366 treia
+L367 treiso
+L368 tremenico
+L369 tremestieri etneo
+L371 tremezzo
+L372 tremosine
+L375 trenta
+L377 trentinara
+L378 trento
+L379 trentola ducenta
+L380 trenzano
+L381 treppo carnico
+L382 treppo grande
+L383 trepuzzi
+L384 trequanda
+L385 tres
+L386 tresana
+L388 trescore balneario
+L389 trescore cremasco
+L390 tresigallo
+L392 tresivio
+L393 tresnuraghes
+L396 trevenzuolo
+L397 trevi
+L398 trevi lazio
+L399 trevico
+L400 treviglio
+L402 trevignano
+L401 trevignano romano
+L403 treville
+L404 treviolo
+L407 treviso
+L406 treviso bresciano
+L408 trezzano rosa
+L409 trezzano naviglio
+L411 trezzo adda
+L410 trezzo tinella
+L413 trezzone
+L414 tribano
+L415 tribiano
+L416 tribogna
+L418 tricarico
+L419 tricase
+L420 tricerro
+L421 tricesimo
+L422 trichiana
+L423 triei
+L424 trieste
+L425 triggiano
+L426 trigolo
+L427 trinita
+L428 trinita agultu vignola
+B915 trinitapoli
+L429 trino
+L430 triora
+L431 tripi
+L432 trisobbio
+L433 trissino
+L434 triuggio
+L435 trivento
+L436 trivero
+L437 trivigliano
+L438 trivignano udinese
+L439 trivigno
+L440 trivolzio
+L444 trodena parco naturale
+L445 trofarello
+L447 troia
+L448 troina
+L449 tromello
+L450 trontano
+A705 tronzano lago maggiore
+L451 tronzano vercellese
+L452 tropea
+L453 trovo
+L454 truccazzano
+L455 tubre
+L457 tuenno
+L458 tufara
+L459 tufillo
+L460 tufino
+L461 tufo
+L462 tuglie
+L463 tuili
+L464 tula
+L466 tuoro trasimeno
+G507 turania
+L469 turano lodigiano
+L470 turate
+L471 turbigo
+L472 turi
+L473 turri
+L474 turriaco
+L475 turrivalignani
+L477 tursi
+L478 tusa
+L310 tuscania
+C789 ubiale clanezzo
+L480 uboldo
+L482 ucria
+L483 udine
+L484 ugento
+L485 uggiano la chiesa
+L487 uggiate-trevano
+L488 ula tirso
+L489 ulassai
+L490 ultimo
+D786 umbertide
+L492 umbriatico
+L494 urago oglio
+L496 uras
+L497 urbana
+L498 urbania
+L499 urbe
+L500 urbino
+L501 urbisaglia
+L502 urgnano
+L503 uri
+L505 ururi
+L506 urzulei
+L507 uscio
+L508 usellus
+L509 usini
+L511 usmate velate
+L512 ussana
+L513 ussaramanna
+L514 ussassai
+L515 usseaux
+L516 usseglio
+L517 ussita
+L519 ustica
+L521 uta
+L522 uzzano
+L524 vaccarizzo albanese
+L525 vacone
+L526 vacri
+L527 vadena
+L528 vado ligure
+L533 vagli sotto
+L529 vaglia
+L532 vaglio basilicata
+L531 vaglio serra
+L537 vaiano
+L535 vaiano cremasco
+L538 vaie
+L539 vailate
+L540 vairano patenora
+M265 vajont
+L555 val torre
+L562 val nizza
+L564 val vizze
+L638 val masino
+H259 val rezzo
+L544 valbondione
+L545 valbrembo
+L546 valbrevenna
+L547 valbrona
+L550 valda
+L551 valdagno
+L552 valdaora
+L554 valdastico
+L556 valdengo
+G319 valderice
+L557 valdidentro
+L558 valdieri
+L561 valdina
+L563 valdisotto
+L565 valdobbiadene
+L566 valduggia
+L568 valeggio
+L567 valeggio mincio
+L569 valentano
+L570 valenza
+L571 valenzano
+L572 valera fratta
+L573 valfabbrica
+L574 valfenera
+L575 valfloriana
+L576 valfurva
+L577 valganna
+L578 valgioie
+L579 valgoglio
+L580 valgrana
+L581 valgreghentino
+L582 valgrisenche
+L583 valguarnera caropepe
+L584 vallada agordina
+L586 vallanzengo
+L588 vallarsa
+L589 vallata
+L594 valle agricola
+L595 valle aurina
+L597 valle castellana
+G540 valle angelo
+L590 valle cadore
+L601 valle casies
+L591 valle maddaloni
+L593 valle lomellina
+L606 valle mosso
+L617 valle salimbene
+L620 valle san nicolao
+L596 vallebona
+L598 vallecorsa
+L599 vallecrosia
+L603 valledolmo
+L604 valledoria
+I322 vallefiorita
+L607 vallelonga
+L609 vallelunga pratameno
+L605 vallemaio
+L611 vallepietra
+L612 vallerano
+L613 vallermosa
+L614 vallerotonda
+L616 vallesaccarda
+L623 valleve
+L624 valli pasubio
+L625 vallinfreda
+L626 vallio terme
+L628 vallo lucania
+L627 vallo nera
+L629 vallo torinese
+L631 valloriate
+L633 valmacca
+L634 valmadrera
+L636 valmala
+L639 valmontone
+L640 valmorea
+L641 valmozzola
+L642 valnegra
+L643 valpelline
+L644 valperga
+B510 valprato soana
+L647 valsavarenche
+L649 valsecca
+D513 valsinni
+C936 valsolda
+L650 valstagna
+L651 valstrona
+L653 valtopina
+L655 valtorta
+L654 valtournenche
+L656 valva
+L657 valvasone
+L659 valverde
+L658 valverde
+L468 valvestino
+L660 vandoies
+L664 vanzaghello
+L665 vanzago
+L666 vanzone san carlo
+L667 vaprio adda
+L668 vaprio agogna
+L669 varallo
+L670 varallo pombia
+L671 varano borghi
+L672 varano de melegari
+L673 varapodio
+L675 varazze
+L676 varco sabino
+L677 varedo
+L678 varena
+L680 varenna
+L682 varese
+L681 varese ligure
+L685 varisella
+L686 varmo
+L687 varna
+L689 varsi
+L690 varzi
+L691 varzo
+L692 vas
+A701 vasanello
+L693 vasia
+E372 vasto
+L696 vastogirardi
+L697 vattaro
+L698 vauda canavese
+L699 vazzano
+L700 vazzola
+L702 vecchiano
+L704 vedano lambro
+L703 vedano olona
+L705 veddasca
+L706 vedelago
+L707 vedeseta
+L709 veduggio colzano
+L710 veggiano
+L711 veglie
+L712 veglio
+L713 vejano
+L715 veleso
+L716 velezzo lomellina
+L719 velletri
+L720 vellezzo bellini
+L723 velo astico
+L722 velo veronese
+L724 velturno
+L725 venafro
+L727 venaria reale
+L728 venarotta
+L729 venasca
+L726 venaus
+L730 vendone
+L731 vendrogno
+L733 venegono inferiore
+L734 venegono superiore
+L735 venetico
+L736 venezia
+L737 veniano
+L738 venosa
+L739 venticano
+L741 ventimiglia
+L740 ventimiglia sicilia
+L742 ventotene
+L743 venzone
+L744 verano brianza
+L745 verano
+L746 verbania
+L747 verbicaro
+L748 vercana
+L749 verceia
+L750 vercelli
+L751 vercurago
+L752 verdellino
+L753 verdello
+L755 verderio inferiore
+L756 verderio superiore
+L758 verduno
+L762 vergato
+L763 vergemoli
+L764 verghereto
+L765 vergiate
+L768 vermezzo
+L769 vermiglio
+L771 vernante
+L772 vernasca
+L773 vernate
+L774 vernazza
+L775 vernio
+L776 vernole
+L777 verolanuova
+L778 verolavecchia
+L779 verolengo
+L780 veroli
+L781 verona
+D193 veronella
+L783 verrayes
+C282 verres
+L784 verretto
+L785 verrone
+L788 verrua po
+L787 verrua savoia
+L792 vertemate minoprio
+L795 vertova
+L797 verucchio
+L798 veruno
+L799 vervio
+L800 vervo
+L801 verzegnis
+L802 verzino
+L804 verzuolo
+L805 vescovana
+L806 vescovato
+L807 vesime
+L808 vespolate
+L809 vessalico
+L810 vestenanova
+L811 vestigne
+L812 vestone
+L813 vestreno
+L814 vetralla
+L815 vetto
+L817 vezza alba
+L816 vezza oglio
+L821 vezzano
+L819 vezzano ligure
+L820 vezzano crostolo
+L823 vezzi portio
+L826 viadana
+L827 viadanica
+L828 viagrande
+L829 viale
+L830 vialfre
+L831 viano
+L833 viareggio
+L834 viarigi
+F537 vibo valentia
+L835 vibonati
+L836 vicalvi
+L837 vicari
+L838 vicchio
+L840 vicenza
+L548 vico canavese
+L842 vico gargano
+L845 vico equense
+L843 vico lazio
+L841 vicoforte
+L846 vicoli
+L847 vicolungo
+L850 vicopisano
+L851 vicovaro
+M259 viddalba
+L854 vidigulfo
+L856 vidor
+L857 vidracco
+L858 vieste
+L859 vietri potenza
+L860 vietri mare
+L864 viganella
+L866 vigano
+L865 vigano san martino
+L868 vigarano mainarda
+L869 vigasio
+L872 vigevano
+L873 viggianello
+L874 viggiano
+L876 viggiu
+L878 vighizzolo este
+L880 vigliano biellese
+L879 vigliano asti
+L881 vignale monferrato
+L882 vignanello
+L883 vignate
+L885 vignola
+L886 vignola falesina
+L887 vignole borbera
+L888 vignolo
+L889 vignone
+L890 vigo cadore
+L893 vigo fassa
+L903 vigo rendena
+L892 vigodarzere
+L894 vigolo
+L896 vigolo vattaro
+L897 vigolzone
+L898 vigone
+L899 vigonovo
+L900 vigonza
+L904 viguzzolo
+L910 villa agnedo
+L912 villa bartolomea
+L913 villa basilica
+L917 villa biscossi
+L919 villa carcina
+L920 villa castelli
+L922 villa celiera
+L926 villa collemandina
+L928 villa cortese
+L929 villa adda
+A215 villa alme
+L933 villa bosco
+L934 villa conte
+D801 villa briano
+L907 villa chiavenna
+L936 villa serio
+L908 villa tirano
+L938 villa ogna
+L937 villa estense
+L943 villa faraldi
+L956 villa guardia
+L957 villa lagarina
+A081 villa latina
+L844 villa literno
+L969 villa minozzo
+F804 villa poma
+M006 villa rendena
+M018 villa san giovanni
+H913 villa san giovanni tuscia
+I118 villa san pietro
+M019 villa san secondo
+L905 villa san lucia
+M021 villa san lucia abruzzi
+M022 villa san maria
+M023 villa san angelo
+I298 villa san antonio
+L909 villa santina
+I364 villa san stefano
+A609 villa verde
+M034 villa vicentina
+L915 villabassa
+L916 villabate
+L923 villachiara
+L924 villacidro
+L931 villadeati
+L939 villadose
+L906 villadossola
+L942 villafalletto
+L945 villafranca asti
+L949 villafranca verona
+L946 villafranca lunigiana
+L947 villafranca padovana
+L948 villafranca piemonte
+L944 villafranca sicula
+L950 villafranca tirrena
+L951 villafrati
+L952 villaga
+L953 villagrande strisaili
+L958 villalago
+L959 villalba
+L961 villalfonsina
+L963 villalvernia
+L964 villamagna
+L965 villamaina
+L966 villamar
+L967 villamarzana
+L968 villamassargia
+L970 villamiroglio
+L971 villandro
+L978 villanova biellese
+L982 villanova canavese
+L975 villanova albenga
+L983 villanova ardenghi
+L984 villanova asti
+L973 villanova battista
+L985 villanova ghebbo
+L977 villanova sillaro
+L979 villanova camposampiero
+L988 villanova marchesana
+L974 villanova mondovi
+L972 villanova monferrato
+L989 villanova monteleone
+L990 villanova solaro
+L980 villanova arda
+L991 villanova truschedu
+L992 villanova tulo
+L986 villanovaforru
+L987 villanovafranca
+L994 villanterio
+L995 villanuova clisi
+M278 villaperuccio
+B903 villapiana
+L998 villaputzu
+L999 villar dora
+M007 villar focchiardo
+M013 villar pellice
+M014 villar perosa
+M015 villar san costanzo
+M002 villarbasse
+M003 villarboit
+M004 villareggia
+G309 villaricca
+M009 villaromagnano
+M011 villarosa
+M016 villasalto
+M017 villasanta
+B738 villasimius
+M025 villasor
+M026 villaspeciosa
+M027 villastellone
+M028 villata
+M030 villaurbana
+M031 villavallelonga
+M032 villaverla
+L981 villeneuve
+M043 villesse
+M041 villetta barrea
+M042 villette
+M044 villimpenta
+M045 villongo
+M048 villorba
+M050 vilminore scalve
+M052 vimercate
+M053 vimodrone
+M055 vinadio
+M057 vinchiaturo
+M058 vinchio
+M059 vinci
+M060 vinovo
+M062 vinzaglio
+M063 viola
+M065 vione
+M067 vipiteno
+H123 virgilio
+M069 virle piemonte
+M070 visano
+M071 vische
+M072 visciano
+M073 visco
+M077 visone
+M078 visso
+M079 vistarino
+M080 vistrorio
+M081 vita
+M082 viterbo
+M083 viticuso
+M085 vito asio
+M086 vitorchiano
+M088 vittoria
+M089 vittorio veneto
+M090 vittorito
+M091 vittuone
+M093 vitulano
+M092 vitulazio
+M094 viu
+M096 vivaro
+M095 vivaro romano
+M098 viverone
+M100 vizzini
+M101 vizzola ticino
+M102 vizzolo predabissi
+M103 vo
+M104 vobarno
+M105 vobbia
+M106 vocca
+M108 vodo cadore
+M109 voghera
+M110 voghiera
+M111 vogogna
+M113 volano
+M115 volla
+M116 volongo
+M118 volpago montello
+M119 volpara
+M120 volpedo
+M121 volpeglino
+M122 volpiano
+M125 volta mantovana
+M123 voltaggio
+M124 voltago agordino
+M126 volterra
+M127 voltido
+M131 volturara appula
+M130 volturara irpina
+M132 volturino
+M133 volvera
+M136 vottignasco
+M138 zaccanopoli
+M139 zafferana etnea
+M140 zagarise
+M141 zagarolo
+M142 zambana
+M143 zambrone
+M144 zandobbio
+M145 zane
+M147 zanica
+M267 zapponeta
+M150 zavattarello
+M152 zeccone
+M153 zeddiani
+M156 zelbio
+M158 zelo buon persico
+M160 zelo surrigone
+M161 zeme
+M162 zenevredo
+M163 zenson piave
+M165 zerba
+M166 zerbo
+M167 zerbolo
+M168 zerfaliu
+M169 zeri
+M170 zermeghedo
+M171 zero branco
+M172 zevio
+M173 ziano fiemme
+L848 ziano piacentino
+M174 zibello
+M176 zibido san giacomo
+M177 zignago
+M178 zimella
+M179 zimone
+M180 zinasco
+M182 zoagli
+M183 zocca
+M184 zogno
+M185 zola predosa
+I345 zoldo alto
+M187 zollino
+M188 zone
+M189 zoppe cadore
+M190 zoppola
+M194 zovencedo
+M196 zubiena
+M197 zuccarello
+M198 zuclo
+M199 zugliano
+M200 zuglio
+M201 zumaglia
+M202 zumpano
+M203 zungoli
+M204 zungri

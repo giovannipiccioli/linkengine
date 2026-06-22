@@ -1,0 +1,219 @@
+{"cat": "cgue", "text": "causa C-123/20", "refs": [{"ref-type": "caselaw", "authority": "CGUE", "case-number": "C-123/2020", "urn": "CELEX:62020CJ0123"}]}
+{"cat": "cgue", "text": "causa T-123/20", "refs": [{"authority": "CGUE", "case-number": "T-123/2020", "urn": "CELEX:62020TJ0123"}]}
+{"cat": "cgue", "text": "sentenza nella causa C-249/17", "refs": [{"authority": "CGUE", "doc-type": "SENT", "urn": "CELEX:62017CJ0249"}]}
+{"cat": "cgue", "text": "cause riunite C-78/08 e C-80/08", "refs": [{"urn": "CELEX:62008CJ0078"}]}
+{"cat": "cgue", "text": "causa C-152/02, punti 35 e 36", "refs": [{"urn": "CELEX:62002CJ0152~num35", "partition": "punto-35"}, {"urn": "CELEX:62002CJ0152~num36", "partition": "punto-36"}]}
+{"cat": "cgue", "text": "causa C-334/20, punti 20-22", "refs": [{"urn": "CELEX:62020CJ0334~num20", "partition": "punto-20"}, {"urn": "CELEX:62020CJ0334~num21", "partition": "punto-21"}, {"urn": "CELEX:62020CJ0334~num22", "partition": "punto-22"}]}
+{"cat": "cgue", "text": "Sentenza CGUE n. 1234/2020", "refs": [{"ref-type": "caselaw", "authority": "CGUE", "doc-type": "SENT", "number": "1234", "year": "2020", "urn": "CELEX:62020CJ1234"}]}
+{"cat": "cgue", "text": "Corte di Giustizia UE n. 1234/2020", "refs": [{"authority": "CGUE", "number": "1234", "year": "2020", "urn": "CELEX:62020CJ1234"}]}
+{"cat": "cgue", "text": "Sentenza della Corte di giustizia dell'Unione europea n. 123/2020", "refs": [{"authority": "CGUE", "number": "123", "year": "2020"}]}
+{"cat": "cgue", "text": "Sentenza CGUE n.1234/2020 punti 18-20", "refs": [{"authority": "CGUE", "number": "1234", "partition": "punto-18"}, {"authority": "CGUE", "partition": "punto-19"}, {"authority": "CGUE", "partition": "punto-20"}]}
+{"cat": "cgue", "text": "Corte di Giustizia UE n.1234/2020 paragrafi 11 e 12", "refs": [{"authority": "CGUE", "number": "1234", "partition": "paragrafo-11"}, {"authority": "CGUE", "partition": "paragrafo-12"}]}
+{"cat": "cgt", "text": "CGT 2° grado Lazio n. 100/2024", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_REG", "region": "LAZ", "number": "100", "year": "2024", "urn": "ECLI:IT:CTRLAZ:2024:100"}]}
+{"cat": "cgt", "text": "CGT secondo grado Toscana n. 126/2024", "refs": [{"authority": "COMM_TRIBUT_REG", "region": "TOS", "urn": "ECLI:IT:CTRTOS:2024:126"}]}
+{"cat": "cgt", "text": "CGT II grado Sicilia n. 3086/2024", "refs": [{"authority": "COMM_TRIBUT_REG", "region": "SIC", "urn": "ECLI:IT:CTRSIC:2024:3086"}]}
+{"cat": "cgt", "text": "CGT di secondo grado del Lazio, sez. 18, 12 marzo 2024 n. 1731", "refs": [{"authority": "COMM_TRIBUT_REG", "region": "LAZ", "section": "18", "doc-date": "2024-03-12", "number": "1731", "urn": "ECLI:IT:CTRLAZ:2024:1731"}]}
+{"cat": "cgt", "text": "Corte di Giustizia Tributaria di II Grado Emilia Romagna n. 536/2023", "refs": [{"authority": "COMM_TRIBUT_REG", "region": "EMR", "urn": "ECLI:IT:CTREMR:2023:536"}]}
+{"cat": "cgt", "text": "CGT 2° grado Sicilia – Sezione VII n. 3086 del 18.04.2024", "refs": [{"authority": "COMM_TRIBUT_REG", "region": "SIC", "section": "7", "doc-date": "2024-04-18", "number": "3086", "urn": "ECLI:IT:CTRSIC:2024:3086"}]}
+{"cat": "cgt", "text": "sentenza n. 455 del 5.6.2024 della Corte di Giustizia Tributaria di secondo grado della Liguria", "refs": [{"authority": "COMM_TRIBUT_REG", "region": "LIG", "number": "455", "doc-date": "2024-06-05", "urn": "ECLI:IT:CTRLIG:2024:455"}]}
+{"cat": "cgt", "text": "CGT 2° grado Lazio Roma Sez. XVII n. 100/2024", "refs": [{"authority": "COMM_TRIBUT_REG", "region": "LAZ", "section": "17", "urn": "ECLI:IT:CTRLAZ:2024:100"}]}
+{"cat": "cgt", "text": "CGT 1 Napoli n.123/2020", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_PROV", "city": "NA", "number": "123", "year": "2020", "urn": "ECLI:IT:CTPNA:2020:123"}]}
+{"cat": "cgt", "text": "CGT primo grado Torino n. 924/2023", "refs": [{"authority": "COMM_TRIBUT_PROV", "city": "TO", "urn": "ECLI:IT:CTPTO:2023:924"}]}
+{"cat": "cgt", "text": "C.G.T. di Primo Grado di Torino, sentenza n. 924/2023", "refs": [{"authority": "COMM_TRIBUT_PROV", "city": "TO", "urn": "ECLI:IT:CTPTO:2023:924"}]}
+{"cat": "cgt", "text": "Corte di Giustizia Tributaria di Salerno, Sez. 11, sentenza n. 1765 del 5 giugno 2023", "refs": [{"authority": "COMM_TRIBUT_PROV", "city": "SA", "section": "11", "number": "1765", "doc-date": "2023-06-05", "urn": "ECLI:IT:CTPSA:2023:1765"}]}
+{"cat": "cgt", "text": "CGT Prato 87/2023", "refs": [{"authority": "COMM_TRIBUT_PROV", "city": "PO", "number": "87", "year": "2023", "urn": "ECLI:IT:CTPPO:2023:87"}]}
+{"cat": "cgt", "text": "CGT I Grado Nuoro n. 230/2022", "refs": [{"authority": "COMM_TRIBUT_PROV", "city": "NU", "urn": "ECLI:IT:CTPNU:2022:230"}]}
+{"cat": "cgt", "text": "sentenza 4361/2023 della Corte di Giustizia tributaria di Napoli", "refs": [{"authority": "COMM_TRIBUT_PROV", "city": "NA", "number": "4361", "urn": "ECLI:IT:CTPNA:2023:4361"}]}
+{"cat": "cgt", "text": "Sentenza CGT 1 Napoli n.123/2020", "refs": [{"authority": "COMM_TRIBUT_PROV", "city": "NA", "urn": "ECLI:IT:CTPNA:2020:123"}]}
+{"cat": "cgt", "text": "Sentenza n.536 del 15 marzo 2023, Corte di Giustizia Tributaria di II Grado Emilia Romagna", "refs": [{"authority": "COMM_TRIBUT_REG", "region": "EMR", "number": "536", "doc-date": "2023-03-15", "urn": "ECLI:IT:CTREMR:2023:536"}]}
+{"cat": "cgt", "text": "C.T.R. Lombardia Sez. V n. 2291/2022", "refs": [{"authority": "COMM_TRIBUT_REG", "region": "LOM", "section": "5", "urn": "ECLI:IT:CTRLOM:2022:2291"}]}
+{"cat": "cgt", "text": "CTP Bari n. 500/2019", "refs": [{"authority": "COMM_TRIBUT_PROV", "city": "BA", "urn": "ECLI:IT:CTPBA:2019:500"}]}
+{"cat": "alias", "text": "art. 2697 del codice civile", "refs": [{"alias": "COD_CIV", "urn": "urn:nir:stato:regio.decreto:1942;262:2~art2697"}]}
+{"cat": "alias", "text": "art. 360 c.p.c.", "refs": [{"alias": "COD_PROC_CIV", "urn": "urn:nir:stato:regio.decreto:1940;1443:1~art360"}]}
+{"cat": "alias", "text": "art. 69 cod.proc.civ.", "refs": [{"alias": "COD_PROC_CIV", "urn": "urn:nir:stato:regio.decreto:1940;1443:1~art69"}]}
+{"cat": "alias", "text": "art. 109 del TUIR", "refs": [{"alias": "TU_IMPOSTE_REDDITO", "urn": "urn:nir:presidente.repubblica:decreto:1986;917~art109"}]}
+{"cat": "alias", "text": "art. 13 del TUF", "refs": [{"alias": "TU_FINANZE", "urn": "urn:nir:stato:decreto.legislativo:1998;58~art13"}]}
+{"cat": "alias", "text": "art. 2 dello Statuto dei diritti del contribuente", "refs": [{"alias": "STATUTO_CONTRIB", "urn": "urn:nir:stato:legge:2000;212~art2"}]}
+{"cat": "alias", "text": "art. 53 della Costituzione", "refs": [{"alias": "COST", "urn": "urn:nir:stato:costituzione:1947~art53"}]}
+{"cat": "alias", "text": "art. 256 del Codice dell'ambiente", "refs": [{"alias": "TU_AMBIENTE", "urn": "urn:nir:stato:decreto.legislativo:2006;152~art256"}]}
+{"cat": "seg", "text": "CGT Toscana n. 126/2024 e Cass. n. 5678/2023", "refs": [{"authority": "COMM_TRIBUT_REG", "region": "TOS", "urn": "ECLI:IT:CTRTOS:2024:126"}, {"authority": "CORTE_CASS", "urn": "ECLI:IT:CASS:2023:5678CIV"}]}
+{"cat": "seg", "text": "art. 19 del d.lgs. 546/1992 e CGT 2° grado Lazio n. 100/2024", "refs": [{"urn": "urn:nir:stato:decreto.legislativo:1992;546~art19"}, {"authority": "COMM_TRIBUT_REG", "region": "LAZ", "urn": "ECLI:IT:CTRLAZ:2024:100"}]}
+{"cat": "seg", "text": "art. 269 c.p.c. e dell'art. 14, comma 3, del dlgs. n. 546/1992", "refs": [{"urn": "urn:nir:stato:regio.decreto:1940;1443:1~art269"}, {"urn": "urn:nir:stato:decreto.legislativo:1992;546~art14-comma3"}]}
+{"cat": "seg", "text": "artt. 1 e 2 del d.lgs. 546/1992 e art. 360 c.p.c.", "refs": [{"urn": "urn:nir:stato:decreto.legislativo:1992;546~art1"}, {"urn": "urn:nir:stato:decreto.legislativo:1992;546~art2"}, {"urn": "urn:nir:stato:regio.decreto:1940;1443:1~art360"}]}
+{"cat": "seg", "text": "direttiva 2006/112/CE e Cass. n. 100/2020", "refs": [{"urn": "CELEX:32006L0112"}, {"authority": "CORTE_CASS", "urn": "ECLI:IT:CASS:2020:100CIV"}]}
+{"cat": "cgt", "text": "CGT 2° grado Lombardia n. 100/2024", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_REG", "region": "LOM", "number": "100", "year": "2024", "urn": "ECLI:IT:CTRLOM:2024:100"}]}
+{"cat": "cgt", "text": "CGT secondo grado Piemonte n. 101/2024", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_REG", "region": "PIE", "number": "101", "year": "2024", "urn": "ECLI:IT:CTRPIE:2024:101"}]}
+{"cat": "cgt", "text": "CGT II grado Veneto n. 102/2024", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_REG", "region": "VEN", "number": "102", "year": "2024", "urn": "ECLI:IT:CTRVEN:2024:102"}]}
+{"cat": "cgt", "text": "CGT di secondo grado del Puglia n. 103/2024", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_REG", "region": "PUG", "number": "103", "year": "2024", "urn": "ECLI:IT:CTRPUG:2024:103"}]}
+{"cat": "cgt", "text": "Corte di Giustizia Tributaria di II Grado Calabria n. 104/2024", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_REG", "region": "CAL", "number": "104", "year": "2024", "urn": "ECLI:IT:CTRCAL:2024:104"}]}
+{"cat": "cgt", "text": "CGT 2 Sardegna n. 105/2024", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_REG", "region": "SAR", "number": "105", "year": "2024", "urn": "ECLI:IT:CTRSAR:2024:105"}]}
+{"cat": "cgt", "text": "Corte di Giustizia Tributaria di secondo grado della Campania n. 106/2024", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_REG", "region": "CAM", "number": "106", "year": "2024", "urn": "ECLI:IT:CTRCAM:2024:106"}]}
+{"cat": "cgt", "text": "CGT 2° grado Toscana n. 107/2024", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_REG", "region": "TOS", "number": "107", "year": "2024", "urn": "ECLI:IT:CTRTOS:2024:107"}]}
+{"cat": "cgt", "text": "CGT secondo grado Lazio n. 108/2024", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_REG", "region": "LAZ", "number": "108", "year": "2024", "urn": "ECLI:IT:CTRLAZ:2024:108"}]}
+{"cat": "cgt", "text": "CGT II grado Sicilia n. 109/2024", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_REG", "region": "SIC", "number": "109", "year": "2024", "urn": "ECLI:IT:CTRSIC:2024:109"}]}
+{"cat": "cgt", "text": "CGT di secondo grado del Liguria n. 110/2024", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_REG", "region": "LIG", "number": "110", "year": "2024", "urn": "ECLI:IT:CTRLIG:2024:110"}]}
+{"cat": "cgt", "text": "Corte di Giustizia Tributaria di II Grado Emilia Romagna n. 111/2024", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_REG", "region": "EMR", "number": "111", "year": "2024", "urn": "ECLI:IT:CTREMR:2024:111"}]}
+{"cat": "cgt", "text": "CGT 2 Marche n. 112/2024", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_REG", "region": "MAR", "number": "112", "year": "2024", "urn": "ECLI:IT:CTRMAR:2024:112"}]}
+{"cat": "cgt", "text": "Corte di Giustizia Tributaria di secondo grado della Abruzzo n. 113/2024", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_REG", "region": "ABR", "number": "113", "year": "2024", "urn": "ECLI:IT:CTRABR:2024:113"}]}
+{"cat": "cgt", "text": "CGT 2° grado Umbria n. 114/2024", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_REG", "region": "UMB", "number": "114", "year": "2024", "urn": "ECLI:IT:CTRUMB:2024:114"}]}
+{"cat": "cgt", "text": "CGT secondo grado Basilicata n. 115/2024", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_REG", "region": "BAS", "number": "115", "year": "2024", "urn": "ECLI:IT:CTRBAS:2024:115"}]}
+{"cat": "cgt", "text": "CGT 1 Milano n. 200/2023", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_PROV", "city": "MI", "number": "200", "year": "2023", "urn": "ECLI:IT:CTPMI:2023:200"}]}
+{"cat": "cgt", "text": "CGT primo grado Roma n. 201/2023", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_PROV", "city": "RM", "number": "201", "year": "2023", "urn": "ECLI:IT:CTPRM:2023:201"}]}
+{"cat": "cgt", "text": "CGT I grado Firenze n. 202/2023", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_PROV", "city": "FI", "number": "202", "year": "2023", "urn": "ECLI:IT:CTPFI:2023:202"}]}
+{"cat": "cgt", "text": "CGT di primo grado di Bologna n. 203/2023", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_PROV", "city": "BO", "number": "203", "year": "2023", "urn": "ECLI:IT:CTPBO:2023:203"}]}
+{"cat": "cgt", "text": "Corte di Giustizia Tributaria di Primo Grado di Bari n. 204/2023", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_PROV", "city": "BA", "number": "204", "year": "2023", "urn": "ECLI:IT:CTPBA:2023:204"}]}
+{"cat": "cgt", "text": "C.G.T. di I grado di Palermo n. 205/2023", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_PROV", "city": "PA", "number": "205", "year": "2023", "urn": "ECLI:IT:CTPPA:2023:205"}]}
+{"cat": "cgt", "text": "Corte di Giustizia Tributaria di Genova n. 206/2023", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_PROV", "city": "GE", "number": "206", "year": "2023", "urn": "ECLI:IT:CTPGE:2023:206"}]}
+{"cat": "cgt", "text": "CGT 1 Venezia n. 207/2023", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_PROV", "city": "VE", "number": "207", "year": "2023", "urn": "ECLI:IT:CTPVE:2023:207"}]}
+{"cat": "cgt", "text": "CGT primo grado Cagliari n. 208/2023", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_PROV", "city": "CA", "number": "208", "year": "2023", "urn": "ECLI:IT:CTPCA:2023:208"}]}
+{"cat": "cgt", "text": "CGT I grado Napoli n. 209/2023", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_PROV", "city": "NA", "number": "209", "year": "2023", "urn": "ECLI:IT:CTPNA:2023:209"}]}
+{"cat": "cgt", "text": "CGT di primo grado di Torino n. 210/2023", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_PROV", "city": "TO", "number": "210", "year": "2023", "urn": "ECLI:IT:CTPTO:2023:210"}]}
+{"cat": "cgt", "text": "Corte di Giustizia Tributaria di Primo Grado di Salerno n. 211/2023", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_PROV", "city": "SA", "number": "211", "year": "2023", "urn": "ECLI:IT:CTPSA:2023:211"}]}
+{"cat": "cgt", "text": "C.G.T. di I grado di Catanzaro n. 212/2023", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_PROV", "city": "CZ", "number": "212", "year": "2023", "urn": "ECLI:IT:CTPCZ:2023:212"}]}
+{"cat": "cgt", "text": "Corte di Giustizia Tributaria di Verona n. 213/2023", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_PROV", "city": "VR", "number": "213", "year": "2023", "urn": "ECLI:IT:CTPVR:2023:213"}]}
+{"cat": "cgt", "text": "CGT 1 Padova n. 214/2023", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_PROV", "city": "PD", "number": "214", "year": "2023", "urn": "ECLI:IT:CTPPD:2023:214"}]}
+{"cat": "cgt", "text": "CGT 2° grado Sicilia Sez. VII n. 3086 del 18.04.2024", "refs": [{"authority": "COMM_TRIBUT_REG", "region": "SIC", "section": "7", "number": "3086", "doc-date": "2024-04-18", "urn": "ECLI:IT:CTRSIC:2024:3086"}]}
+{"cat": "cgt", "text": "CGT secondo grado Lombardia Sez. XII n. 2291/2022", "refs": [{"authority": "COMM_TRIBUT_REG", "region": "LOM", "section": "12", "urn": "ECLI:IT:CTRLOM:2022:2291"}]}
+{"cat": "cgt", "text": "CGT 1 Milano Sez. 3 sentenza n. 450 del 7 luglio 2023", "refs": [{"authority": "COMM_TRIBUT_PROV", "city": "MI", "section": "3", "number": "450", "doc-date": "2023-07-07", "urn": "ECLI:IT:CTPMI:2023:450"}]}
+{"cat": "cgt", "text": "sentenza n. 924/01/2023 della CGT di Primo Grado di Torino", "refs": [{"authority": "COMM_TRIBUT_PROV", "city": "TO", "number": "924", "year": "2023", "urn": "ECLI:IT:CTPTO:2023:924"}]}
+{"cat": "cgt", "text": "C.T.P. Salerno Sez. 11 n. 1765/2023", "refs": [{"authority": "COMM_TRIBUT_PROV", "city": "SA", "section": "11", "urn": "ECLI:IT:CTPSA:2023:1765"}]}
+{"cat": "cgt", "text": "CTR Campania Napoli Sez. 15 n. 5287/2022", "refs": [{"authority": "COMM_TRIBUT_REG", "region": "CAM", "section": "15", "urn": "ECLI:IT:CTRCAM:2022:5287"}]}
+{"cat": "cgue", "text": "causa C-446/03", "refs": [{"authority": "CGUE", "case-number": "C-446/2003", "urn": "CELEX:62003CJ0446"}]}
+{"cat": "cgue", "text": "causa T-9/99", "refs": [{"authority": "CGUE", "case-number": "T-9/1999", "urn": "CELEX:61999TJ0009"}]}
+{"cat": "cgue", "text": "sentenza 5 maggio 2011, causa C-434/09", "refs": [{"authority": "CGUE", "urn": "CELEX:62009CJ0434"}]}
+{"cat": "cgue", "text": "cause riunite C-397/01 e C-403/01", "refs": [{"urn": "CELEX:62001CJ0397"}]}
+{"cat": "cgue", "text": "causa C-106/89, punto 8", "refs": [{"urn": "CELEX:61989CJ0106~num8", "partition": "punto-8"}]}
+{"cat": "cgue", "text": "causa C-280/13, paragrafi 30 e 31", "refs": [{"authority": "CGUE", "case-number": "C-280/2013", "partition": "paragrafo-30"}, {"authority": "CGUE", "partition": "paragrafo-31"}]}
+{"cat": "cgue", "text": "Sentenza CGUE n. 567/2019", "refs": [{"authority": "CGUE", "doc-type": "SENT", "number": "567", "year": "2019", "urn": "CELEX:62019CJ0567"}]}
+{"cat": "cgue", "text": "Corte di giustizia dell'Unione europea, sentenza n. 88/2021", "refs": [{"authority": "CGUE", "number": "88", "year": "2021"}]}
+{"cat": "alias", "text": "art. 1218 del codice civile", "refs": [{"alias": "COD_CIV", "urn": "urn:nir:stato:regio.decreto:1942;262:2~art1218"}]}
+{"cat": "alias", "text": "art. 81 del codice di procedura penale", "refs": [{"alias": "COD_PROC_PEN", "urn": "urn:nir:stato:decreto.del.presidente.della.repubblica:1988;447~art81"}]}
+{"cat": "alias", "text": "art. 24 c.p.p.", "refs": [{"alias": "COD_PROC_PEN", "urn": "urn:nir:stato:decreto.del.presidente.della.repubblica:1988;447~art24"}]}
+{"cat": "alias", "text": "art. 416 del codice penale", "refs": [{"alias": "COD_PEN", "urn": "urn:nir:stato:regio.decreto:1930;1398:1~art416"}]}
+{"cat": "alias", "text": "art. 73 del TUB", "refs": [{"alias": "TU_BANCARIO"}]}
+{"cat": "alias", "text": "art. 50 del TUEL", "refs": [{"alias": "TU_ENTI_LOCALI"}]}
+{"cat": "alias", "text": "art. 20 del T.U.R.", "refs": [{"alias": "TU_IMPOSTA_REGISTRO"}]}
+{"cat": "alias", "text": "art. 7 dello Statuto del contribuente", "refs": [{"alias": "STATUTO_CONTRIB", "urn": "urn:nir:stato:legge:2000;212~art7"}]}
+{"cat": "alias", "text": "art. 111 Cost.", "refs": [{"alias": "COST", "urn": "urn:nir:stato:costituzione:1947~art111"}]}
+{"cat": "alias", "text": "art. 8 della legge fallimentare", "refs": [{"alias": "LEGGE_FALL"}]}
+{"cat": "alias", "text": "art. 2 del codice della strada", "refs": [{"alias": "COD_STRADA", "urn": "urn:nir:stato:decreto.legislativo:1992;285~art2"}]}
+{"cat": "alias", "text": "art. 18 dello Statuto dei lavoratori", "refs": [{"alias": "STATUTO_LAVORATORI"}]}
+{"cat": "alias", "text": "art. 6 della CEDU", "refs": [{"alias": "CONV_EU_DIR_UOMO"}]}
+{"cat": "alias", "text": "art. 5 cod.proc.amm.", "refs": [{"alias": "COD_PROCESSO_AMM"}]}
+{"cat": "seg", "text": "CGT 2° grado Lazio n. 100/2024, CGT 1 Napoli n. 50/2023 e Cass. n. 999/2022", "refs": [{"urn": "ECLI:IT:CTRLAZ:2024:100"}, {"urn": "ECLI:IT:CTPNA:2023:50"}, {"urn": "ECLI:IT:CASS:2022:999CIV"}]}
+{"cat": "seg", "text": "artt. 3 e 4 della legge 241/1990 e art. 7 del d.lgs. 546/1992", "refs": [{"urn": "urn:nir:stato:legge:1990;241~art3"}, {"urn": "urn:nir:stato:legge:1990;241~art4"}, {"urn": "urn:nir:stato:decreto.legislativo:1992;546~art7"}]}
+{"cat": "seg", "text": "direttiva 2006/112/CE e direttiva 90/435", "refs": [{"urn": "CELEX:32006L0112"}, {"urn": "CELEX:31990L0435"}]}
+{"cat": "seg", "text": "causa C-123/20 e causa T-45/19", "refs": [{"urn": "CELEX:62020CJ0123"}, {"urn": "CELEX:62019TJ0045"}]}
+{"cat": "seg", "text": "art. 2697 c.c., art. 115 c.p.c. e art. 53 Cost.", "refs": [{"urn": "urn:nir:stato:regio.decreto:1942;262:2~art2697"}, {"urn": "urn:nir:stato:regio.decreto:1940;1443:1~art115"}, {"urn": "urn:nir:stato:costituzione:1947~art53"}]}
+{"cat": "cgt", "text": "CGT 2° grado Campania – Napoli – Sez. 15 08/07/2022 n. 5287", "refs": [{"authority": "COMM_TRIBUT_REG", "region": "CAM", "section": "15", "number": "5287", "year": "2022", "doc-date": "2022-07-08", "urn": "ECLI:IT:CTRCAM:2022:5287"}]}
+{"cat": "cgt", "text": "CGT di secondo grado del Veneto, 12/03/2024, n. 1731", "refs": [{"authority": "COMM_TRIBUT_REG", "region": "VEN", "number": "1731", "doc-date": "2024-03-12", "urn": "ECLI:IT:CTRVEN:2024:1731"}]}
+{"cat": "cgt", "text": "CGT 1 Firenze sentenza n. 300 del 5.6.2024", "refs": [{"authority": "COMM_TRIBUT_PROV", "city": "FI", "number": "300", "doc-date": "2024-06-05", "urn": "ECLI:IT:CTPFI:2024:300"}]}
+{"cat": "prassi", "text": "circolare 12/E/2020 e risoluzione 22/E/2005", "refs": [{"doc-type": "CIRC", "urn": "PRAX:AE:CIRC:2020:12/E"}, {"doc-type": "RIS", "urn": "PRAX:AE:RIS:2005:22/E"}]}
+{"cat": "norm", "text": "art. 36-bis del d.P.R. 600/1973", "refs": [{"doc-type": "DECR", "authority": "PRES_REP", "urn": "urn:nir:presidente.repubblica:decreto:1973;600~art36bis"}]}
+{"cat": "norm", "text": "D.M. 7 settembre 1998, n. 503", "refs": [{"doc-type": "DECR", "authority": "MINISTERO", "number": "503", "doc-date": "1998-09-07", "urn": "urn:nir:ministero:decreto:1998;503"}]}
+{"cat": "alias", "text": "art. 78 T.U. Registro", "refs": [{"alias": "TU_IMPOSTA_REGISTRO", "urn": "urn:nir:stato:regio.decreto:1986;131~art78"}], "reg-scope": "comunitario"}
+{"cat": "alias", "text": "art. 25 Testo Unico Registro", "refs": [{"alias": "TU_IMPOSTA_REGISTRO", "urn": "urn:nir:stato:regio.decreto:1986;131~art25"}], "reg-scope": "comunitario"}
+{"cat": "alias", "text": "art. 221 comma 3 Codice Doganale Comunitario", "refs": [{"alias": "COD_DOGANALE_COMUN", "urn": "CELEX:31992R2913~art221-num3"}], "reg-scope": "comunitario"}
+{"cat": "alias", "text": "art. 32 Codice Doganale Comunitario (CDC)", "refs": [{"alias": "COD_DOGANALE_COMUN", "urn": "CELEX:31992R2913~art32"}], "reg-scope": "comunitario"}
+{"cat": "alias", "text": "art. 10 codice doganale dell’unione europea", "refs": [{"alias": "COD_DOGANALE_UNIONE", "urn": "CELEX:32013R0952~art10"}], "reg-scope": "comunitario"}
+{"cat": "alias", "text": "art. 303 comma 3 TULD", "refs": [{"alias": "TU_DOGANALE", "urn": "urn:nir:presidente.repubblica:decreto:1973;43~art303-comma3"}], "reg-scope": "comunitario"}
+{"cat": "alias", "text": "art. 301 Testo Unico Legge Doganale", "refs": [{"alias": "TU_DOGANALE", "urn": "urn:nir:presidente.repubblica:decreto:1973;43~art301"}], "reg-scope": "comunitario"}
+{"cat": "alias", "text": "art. 156 ult. co. c.p.p.", "refs": [{"alias": "COD_PROC_PEN", "urn": "urn:nir:stato:decreto.del.presidente.della.repubblica:1988;447~art156"}], "reg-scope": "comunitario"}
+{"cat": "alias", "text": "art. 11 preleggi", "refs": [{"alias": "COD_CIV", "urn": "urn:nir:stato:regio.decreto:1942;262:2~art11"}], "reg-scope": "comunitario"}
+{"cat": "alias", "text": "art. 14 Preleggi c.c.", "refs": [{"alias": "COD_CIV", "urn": "urn:nir:stato:regio.decreto:1942;262:2~art14"}], "reg-scope": "comunitario"}
+{"cat": "alias", "text": "art. 7 Statuto del Contribuente", "refs": [{"alias": "STATUTO_CONTRIB", "urn": "urn:nir:stato:legge:2000;212~art7"}], "reg-scope": "comunitario"}
+{"cat": "alias", "text": "art. 12, comma 7, dello Statuto del contribuente", "refs": [{"alias": "STATUTO_CONTRIB", "urn": "urn:nir:stato:legge:2000;212~art12-comma7"}], "reg-scope": "comunitario"}
+{"cat": "alias", "text": "art. 7 comma 1 Statuto dei diritti dei contribuenti", "refs": [{"alias": "STATUTO_CONTRIB", "urn": "urn:nir:stato:legge:2000;212~art7-comma1"}], "reg-scope": "comunitario"}
+{"cat": "alias", "text": "art. 12 statuto contribuente", "refs": [{"alias": "STATUTO_CONTRIB", "urn": "urn:nir:stato:legge:2000;212~art12"}], "reg-scope": "comunitario"}
+{"cat": "reg", "text": "L. reg. Sardegna 4/2015, art. 1", "refs": [{"urn": "urn:nir:regione.sardegna:legge:2015;4~art1"}], "reg-scope": "comunitario"}
+{"cat": "reg", "text": "L. Regione Campania n. 4/2007", "refs": [{"urn": "urn:nir:regione.campania:legge:2007;4"}], "reg-scope": "comunitario"}
+{"cat": "reg", "text": "art. 23 l. reg. Calabria n. 11/2003", "refs": [{"urn": "urn:nir:regione.calabria:legge:2003;11~art23"}], "reg-scope": "comunitario"}
+{"cat": "reg", "text": "L. reg. Campania n. 28 del 2003", "refs": [{"urn": "urn:nir:regione.campania:legge:2003;28"}], "reg-scope": "comunitario"}
+{"cat": "reg", "text": "art. 13 l. reg. Campania 26 luglio 2002 n. 15", "refs": [{"urn": "urn:nir:regione.campania:legge:2002;15~art13"}], "reg-scope": "comunitario"}
+{"cat": "norm", "text": "art.17 D.Lg.vo n.472/97", "refs": [{"doc-type": "DLGS", "urn": "urn:nir:stato:decreto.legislativo:1997;472~art17"}], "reg-scope": "comunitario"}
+{"cat": "norm", "text": "art. 21 D. Lgv. 546/92", "refs": [{"doc-type": "DLGS", "urn": "urn:nir:stato:decreto.legislativo:1992;546~art21"}], "reg-scope": "comunitario"}
+{"cat": "norm", "text": "art. 11 d.lgv. 504/92", "refs": [{"doc-type": "DLGS", "urn": "urn:nir:stato:decreto.legislativo:1992;504~art11"}], "reg-scope": "comunitario"}
+{"cat": "norm", "text": "art. 59, comma 1, lett. g, D.Lgs. n. 446/1997", "refs": [{"urn": "urn:nir:stato:decreto.legislativo:1997;446~art59-comma1-letg"}], "reg-scope": "comunitario"}
+{"cat": "norm", "text": "DM MEF 19.11.2012 n. 200", "refs": [{"doc-type": "DECR", "authority": "MINISTERO", "urn": "urn:nir:ministero:decreto:2012;200"}], "reg-scope": "comunitario"}
+{"cat": "norm", "text": "art. 9 decreto MEF 23/12/2013 n. 163", "refs": [{"authority": "MINISTERO", "urn": "urn:nir:ministero:decreto:2013;163~art9"}], "reg-scope": "comunitario"}
+{"cat": "eu", "text": "art. 2 Direttiva IVA 2006/112/CE", "refs": [{"doc-type": "DIR", "urn": "CELEX:32006L0112~art2"}], "reg-scope": "comunitario"}
+{"cat": "eu", "text": "Regolamento UE nº 910/2014", "refs": [{"doc-type": "REG", "urn": "CELEX:32014R0910"}], "reg-scope": "comunitario"}
+{"cat": "eu", "text": "regolamento (CE) 261/2004", "refs": [{"doc-type": "REG", "urn": "CELEX:32004R0261"}], "reg-scope": "comunitario"}
+{"cat": "eu", "text": "art 12 Trattato CE", "refs": [{"urn": "CELEX:12002E/TXT~art12"}], "reg-scope": "comunitario"}
+{"cat": "eu", "text": "articolo 58, paragrafo 3, CE", "refs": [{"urn": "CELEX:12002E/TXT~art58-num3"}], "reg-scope": "comunitario"}
+{"cat": "eu", "text": "articolo 87, paragrafo 3, lettera a), CE", "refs": [{"urn": "CELEX:12002E/TXT~art87-num3-leta"}], "reg-scope": "comunitario"}
+{"cat": "eu", "text": "articolo 4, punto 1, GDPR", "refs": [{"alias": "GDPR", "urn": "CELEX:32016R0679~art4-punto1"}], "reg-scope": "comunitario"}
+{"cat": "eu", "text": "articolo 5, paragrafo 1, RGPD", "refs": [{"alias": "GDPR", "urn": "CELEX:32016R0679~art5-num1"}], "reg-scope": "comunitario"}
+{"cat": "cgue", "text": "C-123/20", "refs": [{"authority": "CGUE", "case-number": "C-123/2020", "urn": "CELEX:62020CJ0123"}], "reg-scope": "comunitario"}
+{"cat": "cgue", "text": "causa T-123/20 punti 12,13", "refs": [{"urn": "CELEX:62020TJ0123~num12"}, {"urn": "CELEX:62020TJ0123~num13"}], "reg-scope": "comunitario"}
+{"cat": "cgue", "text": "punto 12 causa C-123/20", "refs": [{"urn": "CELEX:62020CJ0123~num12"}], "reg-scope": "comunitario"}
+{"cat": "cgue", "text": "causa C-123/20 paragrafi 18,21 e 34", "refs": [{"urn": "CELEX:62020CJ0123~num18"}, {"urn": "CELEX:62020CJ0123~num21"}, {"urn": "CELEX:62020CJ0123~num34"}], "reg-scope": "comunitario"}
+{"cat": "cgue", "text": "causa C-123/20 paragrafi 12,13", "refs": [{"urn": "CELEX:62020CJ0123~num12"}, {"urn": "CELEX:62020CJ0123~num13"}], "reg-scope": "comunitario"}
+{"cat": "cgue", "text": "Cort. Giust. UE causa C-246/04", "refs": [{"authority": "CGUE", "urn": "CELEX:62004CJ0246"}], "reg-scope": "comunitario"}
+{"cat": "cgt", "text": "Cort. Giust. Trib. Reg. Lazio n. 100/2024", "refs": [{"authority": "COMM_TRIBUT_REG", "region": "LAZ", "urn": "ECLI:IT:CTRLAZ:2024:100"}], "reg-scope": "comunitario"}
+{"cat": "cgt", "text": "C.G.T. Reg. Toscana n. 126/2024", "refs": [{"authority": "COMM_TRIBUT_REG", "region": "TOS", "urn": "ECLI:IT:CTRTOS:2024:126"}], "reg-scope": "comunitario"}
+{"cat": "cgt", "text": "Corte Giust. Trib. Prov. Milano n. 50/2019", "refs": [{"authority": "COMM_TRIBUT_PROV", "city": "MI", "urn": "ECLI:IT:CTPMI:2019:50"}], "reg-scope": "comunitario"}
+{"cat": "cgt", "text": "CGT Prov. Napoli n. 123/2020", "refs": [{"authority": "COMM_TRIBUT_PROV", "city": "NA", "urn": "ECLI:IT:CTPNA:2020:123"}], "reg-scope": "comunitario"}
+{"cat": "cgt", "text": "Comm. Trib. Prov. di Milano n. 50/2019", "refs": [{"authority": "COMM_TRIBUT_PROV", "city": "MI", "urn": "ECLI:IT:CTPMI:2019:50"}], "reg-scope": "comunitario"}
+{"cat": "cgt", "text": "C.T.R. Lazio n. 2291/2022", "refs": [{"authority": "COMM_TRIBUT_REG", "region": "LAZ", "urn": "ECLI:IT:CTRLAZ:2022:2291"}], "reg-scope": "comunitario"}
+{"cat": "cgt", "text": "CTC n. 123/1989", "refs": [{"authority": "COMM_TRIBUT_CEN", "urn": "ECLI:IT:CTCIT:1989:123"}], "reg-scope": "comunitario"}
+{"cat": "cgt", "text": "Comm. Trib. Centr. n. 123/1989", "refs": [{"authority": "COMM_TRIBUT_CEN", "urn": "ECLI:IT:CTCIT:1989:123"}], "reg-scope": "comunitario"}
+{"cat": "cgt", "text": "Sentenza n. 123/2008 C.T.C.", "refs": [{"authority": "COMM_TRIBUT_CEN", "urn": "ECLI:IT:CTCIT:2008:123"}], "reg-scope": "comunitario"}
+{"cat": "prassi", "text": "Risposta ad interpello n. 342 del 13 maggio 2021", "refs": [{"doc-type": "INTERPELLO", "urn": "PRAX:AE:INT:2021:342"}], "reg-scope": "comunitario"}
+{"cat": "prassi", "text": "Risposta interpello Agenzia Entrate n. 308/2024", "refs": [{"doc-type": "INTERPELLO", "urn": "PRAX:AE:INT:2024:308"}], "reg-scope": "comunitario"}
+{"cat": "prassi", "text": "risposta Agenzia delle Entrate all'interpello 309/2019", "refs": [{"doc-type": "INTERPELLO", "urn": "PRAX:AE:INT:2019:309"}], "reg-scope": "comunitario"}
+{"cat": "prassi", "text": "risposta a quesito n. 699/2021 dell'Agenzia delle Entrate", "refs": [{"doc-type": "INTERPELLO", "urn": "PRAX:AE:INT:2021:699"}], "reg-scope": "comunitario"}
+{"cat": "prassi", "text": "Risoluzione Ag. Entrate n. 91/2004", "refs": [{"doc-type": "RIS", "urn": "PRAX:AE:RIS:2004:91"}], "reg-scope": "comunitario"}
+{"cat": "prassi", "text": "Circolare AdE n. 47/2005", "refs": [{"doc-type": "CIRC", "urn": "PRAX:AE:CIRC:2005:47"}], "reg-scope": "comunitario"}
+{"cat": "prassi", "text": "Circ. AdE n. 11/E del 06.06.2020", "refs": [{"doc-type": "CIRC", "urn": "PRAX:AE:CIRC:2020:11/E"}], "reg-scope": "comunitario"}
+{"cat": "prassi", "text": "Circolare MEF 11/E del 6.5.2020", "refs": [{"doc-type": "CIRC", "urn": "PRAX:AE:CIRC:2020:11/E"}], "reg-scope": "comunitario"}
+{"cat": "seg", "text": "art. 15 commi da 1 a 4 DPR n. 600/1973", "refs": [{"urn": "urn:nir:presidente.repubblica:decreto:1973;600~art15-comma1"}, {"urn": "urn:nir:presidente.repubblica:decreto:1973;600~art15-comma2"}, {"urn": "urn:nir:presidente.repubblica:decreto:1973;600~art15-comma3"}, {"urn": "urn:nir:presidente.repubblica:decreto:1973;600~art15-comma4"}], "reg-scope": "comunitario"}
+{"cat": "seg", "text": "articoli da 615 a 618 del codice di procedura civile", "refs": [{"urn": "urn:nir:stato:regio.decreto:1940;1443:1~art615"}, {"urn": "urn:nir:stato:regio.decreto:1940;1443:1~art616"}, {"urn": "urn:nir:stato:regio.decreto:1940;1443:1~art617"}, {"urn": "urn:nir:stato:regio.decreto:1940;1443:1~art618"}], "reg-scope": "comunitario"}
+{"cat": "seg", "text": "art. 4 e 10 Statuto del contribuente", "refs": [{"urn": "urn:nir:stato:legge:2000;212~art4"}, {"urn": "urn:nir:stato:legge:2000;212~art10"}], "reg-scope": "comunitario"}
+{"cat": "seg", "text": "D.M. Trasporti n. 39/2008, art. 5 e 7", "refs": [{"urn": "urn:nir:ministero:decreto:2008;39~art5"}, {"urn": "urn:nir:ministero:decreto:2008;39~art7"}], "reg-scope": "comunitario"}
+{"cat": "seg", "text": "art. 2 Direttiva IVA 2006/112/CE e art. 19 del d.lgs. 546/1992", "refs": [{"urn": "CELEX:32006L0112~art2"}, {"urn": "urn:nir:stato:decreto.legislativo:1992;546~art19"}], "reg-scope": "comunitario"}
+{"cat": "seg", "text": "CGT Reg. Toscana n. 126/2024 e causa C-123/20", "refs": [{"urn": "ECLI:IT:CTRTOS:2024:126"}, {"urn": "CELEX:62020CJ0123"}], "reg-scope": "comunitario"}
+{"cat": "seg", "text": "art. 7 Statuto del Contribuente e art. 12 preleggi", "refs": [{"urn": "urn:nir:stato:legge:2000;212~art7"}, {"urn": "urn:nir:stato:regio.decreto:1942;262:2~art12"}], "reg-scope": "comunitario"}
+{"cat": "seg", "text": "art. 2 del d.lgs. 546/1992 e art. 7 Statuto del Contribuente", "refs": [{"urn": "urn:nir:stato:decreto.legislativo:1992;546~art2"}, {"urn": "urn:nir:stato:legge:2000;212~art7"}], "reg-scope": "comunitario"}
+{"cat": "seg", "text": "Comm. Trib. Centr. n. 123/1989 e CTR Lazio n. 2291/2022", "refs": [{"urn": "ECLI:IT:CTCIT:1989:123"}, {"urn": "ECLI:IT:CTRLAZ:2022:2291"}], "reg-scope": "comunitario"}
+{"cat": "jur", "text": "Giudice di Pace di Roma n. 100/2020", "refs": [{"authority": "GIUDICE_PACE", "urn": "ECLI:IT:GDPRM:2020:100"}]}
+{"cat": "jur", "text": "Corte d'Appello di Milano n. 50/2019", "refs": [{"authority": "CORTE_APPELLO", "urn": "ECLI:IT:CAPPMI:2019:50"}]}
+{"cat": "jur", "text": "Corte d'Assise di Napoli n. 5/2018", "refs": [{"authority": "CORTE_ASSISE", "urn": "ECLI:IT:ASSNA:2018:5"}]}
+{"cat": "jur", "text": "Corte d'Assise d'Appello di Torino n. 3/2017", "refs": [{"authority": "CORTE_ASSISE_APPELLO", "urn": "ECLI:IT:ASSAPPTO:2017:3"}]}
+{"cat": "jur", "text": "Tribunale di Sorveglianza di Bologna n. 10/2021", "refs": [{"authority": "TRIBUNALE_SORVEGLIANZA", "urn": "ECLI:IT:TRIBSORVBO:2021:10"}]}
+{"cat": "jur", "text": "Corte dei Conti n. 200/2022", "refs": [{"authority": "CORTE_CONTI", "urn": "ECLI:IT:CCONTI:2022:200"}]}
+{"cat": "jur", "text": "Tribunale di Milano n. 500/2020", "refs": [{"authority": "TRIB", "urn": "ECLI:IT:TRIBMI:2020:500"}]}
+{"cat": "jur", "text": "Consiglio di Stato n. 1234/2021", "refs": [{"authority": "CONS_STATO", "urn": "ECLI:IT:CONSSTATO:2021:1234"}]}
+{"cat": "prassi", "text": "risposta a interpello n. 342 del 13 maggio 2021", "refs": [{"doc-type": "INTERPELLO", "urn": "PRAX:AE:INT:2021:342"}]}
+{"cat": "jur", "text": "Cass. n. 08508/2019", "refs": [{"ref-type": "caselaw", "authority": "CORTE_CASS", "number": "8508", "year": "2019", "urn": "ECLI:IT:CASS:2019:8508CIV"}]}
+{"cat": "jur", "text": "CASSAZIONE sesta sez. civ., n. 20213/2015", "refs": [{"authority": "CORTE_CASS", "section": "6CIV", "number": "20213", "year": "2015", "urn": "ECLI:IT:CASS:2015:20213CIV"}]}
+{"cat": "jur", "text": "Cassazione Civile, Sezione Tributaria, 14 gennaio 2015 n. 428", "refs": [{"authority": "CORTE_CASS", "section": "5CIV", "number": "428", "year": "2015", "urn": "ECLI:IT:CASS:2015:428CIV"}]}
+{"cat": "jur", "text": "Cassazione Civile, sezione V, 6 febbraio 2019, n. 3389", "refs": [{"section": "5CIV", "number": "3389", "year": "2019", "urn": "ECLI:IT:CASS:2019:3389CIV"}]}
+{"cat": "jur", "text": "Cass. civ., sez. trib., 17 gennaio 2022, n. 1213", "refs": [{"section": "5CIV", "number": "1213", "year": "2022", "urn": "ECLI:IT:CASS:2022:1213CIV"}]}
+{"cat": "jur", "text": "Cassazione Sez. 5 - 6, Ordinanza n. 8508 del 27/03/2019", "refs": [{"section": "5CIV", "number": "8508", "year": "2019", "urn": "ECLI:IT:CASS:2019:8508CIV"}]}
+{"cat": "jur", "text": "Cass. SS.UU. n. 1234/2018", "refs": [{"section": "UNITE", "number": "1234", "year": "2018", "urn": "ECLI:IT:CASS:2018:1234CIV"}]}
+{"cat": "reg", "text": "L.R. Lombardia n. 16/2016", "refs": [{"ref-type": "legislation", "ref-scope": "regionale", "region": "lombardia", "number": "16", "year": "2016", "urn": "urn:nir:regione.lombardia:legge:2016;16"}]}
+{"cat": "reg", "text": "art. 90 L.R. n. 10/2003 (Regione Lombardia)", "refs": [{"region": "lombardia", "number": "10", "year": "2003", "partition": "articolo-90", "urn": "urn:nir:regione.lombardia:legge:2003;10~art90"}]}
+{"cat": "cgue", "text": "Comunicazione della Commissione Europea (2014/C 198/01) del 27 giugno 2014", "refs": []}
+{"cat": "cgue", "text": "Corte Europea di Giustizia, causa 276/12 Jiri Sabou", "refs": [{"ref-type": "caselaw", "authority": "CGUE", "case-number": "C-276/2012", "urn": "CELEX:62012CJ0276"}]}
+{"cat": "cgue", "text": "sentenza CGUE 8 dicembre 1970, causa 14-70", "refs": [{"authority": "CGUE", "case-number": "C-14/1970", "urn": "CELEX:61970CJ0014"}]}
+{"cat": "cgue", "text": "sentenze CGUE 18 marzo 1980, cause 91/79 e 92/79", "refs": [{"case-number": "C-91/1979", "urn": "CELEX:61979CJ0091"}, {"case-number": "C-92/1979", "urn": "CELEX:61979CJ0092"}]}
+{"cat": "eu", "text": "Reg. UE 2017/2093", "refs": [{"ref-type": "legislation", "ref-scope": "comunitario", "doc-type": "REG", "number": "2093", "year": "2017", "urn": "CELEX:32017R2093"}]}
+{"cat": "eu", "text": "art. 140 Reg. UE n. 2015/2447", "refs": [{"doc-type": "REG", "number": "2447", "year": "2015", "partition": "articolo-140", "urn": "CELEX:32015R2447~art140"}]}
+{"cat": "cgt", "text": "CTR Lombardia 1824/25/2020", "refs": [{"ref-type": "caselaw", "authority": "COMM_TRIBUT_REG", "region": "LOM", "number": "1824", "year": "2020", "full-number": "1824/25/2020", "urn": "ECLI:IT:CTRLOM:2020:1824"}]}
+{"cat": "cgt", "text": "CTR Toscana nn. 11/01/2021 e 619/01/2020", "refs": [{"region": "TOS", "number": "11", "full-number": "11/01/2021", "urn": "ECLI:IT:CTRTOS:2021:11"}, {"number": "619", "full-number": "619/01/2020", "urn": "ECLI:IT:CTRTOS:2020:619"}]}
+{"cat": "cgt", "text": "Comm. trib. prov.le Milano sez. I, 18/06/2021, n. 2777", "refs": [{"authority": "COMM_TRIBUT_PROV", "city": "MI", "number": "2777", "urn": "ECLI:IT:CTPMI:2021:2777"}]}
+{"cat": "seg", "text": "Circolare AdE n. 47/2005; direttiva 2006/112/CE", "refs": [{"ref-type": "prassi", "urn": "PRAX:AE:CIRC:2005:47"}, {"ref-type": "legislation", "urn": "CELEX:32006L0112"}]}
+{"cat": "jur", "text": "Cassazione Sez. Unite nn. 26636 e 26637 del 18.12.2009", "refs": [{"section": "UNITE", "number": "26636", "year": "2009", "urn": "ECLI:IT:CASS:2009:26636CIV"}, {"section": "UNITE", "number": "26637", "year": "2009", "urn": "ECLI:IT:CASS:2009:26637CIV"}]}
+{"cat": "alias", "text": "Voce 15.13 della Tariffa doganale comune", "refs": [{"alias": "TARIFFA_DOGANALE_COM", "urn": "TARIFFA_DOGANALE_COM"}]}
+{"cat": "conv", "text": "art. 6 n. 2 Convenzione di Bruxelles del 27 settembre 1968", "refs": [{"alias": "CONV_BRUXELLES", "ref-scope": "comunitario", "urn": "CELEX:41998A0126~art6-num2"}]}
+{"cat": "eu", "text": "art. 10 e 12 Dir. 69/335/CEE", "refs": [{"doc-type": "DIR", "number": "335", "year": "1969", "urn": "CELEX:31969L0335~art10"}, {"urn": "CELEX:31969L0335~art12"}]}
+{"cat": "jur", "text": "Cassazione 1998, n. 4775", "refs": [{"ref-type": "caselaw", "authority": "CORTE_CASS", "number": "4775", "year": "1998", "urn": "ECLI:IT:CASS:1998:4775CIV"}]}
+{"cat": "jur", "text": "Cass. S.U. 1990 n. 11490", "refs": [{"section": "UNITE", "number": "11490", "year": "1990", "urn": "ECLI:IT:CASS:1990:11490CIV"}]}
+{"cat": "reg", "text": "art. 1 L.R. n. 2/1971 Toscana", "refs": [{"region": "toscana", "number": "2", "year": "1971", "partition": "articolo-1", "urn": "urn:nir:regione.toscana:legge:1971;2~art1"}]}
+{"cat": "jur", "text": "T.A.R. Lombardia sez. II 29 marzo 1995 n. 466", "refs": [{"authority": "TRIB_AMM_REG", "region": "LOM", "section": "2", "number": "466", "year": "1995", "urn": "ECLI:IT:TARLOM:1995:466"}]}
+{"cat": "cgue", "text": "cause riunite C-216 e 222/99", "refs": [{"case-number": "C-216/1999", "urn": "CELEX:61999CJ0216"}]}
+{"cat": "alias", "text": "Voce 15.13 della Tariffa doganale comune", "refs": [{"ref-scope": "comunitario", "alias": "TARIFFA_DOGANALE_COM", "urn": "TARIFFA_DOGANALE_COM"}]}
+{"cat": "cgue", "text": "sentenza CGUE 19 giugno 1973, 77/72", "refs": [{"ref-type": "caselaw", "authority": "CGUE", "number": "77", "urn": "CELEX:61972CJ0077"}]}
+{"cat": "norm", "text": "legge finanziaria 2008", "refs": [{"ref-type": "legislation", "doc-type": "L", "number": "244", "year": "2007", "urn": "urn:nir:stato:legge:2007;244"}]}
+{"cat": "norm", "text": "art. 1, comma 5, della legge di bilancio 2023", "refs": [{"number": "197", "year": "2022", "partition": "articolo-1_comma-5", "urn": "urn:nir:stato:legge:2022;197~art1-comma5"}]}

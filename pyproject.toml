@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "linkengine"
+version = "0.1.0"
+description = "Recognize, parse and normalize Italian legal citations into stable identifiers (URN-NIR / ECLI / CELEX / PRAX)."
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.8"
+authors = [{ name = "The linkengine authors", email = "giovannipiccioli@gmail.com" }]
+keywords = ["legal", "citations", "italian-law", "nlp", "urn-nir", "ecli", "celex", "legal-tech"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Legal Industry",
+    "License :: OSI Approved :: Apache Software License",
+    "Natural Language :: Italian",
+    "Programming Language :: Python :: 3",
+    "Topic :: Text Processing :: Linguistic",
+]
+dependencies = []   # pure standard library
+
+[project.optional-dependencies]
+test = ["pytest"]
+notebook = ["jupyter", "pandas"]
+
+[project.urls]
+Homepage = "https://github.com/your-org/linkengine"
+Repository = "https://github.com/your-org/linkengine"
+
+[tool.setuptools]
+packages = ["linkengine"]
+
+[tool.setuptools.package-data]
+linkengine = ["data/*.txt"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

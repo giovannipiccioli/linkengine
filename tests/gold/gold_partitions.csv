@@ -1,0 +1,32 @@
+text|expected_urn|category|note
+art. 11, comma 1, lettera a), n. 2, del d.P.R. 600/1973|urn:nir:presidente.repubblica:decreto:1973;600~art11-comma1-leta-num2|nat|deep chain art>comma>let>num
+art. 360, primo comma, n. 3, c.p.c.|urn:nir:stato:regio.decreto:1940;1443:1~art360-comma1-num3|nat|ordinal comma + numero
+art. 633, secondo comma, c.p.|urn:nir:stato:regio.decreto:1930;1398:1~art633-comma2|nat|ordinal comma
+art. 2495, primo comma, c.c.|urn:nir:stato:regio.decreto:1942;262:2~art2495-comma1|nat|ordinal comma
+art. 50, comma 2-bis, del TUEL|urn:nir:stato:decreto.legislativo:2000;267~art50-comma2bis|nat|latin comma
+art. 2-ter, comma 1, del d.l. 138/2011|urn:nir:stato:decreto.legge:2011;138~art2ter-comma1|nat|latin article
+artt. 5 e 6 della legge 400/1988|urn:nir:stato:legge:1988;400~art5 urn:nir:stato:legge:1988;400~art6|nat|article conjunction
+art. 13 e 14 del d.lgs. 546/1992|urn:nir:stato:decreto.legislativo:1992;546~art13 urn:nir:stato:decreto.legislativo:1992;546~art14|nat|article conjunction
+art. 19, commi 1 e 2-bis, del d.P.R. 600/1973|urn:nir:presidente.repubblica:decreto:1973;600~art19-comma1 urn:nir:presidente.repubblica:decreto:1973;600~art19-comma2bis|nat|comma conjunction + latin
+art. 12, commi 1, 2 e 3, della legge 212/2000|urn:nir:stato:legge:2000;212~art12-comma1 urn:nir:stato:legge:2000;212~art12-comma2 urn:nir:stato:legge:2000;212~art12-comma3|nat|3-way comma list
+art. 2, comma 3, lett. b) e c), del d.lgs. 504/1992|urn:nir:stato:decreto.legislativo:1992;504~art2-comma3-letb urn:nir:stato:decreto.legislativo:1992;504~art2-comma3-letc|nat|letter conjunction
+art. 3, comma 1, lett. a) e b), e comma 2, del d.lgs. 23/2011|urn:nir:stato:decreto.legislativo:2011;23~art3-comma1-leta urn:nir:stato:decreto.legislativo:2011;23~art3-comma1-letb urn:nir:stato:decreto.legislativo:2011;23~art3-comma2|nat|mixed: comma1(let a,b) + comma2
+art. 11 e commi 1 e 2 dell'art. 19 del d.P.R. 600/1973|urn:nir:presidente.repubblica:decreto:1973;600~art11 urn:nir:presidente.repubblica:decreto:1973;600~art19-comma1 urn:nir:presidente.repubblica:decreto:1973;600~art19-comma2|nat|BACKWARD dell'art
+lettera b) del comma 2 dell'art. 17 del d.lgs. 546/1992|urn:nir:stato:decreto.legislativo:1992;546~art17-comma2-letb|nat|full backward let>comma>art
+art. 9, paragrafo 1, della direttiva 2006/112/CE|CELEX:32006L0112~art9-num1|eu|EU paragrafo -> num
+art. 167, paragrafo 2, lettera a), della direttiva 2006/112/CE|CELEX:32006L0112~art167-num2-leta|eu|EU paragrafo + letter
+art. 4, paragrafi 1 e 2, del regolamento (UE) 2016/679|CELEX:32016R0679~art4-num1 CELEX:32016R0679~art4-num2|eu|EU paragrafo conjunction
+allegato A al d.lgs. 50/2016|urn:nir:stato:decreto.legislativo:2016;50:a|nat|allegato -> annex marker
+art. 23, commi da 5 a 8, del d.lgs. 546/1992|urn:nir:stato:decreto.legislativo:1992;546~art23-comma5 urn:nir:stato:decreto.legislativo:1992;546~art23-comma6 urn:nir:stato:decreto.legislativo:1992;546~art23-comma7 urn:nir:stato:decreto.legislativo:1992;546~art23-comma8|nat|range commi "da X a Y" -> one line each
+art. 34, commi 5-7, del d.lgs. 546/1992|urn:nir:stato:decreto.legislativo:1992;546~art34-comma5 urn:nir:stato:decreto.legislativo:1992;546~art34-comma6 urn:nir:stato:decreto.legislativo:1992;546~art34-comma7|nat|range commi "X-Y" dash
+articoli da 34 a 36 del d.lgs. 546/1992|urn:nir:stato:decreto.legislativo:1992;546~art34 urn:nir:stato:decreto.legislativo:1992;546~art35 urn:nir:stato:decreto.legislativo:1992;546~art36|nat|range articoli "da X a Y"
+causa C-123/20, punti 20-22|CELEX:62020CJ0123~num20 CELEX:62020CJ0123~num21 CELEX:62020CJ0123~num22|eu|CGUE case id + punti range -> CELEX per punto
+art. 2-bis, comma 3-ter, del d.lgs. 546/1992|urn:nir:stato:decreto.legislativo:1992;546~art2bis-comma3ter|nat|latin suffix on both article and comma
+art. 1, commi 1, 2 e 3, della legge 190/2014|urn:nir:stato:legge:2014;190~art1-comma1 urn:nir:stato:legge:2014;190~art1-comma2 urn:nir:stato:legge:2014;190~art1-comma3|nat|comma list under one article
+art. 8, comma 1, lettere a) e b), del d.lgs. 471/1997|urn:nir:stato:decreto.legislativo:1997;471~art8-comma1-leta urn:nir:stato:decreto.legislativo:1997;471~art8-comma1-letb|nat|deep chain art>comma>lettere list
+allegato A al d.P.R. 633/1972|urn:nir:presidente.repubblica:decreto:1972;633:a|nat|allegato -> annex marker ":a"
+art. 21, 1° comma, della legge 133/1999|urn:nir:stato:legge:1999;133~art21-comma1|nat|ordinal comma '1°' (degree symbol)
+art. 32, II comma, della legge 142/1990|urn:nir:stato:legge:1990;142~art32-comma2|nat|ordinal comma roman 'II'
+art. 7, c. 2, del d.P.R. 633/1972|urn:nir:presidente.repubblica:decreto:1972;633~art7-comma2|nat|comma abbreviation 'c.'
+art. 9, co. 1 bis e 1 ter, della legge n. 53/1994|urn:nir:stato:legge:1994;53~art9-comma1bis urn:nir:stato:legge:1994;53~art9-comma1ter|nat|commi-list with latin suffixes via 'co.'
+art. 48, co. 5, del d.lgs. 14/2019|urn:nir:stato:decreto.legislativo:2019;14~art48-comma5|nat|'co.' comma abbreviation in a deep act

@@ -1,0 +1,259 @@
+text|expected_urn|category|note
+art. 3 della legge 24 dicembre 2007, n. 244|urn:nir:stato:legge:2007;244~art3|norm|legge
+decreto legislativo 31 dicembre 1992, n. 546|urn:nir:stato:decreto.legislativo:1992;546|norm|dlgs
+art. 36-bis del d.P.R. 600/1973|urn:nir:presidente.repubblica:decreto:1973;600~art36bis|norm|dpr+latin
+art. 13 del d.l. 6 dicembre 2011, n. 201|urn:nir:stato:decreto.legge:2011;201~art13|norm|dl
+art. 17, comma 3, della legge 23 agosto 1988, n. 400|urn:nir:stato:legge:1988;400~art17-comma3|norm|legge+comma
+d.lgs. 504 del 1992|urn:nir:stato:decreto.legislativo:1992;504|norm|dlgs ICI
+decreto legislativo 18 dicembre 1997, n. 472|urn:nir:stato:decreto.legislativo:1997;472|norm|dlgs
+d.lgs. n. 471/1997|urn:nir:stato:decreto.legislativo:1997;471|norm|dlgs abbrev
+art. 8 del d.lgs. 546/1992|urn:nir:stato:decreto.legislativo:1992;546~art8|norm|dlgs+art
+art. 19 del decreto legislativo n. 546 del 1992|urn:nir:stato:decreto.legislativo:1992;546~art19|norm|full form
+legge 27 dicembre 2006, n. 296|urn:nir:stato:legge:2006;296|norm|legge
+art. 1, comma 53, della legge 244/2007|urn:nir:stato:legge:2007;244~art1-comma53|norm|legge slash
+decreto-legge 31 maggio 2010, n. 78|urn:nir:stato:decreto.legge:2010;78|norm|dl full
+d.l. 70/2011|urn:nir:stato:decreto.legge:2011;70|norm|dl abbrev
+art. 2 del d.P.R. 26 aprile 1986, n. 131|urn:nir:presidente.repubblica:decreto:1986;131~art2|norm|dpr
+d.P.R. 22 dicembre 1986, n. 917|urn:nir:presidente.repubblica:decreto:1986;917|norm|dpr (TUIR act)
+legge costituzionale 18 ottobre 2001, n. 3|urn:nir:stato:legge.costituzionale:2001;3|norm|legge cost
+art. 53 della Costituzione|urn:nir:stato:costituzione:1947~art53|norm|costituzione
+D.M. 22 dicembre 2005|DM2005-12-22|norm|decreto ministeriale unnumbered (date id)
+decreto ministeriale n. 597 del 2018|urn:nir:ministero:decreto:2018;597|norm|dm numbered
+art. 13 del decreto-legge n. 201/2011|urn:nir:stato:decreto.legge:2011;201~art13|norm|dl
+legge 212 del 2000|urn:nir:stato:legge:2000;212|norm|legge del-year
+art. 7, comma 1, lett. a), del d.lgs. 546/1992|urn:nir:stato:decreto.legislativo:1992;546~art7-comma1-leta|norm|art+comma+lettera
+art. 2-bis del d.l. 138/2011|urn:nir:stato:decreto.legge:2011;138~art2bis|norm|latin
+art. 2, comma 2-ter, della legge 27 luglio 2000, n. 212|urn:nir:stato:legge:2000;212~art2-comma2ter|norm|comma latin
+art. 1, commi 1 e 2, della legge 296/2006|urn:nir:stato:legge:2006;296~art1-comma1 urn:nir:stato:legge:2006;296~art1-comma2|norm|comma list
+art. 100, comma 3, lettera b), del d.lgs. 50/2016|urn:nir:stato:decreto.legislativo:2016;50~art100-comma3-letb|norm|art+comma+let
+legge 7 agosto 1990, n. 241|urn:nir:stato:legge:1990;241|norm|legge 241
+art. 32 del d.P.R. 29 settembre 1973, n. 600|urn:nir:presidente.repubblica:decreto:1973;600~art32|norm|dpr
+decreto legislativo 14 marzo 2013, n. 33|urn:nir:stato:decreto.legislativo:2013;33|norm|dlgs
+art. 4 del d.lgs. n. 23 del 2011|urn:nir:stato:decreto.legislativo:2011;23~art4|norm|dlgs del-year
+art. 1, comma 629, legge 23 dicembre 2014, n. 190|urn:nir:stato:legge:2014;190~art1-comma629|norm|legge
+art. 13 del d.lgs. 30 dicembre 1992, n. 504|urn:nir:stato:decreto.legislativo:1992;504~art13|norm|dlgs ICI art
+art. 39 del d.P.R. 600/1973|urn:nir:presidente.repubblica:decreto:1973;600~art39|norm|dpr
+art. 360, comma 1, n. 3, c.p.c.|urn:nir:stato:regio.decreto:1940;1443:1~art360-comma1-num3|norm|NUMERO sub-partition (linkengine gap)
+art. 2697 c.c.|urn:nir:stato:regio.decreto:1942;262:2~art2697|alias|codice civile
+art. 112 c.p.c.|urn:nir:stato:regio.decreto:1940;1443:1~art112|alias|cpc
+art. 81 c.p.p.|urn:nir:stato:decreto.del.presidente.della.repubblica:1988;447~art81|alias|cpp
+art. 633 codice penale|urn:nir:stato:regio.decreto:1930;1398:1~art633|alias|codice penale
+art. 73 del TUIR|urn:nir:presidente.repubblica:decreto:1986;917~art73|alias|tuir
+art. 13 del T.U.B.|urn:nir:stato:decreto.legislativo:1993;385~art13|alias|tub
+art. 50 del TUEL|urn:nir:stato:decreto.legislativo:2000;267~art50|alias|tuel
+art. 5 l. fall.|urn:nir:stato:regio.decreto:1942;267:1~art5|alias|legge fallimentare
+art. 18 dello statuto dei lavoratori|urn:nir:stato:legge:1970;300~art18|alias|statuto lavoratori
+art. 117 Cost.|urn:nir:stato:costituzione:1947~art117|alias|costituzione
+art. 2 codice della strada|urn:nir:stato:decreto.legislativo:1992;285~art2|alias|codice strada
+art. 2729 cod. civ.|urn:nir:stato:regio.decreto:1942;262:2~art2729|alias|cod civ variant
+art. 115 c.p.c.|urn:nir:stato:regio.decreto:1940;1443:1~art115|alias|cpc
+art. 192 c.p.p.|urn:nir:stato:decreto.del.presidente.della.repubblica:1988;447~art192|alias|cpp
+art. 40 c.p.|urn:nir:stato:regio.decreto:1930;1398:1~art40|alias|codice penale
+art. 38 TUIR|urn:nir:presidente.repubblica:decreto:1986;917~art38|alias|tuir
+art. 109 del TUIR|urn:nir:presidente.repubblica:decreto:1986;917~art109|alias|tuir
+art. 14 TUB|urn:nir:stato:decreto.legislativo:1993;385~art14|alias|tub
+art. 42 del TUEL|urn:nir:stato:decreto.legislativo:2000;267~art42|alias|tuel
+art. 88 disp. att. c.p.c.|urn:nir:stato:regio.decreto:1941;1368:1~art88|alias|disp att cpc
+art. 217 legge fallimentare|urn:nir:stato:regio.decreto:1942;267:1~art217|alias|legge fall
+art. 10 dello Statuto del contribuente|urn:nir:stato:legge:2000;212~art10|alias|statuto contribuente
+art. 33 codice del consumo|urn:nir:stato:decreto.legislativo:2005;206~art33|alias|codice consumo
+art. 80 del codice dei contratti pubblici|urn:nir:stato:decreto.legislativo:2016;50~art80|alias|codice contratti
+art. 2495 c.c.|urn:nir:stato:regio.decreto:1942;262:2~art2495|alias|cod civ
+art. 132 c.p.c.|urn:nir:stato:regio.decreto:1940;1443:1~art132|alias|cpc
+art. 606 c.p.p.|urn:nir:stato:decreto.del.presidente.della.repubblica:1988;447~art606|alias|cpp
+art. 314 codice penale|urn:nir:stato:regio.decreto:1930;1398:1~art314|alias|codice penale
+art. 167 del TUIR|urn:nir:presidente.repubblica:decreto:1986;917~art167|alias|tuir
+art. 67 della legge fallimentare|urn:nir:stato:regio.decreto:1942;267:1~art67|alias|legge fall
+art. 7 del codice dell'amministrazione digitale|urn:nir:stato:decreto.legislativo:2005;82~art7|alias|CAD
+Cass. n. 12345/2020|ECLI:IT:CASS:2020:12345CIV|jur|cassazione (def. CIV)
+Cass. 10266/2018, 30927/2018|ECLI:IT:CASS:2018:10266CIV ECLI:IT:CASS:2018:30927CIV|jur|number list
+Cass. civ. sez. trib. n. 12345 del 2020|ECLI:IT:CASS:2020:12345CIV|jur|cass del-year
+Corte di Cassazione, sentenza n. 5/2019|ECLI:IT:CASS:2019:5CIV|jur|cass full
+Cass. SS.UU. n. 1234/2018|ECLI:IT:CASS:2018:1234CIV|jur|cass sez unite
+Cassazione civile, sez. V, 14 maggio 2020, n. 8967|ECLI:IT:CASS:2020:8967CIV|jur|cass+date
+Corte cost. n. 200/2019|ECLI:IT:COST:2019:200|jur|corte cost
+Corte costituzionale n. 24 del 2017|ECLI:IT:COST:2017:24|jur|corte cost full
+Corte cost., sent. n. 10 del 2015|ECLI:IT:COST:2015:10|jur|corte cost
+Consiglio di Stato n. 100/2021|ECLI:IT:CONSSTATO:2021:100|jur|cons stato
+Cons. Stato, sez. IV, n. 250/2020|ECLI:IT:CONSSTATO:2020:250|jur|cons stato abbrev
+C.T.R. Lombardia n. 100/2021|ECLI:IT:CTRLOM:2021:100|jur|ctr region
+C.T.R. Lombardia n. 50/2020|ECLI:IT:CTRLOM:2020:50|jur|ctr region
+Commissione Tributaria Regionale del Lazio n. 2291/2022|ECLI:IT:CTRLAZ:2022:2291|jur|ctr full
+Comm. Trib. Reg. Campania n. 500/2019|ECLI:IT:CTRCAM:2019:500|jur|ctr
+Commissione Tributaria Provinciale di Milano n. 50/2018|ECLI:IT:CTPMI:2018:50|jur|ctp province
+C.T.P. Milano n. 30/2019|ECLI:IT:CTPMI:2019:30|jur|ctp abbrev
+Corte di Giustizia Tributaria di primo grado di Torino n. 10/2024|ECLI:IT:CTPTO:2024:10|jur|cgt primo grado
+Corte di Giustizia Tributaria di secondo grado della Toscana n. 45/2024|ECLI:IT:CTRTOS:2024:45|jur|cgt secondo grado
+Corte d'Appello di Roma n. 5/2022|ECLI:IT:CAPPRM:2022:5|jur|corte appello
+Corte d'Appello di Napoli n. 7/2022|ECLI:IT:CAPPNA:2022:7|jur|corte appello
+Corte d'Appello di Bologna n. 12/2021|ECLI:IT:CAPPBO:2021:12|jur|corte appello
+Tribunale di Napoli sent. n. 30/2019|ECLI:IT:TRIBNA:2019:30|jur|tribunale capoluogo
+Tribunale di Milano n. 200/2018|ECLI:IT:TRIBMI:2018:200|jur|tribunale capoluogo
+Tribunale di Tivoli n. 7/2021|ECLI:IT:TRIBL182:2021:7|jur|tribunale small city (catastale)
+Tribunale di Busto Arsizio n. 5/2021|ECLI:IT:TRIBB300:2021:5|jur|tribunale catastale
+Tribunale di Verona n. 33/2018|ECLI:IT:TRIBVR:2018:33|jur|tribunale capoluogo
+Giudice di Pace di Roma n. 3/2020|ECLI:IT:GDPRM:2020:3|jur|giudice di pace
+Corte dei Conti n. 45/2019|ECLI:IT:CCONTI:2019:45|jur|corte conti
+Direttiva 2006/112/CE|CELEX:32006L0112|eu|directive (year/number)
+direttiva 2006/112/CE del Consiglio|CELEX:32006L0112|eu|directive
+Direttiva 2008/9/CE|CELEX:32008L0009|eu|directive
+Direttiva 77/388/CEE|CELEX:31977L0388|eu|old YY/NNN order (linkengine gap)
+Direttiva 2014/24/UE|CELEX:32014L0024|eu|directive
+Regolamento (UE) n. 1215/2012|CELEX:32012R1215|eu|regulation
+Regolamento (CE) n. 1346/2000|CELEX:32000R1346|eu|regulation
+Regolamento (CEE) n. 2913/92|CELEX:31992R2913|eu|regulation 2-digit year
+Regolamento (UE) 2016/679|CELEX:32016R0679|eu|GDPR
+art. 4 del regolamento (UE) 2016/679|CELEX:32016R0679~art4|eu|regulation+art
+Raccomandazione 2003/361/CE|CELEX:32003H0361|eu|recommendation
+decisione 2009/470/CE|CELEX:32009D0470|eu|decision
+articolo 267 TFUE|CELEX:12012E/TXT~art267|eu|treaty alias
+art. 49 del TFUE|CELEX:12012E/TXT~art49|eu|treaty
+art. 110 del Trattato sul funzionamento dell'Unione europea|CELEX:12012E/TXT~art110|eu|treaty full
+articolo 6 del Trattato sull'Unione europea|CELEX:12016ME/TXT~art6|eu|TUE
+Circolare Agenzia delle Entrate n. 12/2009|PRAX:AE:CIRC:2009:12|prassi|AdE circolare
+Risoluzione Agenzia Entrate n. 337/E/2002|PRAX:AE:RIS:2002:337/E|prassi|AdE risoluzione N/E
+circolare n. 36/E del 2016|PRAX:AE:CIRC:2016:36/E|prassi|circolare N/E del-year
+Risoluzione n. 140/E/2017|PRAX:AE:RIS:2017:140/E|prassi|risoluzione N/E
+circolare AdE n. 9/E del 2021|PRAX:AE:CIRC:2021:9/E|prassi|circolare
+risoluzione dell'Agenzia delle Entrate n. 200/E/2008|PRAX:AE:RIS:2008:200/E|prassi|risoluzione
+circolare n. 1/E del 2018|PRAX:AE:CIRC:2018:1/E|prassi|circolare
+Risoluzione Agenzia delle Entrate n. 75/E del 2019|PRAX:AE:RIS:2019:75/E|prassi|risoluzione
+Convenzione Italia-Francia, art. 15|urn:nir:stato:legge:1992;20~art15|conv|doppia imposizione -> ratification law (Italy-France)
+art. 19 Convenzione contro le doppie imposizioni tra Italia e Spagna|urn:nir:stato:legge:1980;663~art19|conv|treaty, country after; ratification law
+Convenzione Italia-Turchia contro la doppia imposizione, artt. 15 e 23|urn:nir:stato:legge:1993;195~art15 urn:nir:stato:legge:1993;195~art23|conv|treaty + two articles
+L. reg. Campania n. 28 del 2003|urn:nir:regione.campania:legge:2003;28|reg|legge regionale + region name
+art. 13 l. reg. Campania 26 luglio 2002 n. 15|urn:nir:regione.campania:legge:2002;15~art13|reg|legge regionale + date + article
+L. Regione Campania n. 4/2007|urn:nir:regione.campania:legge:2007;4|reg|"L. Regione" form
+decisione 2003/33/CE|CELEX:32003D0033|eu|EU decision -> CELEX sector 3, letter D
+raccomandazione 2003/361/CE|CELEX:32003H0361|eu|EU recommendation -> letter H
+regolamento (CE) n. 1083/2006|CELEX:32006R1083|eu|EU regulation, "(CE)" form
+cause riunite C-1/20 e C-2/20|CELEX:62020CJ0001|eu|joined cases -> single celex (smallest)
+sentenza del Tribunale UE T-456/19|CELEX:62019TJ0456|eu|General Court (T-) -> TJ
+Consiglio di Stato, sez. IV, n. 567/2019|ECLI:IT:CONSSTATO:2019:567|jur|Consiglio di Stato ECLI
+Corte dei Conti, sez. giurisdizionale, n. 89/2021|ECLI:IT:CCONTI:2021:89|jur|Corte dei Conti ECLI
+Tribunale di Milano, ord. 15 marzo 2021, n. 99|ECLI:IT:TRIBMI:2021:99|jur|tribunale ordinanza + capoluogo targa
+Corte cost., sentenza n. 10/2020|ECLI:IT:COST:2020:10|jur|Corte Costituzionale ECLI
+legge 23 dicembre 2014, n. 190|urn:nir:stato:legge:2014;190|norm|legge with full date
+decreto-legge 19 maggio 2020, n. 34|urn:nir:stato:decreto.legge:2020;34|norm|decreto-legge full date
+d.P.R. 22 dicembre 1986, n. 917|urn:nir:presidente.repubblica:decreto:1986;917|norm|DPR full date (TUIR act)
+art. 633 codice penale|urn:nir:stato:regio.decreto:1930;1398:1~art633|alias|codice penale full name
+art. 2059 c.c.|urn:nir:stato:regio.decreto:1942;262:2~art2059|alias|codice civile abbreviation
+art. 1 della legge costituzionale n. 3/2001|urn:nir:stato:legge.costituzionale:2001;3~art1|norm|legge costituzionale -> LC path
+Corte d'Assise di Milano n. 5/2019|ECLI:IT:ASSMI:2019:5|jur|Corte d'Assise ECLI
+Corte d'Assise d'Appello di Roma n. 12/2020|ECLI:IT:ASSAPPRM:2020:12|jur|Corte d'Assise d'Appello ECLI
+Tribunale di Sorveglianza di Roma n. 100/2020|ECLI:IT:TRIBSORVRM:2020:100|jur|Tribunale di Sorveglianza ECLI
+Commissione Tributaria Centrale n. 123/1989|ECLI:IT:CTCIT:1989:123|jur|Commissione Tributaria Centrale (no city) -> CTCIT
+C.T.C. n. 456/2008|ECLI:IT:CTCIT:2008:456|jur|C.T.C. abbreviation -> CTCIT
+delibera del Comune di Roma n. 50/2020|DEL:CORM:2020:50|other|delibera comunale -> DEL:CO{city}
+deliberazione del Comune di Milano n. 30 del 2019|DEL:COMI:2019:30|other|delibera comunale, capoluogo Milano
+art. 15, comma 2-septies, del D.Lgs. n. 546/1992|urn:nir:stato:decreto.legislativo:1992;546~art15-comma2septies|norm|bdgt real: latin suffix 2-septies
+art. 39, comma 1, lett. d) d.p.r. n. 600/73|urn:nir:presidente.repubblica:decreto:1973;600~art39-comma1-letd|norm|bdgt real: lett + 2-digit year
+art. 7, co. 1 lett. i), del d.lgs. n. 504/1992|urn:nir:stato:decreto.legislativo:1992;504~art7-comma1-leti|norm|cass real: 'co.' comma abbreviation
+art. 13, co. 1 quater del d.P.R. 30 maggio 2002, n. 115|urn:nir:presidente.repubblica:decreto:2002;115~art13-comma1quater|norm|cass real: comma 1-quater
+Cass. Ord. n. 10754/2017|ECLI:IT:CASS:2017:10754CIV|jur|cass real: ordinanza
+articolo 13 del d.lgs. n. 472 del 1997|urn:nir:stato:decreto.legislativo:1997;472~art13|prassi|prassi real (Risoluzione AdE)
+articolo 2, comma 7, del d.P.R. n. 322 del 1998|urn:nir:presidente.repubblica:decreto:1998;322~art2-comma7|prassi|prassi real (Risoluzione AdE)
+regolamento 2913/92|urn:nir:stato:regolamento:1992;2913|norm|bare regolamento -> national (no EU acronym)
+48 della legge 833/1978|urn:nir:stato:legge:1978;833~art48|norm|Cassazione leading-article 'N del ACT'
+art. 122 cod. proc. amm.|urn:nir:stato:decreto.legislativo:2010;104:2~art122|alias|abbreviation 'cod. proc. amm.'
+art. 123, comma 3, c.p.a.|urn:nir:stato:decreto.legislativo:2010;104:2~art123-comma3|alias|'c.p.a.' = codice processo amministrativo
+art. 264 cod. pen. mil. pace|urn:nir:stato:relazione.e.regio.decreto:1941;303:1~art264|alias|codice penale militare di pace (not c.p.)
+art. 22, comma 6, D.M. 31 gennaio 2014|DM2014-01-31~art22-comma6|norm|DM date-only with partition
+art. 13, lett. c) della VI Direttiva 77/388/CEE|CELEX:31977L0388~art13-letc|eu|old directive YY/NNN + article + lettera
+art. 21 quinquies della legge 7 agosto 1990, n. 241|urn:nir:stato:legge:1990;241~art21quinquies|norm|latin suffix quinquies on article
+Cass. 10.10.1962, n. 2920|ECLI:IT:CASS:1962:2920CIV|jur|older Cassazione: year from the date
+art. 12 L. 3/8/78 n. 405|urn:nir:stato:legge:1978;405~art12|norm|2-digit-year slashed date (1978)
+art. 39 del D.P.R. 12/2/65 n. 162|urn:nir:presidente.repubblica:decreto:1965;162~art39|norm|2-digit-year dotted date (1965)
+d.l.lgt. n. 1501 del 1947|urn:nir:luogotenente:decreto.legge:1947;1501|norm|decreto legge luogotenenziale
+decreto legislativo luogotenenziale n. 369/1944|urn:nir:luogotenente:decreto.legislativo:1944;369|norm|d.lgs. luogotenenziale
+art. 3 del d.l. C.P.S. n. 1501 del 1947|urn:nir:capo.provvisorio.stato:decreto.legge:1947;1501~art3|norm|decreto del Capo Provvisorio dello Stato
+Cass. n. 1234/5/2020|ECLI:IT:CASS:2020:1234CIV|jur|caselaw number/section/year
+D.P.R. 12/2/65 n. 162|urn:nir:presidente.repubblica:decreto:1965;162|norm|numeric date with 2-digit year
+All. A del D.P.R. n. 634 del 1972|urn:nir:presidente.repubblica:decreto:1972;634:a|norm|'All.' allegato abbreviation -> annex :a
+alleg. F della legge n. 2248 del 1865|urn:nir:stato:legge:1865;2248:f|norm|pre-1900 act (1865) + alleg. F
+D.P.C.M. n. 18 del 2020|urn:nir:presidente.consiglio.ministri:decreto:2020;18|norm|numbered DPCM
+decreto del Presidente del Consiglio dei Ministri n. 5/2021|urn:nir:presidente.consiglio.ministri:decreto:2021;5|norm|DPCM full form
+art. 269 c.p.c. e dell'art. 14, comma 3, del dlgs. n. 546/1992|urn:nir:stato:regio.decreto:1940;1443:1~art269 urn:nir:stato:decreto.legislativo:1992;546~art14-comma3|norm|partition right-binds to 'del <act>'
+art. 5 del codice civile e art. 3 del d.lgs. 546/1992|urn:nir:stato:regio.decreto:1942;262:2~art5 urn:nir:stato:decreto.legislativo:1992;546~art3|norm|two genitive-bound partitions to distinct acts
+sentenza della Corte Costituzionale n. 348/2007|ECLI:IT:COST:2007:348|jur|number reclaimed onto sentenza+authority
+ordinanza del Consiglio di Stato n. 567/2018|ECLI:IT:CONSSTATO:2018:567|jur|sentenza/ordinanza + authority + number binding
+Sezioni Unite, sentenze n. 2281/1990 e n. 13446/1991|ECLI:IT:CASS:1990:2281CIV ECLI:IT:CASS:1991:13446CIV|jur|Sezioni Unite -> CORTE_CASS, multi-number split
+le Sezioni Unite, sent. n. 5678/2014|ECLI:IT:CASS:2014:5678CIV|jur|SS.UU. standalone authority
+sentenza C. Cost. n. 188 del 2018|ECLI:IT:COST:2018:188|jur|'C. Cost.' + number -> Corte Cost (not the Constitution)
+art. 85 del T.U. imposte sui redditi|urn:nir:presidente.repubblica:decreto:1986;917~art85|alias|'T.U. imposte sui redditi' descriptive form -> TUIR
+art. 256 del Codice dell'ambiente|urn:nir:stato:decreto.legislativo:2006;152~art256|alias|'Codice dell'ambiente' -> d.lgs. 152/2006
+art. 13 del d.P.R. 600/1973, art. 54 del d.P.R. 633/1972 e art. 2697 c.c.|urn:nir:presidente.repubblica:decreto:1973;600~art13 urn:nir:presidente.repubblica:decreto:1972;633~art54 urn:nir:stato:regio.decreto:1942;262:2~art2697|series|3-act series, each partition to its own act
+artt. 1 e 2 del d.lgs. 546/1992 e art. 360, comma 1, n. 3, c.p.c.|urn:nir:stato:decreto.legislativo:1992;546~art1 urn:nir:stato:decreto.legislativo:1992;546~art2 urn:nir:stato:regio.decreto:1940;1443:1~art360-comma1-num3|series|list + bare-adjacency: art360-comma1-num3 binds to the c.p.c. on its right
+art. 100 c.p.c., art. 23 della legge 689/1981 e art. 5 del d.lgs. 472/1997|urn:nir:stato:regio.decreto:1940;1443:1~art100 urn:nir:stato:legge:1981;689~art23 urn:nir:stato:decreto.legislativo:1997;472~art5|series|three acts, mixed alias/legge/dlgs connectors
+violazione degli artt. 36 e 61 del d.lgs. 546/1992 nonche' dell'art. 132 c.p.c.|urn:nir:stato:decreto.legislativo:1992;546~art36 urn:nir:stato:decreto.legislativo:1992;546~art61 urn:nir:stato:regio.decreto:1940;1443:1~art132|series|range list to one act + a separate alias citation
+Cass.1532/2012|ECLI:IT:CASS:2012:1532CIV|jur|attached form: abbreviation directly followed by number/year (no space)
+art.23 della l.241/90|urn:nir:stato:legge:1990;241~art23|norm|attached 'l.241' no-space + 2-digit year
+art.1, co.707, della L.147/2013|urn:nir:stato:legge:2013;147~art1-comma707|norm|dense no-space citation art.N/co.N/della L.N
+art. 69 cod.proc.civ.|urn:nir:stato:regio.decreto:1940;1443:1~art69|alias|no-space code alias cod.proc.civ. -> c.p.c.
+art. 2697 cod.civ.|urn:nir:stato:regio.decreto:1942;262:2~art2697|alias|no-space code alias cod.civ. -> c.c.
+art. 81 cod.proc.pen.|urn:nir:stato:decreto.del.presidente.della.repubblica:1988;447~art81|alias|no-space cod.proc.pen. -> c.p.p.
+direttiva 90/435|CELEX:31990L0435|eu|old EU directive 2-digit-year-first (90/435 = number 435, year 1990)
+art. 12 della direttiva 69/335|CELEX:31969L0335~art12|eu|EU directive year/number with article
+art. 5, n. 1, della direttiva 90/435|CELEX:31990L0435~art5-num1|eu|EU directive year/number with article+numero partition
+direttive 92/83/CEE e 92/84/CEE|CELEX:31992L0083 CELEX:31992L0084|eu|plural 'direttive' + multi-CELEX
+articolo 235 del Trattato CEE|CELEX:11957E/TXT~art235|eu|treaty article (EEC Treaty)
+art. 267 del TFUE|CELEX:12012E/TXT~art267|eu|TFUE article
+circolare 12/E/2020|PRAX:AE:CIRC:2020:12/E|prassi|AdE circolare NNN/E/YYYY without 'n.' prefix
+risoluzione 22/E/2005|PRAX:AE:RIS:2005:22/E|prassi|AdE risoluzione NNN/E/YYYY without 'n.'
+circolari n. 34/E/2013|PRAX:AE:CIRC:2013:34/E|prassi|plural 'circolari' -> CIRC
+Cass. 2968-73|ECLI:IT:CASS:1973:2968CIV|jur|historical dash number-year (Cassazione), context-guarded
+Cass. S.U. 6477-84|ECLI:IT:CASS:1984:6477CIV|jur|dash number-year with S.U. -> CORTE_CASS
+art. 37 della legge 300-1970|urn:nir:stato:legge:1970;300~art37|norm|dash number-year on a legge + article
+D.P.R. n. 873-78|urn:nir:presidente.repubblica:decreto:1978;873|norm|dash number-year (2-digit year) on a d.P.R.
+CGT 2° grado Lazio n. 100/2024|ECLI:IT:CTRLAZ:2024:100|jur|CGT secondo grado -> CTR/region
+CGT di secondo grado del Lazio, sez. 18, n. 1731/2024|ECLI:IT:CTRLAZ:2024:1731|jur|CGT secondo grado full form -> CTR
+Corte di Giustizia Tributaria di II Grado Emilia Romagna n. 536/2023|ECLI:IT:CTREMR:2023:536|jur|CGT II grado -> CTR Emilia-Romagna
+CGT 1 Napoli n.123/2020|ECLI:IT:CTPNA:2020:123|jur|CGT primo grado + city
+C.G.T. di Primo Grado di Torino, sentenza n. 924/2023|ECLI:IT:CTPTO:2023:924|jur|CGT primo grado -> CTP Torino
+CGT Prato 87/2023|ECLI:IT:CTPPO:2023:87|jur|CGT bare city (Prato) -> CTP, catastale-targa code PO
+causa T-123/20|CELEX:62020TJ0123|eu|CJEU General Court case (T-) -> CELEX TJ
+causa C-152/02, punto 35|CELEX:62002CJ0152~num35|eu|CJEU case + punto -> CELEX with locator
+art. 13 del TUF|urn:nir:stato:decreto.legislativo:1998;58~art13|alias|TUF (testo unico della finanza) -> d.lgs. 58/1998
+Cass. n. 08508/2019|ECLI:IT:CASS:2019:8508CIV|jur|cass leading-zero stripped
+Cassazione Civile, Sezione Tributaria, 14 gennaio 2015 n. 428|ECLI:IT:CASS:2015:428CIV|jur|cass date-bridge + sez trib
+Cassazione Civile, sezione V, 6 febbraio 2019, n. 3389|ECLI:IT:CASS:2019:3389CIV|jur|cass date-bridge sezione V
+L.R. Lombardia n. 16/2016|urn:nir:regione.lombardia:legge:2016;16|reg|L.R. abbrev + region
+art. 4 L.R. Veneto 30 dicembre 1993, n. 63|urn:nir:regione.veneto:legge:1993;63~art4|reg|L.R. region + date
+art. 90 L.R. n. 10/2003 (Regione Lombardia)|urn:nir:regione.lombardia:legge:2003;10~art90|reg|region in paren tail
+Corte Europea di Giustizia, causa 276/12 Jiri Sabou|CELEX:62012CJ0276|eu|cgue causa no-prefix
+sentenza CGUE 8 dicembre 1970, causa 14-70|CELEX:61970CJ0014|eu|cgue dash-year causa
+Corte di Giustizia CEE 28 giugno 1977, causa 11/77|CELEX:61977CJ0011|eu|cgue CEE authority
+sentenze CGUE 18 marzo 1980, cause 91/79 e 92/79|CELEX:61979CJ0091 CELEX:61979CJ0092|eu|cgue case list
+Reg. UE 2017/2093|CELEX:32017R2093|eu|Reg. UE bare acronym
+art. 17 Reg. UE n. 1186/2009|CELEX:32009R1186~art17|eu|Reg. UE n. + art
+art. 1, comma 1, lett. d, Dir. CEE n. 2015/2366|CELEX:32015L2366~art1-num1-letd|eu|Dir. CEE
+art. 140 Reg. UE n. 2015/2447|CELEX:32015R2447~art140|eu|Reg. UE year/number
+art. 28 TU successioni|urn:nir:stato:decreto.legislativo:1990;346~art28|alias|TUS recognition
+art. 2, comma 47 TUS|urn:nir:stato:decreto.legislativo:1990;346~art2-comma47|alias|TUS abbrev
+art. 34 Testo Unico delle Leggi Doganali (TULD)|urn:nir:presidente.repubblica:decreto:1973;43~art34|alias|TULD leggi-plural
+art. 133, comma 1, lett. l) codice processo amministrativo|urn:nir:stato:decreto.legislativo:2010;104:2~art133-comma1-letl|alias|c.p.a. no-del
+CTR Lombardia 1824/25/2020|ECLI:IT:CTRLOM:2020:1824|jur|cgt 3-part docket
+CTP Milano 8422/42/2014|ECLI:IT:CTPMI:2014:8422|jur|cgt 3-part docket
+CTR Emilia-Romagna, collegio 11, n. 716 del 05/06/2020|ECLI:IT:CTREMR:2020:716|jur|cgt hyphen region
+art. 7 L. n° 212/2000|urn:nir:stato:legge:2000;212~art7|norm|n° degree marker
+art. 1, comma 186, L 197/2022|urn:nir:stato:legge:2022;197~art1-comma186|norm|dot-less L
+art. 249 codice procedura civile|urn:nir:stato:regio.decreto:1940;1443:1~art249|alias|c.p.c. no-di
+art. 206 cod. strada|urn:nir:stato:decreto.legislativo:1992;285~art206|alias|cod. strada abbrev
+Convenzione Italia-Svizzera 1976, art. 4|urn:nir:stato:legge:1978;943~art4|conv|CH ratification
+Convenzione Italia-Gran Bretagna, art. 24|urn:nir:stato:legge:1990;329~art24|conv|gran bretagna
+art. 12 Convenzione italo-austriaca 16 novembre 1971|urn:nir:stato:legge:1984;762~art12|conv|austriaca adjective
+Cassazione Sez. Unite nn. 26636 e 26637 del 18.12.2009|ECLI:IT:CASS:2009:26636CIV ECLI:IT:CASS:2009:26637CIV|jur|nn plural list + date
+Tariffa Doganale Comune|TARIFFA_DOGANALE_COM|alias|special self-urn
+art. 6 n. 2 Convenzione di Bruxelles 27 settembre 1968|CELEX:41998A0126~art6-num2|conv|bruxelles alias
+Dir. 69/335/CEE|CELEX:31969L0335|eu|old directive year/number
+Cassazione 1998, n. 4775|ECLI:IT:CASS:1998:4775CIV|jur|cass year-first n.
+Cass. S.U. 1990 n. 11490|ECLI:IT:CASS:1990:11490CIV|jur|cass S.U. year-first
+art. 1 L.R. n. 2/1971 Toscana|urn:nir:regione.toscana:legge:1971;2~art1|reg|region after number
+T.A.R. Lombardia sez. II 29 marzo 1995 n. 466|ECLI:IT:TARLOM:1995:466|jur|TAR ecli
+Corte di Giustizia CE 15 settembre 1998, cause riunite C-279, 280 e 281/96|CELEX:61996CJ0279|eu|cause riunite single smallest
+sentenza CGUE 19 giugno 1973, 77/72|CELEX:61972CJ0077|eu|cgue authority + bare number (no causa)
+Corte di Giustizia dell'Unione Europea n. 456/2018|CELEX:62018CJ0456|eu|cgue full name + n.
+legge finanziaria 2008|urn:nir:stato:legge:2007;244|norm|legge finanziaria -> enacting legge
+finanziaria 1999|urn:nir:stato:legge:1998;449|norm|finanziaria bare
+legge di bilancio 2023|urn:nir:stato:legge:2022;197|norm|legge di bilancio
+legge di bilancio 2018|urn:nir:stato:legge:2017;205|norm|legge di bilancio
