@@ -75,7 +75,8 @@ ALIASES: List[Alias] = [
           patterns=(r"codice\s+(?:di\s+)?procedura\s+penale|cod\.?\s*proc\.?\s*pen\.?|\bc\.?\s?p\.?\s?p\.?\b",)),
     # COD_CIV also covers the "preleggi" (disposizioni preliminari al codice civile).
     Alias("COD_CIV", nir="stato:regio.decreto:1942-03-16;262:2", display="codice civile",
-          patterns=(r"codice\s+civile|cod\.?\s*civ\.?|\bc\.?\s?c\.?\b", r"\bpreleggi\b")),
+          patterns=(r"codice\s+civile|cod\.?\s*civ\.?|\bc\.?\s?c\.?\b(?!\.?\s*n\.?\s*l)",
+                    r"\bpreleggi\b")),
     Alias("COD_PEN", nir="stato:regio.decreto:1930-10-19;1398:1", display="codice penale",
           patterns=(r"codice\s+penale|cod\.?\s*pen\.?|\bc\.?\s?p\.?\b",)),
     Alias("COD_STRADA", nir="stato:decreto.legislativo:1992-04-30;285", display="codice della strada",
@@ -94,7 +95,7 @@ ALIASES: List[Alias] = [
     Alias("COD_PROPR_INDUSTRIALE", nir="stato:decreto.legislativo:2005-02-10;30",
           patterns=(r"codice\s+della\s+propriet[aà]\s+industriale",)),
     Alias("COD_NAVIG", nir="stato:regio.decreto:1942-03-30;327:1", display="codice della navigazione",
-          patterns=(r"codice\s+(?:della\s+)?navigazione",)),
+          patterns=(r"codice\s+(?:della\s+)?navigazione|cod\.?\s*nav\.?|\bc\.?\s?nav\.?\b",)),
     Alias("COD_ASSICURAZIONI_PRIV", nir="stato:decreto.legislativo:2005-09-07;209",
           patterns=(r"codice\s+delle\s+assicurazioni(?:\s+private)?",)),
     Alias("COD_BENI_CULT", nir="stato:decreto.legislativo:2004-01-22;42", display="codice dei beni culturali",
@@ -109,6 +110,36 @@ ALIASES: List[Alias] = [
     # contribuente/i" / bare "contribuente".
     Alias("STATUTO_CONTRIB", nir="stato:legge:2000-07-27;212", display="Statuto del contribuente",
           patterns=(r"statuto\s+(?:del\s+|dei\s+diritti\s+de[il]\s+)?contribuent[ei]",)),
+    # Statuti delle regioni a autonomia speciale, approvati con legge costituzionale.
+    Alias("STATUTO_REG_SICILIA", nir="stato:legge.costituzionale:1948-02-26;2",
+          display="Statuto della Regione Siciliana",
+          patterns=(r"statuto(?:\s+speciale)?\s+(?:della\s+)?regione\s+(?:sicilia|siciliana)\b",)),
+    Alias("STATUTO_REG_SARDEGNA", nir="stato:legge.costituzionale:1948-02-26;3",
+          display="Statuto speciale della Sardegna",
+          patterns=(r"statuto(?:\s+speciale)?\s+(?:della\s+)?regione\s+(?:sardegna|sarda)\b",)),
+    Alias("STATUTO_REG_VALLE_AOSTA", nir="stato:legge.costituzionale:1948-02-26;4",
+          display="Statuto speciale della Valle d'Aosta",
+          patterns=(
+              r"statuto(?:\s+speciale)?\s+(?:della\s+)?regione(?:\s+autonoma)?\s+"
+              r"valle\s+d['’]\s*aosta\b",
+              r"statuto\s+speciale\s+(?:della|per\s+la)\s+valle\s+d['’]\s*aosta\b",
+          )),
+    Alias("STATUTO_REG_TRENTINO_ALTO_ADIGE",
+          nir="stato:legge.costituzionale:1948-02-26;5",
+          display="Statuto speciale del Trentino-Alto Adige",
+          patterns=(
+              r"statuto(?:\s+speciale)?\s+(?:della\s+)?regione(?:\s+autonoma)?\s+"
+              r"trentino[\s-]+alto\s+adige\b",
+              r"statuto\s+speciale\s+(?:del|per\s+il)\s+trentino[\s-]+alto\s+adige\b",
+          )),
+    Alias("STATUTO_REG_FRIULI_VENEZIA_GIULIA",
+          nir="stato:legge.costituzionale:1963-01-31;1",
+          display="Statuto speciale del Friuli-Venezia Giulia",
+          patterns=(
+              r"statuto(?:\s+speciale)?\s+(?:della\s+)?regione(?:\s+autonoma)?\s+"
+              r"friuli[\s-]+venezia\s+giulia\b",
+              r"statuto\s+speciale\s+(?:del|per\s+il)\s+friuli[\s-]+venezia\s+giulia\b",
+          )),
     Alias("ORDIN_PENIT", nir="stato:legge:1975-07-26;354", display="ordinamento penitenziario",
           patterns=(r"ordinamento\s+penitenziario",)),
 
@@ -139,7 +170,7 @@ ALIASES: List[Alias] = [
                     r"\bt\.?u\.?s\.?\b",
                     r"imposta\s+sull[e'’]\s?successioni\s+e\s+donazioni")),
     Alias("TU_AMBIENTE", nir="stato:decreto.legislativo:2006-04-03;152", display="codice dell'ambiente",
-          patterns=(r"testo\s+unico\s+ambiental[ei]|codice\s+dell['’]?\s?ambiente",)),
+          patterns=(r"testo\s+unico\s+ambiental[ei]|codice\s+dell['’]?\s?ambiente|\bt\.?\s?u\.?\s?a\.?\b",)),
     Alias("TU_ACCISE", nir="stato:decreto.legislativo:1995-10-26;504", display="Testo Unico Accise",
           patterns=(r"testo\s+unico\s+(?:delle\s+)?accise",)),
     Alias("TU_STUPEFACENTI", nir="presidente.repubblica:decreto:1990-10-09;309",
@@ -191,7 +222,7 @@ ALIASES: List[Alias] = [
     Alias("TRATTATO_CE", "eu", celex="CELEX:12002E/TXT",              # trattato CE (Maastricht, cons. 2002)
           patterns=(r"trattato\s+(?:c\.?e\.?|che\s+istituisce\s+la\s+comunit[aà]\s+europea)\b",)),
     Alias("CARTA_DIR_FOND_UE", "eu", celex="CELEX:12012P/TXT",        # Carta dei diritti fondamentali UE
-          patterns=(r"carta\s+dei\s+diritti\s+fondamentali",)),
+          patterns=(r"carta\s+dei\s+diritti\s+fondamentali|\bc\.?d\.?f\.?u\.?e\.?\b",)),
     Alias("GDPR", "eu", celex="CELEX:32016R0679",                    # reg. (UE) 2016/679
           patterns=(r"\b(?:gdpr|rgpd)\b",)),
     Alias("COD_DOGANALE_COMUN", "eu", celex="CELEX:31992R2913",       # codice doganale comunitario (CEE 2913/92)
@@ -213,7 +244,15 @@ ALIASES: List[Alias] = [
 
 # aliases that are a complete reference on their own (no cited partition/number required) and
 # whose URN is just the alias token.
-SELF_VALID_ALIASES = frozenset({"TARIFFA_DOGANALE_COM"})
+SELF_VALID_ALIASES = frozenset({
+    "STATUTO_CONTRIB",
+    "STATUTO_REG_SICILIA",
+    "STATUTO_REG_SARDEGNA",
+    "STATUTO_REG_VALLE_AOSTA",
+    "STATUTO_REG_TRENTINO_ALTO_ADIGE",
+    "STATUTO_REG_FRIULI_VENEZIA_GIULIA",
+    "TARIFFA_DOGANALE_COM",
+})
 
 
 # ── Derived per-field maps (consumed elsewhere; do not edit — edit ALIASES above) ──
@@ -226,10 +265,10 @@ ALIAS_PATTERNS = [(p, a.code) for a in ALIASES for p in a.patterns]
 
 _ALIAS_COMPILED = [(re.compile(p, I), v) for p, v in ALIAS_PATTERNS]
 
-# bare "CE" as the EC Treaty, but *only* right after an article partition ("articolo 56 CE",
-# "articolo 58, paragrafo 3, CE") — a special recognizer for TRATTATO_CE that captures just the
-# "CE" sub-group. The article-prefix guard keeps a stray "CE" from becoming a phantom citation.
-_CE_TRATTATO = re.compile(r"\bart(?:icol[oi]|\.)?\s*\d+[^.;]{0,45}?[\s,]+(CE)\b", I)
+# Bare "CE" as the EC Treaty, only after an article within the treaty's actual range. The upper
+# bound blocks common OCR damage where "c.c." becomes "ce" ("art. 2303 ce").
+_CE_TRATTATO = re.compile(
+    r"\bart(?:icol[oi]|\.)?\s*(\d{1,3})(?!\d)[^.;]{0,45}?[\s,]+(CE)\b", I)
 
 
 def recognize_aliases(text: str, nonoverlap) -> List[Span]:
@@ -238,7 +277,8 @@ def recognize_aliases(text: str, nonoverlap) -> List[Span]:
         for m in pat.finditer(text):
             spans.append(Span(m.start(), m.end(), Entity.ALIAS, value, m.group(0)))
     for m in _CE_TRATTATO.finditer(text):
-        spans.append(Span(m.start(1), m.end(1), Entity.ALIAS, "TRATTATO_CE", m.group(1)))
+        if int(m.group(1)) <= 314:
+            spans.append(Span(m.start(2), m.end(2), Entity.ALIAS, "TRATTATO_CE", m.group(2)))
     return nonoverlap(spans)
 
 

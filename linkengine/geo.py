@@ -7,8 +7,8 @@ runtime. A few provinces are represented via their catastale code (Verbania, Pes
 Forlì, Massa-Carrara).
 
 ECLI usage:
-  * CTR / Corte Giust. Trib. 2º grado -> needs ``region`` (3-letter)
-  * CTP / Corte Giust. Trib. 1º grado / Tribunale / Corte d'Appello / Assise / Giudice di
+  * CTR / CGT second grade -> needs ``region`` (3-letter)
+  * CTP / CGT first grade / Tribunale / Corte d'Appello / Assise / Giudice di
     Pace -> needs ``city`` (2-letter province)
 """
 from __future__ import annotations
@@ -43,9 +43,10 @@ PROVINCE_NAME_TO_CODE = {
     'siena': 'SI', 'siracusa': 'SR', 'sondrio': 'SO', 'taranto': 'TA', 'teramo': 'TE',
     'terni': 'TR', 'torino': 'TO', 'trapani': 'TP', 'treviso': 'TV', 'trieste': 'TS',
     'udine': 'UD', 'varese': 'VA', 'venezia': 'VE', 'vercelli': 'VC', 'verona': 'VR',
-    'vibo valentia': 'VV', 'vicenza': 'VI', 'viterbo': 'VT',
+    'vibo valentia': 'VV', 'vicenza': 'VI', 'viterbo': 'VT', 'trento': 'TN', 'bolzano': 'BZ',
     # provinces represented via their catastale code (added by hand)
-    'verbania': 'VB', 'pesaro': 'PU', 'forli': 'FC', 'massa carrara': 'MS',
+    'verbania': 'VB', 'pesaro': 'PU', 'forli': 'FC', 'forli cesena': 'FC',
+    'cesena': 'FC', 'massa carrara': 'MS',
     'massa': 'MS', 'carrara': 'MS',
 }
 
@@ -100,7 +101,19 @@ def province_code(name: str):
 
 
 def region_code(name: str):
-    return REGION_NAME_TO_CODE.get(strip_accents(name))
+    """Normalize a region name, 3-letter ECLI code, or urn:nir segment to its code."""
+    if not name:
+        return None
+    raw = str(name).strip()
+    upper = raw.upper()
+    if upper in REGION_CODE_TO_URN:
+        return upper
+    urn = strip_accents(raw).replace("-", ".").replace(" ", ".")
+    if urn in REGION_CODE_TO_URN.values():
+        return next(code for code, value in REGION_CODE_TO_URN.items() if value == urn)
+    normalized = strip_accents(raw).replace("’", "'").replace("-", " ").replace(".", " ")
+    normalized = " ".join(normalized.split())
+    return REGION_NAME_TO_CODE.get(normalized)
 
 
 # region code -> urn:nir region segment (e.g. "regione.campania")
@@ -113,20 +126,33 @@ REGION_CODE_TO_URN = {
     "VDA": "valle.aosta", "VEN": "veneto",
 }
 
+# Unlike every other second-grade tax court, Trentino-Alto Adige has one court for each
+# autonomous province. The generic city resolver yields cadastral codes for these cities;
+# only a second-grade tax-court reference translates them to its ECLI province component.
+AUTONOMOUS_TAX_CITY_TO_GEO = {"L378": "TN", "A952": "BZ"}
+AUTONOMOUS_TAX_GEO_NAMES = {"TN": "Trento", "BZ": "Bolzano"}
+
 
 def region_urn(name: str):
-    """A region name (or already-normalized urn segment) -> its urn:nir segment, or None."""
+    """A region name, code, or urn segment -> its urn:nir segment, or None."""
     code = region_code(name)
-    if code:
-        return REGION_CODE_TO_URN.get(code)
-    canon = strip_accents(name).replace(" ", ".")
-    return canon if canon in set(REGION_CODE_TO_URN.values()) else None
+    return REGION_CODE_TO_URN.get(code) if code else None
 
 
 def city_code(name: str):
     """Province 2-letter targa for a capoluogo (Roma->RM), else the comune catastale code
-    (Tivoli->L182)."""
+    (Tivoli->L182). Existing targa and catastale codes are accepted too."""
+    if not name:
+        return None
+    raw = str(name).strip()
+    upper = raw.upper()
+    if upper in PROVINCE_NAME_TO_CODE.values() or upper in MUNICIPALITY_NAME_TO_CODE.values():
+        return upper
     n = strip_accents(name)
+    # Trento and Bolzano use their cadastral city codes outside the tax-court-specific ECLI
+    # path. Their TN/BZ province components are applied later only for tax-court references.
+    if n in {"trento", "bolzano"}:
+        return MUNICIPALITY_NAME_TO_CODE.get(n)
     return PROVINCE_NAME_TO_CODE.get(n) or MUNICIPALITY_NAME_TO_CODE.get(n)
 
 

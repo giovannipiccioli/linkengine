@@ -13,6 +13,10 @@ from typing import Callable, List, Optional
 
 from .model import Entity, Span, MONTHS
 from .normalize import norm_latin_suffix, norm_year, valid_date, valid_year
+from .special_cases import (
+    is_agenzia_composite_number_prefix,
+    protocol_is_provvedimento_number,
+)
 
 I = re.IGNORECASE
 
@@ -33,16 +37,35 @@ _MONTH_RE = re.compile(
     r"\b(\d{1,2})[°ºo]?\s+(" + "|".join(MONTHS) + r")\s+(\d{4})\b", I)   # incl. "1° gennaio"
 # numeric date; the year may be 2- or 4-digit ("D.P.R. 12/2/65 n. 162" -> 1965)
 _NUM_DATE_RE = re.compile(r"\b(\d{1,2})\s?[/.\-]\s?(\d{1,2})\s?[/.\-]\s?(\d{2}|\d{4})\b")
+# a *procedural* date — when a pronouncement was filed / published / served / served notice /
+# entered on the docket — is NOT the act's own date and must not bind to (or extend) a citation:
+# "sentenza n. 100/2020 ... pubblicata il 26.09.2023". Marked role="proc" and dropped by the
+# assembler. ("pronunciata"/"emessa"/"del" stay — those introduce the decision's own date.)
+_DATE_PROC_BEFORE = re.compile(
+    r"(?:\b(?:deposit(?:at[ao]|o)|pubblicat[aoi]|notificat[aoi]|notific(?:a|at[ao])|"
+    r"iscritt[ao]|comunicat[aoi]|udienz[ae]|repertorio)\b|\bricors[oi]\s+(?:in\s+)?data\b|"
+    r"\b(?:ud|dep|pubbl|repert)\.)[^.;]{0,32}$", I)
+_REPERT_DATE_BEFORE = re.compile(r"\brepert\.[^\n;]{0,48}$", I)
 
 
 def recognize_dates(text: str) -> List[Span]:
     spans = []
+
+    def _role(start):
+        prefix = text[max(0, start - 64):start]
+        if re.search(r"\bcomunicat[oi]\s+stampa\s+del\s*$", prefix, I):
+            return {}
+        return {"role": "proc"} if (
+            _DATE_PROC_BEFORE.search(prefix) or _REPERT_DATE_BEFORE.search(prefix)
+        ) else {}
+
     for m in _MONTH_RE.finditer(text):
         d, mon, y = m.group(1), m.group(2).lower(), m.group(3)
         yy = valid_year(y)                       # month name fixes mm; still range-check yyyy
         if yy and 1 <= int(d) <= 31:
             val = f"{yy}-{MONTHS[mon]}-{int(d):02d}"
-            spans.append(Span(m.start(), m.end(), Entity.DATE, val, m.group(0), {"year": yy}))
+            spans.append(Span(m.start(), m.end(), Entity.DATE, val, m.group(0),
+                              {"year": yy, **_role(m.start())}))
     for m in _NUM_DATE_RE.finditer(text):
         # "n. 12/5/2020" is a docket number/section/year, not a date — leave it to the numbers
         if re.search(r"\bnn?\.?\s*$", text[max(0, m.start() - 5):m.start()], I):
@@ -50,8 +73,51 @@ def recognize_dates(text: str) -> List[Span]:
         yy = valid_date(m.group(1), m.group(2), m.group(3))   # dd<=31, mm<=12, year in range
         if yy:
             val = f"{yy}-{int(m.group(2)):02d}-{int(m.group(1)):02d}"
-            spans.append(Span(m.start(), m.end(), Entity.DATE, val, m.group(0), {"year": yy}))
+            spans.append(Span(m.start(), m.end(), Entity.DATE, val, m.group(0),
+                              {"year": yy, **_role(m.start())}))
     return _nonoverlap(spans)
+
+
+# ── court docket numbers (numero di ruolo generale / ricorso) ───────────────────
+# A "n. NNN/YYYY" introduced by ricorso / r.g. / "iscritto al ruolo", or trailed by "R.G.",
+# is the court's *internal* case-management number, never a cited act number — suppress it.
+_DOCKET_BEFORE = re.compile(
+    r"(?:ricors[oi](?:\s+in\s+\w+){0,2}|\bric\.|iscritt[oa]\s+al(?:\s+ruolo)?|"
+    r"ruolo\s+general[ei]|"
+    r"(?:numero\s+di\s+)?registro\s+general[ei]|"
+    r"appello|prot(?:ocollo)?\.?|repert(?:orio)?\.?|rig[ah]e?(?:\s+da)?|"
+    r"r\.?\s?g\.?\s?r\.?|r\.?\s?g\.?(?:\s?a\.?|\s?n\.?)?)\s*n?[.°]*\s*$", I)
+_DOCKET_AFTER = re.compile(
+    r"^[\s,.;:)]*(?:r\.?\s?g\.?(?:\s?a\.?|\s?n\.?)?|ruolo\s+general[ei])\b", I)
+_RGR_RUN_BEFORE = re.compile(r"\br\.?\s*g\.?\s*r\.?\b[^;\n]{0,55}$", I)
+_CITATION_CUE_AFTER_RGR = re.compile(r"\b(?:sentenz|ordinanz|decision|decret|cass)\w*\b", I)
+_NON_CITATION_OBJECT_BEFORE = re.compile(
+    r"(?:cartell[ae](?:\s+di\s+pagamento)?|fattur[ae]|"
+    r"avvis[oi](?:\s+di\s+[a-zà-ù]+){0,3}|intimazion[ei](?:\s+di\s+pagamento)?|"
+    r"dispositiv[oi])\s*$",
+    I,
+)
+# exception: at the European Court of Human Rights the *ricorso* number IS the case identifier
+# ("Corte EDU ... ricorso n. 43395/09"), so it must not be suppressed.
+_CEDU_CUE = re.compile(r"\b(?:c\.?\s?edu|corte\s+e\.?\s?d\.?\s?u|europea\s+dei\s+diritti)\b", I)
+
+
+def _is_docket(text: str, start: int, end: int) -> bool:
+    if _CEDU_CUE.search(text[max(0, start - 60):start]):
+        return False
+    before = text[max(0, start - 72):start]
+    if protocol_is_provvedimento_number(text, start):
+        return False
+    folded = before.casefold()
+    rgr_run = _RGR_RUN_BEFORE.search(before) if "r" in folded and "g" in folded else None
+    if rgr_run and not _CITATION_CUE_AFTER_RGR.search(rgr_run.group(0)):
+        return True
+    return bool(_DOCKET_BEFORE.search(before)
+               or _DOCKET_AFTER.match(text[end:end + 10]))
+
+
+def _is_non_citation_object_number(text: str, start: int) -> bool:
+    return bool(_NON_CITATION_OBJECT_BEFORE.search(text[max(0, start - 90):start]))
 
 
 # Partition element recognition lives in partitions.py (recognition + segmentation).
@@ -61,15 +127,19 @@ from .partitions import recognize_elements as recognize_partitions  # noqa: E402
 # ---------------------------------------------------------------------------
 # Numbers / years / case numbers
 # ---------------------------------------------------------------------------
-# number/year forms "A/B". Both sides are 1-5 digits; _order_num_year decides which is the
-# number and which the year (IT number/year "137/1971" vs EU year/number "2006/112"), and
+# number/year forms "A/B". The number side allows six digits (administrative protocol numbers
+# commonly do); _order_num_year decides which side is the number and which the year
+# (IT number/year "137/1971" vs EU year/number "2006/112"), and
 # rejects the token when neither part looks like a year. The (?![/.]\d) guard avoids
 # matching the middle of a date ("31/12/2020").
 # the "n." marker may be written "n°" / "n.°" (degree sign), "num." or plural "nn.".
-_NUM_YEAR = re.compile(r"\bn(?:n|um(?:ero)?)?[.°]*\s*(\d{1,5})\s*/\s*(\d{1,5})(?![/.]\d)", I)
+_NUM_YEAR = re.compile(r"\bn(?:n|um(?:ero)?)?[.°]*\s*(\d{1,6})\s*/\s*(\d{1,5})(?!\d)(?!\s*[/.\-]\s*\d)", I)
 # plural docket list with no per-number year ("nn. 26636 e 26637 del 18.12.2009" — the year
 # comes from the date); each bare number is a separate docket of the same court.
 _NN_LIST = re.compile(r"\bnn\.?\s*", I)
+_NN_SHARED_YEAR = re.compile(
+    r"\bnn\.?\s*((?:\d{1,6}\s*(?:,|\be(?:d)?\b)\s*)+)"
+    r"(\d{1,6})\s*/\s*(\d{2,4})(?!\s*[/.\-]\s*\d)", I)
 _NN_NUM = re.compile(r"(\d{1,6})(?![\d/])")
 _NN_SEP = re.compile(r"[\s,]*(?:e|ed)\s+(?=\d)", I)
 # "del" makes the second part the year, so the "n." prefix is optional here
@@ -86,7 +156,7 @@ _NUM_DEL_YEAR = re.compile(
 # the (?!\d) stops the second group truncating inside a 3-part date ("08/07/2022" must NOT
 # yield "08/0"); (?![/.]\d) rejects a real date's third part. A trailing "." (sentence end) is
 # still allowed.
-_BARE_NUM_YEAR = re.compile(r"(?<![\w/])(?<!\d\.)(\d{1,5})\s*/\s*(\d{1,5})(?!\d)(?![/.]\d)")
+_BARE_NUM_YEAR = re.compile(r"(?<![\w/])(?<!\d\.)(\d{1,6})\s*/\s*(\d{1,5})(?!\d)(?!\s*[/.\-]\s*\d)")
 # tax-court "number/section/year" ("n. 1234/5/2020", "1824/25/2020"): three "/"-parts. The full
 # docket goes to `full-number`; the ECLI needs only number + year. With an "n."/"nn." marker the
 # form is unambiguous; bare, it is accepted only when it cannot be a date (see _BARE_SEZ_YEAR).
@@ -98,11 +168,24 @@ _NUM_DEL_DATE = re.compile(
     r"\b(?:n(?:um(?:ero)?)?\.?\s*)?(\d{1,5})\s+del\s+(?=\d{1,2}[°ºo]?\s+(?:" +
     "|".join(MONTHS) + r")\b)", I)
 _NUMBER = re.compile(r"\bn(?:um(?:ero)?)?[.°]*\s*(\d{1,6})\b", I)
+_TARIFF_ITEM_AFTER = re.compile(
+    r"^[\s)]*(?:della|del|dei|degli|delle)\s+tariffa\s+allegat[ao]\s+al\b", I)
+_RV_NUMBER = re.compile(r"\bR\.?\s?V\.?\s*(\d{5,8})(?:\s*(?:-\s*)?(\d{2}))?\b", I)
 _YEAR = re.compile(r"\b(?:del\s+)?((?:18|19|20)\d{2})\b", I)
+_YEAR_NUMERIC_DATE_BEFORE = re.compile(r"\d{1,2}\s?[/.\-]\s?\d{1,2}\s?[/.\-]\s*$")
+_YEAR_MONTH_DATE_BEFORE = re.compile(
+    r"\d{1,2}[°ºo]?\s+(?:" + "|".join(MONTHS) + r")\s+$", I)
+_MONTH_DATE_AFTER_NUM_YEAR = re.compile(
+    r"^\s+(?:" + "|".join(MONTHS) + r")\s+\d{4}\b", I)
 # self-identifying CJEU case id: the dash is REQUIRED ("C-439/04", "T-45/20"). Without it a
 # stray "C 198/01" (e.g. in a GUUE reference "(2014/C 198/01)") is NOT a case — only the dash
 # distinguishes a case number from a column/series notation.
 _CASE_CGUE = re.compile(r"\b([CT])\s?[\-‑]\s?(\d{1,4})\s*/\s*(\d{2,4})\b")
+# Older CJEU citations sometimes omit the C-/T- prefix but carry an ECLI tail:
+# "Bouchereau, 30/77, EU:C:1977:172". The EU:C year must agree with the number/year token.
+_BARE_CGUE_ECLI = re.compile(
+    r"(?<![\w/-])(\d{1,4})\s*/\s*(\d{2,4})(?=[^.;]{0,80}\bEU\s*:\s*C\s*:\s*(\d{4})\s*:\s*\d+)",
+    I)
 # with a "causa/cause" keyword the C-/T- prefix and the dash become optional: "causa 276/12",
 # "causa 14-70", "cause 91/79 e 92/79". The keyword marks a CJEU case (default: Court of
 # Justice, C); the number/year may be slash- or dash-separated.
@@ -117,6 +200,10 @@ _RIUNITE_RUN = re.compile(r"[\s,]*(?:e|ed)?\s*(?:(C|T)\s?[\-‑]\s?)?(\d{1,4})(?
 # the distinctive "/E" marker carries the form ("circolare 12/E/2020" with no "n."). A bare
 # "NNN/E" only becomes a citation when a prassi doc-type is present, so dropping "n." is safe.
 _ADE_NUM = re.compile(r"(?:\bn(?:um(?:ero)?)?\.?\s*)?(\d{1,5})\s*/\s*[eE]\b(?:\s*/\s*((?:18|19|20)\d{2}))?")
+# MEF Dipartimento delle Finanze "NNN/DF[/YYYY]" circular number.
+_DF_NUM = re.compile(
+    r"(?:\bn(?:um(?:ero)?)?\.?\s*)?(\d{1,5})\s*/\s*df\b"
+    r"(?:\s*/\s*((?:18|19|20)\d{2}))?", I)
 # historical Cassazione "number-year" with a dash ("Cass. 2968-73", "legge 392-78"). Heavily
 # guarded (see _dash_year_ok): the 2nd part must be a real year, an act/court keyword must
 # immediately precede, and no partition marker may precede — so partition ranges ("commi 5-7")
@@ -152,6 +239,15 @@ def _order_num_year(a: str, b: str):
     return None
 
 
+def _norm_rv(base: str, suffix: str = "") -> str:
+    """Normalize Cassazione Rv. maxims, preserving an explicit -NN suffix when present."""
+    if suffix:
+        return f"{base}-{suffix}"
+    if len(base) == 8 and base[-2:] != "00":
+        return f"{base[:6]}-{base[-2:]}"
+    return base
+
+
 def recognize_numbers(text: str) -> List[Span]:
     spans: List[Span] = []
     taken: List[tuple] = []   # (start,end) ranges already consumed
@@ -174,10 +270,22 @@ def recognize_numbers(text: str) -> List[Span]:
         num, yr = m.group(1), (m.group(2) or "")
         full = f"{num}/E" + (f"/{yr}" if yr else "")
         spans.append(Span(m.start(), m.end(), Entity.NUM_YEAR, f"{num}/{yr}" if yr else num,
-                          m.group(0), {"number": num, "year": yr, "full": full, "ade": "1"}))
+                          m.group(0), {"number": num, "year": yr, "full": full,
+                                       "prax_number": "1", "ade": "1"}))
         taken.append((m.start(), m.end()))
 
-    # 0c) "cause riunite ..." -> ONE case (smallest number; the trailing year is shared). Must
+    # 0c) MEF Dipartimento Finanze "NNN/DF[/YYYY]" circular numbers.
+    for m in _DF_NUM.finditer(text):
+        if not free(m.start(), m.end()):
+            continue
+        num, yr = m.group(1), (m.group(2) or "")
+        full = f"{num}/DF" + (f"/{yr}" if yr else "")
+        spans.append(Span(m.start(), m.end(), Entity.NUM_YEAR, f"{num}/{yr}" if yr else num,
+                          m.group(0), {"number": num, "year": yr, "full": full,
+                                       "prax_number": "1", "df": "1"}))
+        taken.append((m.start(), m.end()))
+
+    # 0d) "cause riunite ..." -> ONE case (smallest number; the trailing year is shared). Must
     # run before the per-case handlers so they don't split the joined run.
     for rm in _RIUNITE.finditer(text):
         nums, year, s0, e0, p = [], None, None, None, rm.end()
@@ -208,7 +316,19 @@ def recognize_numbers(text: str) -> List[Span]:
                           {"number": n, "year": y, "kind": kind}))
         taken.append((m.start(), m.end()))
 
-    # 1a) "causa/cause [C-]NNN/YY" (incl. lists "cause 91/79 e 92/79") — the keyword licenses the
+    # 1a) bare "30/77" licensed by a trailing EU:C ECLI.
+    for m in _BARE_CGUE_ECLI.finditer(text):
+        if not free(m.start(), m.end()):
+            continue
+        y = norm_year(m.group(2))
+        if y != m.group(3):
+            continue
+        n = m.group(1)
+        spans.append(Span(m.start(), m.end(), Entity.CASE_NUMBER, f"C-{n}/{y}",
+                          m.group(0), {"number": n, "year": y, "kind": "C"}))
+        taken.append((m.start(), m.end()))
+
+    # 1b) "causa/cause [C-]NNN/YY" (incl. lists "cause 91/79 e 92/79") — the keyword licenses the
     # looser forms (no C- prefix, dash- or slash-separated); default kind is the Court of Justice.
     for km in _CAUSA_KW.finditer(text):
         pos = km.end()
@@ -229,7 +349,7 @@ def recognize_numbers(text: str) -> List[Span]:
             else:
                 break
 
-    # 1b) tax-court "NNN/SEZ/YYYY" (number/section/year) — claim the 3-part form before the
+    # 1c) tax-court "NNN/SEZ/YYYY" (number/section/year) — claim the 3-part form before the
     # 2-part number/year so the section is not mistaken for the year. The "n."/"nn." marked form
     # is unambiguous; a bare one is only a docket when it cannot be a date (number>31 or sez>12).
     for m in _NUM_SEZ_YEAR.finditer(text):
@@ -257,6 +377,8 @@ def recognize_numbers(text: str) -> List[Span]:
                 continue
             ny = _order_num_year(m.group(1), m.group(2))
             if ny is None:
+                continue
+            if pat is _BARE_NUM_YEAR and _MONTH_DATE_AFTER_NUM_YEAR.match(text[m.end():]):
                 continue
             n, y = ny
             spans.append(Span(m.start(), m.end(), Entity.NUM_YEAR, f"{n}/{y}", m.group(0),
@@ -286,6 +408,25 @@ def recognize_numbers(text: str) -> List[Span]:
                           {"number": m.group(1)}))
         taken.append((m.start(1), m.end(1)))
 
+    # 2c) plural list where only the final docket carries the shared year:
+    # "nn. 16289 e 16290/2022" -> both numbers are 2022 decisions.
+    for m in _NN_SHARED_YEAR.finditer(text):
+        y = valid_year(m.group(3))
+        if not y:
+            continue
+        for nm in re.finditer(r"\d{1,6}", m.group(1)):
+            s0, e0 = m.start(1) + nm.start(), m.start(1) + nm.end()
+            if free(s0, e0):
+                num = nm.group(0)
+                spans.append(Span(s0, e0, Entity.NUM_YEAR, f"{num}/{y}", text[s0:e0],
+                                  {"number": num, "year": y}))
+                taken.append((s0, e0))
+        if free(m.start(2), m.end(3)):
+            num = m.group(2)
+            spans.append(Span(m.start(2), m.end(3), Entity.NUM_YEAR, f"{num}/{y}",
+                              text[m.start(2):m.end(3)], {"number": num, "year": y}))
+            taken.append((m.start(2), m.end(3)))
+
     # 2d) plural "nn. X e Y" -> a bare NUMBER for each (num/year forms were already claimed above)
     for km in _NN_LIST.finditer(text):
         pos = km.end()
@@ -308,18 +449,43 @@ def recognize_numbers(text: str) -> List[Span]:
     for m in _NUMBER.finditer(text):
         if not free(m.start(), m.end()):
             continue
+        if re.match(r"numero\b", m.group(0), I) and _TARIFF_ITEM_AFTER.match(text[m.end():m.end() + 52]):
+            continue
+        if is_agenzia_composite_number_prefix(text, m.start(), m.end()):
+            continue
         spans.append(Span(m.start(), m.end(), Entity.NUMBER, m.group(1), m.group(0),
                           {"number": m.group(1)}))
+        taken.append((m.start(), m.end()))
+
+    # 3a) Cassazione official maxim numbers ("Rv. 246838", "Rv. 279726 - 01"). The Rv.
+    # number is not the decision docket; it enriches the Cassazione reference and can also
+    # license a section-only Cassazione citation.
+    for m in _RV_NUMBER.finditer(text):
+        if not free(m.start(), m.end()):
+            continue
+        rv = _norm_rv(m.group(1), m.group(2) or "")
+        spans.append(Span(m.start(), m.end(), Entity.RV_NUMBER, rv, m.group(0),
+                          {"rv": rv}))
         taken.append((m.start(), m.end()))
 
     # 4) standalone years (range-validated: a bare 4-digit number is a year only in range)
     for m in _YEAR.finditer(text):
         if not free(m.start(), m.end()) or not valid_year(m.group(1)):
             continue
+        if _DATE_PROC_BEFORE.search(text[max(0, m.start() - 28):m.start()]):
+            continue
+        if (_YEAR_NUMERIC_DATE_BEFORE.search(text[max(0, m.start() - 12):m.start()])
+                or _YEAR_MONTH_DATE_BEFORE.search(text[max(0, m.start() - 32):m.start()])):
+            continue
         spans.append(Span(m.start(), m.end(), Entity.YEAR, m.group(1), m.group(0),
                           {"year": m.group(1)}))
         taken.append((m.start(), m.end()))
 
+    # drop court docket numbers (ricorso / ruolo generale): internal numbering, never a citation
+    spans = [s for s in spans if not (
+        s.entity in (Entity.NUMBER, Entity.NUM_YEAR)
+        and (_is_docket(text, s.start, s.end) or _is_non_citation_object_number(text, s.start))
+    )]
     return spans
 
 
@@ -340,14 +506,21 @@ _DOCTYPE_PATTERNS = [
     (r"\bdecreto\s+del\s+presidente\s+della\s+repubblica\b", "DECR", "PRES_REP", "nazionale"),
     (r"\bd\.?\s?p\.?\s?r\.?(?!\w)", "DECR", "PRES_REP", "nazionale"),
     (r"\bdecreto\s+legislativo\b", "DLGS", "", "nazionale"),
+    (r"\bdecreto\s+lgs\.?(?!\w)", "DLGS", "", "nazionale"),
     (r"\bd\.?\s?l\.?gs\.?(?!\w)", "DLGS", "", "nazionale"),
     (r"\bd\.?\s?lgs\.?(?!\w)", "DLGS", "", "nazionale"),
     # "...vo" variants of decreto legislativo: d.l.vo / D.Lg.vo / D. Lgv. / d.lgv.
     (r"\bd\.?\s?lg?\.?\s?v\.?o?\.?(?!\w)", "DLGS", "", "nazionale"),
-    (r"\bdecreto[-\s]?legge\b", "DL", "", "nazionale"),
+    # "Dec. Leg.vo" / "Decr. Leg.vo" / "Dec. Legisl." — decreto legislativo abbreviated with "Dec."
+    (r"\bdec(?:r|reto)?\.?\s*leg(?:isl(?:ativo)?|\.?\s*v\.?o?)\.?(?!\w)", "DLGS", "", "nazionale"),
+    (r"\bdecreto(?:[-\s]|\u00ad)?legge\b", "DL", "", "nazionale"),
+    # "Dec. Legge" / "Decr. Legge" — decreto legge abbreviated with "Dec."
+    (r"\bdec(?:r|reto)?\.?\s*legge\b", "DL", "", "nazionale"),
     (r"\blegge\s+costituzionale\b", "LC", "", "nazionale"),
     (r"\bregio\s+decreto\b", "RD", "", "nazionale"),
     (r"\br\.?\s?d\.?(?!\w)", "RD", "", "nazionale"),
+    (r"\bdecreto\s+del\s+ministro\s+dell['’]?\s*economia\s+e\s+delle\s+finanze\b",
+     "DECR", "MINISTERO", "nazionale"),
     (r"\bdecreto\s+ministeriale\b", "DECR", "MINISTERO", "nazionale"),
     # "decreto MEF/MiSE/MIT …" — a ministry acronym after "decreto" makes it a D.M.
     (r"\bdecreto\s+(?:del\s+)?(?:m\.?e\.?f\.?|mef|m\.?i\.?s\.?e\.?|mise|mit|mims|m\.?i\.?u\.?r\.?|miur)\b",
@@ -360,6 +533,7 @@ _DOCTYPE_PATTERNS = [
     # plain legge, but not "legge regionale / della Regione" (handled by recognize_regional_laws)
     (r"\blegg[ei]\b(?!\s+(?:regional|(?:della\s+)?regione))", "L", "", "nazionale"),
     # a nationally-qualified regolamento is always national (never follows the EU default flag)
+    (r"\bregolament[oi]\s+europe[oi]", "REG", "", "comunitario"),
     (r"\bregolament[oi]\s+(?:ministerial[ei]|comunal[ei]|regional[ei]|governativ[oi]|"
      r"di\s+(?:esecuzione|attuazione))", "REG", "", "nazionale"),
     (r"\bregolament[oi]\b", "REG", "", "comunitario"),
@@ -372,26 +546,97 @@ _DOCTYPE_PATTERNS = [
     (r"\bdir\.?(?=\s*\(?\s*(?:ce|ue|cee)\b|\s*n?\.?\s*\d)", "DIR", "", "comunitario"),
     (r"\bdecision[ei]\b", "DECIS", "", "comunitario"),
     (r"\braccomandazion[ei]\b", "RACC", "", "comunitario"),
+    (r"\bcomunicat[oi]\s+stampa\b", "CS", "", "nazionale"),
+    (r"\btelegramm[ai]\b", "TEL", "", "nazionale"),
+    (r"\bletter[ae]\s+circolar[ei]\b", "LCIRC", "", "nazionale"),
     (r"\bcircolar[ei]\b|\bcirc\.", "CIRC", "", "nazionale"),
     (r"\brisoluzion[ei]\b|\brisol?\.", "RIS", "", "nazionale"),
-    (r"\binterpell[oi]\b|risposta\s+a\s+quesito|\bquesit[oi]\b", "INTERPELLO", "", "nazionale"),
+    (r"\brispost[ae]\b(?=[^;]{0,120}\b(?:agenzia\s+(?:delle\s+)?entrate|a\.\s?d\.\s?e\.?|ade)\b)",
+     "INTERPELLO", "", "nazionale"),
+    (r"\binterpell[oi]\b|risposta\s+a\s+quesito(?=[^;]{0,120}\b(?:agenzia\s+(?:delle\s+)?entrate|a\.\s?d\.\s?e\.?|ade)\b)",
+     "INTERPELLO", "", "nazionale"),
+    # Deliberazioni della giunta / del consiglio comunale. Recognizing the local act as its
+    # own anchor prevents its number from being borrowed by a preceding national act.
+    (r"\bd\.?\s*g\.?\s*c\.?(?!\w)|\bd\.?\s*c\.?\s*c\.?(?!\w)",
+     "DEL", "COMUNE", "nazionale"),
     (r"\bdeliberazion[ei]\b|\bdeliber[ae]\b|\bdelib\.", "DEL", "", "nazionale"),
+    (r"\bparer[ei]\b", "PARERE", "", "nazionale"),
+    (r"\bnot[ae]\b", "NOTA", "", "nazionale"),
     (r"\bprovvediment[oi]\b", "PROVV", "", "nazionale"),
     (r"\bsentenz[ae]\b", "SENT", "", "caselaw"),
     (r"\bsent\.", "SENT", "", "caselaw"),
     (r"\bordinanz[ae]\b", "ORD", "", "nazionale"),
     (r"\bord\.", "ORD", "", "nazionale"),
 ]
+
+# OCR-only doctype patterns stay in a separate table so the strict/lenient boundary is auditable.
+_OCR_DOCTYPE_PATTERNS = [
+    (r"(?-i:\bd\.\s?I\.)(?=\s*n[.°]*\s*\d|\s*\d)", "DL", "", "nazionale"),  # d. I. -> d.l.
+    (r"(?-i:\bI\.)\s*n[.°]*(?=\s*\d)", "L", "", "nazionale"),              # I. n. -> l. n.
+    (r"(?-i:\bI\.)(?=\s*\d)", "L", "", "nazionale"),                       # I. 212 -> l. 212
+    (r"(?<![\w.])1\.(?=\s*n[.°]*\s*\d{1,5}\s*(?:/|\s+del\b))",
+     "L", "", "nazionale"),                                                   # 1. n. -> l. n.
+    (r"(?<![\w.])1\.(?=\s*\d{1,5}\s*/\s*\d{2,4}\b)",
+     "L", "", "nazionale"),                                                   # 1. 212/00 -> l. 212/00
+]
 _DOCTYPE_COMPILED = [(re.compile(p, I), code, auth, scope)
                      for p, code, auth, scope in _DOCTYPE_PATTERNS]
+_OCR_DOCTYPE_COMPILED = [(re.compile(p, I), code, auth, scope)
+                         for p, code, auth, scope in _OCR_DOCTYPE_PATTERNS]
+_OCR_I_LEGGE_BEFORE = re.compile(
+    r"(?:\bartt?[\.,]?\s*(?:da\s+)?[\w-]+(?:\s*(?:,|e|a)\s*[\w-]+)*|"
+    r"\barticol[oi]\s+(?:da\s+)?[\w-]+(?:\s*(?:,|e|a)\s*[\w-]+)*|"
+    r"\bdell['’]\s*art\.?\s*[\w-]+)"
+    r"(?:\s*,?\s+della)?\s*$",
+    I,
+)
+_OCR_ONE_LEGGE_BEFORE = re.compile(r"\bart(?:icol[oi]|\.)?\s*\d[^;]{0,36}$", I)
 
 
-def recognize_doctypes(text: str) -> List[Span]:
+def recognize_doctypes(text: str, *, ocr_accommodations: bool = True) -> List[Span]:
     spans = []
-    for pat, code, auth, scope in _DOCTYPE_COMPILED:
+    compiled = _DOCTYPE_COMPILED + (_OCR_DOCTYPE_COMPILED if ocr_accommodations else [])
+    for pat, code, auth, scope in compiled:
         for m in pat.finditer(text):
-            spans.append(Span(m.start(), m.end(), Entity.DOCTYPE, code, m.group(0),
-                              {"authority": auth, "scope": scope}))
+            if code == "L" and m.group(0).startswith("I."):
+                prefix = text[max(0, m.start() - 45):m.start()]
+                if not _OCR_I_LEGGE_BEFORE.search(prefix):
+                    continue
+            if code == "L" and m.group(0).startswith("1."):
+                prefix = text[max(0, m.start() - 48):m.start()]
+                if not _OCR_ONE_LEGGE_BEFORE.search(prefix):
+                    continue
+            if code == "L" and re.search(r"c\.?\s*c\.?\s*n\.?\s*l\.?$",
+                                         text[max(0, m.start() - 8):m.end()], I):
+                continue
+            if code == "RIS" and re.search(r"principio\s+di\s+diritto",
+                                           text[m.end():m.end() + 48], I):
+                continue
+            if code == "PARERE" and re.match(
+                    r".{0,60}\bconsiglio\s+di\s+stato\b", text[m.end():m.end() + 80], I | re.S):
+                continue
+            if code == "DECIS" and re.search(r"^\W*emanat[aei]\b[^.;]{0,35}\bbiennio\b",
+                                             text[m.end():m.end() + 60], I):
+                continue
+            if code == "DECIS" and m.group(0).isupper():
+                line_start = text.rfind("\n", 0, m.start()) + 1
+                line_end = text.find("\n", m.end())
+                line_end = len(text) if line_end < 0 else line_end
+                line = text[line_start:line_end].strip()
+                if line.isupper() and not re.search(r"\d", line):
+                    continue
+            if code == "PROVV" and re.match(r"^\W*(?:prot(?:ocollo)?\.?|ai\s+sensi\b)",
+                                            text[m.end():m.end() + 28], I):
+                continue
+            attrs = {"authority": auth, "scope": scope}
+            if code == "L" and m.group(0).startswith("1."):
+                attrs["ocr"] = "1"
+            if code == "DECR" and auth == "MINISTERO" and re.search(
+                    r"(?:m\.?e\.?f\.?|economia\s+e\s+(?:delle\s+)?finanze)", m.group(0), I):
+                attrs["ministry"] = "ECONOMIA_FINANZE"
+            if code == "REG" and re.search(r"europe[oi]", m.group(0), I):
+                attrs["eu_hint"] = "1"
+            spans.append(Span(m.start(), m.end(), Entity.DOCTYPE, code, m.group(0), attrs))
     return _nonoverlap(spans)
 
 
@@ -417,7 +662,7 @@ def recognize_eu_acronyms(text: str) -> List[Span]:
 # ---------------------------------------------------------------------------
 _ACCENTS = str.maketrans("àáâãèéêëìíîïòóôõùúûüÀÁÈÉÌÍÒÓÙÚ", "aaaaeeeeiiiioooouuuuAAEEIIOOUU")
 _GEO_LEAD = re.compile(
-    r"^[\s,.:;]*(?:di\s+|della\s+|del\s+|d['’]\s*|presso\s+)?"
+    r"^[\s,.:;]*(?:di\s+|della\s+|dell['’]\s*|del\s+|d['’]\s*|presso\s+)?"
     r"(?:sez(?:ione)?\.?\s*[ivxlcdm0-9]+[°ªa-z]*[,\s]*)?", I)
 
 _COURT_PATTERNS = [
@@ -426,12 +671,15 @@ _COURT_PATTERNS = [
     # own prior sentences: "sentenza n. 123/2020 di questa Corte").
     (r"quest[ao]\s+(?:suprema\s+|ecc(?:ellentissima|\.?)\s+)?cort[ei]", "THIS_COURT", None),
     (r"codesta\s+(?:suprema\s+)?cort[ei]", "THIS_COURT", None),
-    (r"\bla\s+suprema\s+corte\b", "THIS_COURT", None),
+    # "la Suprema Corte" names the Court of Cassation explicitly (not a self-reference) — it
+    # resolves to CORTE_CASS even without a default authority.
+    (r"\bla\s+suprema\s+corte\b", "CORTE_CASS", None),
     (r"quest[ao]\s+tribunal[ei]", "THIS_COURT", None),
     (r"quest[ao]\s+commission[ei](?:\s+tributaria)?", "THIS_COURT", None),
+    (r"quest[ao]\s+sezion[ei]", "THIS_COURT", None),
     (r"quest[ao]\s+(?:collegio|consiglio)", "THIS_COURT", None),
-    (r"comm(?:issione)?\.?\s+trib(?:utaria)?\.?\s+reg(?:ionale)?\.?", "COMM_TRIBUT_REG", "region"),
-    (r"\bc\.?\s?t\.?\s?r\.?\b", "COMM_TRIBUT_REG", "region"),
+    (r"comm(?:issione)?\.?\s+trib(?:utaria)?\.?\s+reg(?:ionale)?\.?", "COMM_TRIBUT_REG", "cgt_region"),
+    (r"\bc\.?\s?t\.?\s?r\.?\b", "COMM_TRIBUT_REG", "cgt_region"),
     (r"comm(?:issione)?\.?\s+trib(?:utaria)?\.?\s+prov(?:inciale|\.?\s?le)?\.?", "COMM_TRIBUT_PROV", "city"),
     (r"\bc\.?\s?t\.?\s?p\.?\b", "COMM_TRIBUT_PROV", "city"),
     (r"comm(?:issione)?\.?\s+trib(?:utaria)?\.?\s+centr(?:ale)?\.?|\bc\.?\s?t\.?\s?c\.?\b",
@@ -450,8 +698,18 @@ _COURT_PATTERNS = [
     # "Sezioni Unite" / "SS.UU." (the Cassazione's united sections): cited on their own as a
     # synonym for the Court of Cassation ("le Sezioni Unite, sent. n. 2281/1990"). The bare
     # section abbreviation "sez. un." is left to the section mechanism (section="un").
-    (r"sezioni\s+unite|\bss\.?\s?uu\.?", "CORTE_CASS", None),
-    (r"\bcass(?:azione)?\.?", "CORTE_CASS", None),
+    (r"sezioni\s+unite|\bss\.?\s?uu\.?|\bs\.\s*u\.?", "CORTE_CASS", None),
+    (r"\bsez(?:ione|\.)?\.?\s*u(?:n(?:ite|iti)?)?\.?(?=\s*,?\s*(?:sentenz|ordinanz|sent\.|ord\.|nn?\.))",
+     "CORTE_CASS", None),
+    # In criminal-law headnotes the court is often implicit: "Sez. I, n. 28682 ... Rv. ...".
+    # The section plus a decision number/date or Rv. marker is enough to identify Cassazione.
+    (r"\bsez(?:ione|\.)?\.?\s*(?:u(?:n(?:ite|iti)?)?|"
+     r"(?!(?:civ|civil|pen|penal|trib|tribut|lav|lavoro|feriale)\b)[ivxlcdm]{1,4}|\d{1,2})"
+     r"(?:\s*[-–]\s*\d{1,2})?\.?(?=\s*,?\s*(?:sentenz|ordinanz|sent\.|ord\.|nn?\.|"
+     r"\d{1,6}\s+del|\d{1,6}\s*/|\d{1,2}\s+(?:gennaio|febbraio|marzo|aprile|maggio|"
+     r"giugno|luglio|agosto|settembre|ottobre|novembre|dicembre)|"
+     r"\d{1,2}\s*[./-]\s*\d{1,2}\s*[./-]\s*\d{2,4}|Rv\.))", "CORTE_CASS", None),
+    (r"\bcass(?:azione)?\.?(?!\w)", "CORTE_CASS", None),
     (r"corte\s+cost(?:ituzionale)?", "CORTE_COST", None),
     # "C. Cost." (Corte abbreviated to "C.") -> the Court, not the COST/'Cost.' alias; the
     # overlapping alias is dropped by _resolve_overlaps, so "C. Cost. n. 188/2018" -> ECLI.
@@ -481,15 +739,46 @@ _COURT_COMPILED = [(re.compile(r"\b" + p if p[0] == "c" or p[0] == "t" or p[0] =
                                else p, I), v, want) for p, v, want in _COURT_PATTERNS]
 
 _OTHER_AUTH_PATTERNS = [
+    (r"agenzia\s+delle\s+dogane\s+e\s+dei\s+monopoli", "AG_DOGANE_MONOPOLI"),
     (r"agenzia\s+delle\s+entrate(?:\s+e\s+delle\s+dogane)?", "AG_ENTRATE"),
     (r"agenzia\s+entrate", "AG_ENTRATE"),
     # common abbreviations: AdE / A.d.E. / Ag. Entrate
     (r"\bade\b|\ba\.\s?d\.\s?e\.?|\bag\.?\s+entrate\b", "AG_ENTRATE"),
     (r"agenzia\s+delle\s+dogane(?:\s+e\s+dei\s+monopoli)?", "AG_DOGANE"),
+    (r"\bmin\.?\s+finanze\b|\bm\.?\s*e\.?\s*f\.?\b|"
+     r"\bmin\.?\s+economia\s+e\s+finanze\b|ministero\s+delle\s+finanze", "MEF"),
+    (r"agenzia\s+del\s+territorio", "ATER"),
+    (r"dipartimento\s+(?:delle\s+)?finanze", "DIF"),
+    (r"presidenza\s+(?:del\s+)?consiglio\s+dei\s+ministri", "PCM"),
+    (r"dipartimento\s+(?:delle\s+)?politiche\s+fiscali", "DPF"),
+    (r"\bmin\.?\s+tesoro\b", "TES"),
+    (r"ministero\s+della\s+funzione\s+pubblica", "MFP"),
+    (r"ministero\s+(?:dello\s+)?sviluppo\s+economico", "MSE"),
+    (r"\bmin\.?\s+attivit[aà]\s+produttive\b", "MAP"),
+    (r"\bmin\.?\s+industria\b", "MIND"),
+    (r"\bmin\.?\s+giustizia\b", "MGIU"),
+    (r"\bmin\.?\s+agricoltura\b", "MAGR"),
+    (r"\brag\.?\s+gen\.?\s+stato\b", "RGS"),
+    (r"banca\s+d['’]italia", "BI"),
+    (r"\binps\b", "INPS"),
+    (r"\bmonopoli\b", "AMON"),
+    (r"cassa\s+depositi\s+e\s+prestiti", "CDP"),
+    (r"\bmin\.?\s+comm\.?\s+estero\b", "MCEST"),
+    (r"\bmin\.?\s+trasporti\b", "MTRA"),
+    (r"\baran\b", "ARAN"),
+    (r"\bmin\.?\s+interni\b", "MINT"),
+    (r"\bmotoriz\.?\s+civile\b", "AMTRC"),
+    (r"agenzia\s+per\s+l['’]italia\s+digitale", "AGID"),
+    (r"\bmin\.?\s+sanit[aà]\b", "MSAL"),
+    (r"garante\s+(?:per\s+la\s+)?protezione\s+(?:dei\s+)?dati\s+personali", "GPDP"),
+    (r"\bmin\.?\s+difesa\b", "MDIF"),
+    (r"\bmin\.?\s+lavoro\b", "MLAV"),
+    (r"\bmin\.?\s+infrastrutture\s+e\s+trasporti\b", "MINF"),
 ]
 _OTHER_AUTH_COMPILED = [(re.compile(p, I), v) for p, v in _OTHER_AUTH_PATTERNS]
 
-from .geo import CITY_RE, REGION_RE, REGION_NAME_TO_CODE, city_code  # noqa: E402
+from .geo import (AUTONOMOUS_TAX_CITY_TO_GEO, CITY_RE, REGION_RE,  # noqa: E402
+                  REGION_NAME_TO_CODE, city_code)
 
 
 def _geo_after(text: str, pos: int, want: str):
@@ -558,7 +847,7 @@ _CASS_ORDINAL = {"prima": "1", "primo": "1", "seconda": "2", "secondo": "2",
                  "terza": "3", "terzo": "3", "quarta": "4", "quarto": "4",
                  "quinta": "5", "quinto": "5", "sesta": "6", "sesto": "6"}
 # chamber kind, highest precedence first (so "civ., sez. trib." reads as tributaria)
-_CASS_KIND = [(r"sezioni\s+unite|\bss\.?\s?uu\b|\bs\.\s?u\.?\b|\bsez(?:ione|\.)?\.?\s*u(?:n(?:ite|iti)?)?\.?\b", "UNITE"),
+_CASS_KIND = [(r"sezioni\s+unite|\bss\.?\s?uu\b|\bs\.\s?u\.?|\bsez(?:ione|\.)?\.?\s*u(?:n(?:ite|iti)?)?\.?\b", "UNITE"),
               (r"\bferiale\b", "FERIALE"), (r"\blavoro\b|\blav\b", "LAVORO"),
               (r"\btribut(?:aria)?\b|\btrib\b", "TRIB"), (r"\bpenal[ei]\b|\bpen\b", "PEN"),
               (r"\bcivil[ei]\b|\bciv\b", "CIV")]
@@ -571,6 +860,9 @@ def _cass_section(text: str, pos: int) -> str:
     """The Cassazione `section` value just after the court keyword. Empty when neither a
     "sez(ione)" marker nor a chamber keyword is present."""
     win = text[pos:pos + 50]
+    stop = re.search(r"\bnn?\.?\s*\d|\d{1,2}\s*[./-]\s*\d{1,2}\s*[./-]\s*\d{2,4}", win, I)
+    if stop:
+        win = win[:stop.start()]
     kind = next((k for rx, k in _CASS_KIND_RE if rx.search(win)), None)
     msez = _CASS_SEZ_MARK.search(win)
     if not msez and kind is None:
@@ -600,9 +892,9 @@ def _cass_section(text: str, pos: int) -> str:
     return suffix if kind in ("CIV", "PEN") else ""
 
 
-# Corte di Giustizia Tributaria grade: "primo grado" (-> provincial / city, CTP) vs "secondo
-# grado" (-> regional / region, CTR). The 2022 reform renamed CTP/CTR to CGT-I/CGT-II grado;
-# the grade is the reliable discriminator (primo grado -> CTP/city, secondo -> CTR/region).
+# Corte di Giustizia Tributaria grade: first grade carries city/province geography, second
+# grade carries regional geography. The grade is the reliable discriminator introduced by the
+# 2022 reform; historical CTP/CTR wording is recognized by separate authority patterns.
 _CGT_GRADE = re.compile(
     r"^[\s,.:;)\-–—]*(?:di\s+|del\s+|della\s+)?"
     r"(?:(?P<p1>prim[oa])|(?P<s1>second[oa])|(?P<p2>1|i)\s*[°ª]?\s*(?=grad)|"
@@ -612,9 +904,25 @@ _CGT_GRADE = re.compile(
 _CGT_GRADE_BARE = re.compile(r"^[\s,.:;)\-–—]*(?:(?P<p>1|i)|(?P<s>2|ii))\s*[°ª]?[\s,.:;)\-–—]+", I)
 
 
+def _cgt_second_grade_geo(kind, code):
+    """Attributes for a second-grade tax court's ECLI geography.
+
+    It normally uses a region code; Trento and Bolzano exceptionally use the autonomous
+    province code. Other cities stay non-resolving, as they did before this exception.
+    """
+    if kind == "region":
+        return {"region": code}
+    if kind == "city":
+        autonomous_geo = AUTONOMOUS_TAX_CITY_TO_GEO.get(code)
+        return {"region": autonomous_geo} if autonomous_geo else {"city": code}
+    return {}
+
+
 def _cgt_resolve(text: str, pos: int):
-    """Resolve a Corte di Giustizia Tributaria reference: detect the grade (primo -> CTP/city,
-    secondo -> CTR/region) and the geo. Returns (authority, attrs, new_end)."""
+    """Resolve a modern CGT grade and geography.
+
+    Returns ``(authority, attrs, new_end)``.
+    """
     win = text[pos:pos + 70]
     # explicit "Reg."/"Prov." scope ("CGT Reg. Toscana", "Cort. Giust. Trib. Prov. Milano")
     ms = re.match(r"^[\s,.:;)\-–—]*(reg(?:ionale)?|prov(?:inciale)?)\.?(?=[\s,.:]|$)", win, I)
@@ -622,10 +930,10 @@ def _cgt_resolve(text: str, pos: int):
         b = pos + ms.end()
         kind, code, new_end = _geo_after(text, b, "either")
         if ms.group(1).lower().startswith("reg"):
-            return "COMM_TRIBUT_REG", ({"region": code} if kind == "region" else
-                                       ({"city": code} if kind else {})), (new_end if kind else b)
-        return "COMM_TRIBUT_PROV", ({"city": code} if kind == "city" else
-                                    ({"region": code} if kind else {})), (new_end if kind else b)
+            return "CORTE_GIUST_TRIBUT_2", _cgt_second_grade_geo(kind, code), \
+                (new_end if kind else b)
+        return "CORTE_GIUST_TRIBUT_1", ({"city": code} if kind == "city" else
+                                       ({"region": code} if kind else {})), (new_end if kind else b)
     grade, off = None, 0
     m = _CGT_GRADE.match(win)
     if m:
@@ -641,23 +949,26 @@ def _cgt_resolve(text: str, pos: int):
     base = pos + off
     kind, code, new_end = _geo_after(text, base, "either")
     if grade == "secondo":
-        attrs = {"region": code} if kind == "region" else ({"city": code} if kind else {})
-        return "COMM_TRIBUT_REG", attrs, (new_end if kind else base)
+        return "CORTE_GIUST_TRIBUT_2", _cgt_second_grade_geo(kind, code), \
+            (new_end if kind else base)
     if grade == "primo":
         attrs = {"city": code} if kind == "city" else ({"region": code} if kind else {})
-        return "COMM_TRIBUT_PROV", attrs, (new_end if kind else base)
+        return "CORTE_GIUST_TRIBUT_1", attrs, (new_end if kind else base)
     # no explicit grade: decide by geo type (a region implies II grado, a city implies I grado)
     if kind == "region":
-        return "COMM_TRIBUT_REG", {"region": code}, new_end
+        return "CORTE_GIUST_TRIBUT_2", {"region": code}, new_end
     if kind == "city":
-        return "COMM_TRIBUT_PROV", {"city": code}, new_end
-    return "COMM_TRIBUT_PROV", {}, base
+        return "CORTE_GIUST_TRIBUT_1", {"city": code}, new_end
+    return "CORTE_GIUST_TRIBUT_1", {}, base
 
 
 def recognize_authorities(text: str) -> List[Span]:
     spans = []
     for pat, value, want in _COURT_COMPILED:
         for m in pat.finditer(text):
+            if value == "CORTE_CASS" and re.fullmatch(r"cass(?:azione)?\.?", m.group(0), I) \
+                    and re.search(r"\b(?:per|in)\s+$", text[max(0, m.start() - 8):m.start()], I):
+                continue
             end, attrs = m.end(), {}
             sec = _section_after(text, m.end())
             if sec:
@@ -666,8 +977,12 @@ def recognize_authorities(text: str) -> List[Span]:
             # match itself may be "Sezioni Unite"/"SS.UU.", else parse what follows the keyword.
             if value == "CORTE_CASS":
                 mtext = text[m.start():m.end()]
-                cs = ("UNITE" if re.search(r"sezioni\s+unite|\bss\.?\s?uu", mtext, I)
-                      else _cass_section(text, m.end()))
+                if re.match(r"\s*sez", mtext, I) and not re.match(r"\s*sezioni\s+unite\b", mtext, I):
+                    attrs["implicit_sez_cass"] = "1"
+                cs = ("UNITE" if re.search(r"sezioni\s+unite|\bss\.?\s?uu|\bs\.\s*u\.?|\bsez(?:ione|\.)?\.?\s*u",
+                                           mtext, I)
+                      else (_cass_section(mtext, 0) if re.search(r"\bsez", mtext, I) else "")
+                      or _cass_section(text, m.end()))
                 if cs:
                     attrs["section"] = cs
                 else:
@@ -676,9 +991,14 @@ def recognize_authorities(text: str) -> List[Span]:
                 value, geo_attrs, end = _cgt_resolve(text, m.end())
                 attrs.update(geo_attrs)
             elif want:
-                kind, code, new_end = _geo_after(text, m.end(), want)
+                geo_want = "either" if want == "cgt_region" else want
+                kind, code, new_end = _geo_after(text, m.end(), geo_want)
                 if want == "region" and kind == "region":
                     attrs["region"] = code; end = new_end
+                elif want == "cgt_region":
+                    regional_geo = _cgt_second_grade_geo(kind, code).get("region")
+                    if regional_geo:
+                        attrs["region"] = regional_geo; end = new_end
                 elif want == "city" and kind == "city":
                     attrs["city"] = code; end = new_end
                 elif want == "either":
@@ -693,7 +1013,28 @@ def recognize_authorities(text: str) -> List[Span]:
     for pat, value in _OTHER_AUTH_COMPILED:
         for m in pat.finditer(text):
             spans.append(Span(m.start(), m.end(), Entity.OTHER_AUTH, value, m.group(0)))
-    return _nonoverlap(spans)
+    filtered = []
+    for s in spans:
+        if s.attrs.get("implicit_sez_cass"):
+            lo = max(0, s.start - 100)
+            prefix = text[lo:s.start]
+            prev_auths = [o for o in spans if o.entity == Entity.AUTHORITY and o is not s
+                          and o.end <= s.start and s.start - o.end <= 100
+                          and ";" not in text[o.end:s.start]]
+            if any(o.value == "CORTE_CASS" and not re.search(
+                    r"\bnn?\.?\s*\d|\bRv\.|\d{1,6}\s*/\s*\d{2,4}|"
+                    r"\d{1,6}\s+del\s+(?:\d{1,2}|gennaio|febbraio|marzo|aprile|maggio|"
+                    r"giugno|luglio|agosto|settembre|ottobre|novembre|dicembre)|"
+                    r"\d{1,2}\s*[./-]\s*\d{1,2}\s*[./-]\s*\d{2,4}",
+                    text[o.end:s.start], I) for o in prev_auths):
+                continue
+            has_cass_context = re.search(r"\bcass(?:azione)?\b|corte\s+di\s+cassazione", prefix, I) \
+                or any(o.value == "CORTE_CASS" for o in prev_auths)
+            has_other_court = any(o.value != "CORTE_CASS" for o in prev_auths)
+            if has_other_court and not has_cass_context:
+                continue
+        filtered.append(s)
+    return _nonoverlap(filtered)
 
 
 # Legislative aliases live in aliases.py (data + recognition + urn resolution).

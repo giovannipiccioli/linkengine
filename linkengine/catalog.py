@@ -19,10 +19,10 @@ COURTS = {
     "CONS_STATO":              {"ecli": "CONSSTATO", "geo": None,     "name": "Consiglio di Stato"},
     "CORTE_CONTI":             {"ecli": "CCONTI",    "geo": None,     "name": "Corte dei Conti"},
     "TRIB":                    {"ecli": "TRIB",      "geo": "city",   "name": "Tribunale"},
-    "COMM_TRIBUT_REG":         {"ecli": "CTR",       "geo": "region", "name": "Corte di Giustizia Tributaria di secondo grado"},
-    "CORTE_GIUST_TRIBUT_REG":  {"ecli": "CTR",       "geo": "region", "name": "Corte di Giustizia Tributaria di secondo grado"},
-    "COMM_TRIBUT_PROV":        {"ecli": "CTP",       "geo": "city",   "name": "Corte di Giustizia Tributaria di primo grado"},
-    "CORTE_GIUST_TRIBUT_PROV": {"ecli": "CTP",       "geo": "city",   "name": "Corte di Giustizia Tributaria di primo grado"},
+    "COMM_TRIBUT_REG":         {"ecli": "CTR",       "geo": "region", "name": "Commissione Tributaria Regionale"},
+    "CORTE_GIUST_TRIBUT_2":    {"ecli": "CGT2",      "geo": "region", "name": "Corte di Giustizia Tributaria di secondo grado"},
+    "COMM_TRIBUT_PROV":        {"ecli": "CTP",       "geo": "city",   "name": "Commissione Tributaria Provinciale"},
+    "CORTE_GIUST_TRIBUT_1":    {"ecli": "CGT1",      "geo": "city",   "name": "Corte di Giustizia Tributaria di primo grado"},
     "COMM_TRIBUT_CEN":         {"ecli": "CTC",       "geo": "city",   "name": "Commissione Tributaria Centrale"},
     "CORTE_APPELLO":           {"ecli": "CAPP",      "geo": "city",   "name": "Corte d'Appello"},
     "CORTE_ASSISE_APPELLO":    {"ecli": "ASSAPP",    "geo": "city",   "name": "Corte d'Assise d'Appello"},
@@ -30,12 +30,14 @@ COURTS = {
     "GIUDICE_PACE":            {"ecli": "GDP",       "geo": "city",   "name": "Giudice di Pace"},
     "TRIBUNALE_SORVEGLIANZA":  {"ecli": "TRIBSORV",  "geo": "city",   "name": "Tribunale di Sorveglianza"},
     "CGUE":                    {"ecli": None,        "geo": None,     "name": "Corte di Giustizia UE"},
-    "CEDU":                    {"ecli": None,        "geo": None,     "name": "Corte EDU"},
+    "CEDU":                    {"ecli": None,        "geo": None,     "name": " Corte europea dei diritti dell'uomo"},
     "TRIB_AMM_REG":            {"ecli": "TAR",       "geo": "region", "name": "TAR"},
 }
 # every court is a case-law authority; "THIS_COURT" (a self-reference resolved to the document's
 # own authority) is one too. This is THE set — assembler and the eval dispatch derive from it.
 CASELAW_AUTH = set(COURTS) | {"THIS_COURT"}
+FIRST_GRADE_TAX_AUTHORITIES = {"COMM_TRIBUT_PROV", "CORTE_GIUST_TRIBUT_1"}
+SECOND_GRADE_TAX_AUTHORITIES = {"COMM_TRIBUT_REG", "CORTE_GIUST_TRIBUT_2"}
 # ECLI prefix -> (court name, geo kind), longest prefix first so "ASSAPP"/"CONSSTATO"/"TRIBSORV"
 # win over "ASS"/"CTC"/"TRIB". "COST" is handled specially (Corte Costituzionale).
 ECLI_PREFIX_TO_COURT = {}
@@ -43,6 +45,23 @@ for _auth, _info in COURTS.items():
     if _info["ecli"] and _info["ecli"] not in ECLI_PREFIX_TO_COURT:
         ECLI_PREFIX_TO_COURT[_info["ecli"]] = (_info["name"], _info["geo"])
 ECLI_PREFIXES = sorted(ECLI_PREFIX_TO_COURT, key=len, reverse=True)
+
+
+# ── Who can emit what ───────────────────────────────────────────────────────────
+# Doc-types an authority can plausibly *issue*, used to reject impossible bindings (a court
+# does not enact a legge; the Agenzia delle Entrate does not hand down a sentenza). Keep this
+# small and obvious — it only has to catch the gross category errors that create false
+# positives, not model the full administrative taxonomy.
+#
+# A **court** (any authority in COURTS / CASELAW_AUTH) issues pronouncements only:
+COURT_DOCTYPES = {"SENT", "ORD", "DECR"}            # sentenza, ordinanza, decreto
+# administrative authorities issue these practice documents. DEL and DIR are handled
+# contextually because they can also identify municipal/EU acts.
+AGENCY_DOCTYPES = {
+    "CIRC", "RIS", "INTERPELLO", "PROVV", "PARERE", "NOTA", "DET",
+    "CS", "TEL", "LCIRC",
+}
+CONDITIONAL_AGENCY_DOCTYPES = {"DEL", "DIR"}
 
 
 # ── Document types (urn:nir "authority:doctype" -> display name) ────────────────

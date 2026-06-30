@@ -38,6 +38,7 @@ EMANANTE_TIPO = {
     # (urn:nir:stato:regolamento). With "(UE)/(CE)" it goes EU (CELEX).
     ("REG", ""):          ("stato", "regolamento"),
 }
+MINISTRY_NIR = {"ECONOMIA_FINANZE": "ministero.economia.finanze"}
 
 # doc-types whose default scope is EU and the CELEX provision letter.
 EU_PROV_LETTER = {"REG": "R", "DIR": "L", "DECIS": "D", "RACC": "H"}
@@ -54,6 +55,7 @@ def partition_to_locator(partition_field: str) -> str:
         return ""
     return (partition_field
             .replace("articolo", "art").replace("lettera", "let")
+            .replace("considerando", "cons")
             .replace("numero", "num").replace("paragrafo", "num")
             .replace("-", "").replace("_", "-"))
 
@@ -74,13 +76,15 @@ def split_annex(partition_field: str):
 
 
 def build_nir(doctype: str, authority: str, number: str, year: str,
-              partition_field: str = "") -> Optional[str]:
+              partition_field: str = "", ministry: str = "") -> Optional[str]:
     """Build a national urn:nir string, or None if the (doctype, authority) is unmapped or
     number/year are missing."""
     em = EMANANTE_TIPO.get((doctype, authority or "")) or EMANANTE_TIPO.get((doctype, ""))
     if not em or not number or not year:
         return None
     authority_urn, doctype_urn = em
+    if authority == "MINISTERO" and ministry in MINISTRY_NIR:
+        authority_urn = MINISTRY_NIR[ministry]
     annex, rest = split_annex(partition_field)
     urn = f"urn:nir:{authority_urn}:{doctype_urn}:{year};{number}"
     if annex:
@@ -138,6 +142,7 @@ def build_celex_caselaw(kind: str, number: str, year: str) -> Optional[str]:
 # e.g. legge 2248/1865); 2030 is a small forward margin. A number outside this range is never
 # accepted as a year — the single guard behind every date / number-year decision.
 MIN_YEAR, MAX_YEAR = 1861, 2030
+REGIO_DECRETO_MIN_YEAR, REGIO_DECRETO_MAX_YEAR = 1861, 1946
 
 
 def norm_year(raw: str) -> str:
@@ -160,6 +165,27 @@ def valid_year(raw: str):
     return y if re.fullmatch(r"\d{4}", y) and MIN_YEAR <= int(y) <= MAX_YEAR else None
 
 
+def year_for_doctype(doctype: str, year: str, raw_year: str = "") -> str:
+    """Apply chronology that is intrinsic to a document type.
+
+    A two-digit Regio Decreto year is resolved inside the only possible interval, 1861-1946:
+    ``2440/23`` is therefore 1923, while ``639/10`` is 1910. An explicit impossible year is
+    left unresolved rather than silently rewritten.
+    """
+    year = (year or "").strip()
+    if doctype != "RD" or not year:
+        return year
+    raw_year = (raw_year or "").strip()
+    if re.fullmatch(r"\d{2}", raw_year):
+        suffix = int(raw_year)
+        candidates = [century + suffix for century in (1800, 1900)]
+        plausible = [candidate for candidate in candidates
+                     if REGIO_DECRETO_MIN_YEAR <= candidate <= REGIO_DECRETO_MAX_YEAR]
+        return str(plausible[0]) if len(plausible) == 1 else ""
+    return year if year.isdigit() and \
+        REGIO_DECRETO_MIN_YEAR <= int(year) <= REGIO_DECRETO_MAX_YEAR else ""
+
+
 def valid_date(day: str, month: str, year: str):
     """Return the normalized 4-digit year if (day, month, year) is a real date (1<=dd<=31,
     1<=mm<=12, year in range), else None. Tolerates leading zeros."""
@@ -173,5 +199,5 @@ def valid_date(day: str, month: str, year: str):
 
 def norm_latin_suffix(value: str) -> str:
     """``"2 ter"`` / ``"2-ter"`` -> ``"2-ter"``; ``"2"`` -> ``"2"``."""
-    v = value.strip().lower().replace(" ", "-")
+    v = value.strip().lower().replace("\u00ad", "-").replace(" ", "-")
     return re.sub(r"-+", "-", v)

@@ -14,14 +14,151 @@ and ``geo.py``.
 from __future__ import annotations
 
 import re
+import unicodedata
 
 from . import catalog
-from .geo import city_name, region_name
+from .geo import (AUTONOMOUS_TAX_CITY_TO_GEO, AUTONOMOUS_TAX_GEO_NAMES, city_name,
+                  region_name)
 from .normalize import (build_nir, build_regional_nir, build_celex, build_celex_caselaw,
                         normattiva_url)
 from .aliases import ALIAS_NIR, ALIAS_CELEX, alias_nir
 
 _CASE_ID_RE = re.compile(r"([ct])\D*(\d+)\s*/\s*(\d{4})", re.I)
+
+
+def _norm_prax_label(value) -> str:
+    text = unicodedata.normalize("NFKD", _g_value(value))
+    text = "".join(ch for ch in text if not unicodedata.combining(ch))
+    return re.sub(r"\s+", " ", text).strip().casefold()
+
+
+def _g_value(value) -> str:
+    if value is None or value != value:
+        return ""
+    return value if isinstance(value, str) else str(value)
+
+
+_PRAX_AUTHORITY_ALIASES = {
+    "Min. Finanze": "MEF", "M.E.F.": "MEF", "MEF": "MEF",
+    "Agenzia delle Entrate": "AE", "Agenzia Entrate": "AE", "AG_ENTRATE": "AE",
+    "Agenzia delle Dogane": "ADOG", "AG_DOGANE": "ADOG",
+    "Agenzia delle Dogane e dei Monopoli": "ADM", "AG_DOGANE_MONOPOLI": "ADM",
+    "Min. Economia e Finanze": "MEF", "Agenzia del Territorio": "ATER",
+    "Dipartimento delle Finanze": "DIF", "Presidenza Consiglio dei Ministri": "PCM",
+    "Dipartimento Politiche Fiscali": "DPF", "Min. Tesoro": "TES",
+    "Ministero della Funzione Pubblica": "MFP", "Ministero Sviluppo Economico": "MSE",
+    "Min. Attività Produttive": "MAP", "Min. Industria": "MIND",
+    "Min. Giustizia": "MGIU", "Min. Agricoltura": "MAGR", "Rag. Gen. Stato": "RGS",
+    "Banca d'Italia": "BI", "INPS": "INPS", "Monopoli": "AMON",
+    "Cassa Depositi e Prestiti": "CDP", "Min. Comm. Estero": "MCEST",
+    "Min. Trasporti": "MTRA", "ARAN": "ARAN", "Min. Interni": "MINT",
+    "Motoriz. Civile": "AMTRC", "Agenzia per l'Italia digitale": "AGID",
+    "Min. Sanità": "MSAL", "Garante Protezione Dati Personali": "GPDP",
+    "Min. Difesa": "MDIF", "Min. Lavoro": "MLAV",
+    "Min. Infrastrutture e Trasporti": "MINF",
+    "MEFDF": "MEFDF",
+}
+PRAX_AUTHORITY_CODES = {
+    _norm_prax_label(alias): code for alias, code in _PRAX_AUTHORITY_ALIASES.items()
+}
+PRAX_AUTHORITY_CODES.update({code.casefold(): code for code in set(PRAX_AUTHORITY_CODES.values())})
+PRAX_AUTHORITY_NAMES = {
+    "MEF": "Ministero dell'Economia e delle Finanze",
+    "AE": "Agenzia delle Entrate",
+    "ADOG": "Agenzia delle Dogane",
+    "ADM": "Agenzia delle Dogane e dei Monopoli",
+    "ATER": "Agenzia del Territorio",
+    "DIF": "Dipartimento delle Finanze",
+    "PCM": "Presidenza del Consiglio dei Ministri",
+    "DPF": "Dipartimento delle Politiche Fiscali",
+    "TES": "Ministero del Tesoro",
+    "MFP": "Ministero della Funzione Pubblica",
+    "MSE": "Ministero dello Sviluppo Economico",
+    "MAP": "Ministero delle Attività Produttive",
+    "MIND": "Ministero dell'Industria",
+    "MGIU": "Ministero della Giustizia",
+    "MAGR": "Ministero dell'Agricoltura",
+    "RGS": "Ragioneria Generale dello Stato",
+    "BI": "Banca d'Italia",
+    "INPS": "INPS",
+    "AMON": "Monopoli",
+    "CDP": "Cassa Depositi e Prestiti",
+    "MCEST": "Ministero del Commercio Estero",
+    "MTRA": "Ministero dei Trasporti",
+    "ARAN": "ARAN",
+    "MINT": "Ministero dell'Interno",
+    "AMTRC": "Motorizzazione Civile",
+    "AGID": "Agenzia per l'Italia digitale",
+    "MSAL": "Ministero della Sanità",
+    "GPDP": "Garante per la protezione dei dati personali",
+    "MDIF": "Ministero della Difesa",
+    "MLAV": "Ministero del Lavoro",
+    "MINF": "Ministero delle Infrastrutture e dei Trasporti",
+    "MEFDF": "Dipartimento delle Finanze - MEF",
+}
+
+_PRAX_TYPE_ALIASES = {
+    "risoluzione": "RIS", "circolare": "CIRC", "comunicato stampa": "CS",
+    "interpello": "INT", "risposta": "INT", "telegramma": "TEL",
+    "lettera circolare": "LCIRC", "delibera": "DEL", "nota": "NOTA",
+    "direttiva": "DIR", "provvedimento": "PROVV", "parere": "PAR",
+    "RIS": "RIS", "CIRC": "CIRC", "CS": "CS", "INTERPELLO": "INT",
+    "INT": "INT", "TEL": "TEL", "LCIRC": "LCIRC", "DEL": "DEL",
+    "NOTA": "NOTA", "DIR": "DIR", "PROVV": "PROVV", "PARERE": "PAR", "PAR": "PAR",
+}
+PRAX_TYPE_CODES = {_norm_prax_label(alias): code for alias, code in _PRAX_TYPE_ALIASES.items()}
+_PRAX_DATE_TYPES = {"CS", "TEL", "LCIRC"}
+PRAX_TYPE_NAMES = {
+    "RIS": "risoluzione",
+    "CIRC": "circolare",
+    "CS": "comunicato stampa",
+    "INT": "interpello",
+    "TEL": "telegramma",
+    "LCIRC": "lettera circolare",
+    "DEL": "delibera",
+    "NOTA": "nota",
+    "DIR": "direttiva",
+    "PROVV": "provvedimento",
+    "PAR": "parere",
+}
+
+
+def _prax_date(value):
+    """Return (year, YYYYMMDD), accepting ISO dates, CERDEF DD_MM_YYYY, or a bare year."""
+    text = _g_value(value).strip()
+    full = re.fullmatch(r"(\d{4})[-_/](\d{2})[-_/](\d{2})", text)
+    if full:
+        return full.group(1), "".join(full.groups())
+    full = re.fullmatch(r"(\d{2})[-_/](\d{2})[-_/](\d{4})", text)
+    if full:
+        return full.group(3), full.group(3) + full.group(2) + full.group(1)
+    year = re.fullmatch(r"(\d{4})", text)
+    return (year.group(1), "") if year else ("", "")
+
+
+def generate_prax_urn(authority, document_type, date, number=None) -> str:
+    """Build a PRAX identifier from CERDEF-style authority/type/date/number metadata."""
+    authority_code = PRAX_AUTHORITY_CODES.get(_norm_prax_label(authority), "")
+    type_code = PRAX_TYPE_CODES.get(_norm_prax_label(document_type), "")
+    year, compact_date = _prax_date(date)
+    if not (authority_code and type_code and year and 1920 <= int(year) <= 2027):
+        return ""
+    if type_code in _PRAX_DATE_TYPES:
+        return f"PRAX:{authority_code}:{type_code}:{compact_date}" if compact_date else ""
+
+    number_text = _g_value(number).strip()
+    if number_text.endswith(".0") and number_text[:-2].isdigit():
+        number_text = number_text[:-2]
+    if not number_text:
+        return ""
+    if authority_code == "AE" and type_code == "CIRC":
+        number_text = re.sub(r"/E$", "", number_text, flags=re.I)
+    elif authority_code == "MEFDF" and type_code == "CIRC":
+        number_text = re.sub(r"/DF$", "", number_text, flags=re.I)
+    numeric_head = number_text.split("/", 1)[0]
+    if not numeric_head.isdigit() or int(numeric_head) > 10**18:
+        return ""
+    return f"PRAX:{authority_code}:{type_code}:{year}:{number_text}"
 
 
 # ── small field helpers ───────────────────────────────────────────────────────
@@ -67,13 +204,35 @@ def _year_only(urn):
     return urn.replace(date_part, date_part[:4]) if len(date_part) == 10 else urn
 
 
+_ROMAN_VAL = {"i": 1, "v": 5, "x": 10, "l": 50, "c": 100, "d": 500, "m": 1000}
+
+
+def _roman_to_int_token(s: str) -> str:
+    s = (s or "").lower()
+    if not s or any(ch not in _ROMAN_VAL for ch in s):
+        return s
+    total, prev = 0, 0
+    for ch in reversed(s):
+        v = _ROMAN_VAL[ch]
+        total += -v if v < prev else v
+        prev = max(prev, v)
+    return str(total)
+
+
 def partition_to_locator(partition, extra_num=()):
     """linkengine partition field -> urn:nir / CELEX locator suffix. ``articolo``->``art``,
     ``lettera``->``let``, ``numero``/``paragrafo``->``num`` always; names in ``extra_num``
     (``comma`` for EU, ``punto`` for CJEU) collapse to ``num`` too."""
     if not partition:
         return ''
+    partition = re.sub(
+        r'allegato-([ivxlcdm]+)',
+        lambda m: 'allegato-' + _roman_to_int_token(m.group(1)),
+        partition,
+        flags=re.I)
     s = (partition.replace('articolo', 'art').replace('lettera', 'let')
+                  .replace('considerando', 'cons')
+                  .replace('allegato', 'all')
                   .replace('numero', 'num').replace('paragrafo', 'num'))
     for name in extra_num:
         s = s.replace(name, 'num')
@@ -95,8 +254,12 @@ def _num_sez_year(text, min_year=1940, max_year=2030):
 
 
 _GIP_GUP = re.compile(r'\bG\.?\s*(?:I|U)\.?\s*P\.?\b\s*(?:del\s+)?tr', re.IGNORECASE)
-_CTP_PROVINCE_FIXUP = {"G479": "PU", "D704": "FC", "F023": "MS", "B832": "MS", "L746": "VB"}
-_TWO_LETTER_GEO = {"COMM_TRIBUT_PROV", "CORTE_GIUST_TRIBUT_PROV", "CORTE_APPELLO"}
+_TAX_CITY_CODE_FIXUP = {"G479": "PU", "D704": "FC", "F023": "MS", "B832": "MS", "L746": "VB"}
+_TWO_LETTER_GEO = catalog.FIRST_GRADE_TAX_AUTHORITIES | {"CORTE_APPELLO"}
+_DATE_ONLY_DECREE_PREFIX = {
+    ("DECR", "MINISTERO"): "DM",
+    ("DECR", "PRES_CONS_MIN"): "DPCM",
+}
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -117,7 +280,7 @@ def build_urn(row) -> str:
         return _caselaw_urn(row) or ''
     if rtype in ('prassi', 'prassi_amm'):
         return _prassi_urn(row) or ''
-    if rtype == 'other' or _g(row, 'doc-type') == 'DEL':
+    if rtype in ('other', 'other acts') or _g(row, 'doc-type') == 'DEL':
         return _other_urn(row) or ''
     return _year_only(_legislation_urn(row) or '')
 
@@ -140,12 +303,15 @@ def _legislation_urn(row):
     # nazionale
     if alias in ALIAS_NIR:
         return alias_nir(alias, part)
-    nir = build_nir(_g(row, 'doc-type'), _g(row, 'authority'), _ns(row, 'number'), _ns(row, 'year'), part)
+    nir = build_nir(_g(row, 'doc-type'), _g(row, 'authority'), _ns(row, 'number'),
+                    _ns(row, 'year'), part, ministry=_g(row, 'ministry'))
     if nir:
         return nir
-    if _g(row, 'doc-type') == "DECR" and _g(row, 'authority') == "MINISTERO" and _g(row, 'doc-date'):
+    date_only_prefix = _DATE_ONLY_DECREE_PREFIX.get(
+        (_g(row, 'doc-type'), _g(row, 'authority')))
+    if date_only_prefix and _g(row, 'doc-date'):
         loc = partition_to_locator(part)
-        return f"DM{_g(row, 'doc-date')}" + (f"~{loc}" if loc else "")
+        return f"{date_only_prefix}{_g(row, 'doc-date')}" + (f"~{loc}" if loc else "")
     # last-resort named EU acts recognized only by their text
     t = _g(row, 'text').lower()
     if 'tariffa doganale comune' in t or 'nomenclatura combinata' in t:
@@ -221,8 +387,13 @@ def _court_ecli(row, year, number):
             if _g(row, 'authority') == "COMM_TRIBUT_CEN":
                 return f"ECLI:IT:CTCIT:{year}:{number}"
             return None
-        if _g(row, 'authority') in ("COMM_TRIBUT_PROV", "CORTE_GIUST_TRIBUT_PROV"):
-            val = _CTP_PROVINCE_FIXUP.get(val, val)
+        if _g(row, 'authority') in catalog.SECOND_GRADE_TAX_AUTHORITIES and val == "TAA":
+            return None
+        if _g(row, 'authority') in catalog.FIRST_GRADE_TAX_AUTHORITIES:
+            val = _TAX_CITY_CODE_FIXUP.get(val, val)
+            # Trento/Bolzano first-grade tax courts: map the cadastral city code to the
+            # BZ/TN province component (the second-grade path does this at line ~509).
+            val = AUTONOMOUS_TAX_CITY_TO_GEO.get(val, val)
         if _g(row, 'authority') in _TWO_LETTER_GEO and len(val) > 2:
             return None
         geo = val
@@ -231,25 +402,25 @@ def _court_ecli(row, year, number):
 
 
 def _prassi_urn(row):
-    if _g(row, 'other-authority') != "AG_ENTRATE":
-        return None
-    year = _int(row, 'year') or (int(_g(row, 'doc-date').split('-')[0]) if _g(row, 'doc-date') else None)
+    date = _g(row, 'doc-date') or _ns(row, 'year')
+    year = _int(row, 'year') or (int(date.split('-')[0]) if date else None)
     full = _g(row, 'full-number')
     if full:
         number = full
         if year and str(year) in number:
             number = number.replace(str(year), '').rstrip('/')
     else:
-        number = _int(row, 'number')
-    if not (year and number):
-        return None
-    kind = {"CIRC": "CIRC", "RIS": "RIS", "INTERPELLO": "INT"}.get(_g(row, 'doc-type'))
-    return f"PRAX:AE:{kind}:{year}:{number}" if kind else None
+        number = _ns(row, 'number')
+    return generate_prax_urn(
+        _g(row, 'other-authority'), _g(row, 'doc-type'), date or str(year or ""), number
+    ) or None
 
 
 def _other_urn(row):
     if _g(row, 'authority') == "COMUNE" and _g(row, 'city') and _int(row, 'year') and _int(row, 'number'):
-        return f"DEL:CO{_g(row, 'city')}:{_int(row, 'year')}:{_int(row, 'number')}"
+        urn = f"DEL:CO{_g(row, 'city')}:{_int(row, 'year')}:{_int(row, 'number')}"
+        locator = partition_to_locator(_g(row, 'partition'))
+        return urn + (f"~{locator}" if locator else "")
     return None
 
 
@@ -257,9 +428,9 @@ def _other_urn(row):
 # urn_to_text: identifier -> human-readable citation (URN alone, no other input)
 # ══════════════════════════════════════════════════════════════════════════════
 _LOC_LABEL = {"art": "art.", "comma": "comma", "let": "let.", "num": "num.",
-              "allegato": "allegato"}
+              "all": "allegato", "allegato": "allegato"}
 # longest first so "comma"/"allegato" win over a bare prefix scan
-_LOC_PREFIX_RE = re.compile(r'^(allegato|comma|art|let|num)(.*)$')
+_LOC_PREFIX_RE = re.compile(r'^(allegato|comma|art|let|num|all)(.*)$')
 
 
 def _render_locator(locator: str, num_label: str = "num.") -> str:
@@ -290,18 +461,25 @@ def urn_to_text(urn: str) -> str:
         return _nir_to_text(urn[len("urn:nir:"):])
     if urn.startswith("CELEX:"):
         return _celex_to_text(urn[len("CELEX:"):])
-    if urn.startswith("PRAX:AE:"):
-        return _prax_to_text(urn[len("PRAX:AE:"):])
+    if urn.startswith("PRAX:"):
+        return _prax_to_text(urn[len("PRAX:"):])
+    if urn.startswith("DEL:CO"):
+        return _local_delibera_to_text(urn)
     if urn.startswith("CONV_EU_DIR_UOMO"):
         _, loc = _split_locator(urn)
         return f"{loc + ' ' if loc else ''}CEDU".strip()
     if urn.startswith("TARIFFA_DOGANALE_COM"):
         _, loc = _split_locator(urn)
         return f"{loc + ' ' if loc else ''}tariffa doganale comune".strip()
-    m = re.match(r'DM(\d{4})-(\d{2})-(\d{2})(?:~(.*))?$', urn)   # date-only ministerial decree
+    m = re.match(r'(DPCM|DM)(\d{4})-(\d{2})-(\d{2})(?:~(.*))?$', urn)
     if m:
-        loc = _render_locator(m.group(4)) if m.group(4) else ""
-        return f"{loc + ' ' if loc else ''}decreto ministeriale del {m.group(3)}/{m.group(2)}/{m.group(1)}".strip()
+        decree_name = {
+            "DM": "decreto ministeriale",
+            "DPCM": "D.P.C.M.",
+        }[m.group(1)]
+        loc = _render_locator(m.group(5)) if m.group(5) else ""
+        date = f"{m.group(4)}/{m.group(3)}/{m.group(2)}"
+        return f"{loc + ' ' if loc else ''}{decree_name} del {date}".strip()
     return urn
 
 
@@ -314,7 +492,7 @@ def _split_locator(body):
 
 
 def _ecli_to_text(body):
-    # body: "CASS:2020:1234CIV" | "CTRLAZ:2024:100" | "COST:2018:188" | "CTCIT:1989:123"
+    # body: "CASS:2020:1234CIV" | "CGT2LAZ:2024:100" | "COST:2018:188"
     parts = body.split(':')
     if len(parts) < 3:
         return "ECLI:IT:" + body
@@ -332,7 +510,9 @@ def _ecli_to_text(body):
             geo_code = court_geo[len(prefix):]
             place = ""
             if geo_code and geo_code != "IT":
-                if geo_kind == "region":
+                if prefix in {"CTR", "CGT2"} and geo_code in AUTONOMOUS_TAX_GEO_NAMES:
+                    place = f" di {AUTONOMOUS_TAX_GEO_NAMES[geo_code]}"
+                elif geo_kind == "region":
                     place = f" {region_name(geo_code)}"
                 elif geo_kind == "city":
                     place = f" di {city_name(geo_code)}"
@@ -387,9 +567,28 @@ def _celex_to_text(body):
 
 
 def _prax_to_text(body):
-    # body: "CIRC:2005:47" | "RIS:2004:91" | "INT:2021:342"
+    # body: "AE:CIRC:2005:47" | "MEF:TEL:19911203"
     parts = body.split(':')
     if len(parts) < 3:
-        return "PRAX:AE:" + body
-    kind = {"CIRC": "circolare", "RIS": "risoluzione", "INT": "interpello"}.get(parts[0], parts[0])
-    return f"{kind} Agenzia delle Entrate n. {parts[2]}/{parts[1]}"
+        return "PRAX:" + body
+    authority, kind = parts[0], parts[1]
+    authority_name = PRAX_AUTHORITY_NAMES.get(authority, authority)
+    kind_name = PRAX_TYPE_NAMES.get(kind, kind)
+    if kind in _PRAX_DATE_TYPES and re.fullmatch(r"\d{8}", parts[2]):
+        date = parts[2]
+        return f"{kind_name} {authority_name} del {date[6:8]}/{date[4:6]}/{date[:4]}"
+    if len(parts) < 4:
+        return "PRAX:" + body
+    return f"{kind_name} {authority_name} n. {parts[3]}/{parts[2]}"
+
+
+def _local_delibera_to_text(urn):
+    base, raw_locator = urn.split("~", 1) if "~" in urn else (urn, "")
+    match = re.fullmatch(r"DEL:CO([^:]+):(\d{4}):(\d+)", base)
+    if not match:
+        return urn
+    place = city_name(match.group(1))
+    issuer = f"Comune di {place}" if place else f"Comune {match.group(1)}"
+    locator = _render_locator(raw_locator) if raw_locator else ""
+    head = f"{locator} " if locator else ""
+    return f"{head}delibera del {issuer} n. {match.group(3)}/{match.group(2)}"

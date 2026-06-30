@@ -1,0 +1,424 @@
+La Corte di Giustizia Tributaria di I grado di MODENA (ex Commissione Tributaria Provinciale di
+MODENA) Sezione 2, riunita in udienza il 11/07/2022 alle ore 09:30 con la seguente composizione
+collegiale:
+BRUSCHETTA ERNESTINO, Presidente
+GUICCIARDI MIRELLA, Relatore
+PREVIDI CLAUDIO, Giudice
+in data 11/07/2022 ha pronunciato la seguente
+SENTENZA
+- sul ricorso n. 71/2022 depositato il 09/02/2022
+proposto da
+Ricorrente_1 - CF_Ricorrente_1
+ Difeso da
+ Difensore_1 - CF_Difensore_1
+ ed elettivamente domiciliato presso Email_1
+contro
+Ag. Entrate Direzione Provinciale Modena - Via Delle Costellazioni N. 190 41126 Modena MO
+ elettivamente domiciliato presso Email_2
+Avente ad oggetto l'impugnazione di:
+- AVVISO DI ACCERTAMENTO n. THH054U00475 IRPEF-ADDIZIONALE REGIONALE 2016
+- AVVISO DI ACCERTAMENTO n. THH054U00475 IRPEF-ADDIZIONALE COMUNALE 2016
+- AVVISO DI ACCERTAMENTO n. THH054U00475 IRPEF-ALTRO 2016
+a seguito di discussione in pubblica udienza
+Richieste delle parti:
+Sentenza n. 465/2022
+Depositato il 17/11/2022
+Ricorrente/Appellante: (Trascrizione delle eventuali richieste ammesse dal Presidente)
+Resistente/Appellato: (Trascrizione delle eventuali richieste ammesse dal Presidente)
+SVOLGIMENTO DEL PROCESSO
+In data 21-05-2018 l’Agenzia delle Entrate- Direzione Provinciale di Parma notificava al sig. Ricorrente_1,
+in qualità di Vice Presidente della società Socuetà_1, un processo verbale di constatazione
+per gli anni d’imposta dal 2013 al 2017. Per l’anno 2016 venivano contestati alla società, a seguito di
+ricostruzione induttiva, ricavi non dichiarati per l’importo di € 109.557,75. La società definiva in via agevolata
+l’annualità in oggetto, ai sensi dell’art. 1 del D.L. n. 119/2018. La ricostruzione induttiva discendeva
+dall’accertata inattendibilità della contabilità, in particolare quella di magazzino. La società partecipata
+vendeva porte, che essa stessa costruisce, ed il componente essenziale era il cilindro, che una volta installato
+rendeva pronta alla consegna la porta stessa. La ricostruzione dei ricavi e del reale volume d’affari, era stata
+basata in quanto identificabile e quantificabile sulle fatture d’acquisto e sugli inventari. L’Ufficio rinviava al
+PVC per l’analisi specifica e dettagliata, pure precisando la pacifica inattendibilità delle obbligatorie scritture
+contabili di magazzino, connotate da violazioni gravi, numerose e ripetute. In tale verifica, l’Ufficio rilevava
+che i cilindri in giacenza fisica erano inferiori a quelli che avrebbero dovuto essere, partendo dalle rimanenze
+finali, sottraendo quelli utilizzati o ceduti ed aumentando tale risultato degli acquisti intervenuti. Pertanto,
+l’Ufficio riteneva ragionevole ed attendibile che gli stessi fossero stati venduti come tali, ovvero venduto il
+componente del prodotto finale (porte) nell’anno della verifica e nei quattro precedenti, e veniva usata la
+proporzione riscontrata nelle vendite nelle due modalità nella Società. Per pervenire ai ricavi veniva utilizzato
+il rispettivo prezzo medio di vendita. La citata società nel 2016 era a ristretta base azionaria, in quanto
+costituita da due soci: Nom_1 quota pari al 60% e Ric_1 quota pari al 40%, per cui
+appariva legittima la presunzione di distribuzione al socio Ric_1 di utili extracontabili. Alla luce della
+dichiarazione dei redditi regolarmente presentata per l’anno d’imposta 2016, nell’azione di controllo si teneva
+conto che la quota di compartecipazione nella società del sig. Ricorrente_1 in tale anno era pari al 40,00%
+(da cui maggiori utili pari ad €43.823,00) e, pertanto, trattavasi di partecipazione qualificata, così come
+desumibile dal tenore letterale dell’art.67, comma 1, lett.c), del D.P.R. 917/86. Ai sensi dell’art.47, comma
+1, del D.P.R. 917/86, gli utili percepiti da soci aventi partecipazioni qualificate in società di capitali concorrono
+per il 49,72% del loro ammontare alla formazione del reddito imponibile complessivo (nello specifico 49,72%
+di € 43.823,00 = € 21.789,00). Con atto n. THHI14U00286/2021 il contribuente era stato invitato a presentarsi
+in Ufficio il 06/05/2021 per attivare il procedimento con adesione. In data 27/04/2021 l’Avv. Dif_1
+, per conto del contribuente, comunicava a mezzo posta elettronica che il cliente non intendeva
+presenziare all’incontro fissato, per cui, preso atto della mancata partecipazione al contraddittorio, l’Ufficio
+procedeva alla notifica dell’avviso di accertamento di cui è causa, accertando, ai sensi dell’art.41 bis del D.
+P.R. 600/73, ai fini dell’IRPEF, dell’ADDIZIONALE REGIONALE e dell’ADDIZIONALE COMUNALE
+ALL’IRPEF, il reddito imponibile e la relativa imposta come dai prospetti riportati dall’avviso di accertamento
+n. THH054U00475/2021, notificato il 02.09.2021, e, contestualmente, irrogando le sanzioni ai sensi del D.
+Lgs. 471/97 e D.lgs.472/97. La Società contribuente notificava il ricorso con effetti di reclamo e l’Ufficio
+notificava il provvedimento di diniego, unitamente alla bozza di controdeduzioni. La ricorrente riteneva l’avviso
+di accertamento illegittimo sotto diversi profili: 1. presunzione di maggior reddito societario, eccependo che
+tale modus operandi appariva erroneo sotto due diversi profili metodologici, che riguardavano il fatto di aver
+riferito l’ammanco fisico dei cilindri rilevato nel periodo 1.1.2018/15.2.2018 a presunte vendite in nero degli
+anni precedenti (come se i cilindri montati su porte presuntivamente vendute in nero negli anni 2013 – 2017
+avessero potuto tornare in magazzino alla data dell’1.1.2018 per poi uscirne prima del 15.2.2018!); aver
+ignorato il numero di alcuni cilindri presenti in magazzino al 15.2.2018 oltre che dei cilindri ceduti in
+sostituzione (e perciò non venduti). 2- Inattendibilità del ragionamento presuntivo adottato dall’Ufficio, perché
+la ricostruzione dei ricavi operata dall’Ufficio appariva illogica ed inattendibile, perché presumeva l’evasione
+d’imposta dell’anno de quo sulla base di un dato dichiaratamente riferito e circoscritto all’anno 2018 (anzi,
+ai primi 46 giorni dell’anno 2018): dato che, come tale, avrebbe potuto giustificare al più una presunzione
+di vendita in nero di porte blindate in quest’ultimo solo periodo. Ulteriore carenza logica e metodologica
+dell’accertamento consisteva nella decisione dell’Ufficio di aver basato l’intera ricostruzione dei ricavi
+derivanti dalla presunta vendita in nero di porte blindate sull’analisi di un solo elemento (il cilindro appunto),
+ignorando il fatto che le porte blindate erano costituite da più di 40 componenti, alcuni dei quali presenti con
+la stessa frequenza dei cilindri (basti pensare ai defender e alle maniglie): sicché le verifiche di magazzino
+avrebbero dovuto riguardare anche questi accessori ed essere poi messe a confronto con quella relativa ai
+cilindri. I cilindri effettivamente presenti in magazzino nel 2018: l’accertamento sull’anno de quo era privo di
+base logica perché si fondava sull’analisi di giacenze iniziali e finali dell’anno 2018 e sull’esame di un solo
+componente delle porte blindate (il cilindro), quindi, evidenziava che nemmeno nel 2018 vi sarebbero state
+vendite extracontabili di porte blindate, perché i cilindri mancanti alla data del 15.2.2018 non erano 864 ma
+molti meno (non più di una ventina). Per altro verso, l’Ufficio non avrebbe considerato che un certo numero
+di cilindri non era stato venduto (né come accessorio autonomo né come componente di porte blindate), ma
+consegnato ai clienti in sostituzione di cilindri difettosi o malfunzionanti. Nel periodo 1.1.2018/15.2.2018 la
+società sostituì 18 cilindri come dalla documentazione prodotta in causa: prospetti annuali delle sostituzioni,
+reclami e segnalazioni dei clienti, scambi di corrispondenza, bolle di consegna, e, quindi, tali cilindri avrebbero
+dovuto essere inclusi nel calcolo dei cilindri “utilizzati” e – come tali – sottratti al numero dei cilindri
+presuntivamente montati su porte non fatturate. In conclusione, l’accertamento sarebbe viziato da
+macroscopici errori di metodo e di calcolo, che non permettevano di ravvisare presunzioni di evasione gravi,
+precise e concordanti ex art. 39, comma 1, lett. d) d.p.r. n. 600/73, né sull’anno 2018 (comunque non
+accertato) né sull’anno oggetto del presente ricorso. In primo luogo, era assurdo pensare che la s.p.a. Vighi
+Security Doors avesse potuto vendere in nero cilindri presenti in magazzino due anni dopo. In secondo
+luogo, era erroneo calcolare il numero di 2.611 cilindri in giacenza iniziale all’1.1.2018 sulla base di un dato
+contabile che rimaneva indimostrato ed era erroneo calcolare il numero di 2.245 cilindri in giacenza finale
+senza sottrarre i 741 cilindri presenti in magazzino a tale data e i 18 cilindri ceduti in sostituzione nei primi
+46 giorni dell’anno 2018. Se i calcoli fossero stati eseguiti correttamente, sarebbero emersi non più di 20
+cilindri da imputare (in ipotesi) a vendite di porte blindate non fatturate nell’anno 2018, oppure (nella
+prospettiva adottata dall’Ufficio) per il 20% a vendite non fatturate nell’anno de quo. Pertanto, la Società
+ricorrente formulava le seguenti conclusioni: “ogni contraria istanza, eccezione, deduzione reietta; annullarsi
+l’atto impugnato, col favor delle spese”. L’Ufficio controdeduceva, evidenziando che il contenuto delle difese,
+con la più ampia riserva di integrazioni e/o modificazioni, era stato già anticipato contestualmente al
+provvedimento di diniego. Preliminarmente evidenziava che nei confronti del medesimo contribuente in
+relazione all’annualità 2014 era stato emesso dall’Agenzia delle Entrate DP di Modena l’avviso di
+accertamento THH054U03261-19 (2014) sempre relativo alla distribuzione di utiliextracontabili da parte
+della predetta società ed emesso sempre in virtù del predetto Pvc. Tale avviso di accertamento era stato
+impugnato dalla parte e la CTP di Modena si era pronunciata in senso favorevole all’Ufficio con sentenza
+n. 32/03/2021 attualmente impugnata con appello di parte – giudizio pendente dinnanzi alla CTR Emilia
+Romagna RGA 1202/2021. L’Ufficio ribadiva che la società Socuetà_1, a cui era stato notificato
+per gli anni di imposta dal 2013 al 2017 un processo verbale di constatazione, aveva definito ai sensi dell’art.
+1 del DL 119/2019 l’annualità 2016, accettando la ricostruzione di maggiori ricavi per € 109.557,75. Segnalava
+l’orientamento consolidato della giurisprudenza di legittimità, secondo cui sarebbe legittima la presunzione
+di attribuzione ai soci degli eventuali utili extracontabili accertati, rimanendo salva la facoltà del contribuente
+di offrire la prova del fatto che i maggiori ricavi non siano stati fatti oggetto di distribuzione, ma siano stati,
+invece accantonati dalla società, ovvero da essa reinvestiti, ne conseguiva che, ove il reddito nei confronti
+della società risultava accertato in maniera definitiva, il giudizio nei confronti del socio, per quanto atteneva
+all’esistenza degli utili extracontabili realizzati dalla società, era pregiudicato dall’esito dell’accertamento
+effettuato nei confronti della società stessa. Parte ricorrente con il ricorso in esame contestava unicamente
+il merito dell’avviso di accertamento emesso nei confronti della società, senza nulla eccepire circa la specifica
+posizione del socio, per cui tale presunzione non era stata vinta dal contribuente, che non aveva fornito in
+merito alcuna argomentazione valida e fondata. In breve, l’Ufficio sosteneva che era il classico esempio di
+“magazzino gonfiato”, il cui valore fisico effettivo (leggasi reali cilindri in giacenza ad inizio 2018) era inferiore
+a quello contabile, mediante accorgimenti, al fine di permettere al contribuente di non esporre perdite e
+redditi irrisori. L’ammanco riscontrato di merce, l’inattendibilità delle scritture contabili, aveva portato l’Ufficio
+a configurare la presenza di minori beni in magazzino (nella misura costituente le vendite in nero) rispetto
+alle inattendibili esistenze inziali dichiarate al 2018. Ragionevolmente, la vendita in nero come porte o come
+accessori non poteva essere avvenuta nel corso dei 46 giorni del 2018 (atteso anche i tempi di lavorazione),
+ma doveva essere distribuita negli anni precedenti il controllo, proprio a ragione dell’assoluta inattendibilità
+dell’intero magazzino in contabilità, riscontrato nel corso di tutti questi periodi d’imposta. Le differenze
+inventariali costituivano gravi irregolarità della contabilità di magazzino, assolutamente eccedenti una
+normale tollerabilità. Pertanto, l’Ufficio formulava le seguenti conclusioni: “ CHIEDE a codesta onorevole
+Commissione Tributaria Provinciale il rigetto del ricorso e la condanna del Ricorrente alle spese di giudizio,
+maggiorate di diritto del cinquanta per cento per la rifusione delle spese del procedimento di mediazione ai
+sensi dell’art. 15, comma 2-septies, del D.Lgs. n. 546/1992”. Parte ricorrente depositava una memoria ove
+contestava ed eccepiva l’errato metodo e calcolo.
+All’udienza di merito in data 11 Luglio 2022 il Giudice relatore esponeva i fatti e le richieste delle parti, ed il
+Collegio tratteneva la causa in decisione.
+MOTIVI DELLA DECISIONE
+La Commissione ritiene il ricorso non meritevole di accoglimento per i seguenti motivi e peraltro citati ed
+esposti dall’Ufficio negli atti, in quanto la ricorrente non ha assolto all’onere probatorio in maniera piena ed
+esaustiva per smentire la tesi dello stesso Ufficio e dei vari PVC e verbali allegati. In via preliminare il Collegio
+evidenzia che nei confronti del medesimo contribuente in relazione all’annualità 2014 è stato emesso
+dall’Agenzia delle Entrate DP di Modena l’avviso di accertamento THH054U03261-19 (2014) sempre relativo
+alla distribuzione di utiliextracontabili da parte della predetta società ed emesso sempre in virtù del predetto
+Pvc. Tale avviso di accertamento è stato impugnato dalla parte e la CTP di Modena si è pronunciata in senso
+favorevole all’Ufficio con sentenza n. 32/03/2021 attualmente impugnata con appello di parte – giudizio
+pendente dinnanzi alla CTR Emilia Romagna RGA 1202/2021. Così pure, la società Società_1
+ a cui è stato notificato per gli anni di imposta dal 2013 al 2017 un processo verbale di constatazione,
+ha definito ai sensi dell’art. 1 del DL 119/2019 l’annualità 2016, accettando la ricostruzione di maggiori ricavi
+per € 109.557,75. Sul punto è opportuno segnalare l’orientamento consolidato della giurisprudenza di
+legittimità, secondo cui “è legittima la presunzione di attribuzione ai soci degli eventuali utili extracontabili
+accertati, rimanendo salva la facoltà del contribuente di offrire la prova del fatto che i maggiori ricavi non
+siano stati fatti oggetto di distribuzione, ma siano stati, invece accantonati dalla società, ovvero da essa
+reinvestiti" (Cass. 6197/2007; 2214/2011); ne consegue che, ove (come nella specie) il reddito nei confronti
+della società risulti accertato in maniera definitiva, il giudizio nei confronti del socio, per quanto attiene
+all’esistenza degli utili extracontabili realizzati dalla società, è pregiudicato dall’esito dell’accertamento
+effettuato nei confronti della società stessa” (Cass., sent. n. 441/2013, richiamata dall’ordinanza n.
+5345/2018); “Qualora il Fisco accerti degli utili extracontabili, nei confronti di società a ristretta base
+partecipativa, si applicherà il meccanismo presuntivo volto ad attribuire tali utili in capo ai soci. Costoro per
+liberarsi dalla presunzione dovranno attivarsi, già in prima battuta dinnanzi all’Amministrazione finanziaria
+e successivamente nel giudizio di merito (qualora il primo contatto con il Fisco abbia raggiunto un esito
+negativo per il contribuente), fornendo la prova che gli utili siano stati accantonati oppure reinvestiti dalla
+società (quindi non distribuiti tra i soci). Addirittura è richiesto al contribuente stesso di provare la propria
+estraneità alla gestione e conduzione societaria. Il recente panorama giurisprudenziale ha meglio perimetrato
+l’operatività del meccanismo presuntivo e soprattutto ha indicato quale sia l’onus probandi richiesto al
+contribuente. Di recente (Cass. n. 14242/2021) la Cassazione ha mitigato la posizione “pro-Fisco” in quanto
+è stato posto un freno all’applicazione sic et simpliciter del meccanismo presuntivo: la presunzione opererà
+solo se da un lato è dimostrata la ristretta base sociale o familiare della società stessa, (il fatto noto posto
+a base della presunzione), e dall’altro se sia stato notificato preventivamente un valido accertamento a carico
+della società in ordine ai ricavi non contabilizzati, costituendo il presupposto per l’accertamento a carico dei
+soci in ordine ai dividendi. Così pure, l’accertamento operato dall’Amministrazione finanziaria nei confronti
+di una società a ristretta base azionaria ai fini Ires, Irap, addizionali e quello conseguenziale operato nei
+confronti del socio, ai fini irpef costituiscono atti distinti e separati ma sicuramente legati tra loro da un
+vincolo di pregiudizialità che non può essere disatteso dal Collegio tributario giudicante. Per cui, il
+sopravvenuto annullamento dell’avviso di accertamento emesso e notificato nei confronti della società di
+capitali a seguito di un sentenza che ha disposto sul merito della questione impositiva (e non su vizi formali
+o procedurali), implica inevitabilmente l’infondatezza della pretesa impositiva contenuta nell’avviso di
+accertamento notificato nei confronti del singolo socio. E’ quanto ha disposto la Corte di Cassazione in
+concomitanza della sentenza n°8652 del 16 marzo 2022. Nel caso di specie, i giudici di Palazzaccio hanno
+evidenziato la rilevanza e, pertanto, la pregiudizialità dell’avviso di accertamento cosiddetto “principale” o
+“prodromico” notificato in capo alla Srl a ristretta base azionaria poiché contenente i fatti costitutivi
+dell’obbligazione tributaria. Pertanto, i giudici di Palazzaccio dall’annullamento di quest’ultimo hanno fatto
+discendere un effetto pregiudicante sull’accertamento notificato ex post a ciascun socio appartenente alla
+Srl (Cass. Sez.5, Sen.33976 del 19/12/2019). Per certi versi, la conferma degli Ermellini in ordine alla
+configurabilità di un inevitabile vincolo di pregiudizialità che necessariamente caratterizza i due avvisi di
+accertamento conferma, a dispetto di un orientamento contrario e costante della stessa Corte di Cassazione,
+che nella casistica degli accertamenti notificati a società a ristretta base azionaria da cui l’AdE fa discendere
+conseguenzialmente l’accertamento nei confronti del singolo socio, è configurabile una doppia presunzione
+che, in quanto tale, deroga espressamente il principio normativo di cui all’art.2727 c.c. Deroga, quest’ultima,
+sempre negata dagli Ermellini, ritenendo questi ultimi che, nel caso di società di capitali a ristretta base
+azionaria, ove siano accertati utili non contabilizzati, opera la presunzione di attribuzione “pro quota” ai soci
+degli utili stessi, salva la prova contraria, gravante sul contribuente, in ordine al fatto che i maggiori ricavi
+sono stati accantonati o reinvestiti. Il ricorso a tale presunzione secondo gli Ermellini non viola il divieto
+della cosiddetta “doppia presunzione “ poiché il fatto noto di cui all’art.2727 cc sopra richiamato, non sarebbe
+costituito dalla sussistenza dei maggiori ricavi induttivamente accertati dall’ufficio impositore nei confronti
+della società di capitali, bensì dalla ristrettezza della base sociale nonché dal vincolo solidaristico che è
+riconducibile al rapporto di parentele o affinità che spesso intercorre tra i soci appartenenti alla società e
+che contraddistinguono questa tipologia di società di capitali. Ancora, si veda Cass. Trib. Sentenza
+03-02-2022 n. 3307 ove afferma “ Questa Corte, con orientamento ormai consolidato, ha affermato che in
+tema di accertamento delle imposte sui redditi, nel caso di società di capitali a ristretta base partecipativa,
+è legittima la presunzione di attribuzione ai soci degli eventuali utili extracontabili accertati, rimanendo salva
+la facoltà per il contribuente di offrire la prova del fatto che i maggiori ricavi non siano stati fatti oggetto di
+distribuzione, ma siano stati invece accantonati dalla società, ovvero da essa reinvestiti, non essendo tuttavia
+a tal fine sufficiente la mera deduzione che l'esercizio sociale ufficiale si sia concluso con perdite contabili
+(cfr. Cass. V n. 5076/2011; n. 17928/2012; n. 27778/2017; n. 30069/2018; 27049/2019, nonché Cass. VI -
+5 n. 24820/2021). In particolare, si è precisato, che la presunzione di distribuzione ai soci degli utili non
+contabilizzati non viola il divieto di presunzione di secondo grado poichè il fatto noto non è costituito dalla
+sussistenza dei maggiori redditi induttivamente accertati, ma dalla ristrettezza della base sociale e dal vincolo
+di solidarietà e di reciproco controllo dei soci che, in tal caso, normalmente caratterizza la gestione sociale
+(Cass. 22 aprile 2009, n. 9519). È consolidato l'orientamento per cui in tema di imposte sui redditi di capitale,
+per escludere l'operatività della presunzione di distribuzione degli utili extracontabili, conseguiti e non
+dichiarati da una società a ristretta base partecipativa, non è sufficiente che il socio si limiti ad allegare
+genericamente la mancanza di prova di un valido e definitivo accertamento nei confronti della società, ma
+deve contestare lo stesso effettivo conseguimento, da parte della società, di tali utili, ove non sia in grado
+di dimostrare la mancata distribuzione degli stessi, stante l'autonomia dei giudizi nei confronti della società
+e del socio e il rapporto di pregiudizialità dell'accertamento nei confronti del primo rispetto a quello verso il
+secondo (Cfr. Cass. V, n. 33976/2019). Nel caso di specie, il Collegio rileva che parte ricorrente con il ricorso
+in esame contesta unicamente il merito dell’avviso di accertamento emesso nei confronti della società, senza
+nulla eccepire circa la specifica posizione del socio. Come noto, la presunzione di distribuzione di utili occulti
+in caso di accertamento in capo a società di capitali a ristretta base, è principio consolidato nella
+giurisprudenza di legittimità e tale presunzione non è stata vinta dal contribuente, che non ha fornito in merito
+alcuna argomentazione valida e fondata e prova contraria. Infatti, la presunzione di distribuzione ai soci
+degli utili occulti conseguiti da una società di capitali a ristretta base partecipativa ha valenza di presunzione
+semplice qualificata (grave, precisa e concordante) e può essere superata dal contribuente fornendo la
+prova (anch'essa eventualmente presuntiva) che gli utili extracontabili conseguiti dalla società non sono
+stati fatti oggetto di distribuzione, ma sono stati, invece, accantonati dalla società, ovvero da essa reinvestiti
+(cfr. Cass.Sez. 5 n. 32959 del 20/12/2018; Sez. 5 n. 27778 del 22/11/2017); così pure, tale principio è stato
+confermato anche dalla recente Cassazione n. 30351 del 19/09/2019 secondo la quale “ L'automatica
+attribuzione ai soci pro quota del maggior reddito rideterminato in capo alla...s.r.l., pur non trovando un
+supporto legislativo (a differenza di quanto avviene per le società di persone), è ormai riconosciuto da questa
+Corte che, in più occasioni, ha avuto modo di statuire la legittimità del ribaltamento dell'utile extracontabile
+(Cass. n. 27778 del 22/11/2017; Cass. n. 5925 del 24/3/2015), salva, tuttavia, la facoltà del socio di fornire
+la prova contraria. La Società ricorrente in sede di ricorso non solo non contesta la citata presunzione ma
+non fornisce alcuna prova relativa alla distribuzione degli utili accertati ovvero che il maggior utile accertato
+non sia stato effettivamente distribuito, o perchè reinvestito o accantonato, o per l'assenza di una concreta
+provvista finanziaria trasferibile nella sfera patrimoniale di quest'ultimo. Il Collegio ribadisce che
+l’accertamento in capo alla società risulta definito ai sensi del DL 119/2018 e sul tema degli effetti che
+l’accertamento definitivo a carico della società produce nei riguardi dei soci, si è espressa in varie occasioni
+recenti la Corte di Cassazione, affermando che “ove il reddito nei confronti della società risulti accertato in
+maniera definitiva, il giudizio nei confronti del socio, per quanto attiene all’esistenza degli utili extra contabili
+realizzati dalla società, è pregiudicato dall’esito dell’accertamento effettuato nei confronti della società
+stessa”. E’ innegabile l’identità della situazione nella definitività del reddito della società partecipata, ed è
+irrilevante che ciò si venga a realizzare per acquiescenza all’accertamento, per giudicato, ovvero per
+definizione agevolata citata, la quale richiede la presentazione (e si perfeziona con il versamento del quantum
+debeatur) di una dichiarazione fiscale che tenga conto dei rilievi del processo verbale di constatazione. Il
+comma 4 dell’art. 1 D.l. n. 119/2018 a proposito dei soci, prevede solo la necessità della preventiva definizione
+agevolata da parte della società e, se presentata, la facoltà dei soci di aderire alla definizione agevolata,
+ovvero ottenere l’abbuono delle sanzioni ed interessi relative alla propria dichiarazione dei redditi.
+Coerentemente non presenta deroga alcuna alle altre norme tributarie e civilistiche applicabili, deroga che
+avrebbe dovuto espressamente essere presente. Peraltro, il Collegio ritiene di conformarsi alla sentenza n.
+328/0372021, depositata il 02/07/2021, dell’intestata Commissione, che ha deciso il medesimo contenzioso
+incardinato per la precedente annualità ove già aderito alla tesi della definitività e vincolatività. Preme
+comunque evidenziare i calcoli eseguiti dall’Ufficio: cilindri rilevati all’1.1.2018 n. 2.611; cilindri acquistati
+dalla società dall’1.1. al 15.2.2018 n. 1.716; cilindri utilizzati dalla società nello stesso periodo n. 1.218;
+cilindri ricostruiti al 15.2.2018 (2.611 + 1.716 – 1.218) n. 3.109; cilindri rilevati in magazzino al 15.2.2018 n.
+2.245; cilindri rilevati come mancanti al 15.2.2018 (3.109-2.245) n. 864; cilindri venduti come accessori n.
+85; porte vendute in nero nel quinquennio (864- 85) n. 779; porte vendute in nero nel 2014 (779 x 20%)
+n.155; ricavi derivanti dalla vendita di porte (155 x € 626 l’una) € 96.780; cilindri venduti in nero come
+accessori nel 2014 n.22; ricavi derivanti dalla vendita di cilindri (22 x € 69 l’uno) € 1.487; ricavi
+presuntivamente non dichiarati (96.780 + 1.487) € 98.267. Sulla contestazione alla precedente ricostruzione
+la ricorrente rileva che l’Ufficio all’”aver riferito l’ammanco fisico dei cilindri rilevato nel periodo
+1.1.2018/15.2.2018 a presunte vendite in nero degli anni precedenti (come se i cilindri venduti negli anni
+2013 – 2017 avessero potuto tornare in magazzino alla data dell’1.1.2018!).” Ritiene che tale dato “avrebbe
+potuto giustificare al più una presunzione di vendita in nero di porte blindate in quest’ultimo solo periodo.”,
+ovvero dal 1° Gennaio al 15 febbraio, un dato che la stessa ricorrente giudica inverosimile. Tale motivo è
+infondato. Argomentazioni suggestive che però non si attagliano al caso in rassegna, non cogliendo la
+natura stessa del recupero e postulando come vero quanto certamente inattendibile, ovvero che i cilindri
+fossero davvero presenti al 1.1.2018. E’ sufficiente esaminare le conclusioni finali della verifica (cfr. pagg.
+58 e 59 PVC) per rendersi conto della legittimità e fondatezza del recupero, anche perché il valore fisico
+effettivo (leggasi reali cilindri in giacenza ad inizio 2018) è inferiore a quello contabile, mediante accorgimenti,
+al fine di permettere al contribuente di non esporre perdite e redditi irrisori. L’ammanco riscontrato di merce,
+l’inattendibilità delle scritture contabili, hanno portato legittimamente e congruamente a configurare la
+presenza di minori beni in magazzino rispetto alle inattendibili esistenze inziali dichiarate al 2018.
+Ragionevolmente, la vendita in nero come porte o come accessori non poteva essere avvenuta nel corso
+dei 46 giorni del 2018 (atteso anche i tempi di lavorazione), ma deve essere distribuita negli anni precedenti
+il controllo, proprio a ragione dell’assoluta inattendibilità dell’intero magazzino in contabilità, riscontrato nel
+corso di tutti questi periodi d’imposta (vedi il prospetto di pagg. 50 e 51 del PVC). A questo proposito si legge
+nel PVC che la verifica generale ha interessato proprio il 2014, ed è stata estesa successivamente, quanto
+al controllo di magazzino, ai periodi d’imposta 2013,2015, 2016, e 2017 (cfr. pagg. 3-4-5 PVC). Quindi, le
+contestazioni della ricorrente appaiono infondate ed appare di tutta evidenza che i cilindri sono usciti, quali
+vendite in nero negli anni precedenti e solo “formalmente” presenti nell’asserito inventario fisico al 31.12.2017
+(id est 01.01.2018). I verificatori hanno ritenuto inattendibili le scritture contabili, od ancor meglio un’assoluta
+inattendibilità delle scritture di magazzino. Un controllo ineccepibile fondato su riscontri oggettivi e sull’analisi
+dettagliata della società. L’avviso di accertamento è legittimo: nello stesso PVC si rinvia a sentenze di
+legittimità che avallano tale tipologia di accertamento nel caso di inattendibilità delle scritture contabili di
+magazzino. Dunque, la doverosa tipologia dell’accertamento induttivo discende dall’incontrovertibile
+inattendibilità della contabilità di magazzino. Nel corso della verifica l’attenzione si spostava giustamente
+sui dati contabili di magazzino al 31.12.2014, nelle rimanenze finali, come da libro inventario, avendo a
+mente che per la società v’era l’obbligo delle scritture ausiliarie di magazzino ex art. 14 lett. d) DPR N.
+600/1973, come non contestato (cfr. pagg. 9 e 10 PVC). E sempre a pagina 10 la Parte dichiarava che le
+scritture presentavano alcune lacune- riguardo la completezza dei dati e proclamava un cattivo
+funzionamento del gestionale, in ordine alla correttezza della elaborazione e conservazione degli stessi dati.
+Esibiva successivamente delle schede contabili, non contenenti il saldo delle esistenze iniziali e con solo
+saldo numerico, mentre la loro valorizzazione era riportato nel Libro Inventari, ma non esisteva nessun
+prospetto di raccordo tra detti valori numerici e i valori confluiti nelle rimanenze finale tramite libro inventari;
+mancava anche il criterio stesso di valorizzazione. Chieste spiegazioni da parte dell’Ufficio alla verificata, la
+stessa concludeva che non esisteva raccordo tra inventari fisici trasfusi nel Libro Inventari e la contabilità
+di magazzino derivante dal gestionale. Inoltre, si legge dalla documentazione allegata, che i verbalizzanti
+hanno voluto procedere al riscontro dati della contabilità di magazzino in relazione alle rimanenze finali, in
+relazione a tre articoli (serrature-cilindri-lamiere), campione adeguatamente rappresentativo delle rimanenze
+finali, pari al 45% ed idoneo ad un’attendibile ricostruzione del venduto, con motivata spiegazione dal PVC,
+e per semplicità sintetizzabile col fatto che le porte dovevano necessariamente contenere un cilindro, e che
+questo manteneva sempre e comunque un’identificabilità. Nella ricostruzione del volume d’affari, si è scelto
+il cilindro perché è una componente essenziale, perché con l’installazione la porta è pronta per la consegna,
+perché componente facilmente identificabile nelle distinte inventariali ed in tutta la documentazione contabile
+nelle varie tipologie e quantificabile (nell’inventario, nelle fatture di acquisto ed in quelle di vendita),
+mantenendo identità e denominazione nella fatture d’acquisto, nel ciclo di produzione, nelle giacenze in
+magazzino, nelle distinte inventariali, non subendo trasformazioni (e vendibile come accessorio). Visto che
+nell’Inventario è riportato solo l’articolo, ma non i codici della contabilità di magazzino, in contraddittorio con
+la parte si procedeva ad associare gli articoli denominati nell’Inventario (confluiti nelle RF) ad i codici articolo
+della contabilità di magazzino. Il lavoro confluiva del PV del 14/02/2016, in cui si dava anche atto che su 74
+articoli non esistevano le schede di magazzino per 50. Si legge che la parte ammetteva che le schede non
+erano state mai istituite ed ammetteva che le rimanenze finali derivavano da inventario fisico senza
+corrispondenza con la contabilità di magazzino (cfr. pag. 13 PVC). Si procedeva correttamente alla
+ricostruzione del saldo per ogni articolo con i dati contabili del magazzino (EI+ carico-scarico) e lo si
+confrontava con il dato delle Rimanenze finali al 31.12.2014. Il Collegio infatti ha constatato dagli atti le
+numerose e le significative incongruenze tra i saldi contabili di magazzino ed i valori indicati alle corrispondenti
+voci nelle Rimanenze Finali. In particolare: la quasi totalità degli articoli ha saldi contabili nelle schede difformi
+da quanto indicato nelle Rimanenze Finali; le rimanenze finali aumentano senza movimenti di magazzino,
+altre volte i movimenti di magazzino non risultano rilevati nelle Rimanenze finali; risultano giacenze contabili,
+non solo difformi rispetto alle RF, ma con saldo negativo, non sussistendo Esistenze Iniziali né carichi, ma
+solo scarichi; anche quanto le giacenze contabili corrispondono alle Rimanenze Finali, il dato non è coerente,
+perché senza registrazione nelle schede di movimentazioni di magazzino in carico e scarico, le Rimanenze
+Finali sono eguali alle Esistenze Iniziali, ma questo è gravemente incoerente, perché sono prodotti quali
+serrature e cilindri, componenti essenziali per la produzione dei beni effettivamente poi venduti, appare
+inverosimile che non si siano caricati e scaricati articoli, né si può riscontrare “materia prima in esaurimento”,
+lavorando su commissione. Le gravi incongruenze ed incoerenze della contabilità di magazzino rimaste
+ingiustificate, la stessa dichiarazione confessoria di parte che la contabilità di magazzino non coincide con
+gli inventari fisici, riportati nelle Rimanenze Finali, e le conclamate irregolarità nella tenuta e compilazione
+delle scritture persuadevano legittimamente i verificatori a procedere al controllo della corretta tenuta della
+contabilità di magazzino nel 2018, al momento della verifica ed in data 15.02.2018 procedevano all’inventario
+fisico dei medesimi articoli (serrature-cilindri-lamiere) controllati nel 2014. Anche in questo caso emergevano
+gravi e significative incongruenze tra i saldi contabili e le giacenze fisiche rilevate il 15 febbraio 2018, ovvero:
+la quasi totalità degli articoli ha saldi contabili al 31.12.2017 difformi da quanto indicato nell’inventario fisico
+redatto al 31.12.2017; al 31.12.2017 le quantità nell’inventario fisico risultano essere in taluni casi inferiori
+ai saldi contabili; in molti casi la giacenza fisica è pari a zero, a fronte di un saldo contabile negativo; -le
+schede di magazzino non riportano il saldo iniziale; la quasi totalità degli articoli a saldi contabili al 15.02.2018
+difformi rispetto a quanto riscontrato in giacenza dai verificatori; per la quasi totalità degli articoli le quantità
+in giacenza erano inferiori ai saldi contabili. Il risultato, anche per il 2018, era di totale inattendibilità dei criteri
+utilizzati per la redazione delle rimanenze finale e l’impossibilità della loro corretta analisi. La conclusione
+corretta e che condivide il Collegio è che le scritture di magazzino recano numerosi e gravi irregolarità, quali:
+non sono state istituite e tenute le schede per tutti gli articoli in giacenza o passati per il magazzino; per tali
+articoli non risultano e non sono state effettuate nemmeno le registrazioni nel registro di magazzino; le
+schede non indicano un saldo iniziale coincidente con quello risultante nell’inventario dell’esercizio
+precedente; le schede non rilevano entrate ed uscite né la ragione economica sottostante (ad esempio,
+acquisto, vendita, ecc.); la consistenza finale delle schede non corrisponde a quanto rilevato nell’Inventario
+redatto a chiusura d’esercizio; i saldi delle schede non coincidono con i saldi o o loro valorizzazione di
+magazzino; sono stati rilevati valori contabili a saldo al 31.12.2014 difformi dalle giacenze iscritte in inventario;
+sono stati rilevati valori contabili a saldo al 31.12.2017 difformi dall’inventario fisico redatto il 31.12.2017; -
+sono stati rilevati valori contabili a saldo al 31.12.2014 difformi dalle giacenze iscritte in inventario. Le
+differenze inventariali costituiscono gravi irregolarità della contabilità di magazzino, assolutamente eccedenti
+una normale tollerabilità. Quindi, la ricostruzione è corretta tra cui il fatto rilevante che sono stati individuate
+i cilindri installati su porte non consegnate al 31.12.2017 (652) ed al 15.02.2018 (684 di cui 340 del 2017,
+differenza 334) rilevanti, chiaramente non presenti nei relativi inventari. Sono stati adottati, in contraddittorio
+con la Parte tutti gli accorgimenti, come da ricostruzione e pag. 42 e seguenti del PVC, la cui conclusione
+è che si rilevata fisicamente una minore giacenza di cilindri pari ad 864. Inoltre, a tutte le eccezioni relative
+al ricalcolo dei cilindri ceduti, sono state già avanzate alla DP di Parma (nel corso della verifica, nelle
+osservazioni al PVC, nell’ambito del procedimento dell’accertamento con adesione afferente l’avviso di
+accertamento societario), che sono state adeguatamente analizzate e respinte con adeguata motivazione.
+Riguardo al numero di giacenze dei cilindri al 01.01.2018, indicato dalla DP di Parma in 2.611 si precisa che
+il dato 2611 è stato ricavato dall’ inventario fisico al 31.12.2017” (non da un dato contabile). Il PVC, riportante
+tali dati, qualificati dai verbalizzanti come un inventario fisico, costituisce mezzo di piena prova dell’assunto
+precedente, fino a querela di falso. A pag. 47 del PVC si legge che “ il numero dei cilindri in esistenze iniziali
+è stato rilevato dall’inventario fisico al 31/12/2017, inventario effettuato ed esibito dalla parte”. Non risulta
+però né la querela né la prova per smentire i verbalizzanti. Altro rilievo della ricorrente all’anno d’imposta
+2015 del punto sub b) ove lamenta che l’Ufficio non avrebbe tenuto conto dell’osservazione formulata dalla
+società nel PVC del 28.3.2018, in base alla quale la verifica inventariale compiuta il 15.2.2018 non aveva
+considerato 741 cilindri pure presenti in magazzino (docc. 6 e 7). Questa osservazione è stata ignorata
+perché “il numero dei cilindri in giacenza al 15.2.2018 è stato rilevato dai verificatori in contraddittorio con il
+sig. Parigi e con il personale addetto” (pag. 47 PVC). Vi sarebbe stato un fraintendimento perché furono
+rilevati soltanto i cilindri inventariati dal software alla data del 15.2.2018, ossia soltanto quelli identificati dal
+software come giacenti in magazzino perché oggetto di movimentazioni fisiche (e contabili) successive al
+31.12.2017, ma il software gestionale non era in grado di rilevare in corso d’anno (alla data del 15.2.2018)
+le giacenze di cilindri identificate da propri codici e mai movimentate rispetto all’anno precedente, quali
+appunto quelle dei 741 cilindri in questione. Tale motivo è infondato. Si legge che la ricerca degli articoli è
+avvenuta invitando la parte ad un’accurata ricerca, atteso il valore ufficiale ed non rettificabile dell’inventario
+una volta concluso. L’eccezione formulata il 28/03/2018, dopo oltre 40 giorni dall’effettuazione dell’inventario,
+è in contrasto con le dichiarazioni precedenti, che avevano confermato la correttezza dell’inventario effettuato.
+Infatti, in data 13/03/2018, depositando un’ altro prospetto la società aveva praticamente confermato come
+giacenza il dato rilevato al 15/02/2018 (cilindri in giacenza 2226). Con dichiarazione del 26/03/2018,
+confermava il dato dell’inventario al 15/02/2018. Si può concludere legittimamente che si è proceduto ad un
+inventario fisico, con sopralluogo alla presenza di un socio e di un dipendente, previo leale ammonimento
+al contribuente della importanza e delle conseguenze della procedura in essere: ovvero inventario fisico che
+ha riscontrato 2245 cilindri. Questo è l’unico dato rilevante ai fini della presente discussione. La ricorrente
+lamenta, infine, circa la ricostruzione l’Ufficio non ha considerato che un numero significativo di cilindri non
+fu venduto (né come accessorio autonomo né come componente di porte blindate) ma consegnato ai clienti
+in sostituzione di cilindri difettosi o malfunzionanti. Il numero dei cilindri ceduti in conto sostituzione risulta
+dalle bolle e dai documenti contabili della società, ed è stato riepilogato in prospetti annuali che evidenziano
+per l’intero quinquennio 2013 – 2017 il numero di 570 cilindri, per l’anno 2014 il numero di 101 cilindri e per
+il periodo 1.1.2018/15.2.2018 il numero di 18 cilindri. In relazione alla mancata valorizzazione dei cilindri
+usciti in conto sostituzione si evidenzia che le rimanenze finali dei cilindri al 31.12.2017, prese a base per
+il calcolo dei cilindri mancanti, sono state fornite dalla società e sono state determinate, come dichiarato
+dalla società, attraverso la conta fisica e, perciò, tengono già conto dei cilindri usciti dal magazzino a qualsiasi
+titolo (quindi anche in c/sostituzione). A conferma d ciò si rileva che nelle schede di magazzino che risultano
+istituite sono state riscontrate le contabilizzazioni delle uscite dei cilindri in c/sostituzione. Di conseguenza,
+il numero di cilindri in giacenza a fine anno tiene già conto dei cilindri ceduti in conto sostituzione. Quindi,
+gli errori macroscopici di calcolo, di cui parla il ricorrente, si tratterebbe di soli 37 cilindri (19 minori cilindri
+in Esistenze Iniziali + 18 cilindri in conto sostituzione) su 2.245: uno scostamento dell’ 1,6% circa, che rende
+la contestazione irrilevante. Infine, sulla redditività, l’Ufficio rileva che i verificatori constatavano come la
+società partecipata fosse connotata da bassa redditività costante nel periodo d’imposta 2012-2016 (utile
+civilistico medio del periodo € 32.630,00, al lordo delle imposte), ed al contempo come i valori delle rimanenze
+finali fossero in costante aumento (salvo lieve aggiustamento nel 2016) senza giustificazione alcuna in Nota
+integrativa (Cfr. pag. 8 PVC). L’incoerenza di un consistente valore delle rimanenze finali è incoerente, non
+solo con l’assenza stessa di spazi fisici idonei, ma con la stessa politica di approvvigionamento dichiarata:
+gli acquisti delle componenti sono legati agli ordinativi dei clienti, con la sottostante certezza della vendita
+caratterizzata da lavorazioni brevi e connotate da rapida rotazione di magazzino. La parte ha dichiarato che
+le vendite avvengono “solo e sempre su commessa” (cfr. PVC pag. 33), non si attua la tentata vendita. Il
+Collegio ritiene tale motivazione infondata, perché la valorizzazione dei semilavorati a seguito della fusione
+intervenuta, era già stata correttamente inserita in valutazione.
+Pertanto le considerazioni di diritto spiegate, il Collegio ritiene che siano assorbenti e rendono irrilevante
+ogni altra eccezione sia di diritto che di merito, quindi alla luce di quanto sopra esposto ed allo stato dei fatti,
+null'altro emergendo e nessun altro atto risultando, il Collegio rigetta il ricorso e, conseguentemente, conferma
+il provvedimento impugnato. A seguito della soccombenza della società ricorrente, la Commissione condanna
+al pagamento delle spese del presente grado che liquida in euro 2.000,00= oltre accessori di legge.
+P.Q.M.
+La Commissione rigetta il ricorso e, conseguentemente, conferma il provvedimento impugnato.
+Condanna la società ricorrente al pagamento delle spese del presente grado che liquida in euro
+2.000,00= , oltre accessori di legge.
+Così deciso in Modena, lì 11 Luglio 2022
+Il Giudice Relatore/Estensore
+Dott.ssa Mirella Guicciardi
+Il Presidente
+Dott. Ernestino Bruschetta

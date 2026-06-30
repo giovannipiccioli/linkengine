@@ -82,8 +82,8 @@ Commissione Tributaria Regionale del Lazio n. 2291/2022|ECLI:IT:CTRLAZ:2022:2291
 Comm. Trib. Reg. Campania n. 500/2019|ECLI:IT:CTRCAM:2019:500|jur|ctr
 Commissione Tributaria Provinciale di Milano n. 50/2018|ECLI:IT:CTPMI:2018:50|jur|ctp province
 C.T.P. Milano n. 30/2019|ECLI:IT:CTPMI:2019:30|jur|ctp abbrev
-Corte di Giustizia Tributaria di primo grado di Torino n. 10/2024|ECLI:IT:CTPTO:2024:10|jur|cgt primo grado
-Corte di Giustizia Tributaria di secondo grado della Toscana n. 45/2024|ECLI:IT:CTRTOS:2024:45|jur|cgt secondo grado
+Corte di Giustizia Tributaria di primo grado di Torino n. 10/2024|ECLI:IT:CGT1TO:2024:10|jur|cgt primo grado
+Corte di Giustizia Tributaria di secondo grado della Toscana n. 45/2024|ECLI:IT:CGT2TOS:2024:45|jur|cgt secondo grado
 Corte d'Appello di Roma n. 5/2022|ECLI:IT:CAPPRM:2022:5|jur|corte appello
 Corte d'Appello di Napoli n. 7/2022|ECLI:IT:CAPPNA:2022:7|jur|corte appello
 Corte d'Appello di Bologna n. 12/2021|ECLI:IT:CAPPBO:2021:12|jur|corte appello
@@ -112,11 +112,11 @@ art. 110 del Trattato sul funzionamento dell'Unione europea|CELEX:12012E/TXT~art
 articolo 6 del Trattato sull'Unione europea|CELEX:12016ME/TXT~art6|eu|TUE
 Circolare Agenzia delle Entrate n. 12/2009|PRAX:AE:CIRC:2009:12|prassi|AdE circolare
 Risoluzione Agenzia Entrate n. 337/E/2002|PRAX:AE:RIS:2002:337/E|prassi|AdE risoluzione N/E
-circolare n. 36/E del 2016|PRAX:AE:CIRC:2016:36/E|prassi|circolare N/E del-year
+circolare n. 36/E del 2016|PRAX:AE:CIRC:2016:36|prassi|circolare N/E del-year
 Risoluzione n. 140/E/2017|PRAX:AE:RIS:2017:140/E|prassi|risoluzione N/E
-circolare AdE n. 9/E del 2021|PRAX:AE:CIRC:2021:9/E|prassi|circolare
+circolare AdE n. 9/E del 2021|PRAX:AE:CIRC:2021:9|prassi|circolare
 risoluzione dell'Agenzia delle Entrate n. 200/E/2008|PRAX:AE:RIS:2008:200/E|prassi|risoluzione
-circolare n. 1/E del 2018|PRAX:AE:CIRC:2018:1/E|prassi|circolare
+circolare n. 1/E del 2018|PRAX:AE:CIRC:2018:1|prassi|circolare
 Risoluzione Agenzia delle Entrate n. 75/E del 2019|PRAX:AE:RIS:2019:75/E|prassi|risoluzione
 Convenzione Italia-Francia, art. 15|urn:nir:stato:legge:1992;20~art15|conv|doppia imposizione -> ratification law (Italy-France)
 art. 19 Convenzione contro le doppie imposizioni tra Italia e Spagna|urn:nir:stato:legge:1980;663~art19|conv|treaty, country after; ratification law
@@ -198,19 +198,19 @@ art. 5, n. 1, della direttiva 90/435|CELEX:31990L0435~art5-num1|eu|EU directive 
 direttive 92/83/CEE e 92/84/CEE|CELEX:31992L0083 CELEX:31992L0084|eu|plural 'direttive' + multi-CELEX
 articolo 235 del Trattato CEE|CELEX:11957E/TXT~art235|eu|treaty article (EEC Treaty)
 art. 267 del TFUE|CELEX:12012E/TXT~art267|eu|TFUE article
-circolare 12/E/2020|PRAX:AE:CIRC:2020:12/E|prassi|AdE circolare NNN/E/YYYY without 'n.' prefix
+circolare 12/E/2020|PRAX:AE:CIRC:2020:12|prassi|AdE circolare NNN/E/YYYY without 'n.' prefix
 risoluzione 22/E/2005|PRAX:AE:RIS:2005:22/E|prassi|AdE risoluzione NNN/E/YYYY without 'n.'
-circolari n. 34/E/2013|PRAX:AE:CIRC:2013:34/E|prassi|plural 'circolari' -> CIRC
+circolari n. 34/E/2013|PRAX:AE:CIRC:2013:34|prassi|plural 'circolari' -> CIRC
 Cass. 2968-73|ECLI:IT:CASS:1973:2968CIV|jur|historical dash number-year (Cassazione), context-guarded
 Cass. S.U. 6477-84|ECLI:IT:CASS:1984:6477CIV|jur|dash number-year with S.U. -> CORTE_CASS
 art. 37 della legge 300-1970|urn:nir:stato:legge:1970;300~art37|norm|dash number-year on a legge + article
 D.P.R. n. 873-78|urn:nir:presidente.repubblica:decreto:1978;873|norm|dash number-year (2-digit year) on a d.P.R.
-CGT 2° grado Lazio n. 100/2024|ECLI:IT:CTRLAZ:2024:100|jur|CGT secondo grado -> CTR/region
-CGT di secondo grado del Lazio, sez. 18, n. 1731/2024|ECLI:IT:CTRLAZ:2024:1731|jur|CGT secondo grado full form -> CTR
-Corte di Giustizia Tributaria di II Grado Emilia Romagna n. 536/2023|ECLI:IT:CTREMR:2023:536|jur|CGT II grado -> CTR Emilia-Romagna
-CGT 1 Napoli n.123/2020|ECLI:IT:CTPNA:2020:123|jur|CGT primo grado + city
-C.G.T. di Primo Grado di Torino, sentenza n. 924/2023|ECLI:IT:CTPTO:2023:924|jur|CGT primo grado -> CTP Torino
-CGT Prato 87/2023|ECLI:IT:CTPPO:2023:87|jur|CGT bare city (Prato) -> CTP, catastale-targa code PO
+CGT 2° grado Lazio n. 100/2024|ECLI:IT:CGT2LAZ:2024:100|jur|CGT secondo grado with region
+CGT di secondo grado del Lazio, sez. 18, n. 1731/2024|ECLI:IT:CGT2LAZ:2024:1731|jur|CGT secondo grado full form
+Corte di Giustizia Tributaria di II Grado Emilia Romagna n. 536/2023|ECLI:IT:CGT2EMR:2023:536|jur|CGT II grado Emilia-Romagna
+CGT 1 Napoli n.123/2020|ECLI:IT:CGT1NA:2020:123|jur|CGT primo grado + city
+C.G.T. di Primo Grado di Torino, sentenza n. 924/2023|ECLI:IT:CGT1TO:2023:924|jur|CGT primo grado Torino
+CGT Prato 87/2023|ECLI:IT:CGT1PO:2023:87|jur|CGT bare city with province code PO
 causa T-123/20|CELEX:62020TJ0123|eu|CJEU General Court case (T-) -> CELEX TJ
 causa C-152/02, punto 35|CELEX:62002CJ0152~num35|eu|CJEU case + punto -> CELEX with locator
 art. 13 del TUF|urn:nir:stato:decreto.legislativo:1998;58~art13|alias|TUF (testo unico della finanza) -> d.lgs. 58/1998

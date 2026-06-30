@@ -32,7 +32,7 @@ from linkengine import LinkEngine
 GOLD_DIR = os.path.join(os.path.dirname(__file__), "gold")
 
 # recognition fields a field-gold entry may pin (besides the computed "urn" and "text" anchor)
-_FIELDS = ("ref-type", "ref-scope", "doc-type", "authority", "region", "city", "section",
+_FIELDS = ("ref-type", "ref-scope", "doc-type", "authority", "ministry", "region", "city", "section",
            "number", "year", "full-number", "doc-date", "partition", "alias", "other-authority",
            "eu-acronym", "case-number", "rv-number")
 

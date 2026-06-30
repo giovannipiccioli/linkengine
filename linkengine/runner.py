@@ -1,7 +1,7 @@
 """
-``run_linkengine_string(text) -> pipe-CSV`` — run the engine and emit the feature rows as a
-header-less, ``"``-quoted, pipe-separated CSV (one line per reference; ``ERROR: No data in
-output`` when empty). This output shape lets it be a drop-in for the legacy JVM bridge.
+``run_linkengine_string(text) -> pipe-CSV`` — run the engine and emit the current feature rows
+as a header-less, ``"``-quoted, pipe-separated CSV (one line per reference; ``ERROR: No data
+in output`` when empty).
 """
 from __future__ import annotations
 

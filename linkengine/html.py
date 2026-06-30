@@ -1,22 +1,24 @@
 """
-HTML annotation — render the input text back out with every recognized reference wrapped in
-a tag carrying its extracted feature fields as attributes. The point is to *see*, in the
-text itself, which
-references were recognized and what the engine made of each one.
+HTML highlighting — re-emit the input text with every recognized legal reference highlighted
+(styled like a link), so you can *see* in the text which citations were found.
 
-Public API (standalone, like ``urn_to_text``)::
+**One function**, ``annotate_html`` — pick what you get with the ``page`` flag::
 
-    from linkengine.html import annotate_html, render_html_document
+    from linkengine import annotate_html
 
-    annotate_html("artt. 15-18 DPR 600/73")            # -> the text with <span> tags inserted
-    render_html_document(text, only_with_urn=True)      # -> a full, styled, browser-ready page
+    annotate_html(text)                  # -> an inline HTML fragment (embed it in your own page)
+    annotate_html(text, page=True)       # -> a complete standalone HTML document (save & open)
+
+Each citation is wrapped in ``<span class="lkn-ref" data-urn=… data-…>…</span>``: the visible
+text is unchanged (just highlighted via CSS), while the extracted fields live in ``data-*``
+attributes for inspection (DevTools) or programmatic use — no details are shown inline.
 
 Design notes
 ------------
 * The **``text`` field of each row is the anchor** that gets wrapped, located in the source via
   ``str.find`` seeded at the reference's char offset (``Reference.start``) — the row's
   ``text`` is the anchor substring, while ``Reference.start/end`` is the whole citation extent.
-* ``only_with_urn=True`` wraps only references that resolved to a ``urn``; the rest stay
+* ``only_with_urn=True`` highlights only references that resolved to a ``urn``; the rest stay
   as plain text.
 * **Range partitions** (``artt. 15-18 ...``) are already handled upstream: the engine anchors
   the inner articles (16, 17) to the ``-`` and the endpoints (15, 18) to their digits. When
@@ -30,11 +32,10 @@ from typing import Dict, List, Optional, Sequence, Tuple
 
 from .engine import LinkEngine
 from .model import FEATURE_FIELDS, ExtractResult
-from .urn import urn_to_text
 
 # Fields shown as attributes: `urn` first (the headline), then every feature field except the
-# bookkeeping/source ones and `text`/`context` (which are not normalized output).
-_EXCLUDE = {"id", "source-name", "source-partition-id", "text", "context"}
+# bookkeeping field and `text`/`context` (which are not normalized output).
+_EXCLUDE = {"id", "text", "context"}
 _ATTR_FIELDS = ["urn"] + [f for f in FEATURE_FIELDS if f not in _EXCLUDE]
 
 _DEFAULT_ENGINE: Optional[LinkEngine] = None
@@ -111,26 +112,12 @@ def _merged_values(rows: Sequence[Dict[str, str]], field: str) -> str:
     return " ".join(vals)
 
 
-def _title(rows: Sequence[Dict[str, str]]) -> str:
-    """Human tooltip: the urn rendered by ``urn_to_text`` (falls back to ref-type)."""
-    out: List[str] = []
-    for row in rows:
-        urn = (row.get("urn") or "").strip()
-        t = (urn_to_text(urn) if urn else "") or (row.get("ref-type") or "")
-        if t and t not in out:
-            out.append(t)
-    return " · ".join(out)
-
-
-def _open_tag(rows: Sequence[Dict[str, str]], tag: str, css_class: str,
-              attr_prefix: str, add_title: bool) -> str:
+def _open_tag(rows: Sequence[Dict[str, str]], tag: str, css_class: str, attr_prefix: str) -> str:
+    """The opening tag for one citation: a CSS class (for highlighting) plus the extracted
+    fields as ``data-*`` attributes (``urn`` first) — details live here, never inline."""
     parts = [tag]
     if css_class:
         parts.append(f'class="{_esc_attr(css_class)}"')
-    if add_title:
-        t = _title(rows)
-        if t:
-            parts.append(f'title="{_esc_attr(t)}"')
     if len(rows) > 1:
         parts.append(f'{attr_prefix}refs="{len(rows)}"')   # this anchor carries N references
     for f in _ATTR_FIELDS:
@@ -140,58 +127,65 @@ def _open_tag(rows: Sequence[Dict[str, str]], tag: str, css_class: str,
     return "<" + " ".join(parts) + ">"
 
 
-# ── public API ─────────────────────────────────────────────────────────────────
-def annotate_html(text: str, result: Optional[ExtractResult] = None, *,
-                  engine: Optional[LinkEngine] = None, only_with_urn: bool = False,
-                  tag: str = "span", css_class: str = "lkn-ref",
-                  attr_prefix: str = "data-", add_title: bool = True) -> str:
-    """Return ``text`` with every recognized reference wrapped in ``<tag … >…</tag>``.
+# Default stylesheet for ``page=True``: citations look like links (coloured + underlined), with
+# nothing shown inline — legislation blue, caselaw green, prassi amber.
+_DEFAULT_CSS = """
+  .lkn-doc { white-space: pre-wrap; word-wrap: break-word; max-width: 50rem; margin: 2rem auto;
+             padding: 0 1rem; color: #1f2328;
+             font: 16px/1.7 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .lkn-ref { color: #1d4ed8; text-decoration: underline; text-decoration-color: #93b4fb;
+             text-decoration-thickness: 2px; text-underline-offset: 2px; }
+  .lkn-ref[data-ref-type="caselaw"] { color: #15803d; text-decoration-color: #86d6a4; }
+  .lkn-ref[data-ref-type="prassi"]  { color: #b45309; text-decoration-color: #f0c08a; }
+""".strip("\n")
 
-    The wrapped text is the row's ``text`` field; the tag carries the extracted feature fields
-    as ``{attr_prefix}{field}`` attributes (``urn`` first) plus a human ``title``. Non-reference
-    text is HTML-escaped and otherwise left exactly as in the input.
+
+# ── public API — the single entry point for HTML output ──────────────────────────
+def annotate_html(text: str, result: Optional[ExtractResult] = None, *, page: bool = False,
+                  only_with_urn: bool = False, css: Optional[str] = None,
+                  title: str = "linkengine — recognized references",
+                  tag: str = "span", css_class: str = "lkn-ref",
+                  attr_prefix: str = "data-") -> str:
+    """Highlight every recognized legal reference in ``text`` and return HTML.
+
+    Each citation is wrapped in ``<span class="lkn-ref" data-urn=… data-…>…</span>``: the visible
+    text is unchanged (highlighted by the stylesheet), the extracted fields live only in the
+    ``data-*`` attributes (for DevTools / programmatic use). Non-citation text is HTML-escaped
+    and otherwise left verbatim.
+
+    Choose the output with ``page``:
+
+    * ``page=False`` (default) → an **inline HTML fragment** to embed in your own page.
+    * ``page=True``           → a complete, styled, standalone **HTML document** you can write
+      straight to a ``.html`` file and open in a browser.
 
     Parameters
     ----------
-    result : reuse an existing ``LinkEngine.extract`` result (else one is computed).
-    engine : a configured ``LinkEngine`` (else a default, cached one is used).
-    only_with_urn : wrap only references that resolved to a ``urn``; leave the rest as text.
+    result : reuse an ``engine.extract(text)`` result to avoid re-extracting; if omitted the
+        text is extracted with a default engine. (To use a configured engine — e.g. a
+        ``default_authority`` — pass ``result=my_engine.extract(text)``.)
+    only_with_urn : highlight only references that resolved to a ``urn``; leave the rest as text.
+    css, title : the stylesheet and ``<title>`` of the document (used only when ``page=True``).
     """
     if text is None:
         return ""
     if result is None:
-        result = (engine or _engine()).extract(text)
+        result = _engine().extract(text)
     anchors = _build_anchors(text, result, only_with_urn)
 
     buf: List[str] = []
     cursor = 0
     for s, e, rows in anchors:
         buf.append(_esc(text[cursor:s]))
-        buf.append(_open_tag(rows, tag, css_class, attr_prefix, add_title))
+        buf.append(_open_tag(rows, tag, css_class, attr_prefix))
         buf.append(_esc(text[s:e]))
         buf.append(f"</{tag}>")
         cursor = e
     buf.append(_esc(text[cursor:]))
-    return "".join(buf)
+    body = "".join(buf)
 
-
-_DEFAULT_CSS = """
-  .lkn-doc { white-space: pre-wrap; word-wrap: break-word;
-             font: 14px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-  .lkn-ref { background: #e8eeff; border-bottom: 1px dotted #6a7bd0; border-radius: 2px;
-             padding: 0 1px; cursor: help; }
-  .lkn-ref[data-ref-type="caselaw"]    { background: #e6f6ea; border-bottom-color: #4f9d68; }
-  .lkn-ref[data-ref-type="prassi"]     { background: #fdeede; border-bottom-color: #c9893a; }
-  .lkn-ref[data-ref-type="legislation"]{ background: #e8eeff; border-bottom-color: #6a7bd0; }
-  .lkn-ref:hover { outline: 1px solid currentColor; }
-""".strip("\n")
-
-
-def render_html_document(text: str, *, title: str = "linkengine — recognized references",
-                         css: Optional[str] = None, **annotate_kwargs) -> str:
-    """A full, browser-ready HTML page: the annotated text inside a styled ``<pre>``. Keyword
-    arguments are forwarded to :func:`annotate_html` (e.g. ``only_with_urn=True``)."""
-    body = annotate_html(text, **annotate_kwargs)
+    if not page:
+        return body
     style = _DEFAULT_CSS if css is None else css
     return (
         "<!doctype html>\n"

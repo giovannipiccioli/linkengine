@@ -42,21 +42,23 @@ I = re.IGNORECASE
 # depth: smaller = shallower (closer to the act). comma/paragrafo are siblings; numero/punto
 # are siblings; allegato is the shallowest container.
 RANK = {
-    Entity.ALLEGATO: 0, Entity.ARTICLE: 2, Entity.COMMA: 3, Entity.PARAGRAPH: 3,
-    Entity.LETTER: 4, Entity.NUMERO: 5, Entity.PUNTO: 5, Entity.PERIODO: 6,
+    Entity.ALLEGATO: 0, Entity.CONSIDERANDO: 2, Entity.ARTICLE: 2,
+    Entity.COMMA: 3, Entity.PARAGRAPH: 3, Entity.LETTER: 4,
+    Entity.NUMERO: 5, Entity.PUNTO: 5, Entity.PERIODO: 6,
 }
 
 _LATIN = r"(?:bis|ter|quater|quinquies|sexies|septies|octies|nonies|decies)"
-_NUMV = r"\d+(?:[-\s]?" + _LATIN + r")?"
+_SUFFIX_SEP = r"[-\s\u00ad]?"
+_NUMV = r"\d+(?:" + _SUFFIX_SEP + _LATIN + r")?"
 # a numeric value OR a range (`5-7`, `5 a 8`): the range alternative comes first so `5-7`
 # is read as a range, while `2-bis` (suffix, not a second number) still falls to _NUMV.
 _NUMV_OR_RANGE = r"(?:\d+\s*(?:[-–]|a)\s*\d+|" + _NUMV + r")"
 # a letter value is a *standalone* letter: the `(?![a-z])` guard stops the list from eating
 # the first letter of a following word ("lett. b), del d.P.R." must not yield letter "d").
-_LETV = r"[a-z](?![a-z])(?:[-\s]?" + _LATIN + r")?\)?"
+_LETV = r"[a-z](?![a-z'’])(?:" + _SUFFIX_SEP + _LATIN + r")?\)?"
 _SEP = r"(?:\s*[,;]\s*|\s+(?:e|ed)\s+)"
 _NUMV_RE = re.compile(_NUMV, I)
-_LETV_RE = re.compile(r"[a-z](?![a-z])(?:[-\s]?" + _LATIN + r")?\)?", I)
+_LETV_RE = re.compile(r"[a-z](?![a-z'’])(?:" + _SUFFIX_SEP + _LATIN + r")?\)?", I)
 _SEP_RE = re.compile(_SEP, I)
 _RANGE_RE = re.compile(r"(\d+)\s*([-–]|a)\s*(\d+)", I)   # "5-7" / "5 a 8" -> expand inclusive
 _MAX_RANGE = 30          # guard: wider ranges keep only the two endpoints
@@ -74,7 +76,8 @@ _NUMLIST = r"(?:da\s+)?(" + _NUMV_OR_RANGE + r"(?:" + _SEP + _NUMV_OR_RANGE + r"
 
 # (entity, head-with-value-list regex, value-token regex, value normalizer)
 _LIST_PATTERNS = [
-    (Entity.ARTICLE, r"\bart(?:icol[oi]|t)?\.?\s*" + _NUMLIST, _NUMV_RE, norm_latin_suffix),
+    (Entity.CONSIDERANDO, r"\bconsiderand[oi]\s*" + _NUMLIST, _NUMV_RE, norm_latin_suffix),
+    (Entity.ARTICLE, r"\bart(?:icol[oi]|t)?[\.,]?\s*" + _NUMLIST, _NUMV_RE, norm_latin_suffix),
     (Entity.COMMA, r"\b(?:commi|comma|co\.|c\.(?=\s*\d))\s*" + _NUMLIST, _NUMV_RE, norm_latin_suffix),
     (Entity.PARAGRAPH, r"\b(?:paragraf[oi]|par\.|§)\s*" + _NUMLIST, _NUMV_RE, norm_latin_suffix),
     (Entity.PUNTO, r"\bpunt[oi]\s*" + _NUMLIST, _NUMV_RE, norm_latin_suffix),
@@ -99,12 +102,18 @@ def _roman_to_int(s: str) -> int:
     v = [_ROM_VAL.get(c, 0) for c in s.lower()]
     return sum(-x if i + 1 < len(v) and x < v[i + 1] else x for i, x in enumerate(v))
 _ORD_PERIODO = re.compile(r"\b(" + _ORD_ALT + r")\s+period[oi]\b", I)
-_PERIODO = re.compile(r"\bperiod[oi]\s*(\d+)", I)
+_PERIODO = re.compile(r"\bperiod[oi]\s*(\d+)\b(?!\s*[/.-]\s*\d)", I)
 # "allegato A" / "allegati" / "alleg. A" / "All. A" -> annex marker. The "all." abbreviation
 # requires the dot so the common words "alla/alle/allo" are not matched.
 _ALLEGATO = re.compile(r"\b(?:allegat[oi]|alleg\.|all\.)\s*([0-9]+|[ivxlcdm]+|[a-z])\b", I)
 # NUMERO candidate ("n. 3", "numero 3", "nn. 3 e 4") — only kept if inside a partition chain
 _NUMERO = re.compile(r"\b(?:numero|nn\.?|n\.)\s*(" + _NUMV + r"(?:" + _SEP + _NUMV + r")*)", I)
+_ELIDED_ARTICLE = re.compile(r"(?:^|[,\s])(?:e|ed)\s+(" + _NUMV + r")\b", I)
+_ELIDED_ARTICLE_AFTER = re.compile(
+    r"^[\s,]*(?:(?:commi|comma|co\.|c\.(?=\s*\d)|lett?(?:er[ae]|\.)?|"
+    r"numero|nn?\.|del|della|delle|dello|dei|degli|dell['’]|d['’])\b)",
+    I,
+)
 
 # "del/della/dei/dell'/al…" backward-link markers. "dell'" needs its own alternative
 # because the trailing apostrophe is not a word boundary (it often ends the connector).
@@ -183,6 +192,44 @@ def recognize_elements(text: str) -> List[Span]:
     for entity, pat, vr, fn in _LIST_COMPILED:
         for m in pat.finditer(text):
             _emit_list(text, m, entity, vr, fn, spans)
+    # Plural article lists can repeat the article number after a subpartition without restating
+    # "art.": "artt. 2, comma 1, e 3, comma 1, lettera c)". The ordinary article-list regex
+    # stops at "comma 1", so recover the elided sibling article only in that narrow context.
+    base_spans = sorted(spans, key=lambda s: s.start)
+    plural_articles = [
+        s for s in base_spans
+        if s.entity == Entity.ARTICLE and re.match(r"\bartt|articoli", s.text, I)
+    ]
+    for m in _ELIDED_ARTICLE.finditer(text):
+        start, end = m.start(1), m.end(1)
+        if not plural_articles:
+            break
+        if not re.search(r"\b(?:artt|articoli)\b", text[max(0, start - 120):start], I):
+            continue
+        if not _ELIDED_ARTICLE_AFTER.match(text[end:end + 32]):
+            continue
+        if any(not (end <= s.start or start >= s.end) for s in spans):
+            continue
+        prev = None
+        for article in reversed(plural_articles):
+            if article.end <= start:
+                if start - article.end <= 100:
+                    prev = article
+                break
+        if prev is None:
+            continue
+        has_deeper = False
+        for s in base_spans:
+            if s.start < prev.end:
+                continue
+            if s.start >= start:
+                break
+            if s.end <= start and RANK[s.entity] > RANK[Entity.ARTICLE]:
+                has_deeper = True
+                break
+        if not has_deeper:
+            continue
+        spans.append(Span(start, end, Entity.ARTICLE, norm_latin_suffix(m.group(1)), text[start:end]))
     for m in _ORD_COMMA.finditer(text):
         spans.append(Span(m.start(), m.end(), Entity.COMMA, ORDINALS[m.group(1).lower()], m.group(0)))
     for m in _NUM_ORD_COMMA.finditer(text):
@@ -202,7 +249,7 @@ def recognize_elements(text: str) -> List[Span]:
     sub = {Entity.COMMA, Entity.PARAGRAPH, Entity.LETTER, Entity.ARTICLE, Entity.NUMERO}
     ends = sorted(s.end for s in base if s.entity in sub)
     for m in _NUMERO.finditer(text):
-        if any(0 <= m.start() - e <= 8 and re.fullmatch(r"[\s,;)\.]*", text[e:m.start()])
+        if any(0 <= m.start() - e <= 8 and re.fullmatch(r"[\s,;()\.]*", text[e:m.start()])
                for e in ends):
             _emit_list(text, m, Entity.NUMERO, _NUMV_RE, norm_latin_suffix, spans)
     return _nonoverlap(spans)
@@ -214,14 +261,16 @@ def _resolve_backward(elements: List[Span], text: str) -> List[Span]:
 
     The 'del…' must *immediately* precede the shallower element — otherwise an unrelated
     later article ("commi 5 a 7, del d.lgs. ..., mentre l'art. 22") would wrongly capture the
-    comma run via the act's own "del"."""
+    comma run via the act's own "del". A list conjunction before the 'del…' also blocks the move:
+    in "comma 1, e dell'art. 360" the "e" makes art. 360 a *new* article, not the comma's owner."""
     els = list(elements)
     for _ in range(len(els) * 2):
         moved = False
         for i in range(1, len(els)):
             conn = text[els[i - 1].end:els[i].start]
             dm = list(_DEL_RE.finditer(conn))
-            adjacent = bool(dm) and len(conn) - dm[-1].end() <= 4
+            adjacent = (bool(dm) and len(conn) - dm[-1].end() <= 4
+                        and not re.search(r"\b(?:e|ed)\b", conn[:dm[-1].start()], I))
             if RANK[els[i].entity] < RANK[els[i - 1].entity] and adjacent:
                 j = i - 1
                 while j > 0 and RANK[els[j - 1].entity] > RANK[els[i].entity]:

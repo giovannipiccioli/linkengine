@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "linkengine"
-version = "0.1.0"
+version = "1.0.0"
 description = "Recognize, parse and normalize Italian legal citations into stable identifiers (URN-NIR / ECLI / CELEX / PRAX)."
 readme = "README.md"
 license = { text = "Apache-2.0" }

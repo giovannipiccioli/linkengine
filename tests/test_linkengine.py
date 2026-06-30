@@ -1,6 +1,8 @@
 """Regression tests for linkengine: the canonical tax-law citation patterns and the URN
 strings they must produce."""
-from linkengine import LinkEngine
+import pytest
+
+from linkengine import DocumentContext, LinkEngine
 from linkengine.runner import run_linkengine_string
 
 ENG = LinkEngine()
@@ -110,6 +112,14 @@ def test_runner_emits_parseable_csv():
     assert run_linkengine_string("buongiorno a tutti") == "ERROR: No data in output"
 
 
+def test_citation_ids_follow_text_order_and_restart_per_document():
+    first = ENG.extract("legge 241/1990 e Cass. n. 100/2020").rows
+    second = ENG.extract("D.P.R. 600/1973").rows
+
+    assert [(row["id"], row["number"]) for row in first] == [("1", "241"), ("2", "100")]
+    assert [(row["id"], row["number"]) for row in second] == [("1", "600")]
+
+
 # --- case-law courts with geo (ECLI built directly by the engine) -----------
 
 
@@ -122,14 +132,97 @@ def test_ctr_uses_region():
     assert _urns("C.T.R. Lazio Roma Sez. V n. 2291/2022") == ["ECLI:IT:CTRLAZ:2022:2291"]
 
 
+def test_modern_and_historical_tax_court_authorities_are_distinct():
+    cases = {
+        "CGT 1 Roma n. 123/2024": "CORTE_GIUST_TRIBUT_1",
+        "CGT 2 Lombardia n. 123/2024": "CORTE_GIUST_TRIBUT_2",
+        "CTP Roma n. 123/2024": "COMM_TRIBUT_PROV",
+        "CTR Lombardia n. 123/2024": "COMM_TRIBUT_REG",
+    }
+    for text, authority in cases.items():
+        assert _one(text)["authority"] == authority
+
+
+def test_trento_bolzano_second_grade_tax_court_ecli_exception():
+    cases = {
+        "CGT 2 Bolzano n. 1234/2020":
+            ("CORTE_GIUST_TRIBUT_2", "BZ", "ECLI:IT:CGT2BZ:2020:1234"),
+        "Corte di Giustizia Tributaria di secondo grado di Trento n. 55/2021":
+            ("CORTE_GIUST_TRIBUT_2", "TN", "ECLI:IT:CGT2TN:2021:55"),
+        "CTR Bolzano n. 1234/2020":
+            ("COMM_TRIBUT_REG", "BZ", "ECLI:IT:CTRBZ:2020:1234"),
+        "Commissione Tributaria Regionale di Trento n. 55/2021":
+            ("COMM_TRIBUT_REG", "TN", "ECLI:IT:CTRTN:2021:55"),
+    }
+    for text, (authority, geo, urn) in cases.items():
+        row = _one(text)
+        assert row["authority"] == authority
+        assert row["region"] == geo
+        assert row["urn"] == urn
+
+
+def test_trento_bolzano_first_grade_tax_court_ecli_exception():
+    cases = {
+        "CGT 1 Bolzano n. 99/2018":
+            ("CORTE_GIUST_TRIBUT_1", "ECLI:IT:CGT1BZ:2018:99"),
+        "Corte di Giustizia Tributaria di primo grado di Trento n. 7/2020":
+            ("CORTE_GIUST_TRIBUT_1", "ECLI:IT:CGT1TN:2020:7"),
+        "Commissione Tributaria Provinciale di Bolzano n. 1234/2020":
+            ("COMM_TRIBUT_PROV", "ECLI:IT:CTPBZ:2020:1234"),
+    }
+    for text, (authority, urn) in cases.items():
+        row = _one(text)
+        assert row["authority"] == authority
+        assert row["urn"] == urn
+
+
+def test_trento_bolzano_second_grade_tax_court_document_context():
+    text = "sentenza n. 1234/2020 di questa Corte"
+    for city, geo in (("Bolzano", "BZ"), ("Trento", "TN")):
+        context = DocumentContext(
+            authority="CORTE_GIUST_TRIBUT_2", city=city, region="Trentino Alto Adige")
+        row = ENG.extract(text, context=context).rows[0]
+        assert row["region"] == geo
+        assert row["urn"] == f"ECLI:IT:CGT2{geo}:2020:1234"
+
+
+def test_trentino_alto_adige_second_grade_tax_court_needs_province():
+    row = _one("CGT 2 Trentino Alto Adige n. 101/2024")
+    assert row["authority"] == "CORTE_GIUST_TRIBUT_2"
+    assert row["region"] == "TAA"
+    assert row["urn"] == ""
+
+
+def test_autonomous_tax_court_geo_does_not_change_other_courts():
+    row = _one("Tribunale di Bolzano n. 1234/2020")
+    assert row["authority"] == "TRIB"
+    assert row["city"] == "A952"
+    assert row["urn"] == "ECLI:IT:TRIBA952:2020:1234"
+
+
+def test_tax_court_rga_number_is_docket_not_citation():
+    assert _urns("giudizio pendente dinnanzi alla CTR Emilia Romagna RGA 1202/2021") == []
+
+
+def test_bdgt_rgr_numbers_are_dockets_not_citations():
+    samples = (
+        "questa Corte si e' gia' pronunciata (procedimento RGR 223/2022) e la sentenza",
+        "CTP di Alessandria con ricorso\nRGR n. 460/2019",
+        "DECISIONE\nIn esito al ricorso R.G.R. n. 162/24",
+        "ha pronunciato la seguente SENTENZA - sul ricorso in riassunzione n. 286/2023",
+    )
+    for text in samples:
+        assert ENG.extract(text).rows == [], text
+
+
 def test_ctp_uses_province_city():
     assert _urns("Commissione Tributaria Provinciale di Udine n. 26924/2019") == \
         ["ECLI:IT:CTPUD:2019:26924"]
 
 
 def test_cgt_ambiguous_resolves_by_geo_type():
-    # a province name -> primo grado (CTP); a region name -> secondo grado (CTR)
-    assert _urns("C.G.T. Udine Sez. II n. 229/2022") == ["ECLI:IT:CTPUD:2022:229"]
+    # a province name -> first grade; a region name -> second grade
+    assert _urns("C.G.T. Udine Sez. II n. 229/2022") == ["ECLI:IT:CGT1UD:2022:229"]
 
 
 def test_corte_appello_and_tribunale_and_gdp():
@@ -143,7 +236,127 @@ def test_ade_risoluzione_and_circolare():
     assert _urns("Risoluzione Agenzia Entrate n. 337/E/2002") == ["PRAX:AE:RIS:2002:337/E"]
     assert _urns("Circolare Agenzia delle Entrate n. 12/2009") == ["PRAX:AE:CIRC:2009:12"]
     # year recovered from a (dotted) date when absent from the number
-    assert _urns("Circolare Ministeriale 12.5.1998 n. 124/E") == ["PRAX:AE:CIRC:1998:124/E"]
+    assert _urns("Circolare Ministeriale 12.5.1998 n. 124/E") == ["PRAX:AE:CIRC:1998:124"]
+
+
+@pytest.mark.parametrize("text, authority, urn", [
+    ("Circolare MEF n. 3/DF/2012", "MEFDF", "PRAX:MEFDF:CIRC:2012:3"),
+    ("Circolare MEF n. 3/DF del 18/05/2012", "MEFDF", "PRAX:MEFDF:CIRC:2012:3"),
+    ("Circolare Ministero delle Finanze n. 9/1993", "MEF", "PRAX:MEF:CIRC:1993:9"),
+    ("Circolare M.E.F. n. 3/df del 18.05.2012", "MEFDF", "PRAX:MEFDF:CIRC:2012:3"),
+    ("Circolare MEF n. 3/DF del 18.5.2012", "MEFDF", "PRAX:MEFDF:CIRC:2012:3"),
+    ("circolare MEF n. 3/DF/2012", "MEFDF", "PRAX:MEFDF:CIRC:2012:3"),
+    ("Circolare MEF n. 1/DF del 19.2.2010", "MEFDF", "PRAX:MEFDF:CIRC:2010:1"),
+    ("Circolare n. 3/DF/2012", "MEFDF", "PRAX:MEFDF:CIRC:2012:3"),
+])
+def test_mef_dipartimento_finanze_circulars(text, authority, urn):
+    row = _one(text)
+    assert row["doc-type"] == "CIRC"
+    assert row["other-authority"] == authority
+    assert row["urn"] == urn
+
+
+def test_unattributed_circular_is_not_recognized():
+    assert ENG.extract("Circolare n. 6/2012").rows == []
+
+
+def test_agenzia_entrate_circular_urn_drops_e_suffix():
+    row = _one("Circolare Agenzia delle entrate n.13/E 2006")
+    assert row["full-number"] == "13/E"
+    assert row["urn"] == "PRAX:AE:CIRC:2006:13"
+
+
+def test_prax_generator_supports_cerdef_authorities_and_types():
+    from linkengine import generate_prax_urn
+
+    assert generate_prax_urn("Min. Finanze", "risoluzione", "1982-08-03", "271112") == \
+        "PRAX:MEF:RIS:1982:271112"
+    assert generate_prax_urn("Agenzia delle Dogane e dei Monopoli", "circolare",
+                             "26_06_2020", 17) == "PRAX:ADM:CIRC:2020:17"
+    # Date-based types deliberately ignore a CERDEF sequence number.
+    assert generate_prax_urn("Agenzia delle Entrate", "comunicato stampa",
+                             "2012-06-07", 83) == "PRAX:AE:CS:20120607"
+    assert generate_prax_urn("Min. Finanze", "telegramma", "03_12_1991") == \
+        "PRAX:MEF:TEL:19911203"
+    assert generate_prax_urn("Autorita sconosciuta", "circolare", "2020-01-01", 1) == ""
+
+
+def test_extended_prassi_citations_build_prax_urns():
+    cases = {
+        "Circolare Min. Finanze n. 160/1996": "PRAX:MEF:CIRC:1996:160",
+        "Risoluzione Min. Finanze n. 271112 del 3 agosto 1982":
+            "PRAX:MEF:RIS:1982:271112",
+        "Comunicato stampa del 7 giugno 2012 Agenzia delle Entrate":
+            "PRAX:AE:CS:20120607",
+        "Telegramma del 3 dicembre 1991 Min. Finanze": "PRAX:MEF:TEL:19911203",
+        "Lettera circolare del 22 febbraio 1989 Min. Finanze": "PRAX:MEF:LCIRC:19890222",
+        "Circolare Agenzia delle Dogane e dei Monopoli n. 17/2020":
+            "PRAX:ADM:CIRC:2020:17",
+        "Delibera Banca d'Italia n. 16/2010": "PRAX:BI:DEL:2010:16",
+        "Direttiva Dipartimento delle Finanze n. 2/2012": "PRAX:DIF:DIR:2012:2",
+    }
+    for text, expected in cases.items():
+        assert _urns(text) == [expected], text
+
+
+def test_prassi_authority_does_not_cross_sentence_boundary():
+    text = ("Agenzia delle Dogane e dei Monopoli ne analizza la composizione. "
+            "Al riguardo, con la circolare 32/E/2010 dell'Agenzia delle Entrate")
+    assert _urns(text) == ["PRAX:AE:CIRC:2010:32"]
+
+
+def test_prassi_date_range_is_not_a_document_number():
+    assert _urns("provvedimenti 18/23 settembre 2024 dell'Agenzia delle Entrate") == []
+
+
+def test_provvedimento_uses_protocol_number():
+    text = ("Provvedimento del Direttore dell'Agenzia delle Entrate - "
+            "prot. n. 183037/2020 del 30 aprile 2020")
+    assert _urns(text) == ["PRAX:AE:PROVV:2020:183037"]
+
+
+def test_prassi_uses_authority_nearest_to_document_type():
+    text = "INPS, con la circolare dell'Agenzia Entrate n. 22/E/2020 ha chiarito"
+    assert _urns(text) == ["PRAX:AE:CIRC:2020:22"]
+
+
+def test_interpello_prefers_explicit_agenzia_entrate_over_applicant():
+    text = ("interpello n. 958-587/2023, presentato dal Fondo di Previdenza del Mef, "
+            "all'Agenzia delle Entrate")
+    assert _urns(text) == ["PRAX:AE:INT:2023:587"]
+
+
+def test_hyphenated_agenzia_protocol_does_not_emit_office_prefix():
+    text = ("nota n. 954-87316 del 22 giugno 2006 della stessa "
+            "Agenzia delle Entrate")
+    assert _urns(text) == ["PRAX:AE:NOTA:2006:87316"]
+
+
+def test_composite_number_exception_is_limited_to_agenzia_prassi():
+    from linkengine.special_cases import is_agenzia_composite_number_prefix
+
+    prassi = "nota n. 954-87316 del 22 giugno 2006 della stessa Agenzia delle Entrate"
+    ordinary = "sentenza n. 954-87316 del 22 giugno 2006"
+    start = prassi.index("n.")
+    end = start + len("n. 954")
+    assert is_agenzia_composite_number_prefix(prassi, start, end)
+    start = ordinary.index("n.")
+    end = start + len("n. 954")
+    assert not is_agenzia_composite_number_prefix(ordinary, start, end)
+
+
+def test_eu_directive_is_not_claimed_by_nearby_prassi_authority():
+    text = ("Monopoli, ai sensi dell'art. 14 della Direttiva 12 dicembre 2006 "
+            "n. 2006/123/CE")
+    assert _urns(text) == ["CELEX:32006L0123~art14"]
+
+
+def test_prassi_act_does_not_propagate_to_legal_articles():
+    text = ("art. 11, comma 1, lett. c) e d) Statuto Agenzia delle entrate, "
+            "approvato con delibera n. 6 del 2000; art. 14, comma 2")
+    rows = ENG.extract(text).rows
+    assert [r["urn"] for r in rows] == ["PRAX:AE:DEL:2000:6"]
+    assert rows[0]["partition"] == ""
 
 
 # --- partition lists --------------------------------------------------------
@@ -157,6 +370,45 @@ def test_comma_list_plural_splits():
     assert _urns("art. 19, commi 1 e 2-bis, DPR 600/1973") == [
         "urn:nir:presidente.repubblica:decreto:1973;600~art19-comma1",
         "urn:nir:presidente.repubblica:decreto:1973;600~art19-comma2bis"]
+
+
+def test_explicit_budget_law_and_alias_do_not_duplicate_partitions():
+    text = "art. 6, commi da 13 a 17, della Legge 388/2000 - Finanziaria 2001"
+    rows = ENG.extract(text).rows
+    assert [r["partition"] for r in rows] == [
+        "articolo-6_comma-13", "articolo-6_comma-14", "articolo-6_comma-15",
+        "articolo-6_comma-16", "articolo-6_comma-17"]
+    assert all(r["text"] for r in rows)
+
+
+def test_unrecognized_dgc_number_is_not_stolen_by_preceding_dlgs():
+    rows = ENG.extract("artt. 198 e 226 del D.Lgs. n. 152/06 e DGC n. 117/17").rows
+    assert [r["urn"] for r in rows if r["urn"]] == [
+        "urn:nir:stato:decreto.legislativo:2006;152~art198",
+        "urn:nir:stato:decreto.legislativo:2006;152~art226"]
+    local = [r for r in rows if r["authority"] == "COMUNE"]
+    assert len(local) == 1
+    assert local[0]["ref-type"] == "other acts"
+    assert (local[0]["doc-type"], local[0]["number"], local[0]["year"]) == ("DEL", "117", "2017")
+    assert all(r["text"] for r in rows)
+
+
+def test_dcc_is_a_local_delibera_with_standard_text():
+    row = _one("D.C.C. n. 34 del 31 luglio 2014 del Comune di Palestrina")
+    assert row["ref-type"] == "other acts"
+    assert row["urn"] == "DEL:COG274:2014:34"
+    from linkengine import urn_to_text
+    assert urn_to_text(row["urn"]) == "delibera del Comune di Palestrina n. 34/2014"
+
+
+def test_elided_article_after_subpartition_starts_new_branch():
+    assert _urns(
+        "violazione degli artt. 2, comma 1, e 3, comma 1, lettera c), "
+        "del d.lgs. n. 446/1997"
+    ) == [
+        "urn:nir:stato:decreto.legislativo:1997;446~art2-comma1",
+        "urn:nir:stato:decreto.legislativo:1997;446~art3-comma1-letc",
+    ]
 
 
 # --- EU acts: year/number order, treaties, Corte Cost, small-city, DM --------
@@ -177,6 +429,19 @@ def test_corte_costituzionale_ecli():
 
 def test_numbered_ministerial_decree():
     assert _urns("decreto ministeriale n. 597/2018") == ["urn:nir:ministero:decreto:2018;597"]
+
+
+def test_mef_ministerial_decree_has_specific_issuer():
+    text = "decreto del Ministro dell'economia e delle finanze 23 dicembre 2013, n. 163"
+    row = _one(text)
+    assert row["text"] == text
+    assert row["ref-type"] == "legislation"
+    assert row["doc-type"] == "DECR"
+    assert row["authority"] == "MINISTERO"
+    assert row["ministry"] == "ECONOMIA_FINANZE"
+    assert row["number"] == "163"
+    assert row["doc-date"] == "2013-12-23"
+    assert row["urn"] == "urn:nir:ministero.economia.finanze:decreto:2013;163"
 
 
 def test_tribunale_small_city_catastale():
@@ -219,6 +484,158 @@ def test_self_reference_needs_default_authority():
     t = "sentenza n. 123/2020 di questa Corte"
     assert _urns_auth(t, "") == []                       # unresolved without the flag
     assert _urns_auth(t, "CORTE_CASS") == ["ECLI:IT:CASS:2020:123CIV"]
+
+
+def test_document_context_resolves_tax_court_self_references():
+    first_grade = DocumentContext(
+        authority="CORTE_GIUST_TRIBUT_1", city="Reggio Calabria", region="Calabria")
+    second_grade = DocumentContext(authority="CORTE_GIUST_TRIBUT_2", region="Lombardia")
+    text = "sentenza n. 123/2024 di questa Corte"
+
+    first = ENG.extract(text, context=first_grade).rows[0]
+    assert first["authority"] == "CORTE_GIUST_TRIBUT_1"
+    assert first["city"] == "RC"
+    assert first["urn"] == "ECLI:IT:CGT1RC:2024:123"
+
+    second = ENG.extract(text, context=second_grade).rows[0]
+    assert second["authority"] == "CORTE_GIUST_TRIBUT_2"
+    assert second["region"] == "LOM"
+    assert second["urn"] == "ECLI:IT:CGT2LOM:2024:123"
+
+
+def test_document_context_region_defaults_unqualified_regional_laws():
+    context = DocumentContext(
+        authority="CORTE_GIUST_TRIBUT_1", city="Roma", region="Lazio")
+    row = ENG.extract("art. 5 della l. reg. n. 4/2024", context=context).rows[0]
+    assert row["region"] == "lazio"
+    assert row["urn"] == "urn:nir:regione.lazio:legge:2024;4~art5"
+
+    # A separate regional-law value can override the deciding court's region.
+    context = DocumentContext(
+        authority="CORTE_CASS", region="Lazio", regional_law_region="Campania")
+    row = ENG.extract("art. 5 della l. reg. n. 4/2024", context=context).rows[0]
+    assert row["urn"] == "urn:nir:regione.campania:legge:2024;4~art5"
+
+
+def test_document_context_is_runtime_and_does_not_mutate_engine_defaults():
+    engine = LinkEngine(default_context=DocumentContext(authority="CORTE_CASS"))
+    text = "sentenza n. 123/2024 di questa Corte"
+    tax_context = DocumentContext(
+        authority="CORTE_GIUST_TRIBUT_2", region="emilia.romagna")
+
+    assert engine.extract(text, context=tax_context).rows[0]["urn"] == \
+        "ECLI:IT:CGT2EMR:2024:123"
+    assert engine.extract(text).rows[0]["urn"] == "ECLI:IT:CASS:2024:123CIV"
+    assert ENG.extract(text, default_authority="CORTE_CASS").rows[0]["urn"] == \
+        "ECLI:IT:CASS:2024:123CIV"
+
+
+def test_document_context_does_not_resolve_bare_decision_numbers():
+    context = DocumentContext(
+        authority="CORTE_GIUST_TRIBUT_1", city="Roma", region="Lazio")
+    row = ENG.extract("Sentenza n. 123/2020", context=context).rows[0]
+    assert row["authority"] == ""
+    assert row["urn"] == ""
+
+
+def test_document_context_normalizes_codes_and_rejects_unknown_values():
+    context = DocumentContext(
+        authority="CORTE_GIUST_TRIBUT_1", city="RC", region="CAL")
+    assert context.city == "RC"
+    assert context.region == "CAL"
+    assert context.regional_law_region == "calabria"
+    assert LinkEngine(default_region="LOM").default_region == "lombardia"
+
+    with pytest.raises(ValueError, match="unknown document authority"):
+        DocumentContext(authority="Cassazione")
+    with pytest.raises(ValueError, match="unknown document authority"):
+        LinkEngine(default_authority="Cassazione")
+    with pytest.raises(ValueError, match="unknown document region"):
+        DocumentContext(region="Atlantide")
+    with pytest.raises(ValueError, match="unknown document city"):
+        DocumentContext(city="Atlantide")
+
+
+def test_unresolved_references_need_minimal_evidence():
+    sent = ENG.extract("Sentenza n. 123/2020").rows
+    assert len(sent) == 1
+    assert sent[0]["urn"] == ""
+    assert sent[0]["doc-type"] == "SENT"
+    assert sent[0]["number"] == "123"
+    assert sent[0]["year"] == "2020"
+
+    cedu = ENG.extract("Corte EDU n. 123/2020").rows
+    assert len(cedu) == 1
+    assert cedu[0]["urn"] == ""
+    assert cedu[0]["authority"] == "CEDU"
+    assert cedu[0]["number"] == "123"
+
+    assert ENG.extract("n. 23, posto che, come gia' statuito da questa Sezione").rows == []
+
+
+def test_unresolved_heading_sentenza_does_not_bind_procedural_ricorso_date():
+    rows = ENG.extract(
+        "Sentenza n. 110/2022\nDepositato il 13/04/2022\n"
+        "Con ricorso in data 25.05.2018 il contribuente impugnava l'atto."
+    ).rows
+    assert len(rows) == 1
+    assert rows[0]["urn"] == ""
+    assert rows[0]["doc-type"] == "SENT"
+    assert rows[0]["number"] == "110"
+    assert rows[0]["year"] == "2022"
+    assert rows[0]["doc-date"] == ""
+    assert rows[0]["text"] == "Sentenza n. 110/2022"
+
+
+def test_bdgt_procedural_header_does_not_bridge_two_numbers():
+    rows = ENG.extract(
+        "n. 30/2025 depositato il 26/05/2025\nSentenza n. 119/2025"
+    ).rows
+    assert [(row["number"], row["year"], row["text"]) for row in rows] == [
+        ("119", "2025", "Sentenza n. 119/2025")
+    ]
+
+
+def test_bdgt_decisione_heading_is_not_an_eu_act():
+    for heading in ("DECISIONE", "SVOLGIMENTO DEL PROCESSO E MOTIVI DELLA DECISIONE"):
+        assert ENG.extract(
+            heading + "\nLa Societa' ricorrente impugnava la cartella di pagamento n. 10 2024"
+        ).rows == []
+
+
+def test_bdgt_object_number_does_not_reach_later_act_word():
+    assert ENG.extract(
+        'n. 2 fatture (riportanti la dicitura\n"esente IVA Legge Bersani")'
+    ).rows == []
+
+
+def test_bdgt_tax_document_and_invoice_numbers_are_not_citations():
+    samples = (
+        "Commissione Tributaria Provinciale di Messina avverso la cartella di "
+        "pagamento n. 295 2011",
+        "provvedimento gravato, ha argomentato che la fornitura oggetto della "
+        "fattura n. 39/2017",
+    )
+    for text in samples:
+        assert ENG.extract(text).rows == [], text
+
+
+def test_bdgt_calendar_period_is_not_a_legal_partition():
+    row = _one(
+        "periodo 8/3/2020-31/8/2021 (ovvero dal 21 febbraio 2020 per i soggetti "
+        "indicati al comma 2bis dell'art. 68 D.L. 18/2020"
+    )
+    assert row["urn"] == "urn:nir:stato:decreto.legge:2020;18~art68-comma2bis"
+    assert "periodo" not in row["partition"]
+
+
+def test_bdgt_narrative_date_does_not_extend_later_case_citation():
+    row = _one(
+        "13.12.2011, ritenuto legittimo all'esito del giudizio conclusosi con "
+        "sentenza della C.T.R. Lazio n. 6508/2017"
+    )
+    assert row["urn"] == "ECLI:IT:CTRLAZ:2017:6508"
+    assert row["text"] == "sentenza della C.T.R. Lazio n. 6508/2017"
 
 
 def test_self_reference_with_date():
@@ -321,6 +738,18 @@ def test_range_not_confused_with_latin_suffix():
         "urn:nir:presidente.repubblica:decreto:1973;600~art19-comma2bis"]
 
 
+def test_soft_hyphen_in_latin_partition_suffix():
+    assert _urns("articolo 119, comma 13\u00adter, del decreto legge n. 34 del 2020") == [
+        "urn:nir:stato:decreto.legge:2020;34~art119-comma13ter"]
+    assert _urns("comma 8\u00adbis dell'articolo 119 del decreto legge n. 34 del 2020") == [
+        "urn:nir:stato:decreto.legge:2020;34~art119-comma8bis"]
+
+
+def test_letter_partition_stops_before_elided_article():
+    assert _urns("art. 2, comma 1, lett. b), l'edificabilita', del d.lgs. n. 504/1992") == [
+        "urn:nir:stato:decreto.legislativo:1992;504~art2-comma1-letb"]
+
+
 # --- CGUE case id -> CELEX (sector 6) ----------------------------------------
 def test_cgue_case_number_builds_celex():
     # number/year of "C-123/20" are enough; no explicit "Corte di giustizia" needed
@@ -349,6 +778,16 @@ def test_doctype_number_propagates_to_far_bare_article():
     assert "urn:nir:stato:decreto.legislativo:1992;546~art5" in urns
 
 
+def test_conversion_law_is_not_bare_article_propagation_source():
+    urns = _urns(
+        "L'articolo 2 del decreto legge 16 febbraio 2023, n. 11, convertito con modificazioni "
+        "dalla legge 11 aprile 2023, n. 38, ha introdotto una disciplina. In particolare, "
+        "l'articolo 2 stabilisce il divieto.")
+    assert "urn:nir:stato:legge:2023;38" in urns
+    assert "urn:nir:stato:legge:2023;38~art2" not in urns
+    assert "urn:nir:stato:decreto.legge:2023;11~art2" in urns
+
+
 def test_propagation_never_from_caselaw():
     # an ECLI takes no partition: a bare article after a Cassazione cite must NOT inherit it
     assert _urns_auth(
@@ -365,6 +804,15 @@ def test_bare_alias_propagates_to_far_article():
     assert "urn:nir:stato:regio.decreto:1942;262:2~art1218" in _urns(
         "Il codice civile disciplina la responsabilita' contrattuale ed extracontrattuale del "
         "debitore. In tale quadro, l'art. 1218 regola l'inadempimento.")
+
+
+def test_constitution_alias_does_not_propagate_to_later_bare_article():
+    urns = _urns(
+        "Si richiamano l'art. 53 Cost. e l'art. 97 Cost.; "
+        "il termine di cui al citato art. 2, comma 8-bis non rileva.")
+    assert "urn:nir:stato:costituzione:1947~art53" in urns
+    assert "urn:nir:stato:costituzione:1947~art97" in urns
+    assert "urn:nir:stato:costituzione:1947~art2-comma8bis" not in urns
 
 
 def test_costituzione_common_noun_is_not_the_constitution():
@@ -405,6 +853,38 @@ def test_statuto_contribuente_variants():
     base = "urn:nir:stato:legge:2000;212~art"
     assert _urns("art. 12 statuto contribuente") == [base + "12"]
     assert _urns("art. 7 comma 1 Statuto dei diritti dei contribuenti") == [base + "7-comma1"]
+    assert _urns("Statuto del contribuente") == ["urn:nir:stato:legge:2000;212"]
+
+
+def test_special_region_statute_aliases():
+    cases = {
+        "art. 14 Statuto Regione Sicilia":
+            "urn:nir:stato:legge.costituzionale:1948;2~art14",
+        "art. 14 Statuto della Regione Sicilia":
+            "urn:nir:stato:legge.costituzionale:1948;2~art14",
+        "art. 14 Statuto della Regione Siciliana":
+            "urn:nir:stato:legge.costituzionale:1948;2~art14",
+        "art. 3 Statuto della Regione Sardegna":
+            "urn:nir:stato:legge.costituzionale:1948;3~art3",
+        "art. 4 Statuto della Regione Sarda":
+            "urn:nir:stato:legge.costituzionale:1948;3~art4",
+        "art. 5 Statuto della Regione Valle d'Aosta":
+            "urn:nir:stato:legge.costituzionale:1948;4~art5",
+        "art. 6 Statuto Regione Trentino-Alto Adige":
+            "urn:nir:stato:legge.costituzionale:1948;5~art6",
+        "art. 7 Statuto della Regione Friuli-Venezia Giulia":
+            "urn:nir:stato:legge.costituzionale:1963;1~art7",
+    }
+    for text, expected in cases.items():
+        assert _urns(text) == [expected], text
+
+
+def test_special_region_statute_is_self_valid_and_renderable():
+    from linkengine import urn_to_text
+
+    urn = _urns("Statuto speciale della Regione Siciliana")[0]
+    assert urn == "urn:nir:stato:legge.costituzionale:1948;2"
+    assert urn_to_text(urn) == "Statuto della Regione Siciliana"
 
 
 def test_testo_unico_registro_and_doganale():
@@ -540,9 +1020,21 @@ def test_legge_costituzionale_path():
 
 def test_delibera_comunale_other_path():
     # delibera del Comune -> DEL:CO{city} (urn_generator "other" dispatch)
-    assert _urns("delibera del Comune di Roma n. 50/2020") == ["DEL:CORM:2020:50"]
+    row = _one("delibera del Comune di Roma n. 50/2020")
+    assert row["ref-type"] == "other acts"
+    assert row["urn"] == "DEL:CORM:2020:50"
     # "delibera" as a verb (no Comune, no number) must not produce a citation
     assert _urns("Il Consiglio delibera l'approvazione del bilancio") == []
+
+
+def test_delibera_comunale_accepts_partition():
+    from linkengine import urn_to_text
+
+    row = _one("art. 3 della delibera del Comune di Roma n. 50/2020")
+    assert row["ref-type"] == "other acts"
+    assert row["partition"] == "articolo-3"
+    assert row["urn"] == "DEL:CORM:2020:50~art3"
+    assert urn_to_text(row["urn"]) == "art. 3 delibera del Comune di Roma n. 50/2020"
 
 
 def test_tribunale_sorveglianza_and_assise_ecli():
@@ -616,6 +1108,25 @@ def test_regolamento_default_scope_flag():
         ["CELEX:32016R0679"]
 
 
+def test_ocr_accommodations_flag():
+    from linkengine import LinkEngine
+
+    ocr_law = "artt. 7 I. 212/00"
+    ocr_dl = "art. 36, comma 2, d. I. n. 223 del 2006"
+    assert _urns(ocr_law) == ["urn:nir:stato:legge:2000;212~art7"]
+    assert _urns(ocr_dl) == ["urn:nir:stato:decreto.legge:2006;223~art36-comma2"]
+
+    strict = LinkEngine(ocr_accommodations=False)
+    assert strict.extract(ocr_law).rows == []
+    assert strict.extract(ocr_dl).rows == []
+    assert [r["urn"] for r in strict.extract("art. 7 l. 212/00").rows] == [
+        "urn:nir:stato:legge:2000;212~art7"]
+
+    assert [r["urn"] for r in strict.extract(ocr_law, ocr_accommodations=True).rows] == [
+        "urn:nir:stato:legge:2000;212~art7"]
+    assert ENG.extract(ocr_law, ocr_accommodations=False).rows == []
+
+
 # --- older date-based caselaw + 2-digit-year dates (broader-corpus fixes) ----------------
 def test_caselaw_year_from_date():
     # "Cass. 10.10.1962, n. 2920" — the ECLI year comes from the date, not an explicit year
@@ -629,6 +1140,28 @@ def test_date_number_caselaw_series_pairs_correctly():
     # each "Cass. <date>, n. <num>" in a series keeps its own date+number pairing
     assert _urns_auth("Cass. 10.10.1962, n. 2920; Cass. 26.11.1977, n. 5157", "CORTE_CASS") == [
         "ECLI:IT:CASS:1962:2920CIV", "ECLI:IT:CASS:1977:5157CIV"]
+
+
+def test_caselaw_date_after_number_does_not_hop_to_next_reference():
+    assert _urns_auth(
+        "Sez. 6-5, ord. n. 8131 del 3 aprile 2018 e Sez. 5 ord. n. 5459 del 13 giugno 2018",
+        "CORTE_CASS") == [
+        "ECLI:IT:CASS:2018:5459CIV", "ECLI:IT:CASS:2018:8131CIV"]
+
+
+def test_split_caselaw_anchor_drops_next_number_marker():
+    rows = LinkEngine(default_authority="CORTE_CASS").extract(
+        "ordinanze della Sezione VI-5 n. 12018 del 13 aprile 2022, nn. 4307").rows
+    row = next(r for r in rows if r["urn"] == "ECLI:IT:CASS:2022:12018CIV")
+    assert row["text"] == "ordinanze della Sezione VI-5 n. 12018 del 13 aprile 2022"
+
+
+def test_number_marker_trim_does_not_cut_codice_penale_anchor():
+    rows = LinkEngine().extract("art. 240 cod. pen. e artt. 444 e 445 cod. proc. pen.").rows
+    texts = {r["urn"]: r["text"] for r in rows}
+    assert texts["urn:nir:stato:regio.decreto:1930;1398:1~art240"] == "art. 240 cod. pen."
+    assert texts["urn:nir:stato:decreto.del.presidente.della.repubblica:1988;447~art445"] == \
+        "445 cod. proc. pen."
 
 
 def test_two_digit_year_dates():
@@ -692,12 +1225,21 @@ def test_tar_fills_region_section_number_year():
     assert r2["number"] == "50" and r2["year"] == "2019"
 
 
-def test_dpcm_date_only_recognized_without_urn():
+def test_dpcm_date_only_builds_urn():
     r = _one("D.P.C.M. 11 marzo 2020")
     assert r["ref-type"] == "legislation"
     assert r["doc-type"] == "DECR" and r["authority"] == "PRES_CONS_MIN"
     assert r["doc-date"] == "2020-03-11"
-    assert not r["url"]            # date-only -> recognized, no URN
+    assert r["urn"] == "DPCM2020-03-11"
+    assert not r["url"]
+
+
+def test_dpcm_date_only_partition_and_standard_text():
+    from linkengine import urn_to_text
+
+    urn = _urns("art. 2 del D.P.C.M. 11 marzo 2020")[0]
+    assert urn == "DPCM2020-03-11~art2"
+    assert urn_to_text(urn) == "art. 2 D.P.C.M. del 11/03/2020"
 
 
 def test_dpcm_numbered_builds_urn():
@@ -816,10 +1358,10 @@ def test_eu_directive_year_number_order():
 
 
 def test_ade_prassi_number_without_n_prefix_and_plural():
-    assert _urns("circolare 12/E/2020") == ["PRAX:AE:CIRC:2020:12/E"]
+    assert _urns("circolare 12/E/2020") == ["PRAX:AE:CIRC:2020:12"]
     assert _urns("risoluzione 22/E/2005") == ["PRAX:AE:RIS:2005:22/E"]
-    assert _urns("circolari n. 34/E/2013") == ["PRAX:AE:CIRC:2013:34/E"]   # plural circolari
-    assert _urns("circolare 21/E del 2020") == ["PRAX:AE:CIRC:2020:21/E"]  # 'del YEAR' variant
+    assert _urns("circolari n. 34/E/2013") == ["PRAX:AE:CIRC:2013:34"]   # plural circolari
+    assert _urns("circolare 21/E del 2020") == ["PRAX:AE:CIRC:2020:21"]  # 'del YEAR' variant
 
 
 def test_dash_number_year_context_guarded():
@@ -861,8 +1403,10 @@ def test_urn_to_text_round_of_forms():
     cases = {
         "ECLI:IT:CASS:2020:1234CIV": "Cassazione civile n. 1234/2020",
         "ECLI:IT:CASS:1984:877PEN": "Cassazione penale n. 877/1984",
-        "ECLI:IT:CTRLAZ:2024:100": "Corte di Giustizia Tributaria di secondo grado Lazio n. 100/2024",
-        "ECLI:IT:CTPNA:2020:123": "Corte di Giustizia Tributaria di primo grado di Napoli n. 123/2020",
+        "ECLI:IT:CGT2LAZ:2024:100": "Corte di Giustizia Tributaria di secondo grado Lazio n. 100/2024",
+        "ECLI:IT:CGT1NA:2020:123": "Corte di Giustizia Tributaria di primo grado di Napoli n. 123/2020",
+        "ECLI:IT:CTRLAZ:2024:100": "Commissione Tributaria Regionale Lazio n. 100/2024",
+        "ECLI:IT:CTPNA:2020:123": "Commissione Tributaria Provinciale di Napoli n. 123/2020",
         "ECLI:IT:COST:2018:188": "Corte Costituzionale n. 188/2018",
         "ECLI:IT:GDPRM:2020:100": "Giudice di Pace di Roma n. 100/2020",
         "ECLI:IT:CTCIT:1989:123": "Commissione Tributaria Centrale n. 123/1989",
@@ -884,6 +1428,34 @@ def test_urn_to_text_round_of_forms():
     assert urn_to_text("") == ""
 
 
+def test_urn_to_text_autonomous_second_grade_tax_court():
+    from linkengine import urn_to_text
+
+    assert urn_to_text("ECLI:IT:CTRBZ:2020:1234").endswith(
+        "di Bolzano n. 1234/2020")
+    assert urn_to_text("ECLI:IT:CTRTN:2021:55").endswith(
+        "di Trento n. 55/2021")
+    assert urn_to_text("ECLI:IT:CGT2BZ:2020:1234").endswith(
+        "di Bolzano n. 1234/2020")
+    assert urn_to_text("ECLI:IT:CGT2TN:2021:55").endswith(
+        "di Trento n. 55/2021")
+
+
+def test_urn_to_text_supports_every_prax_authority_and_type():
+    from linkengine.urn import PRAX_AUTHORITY_NAMES, PRAX_TYPE_NAMES, urn_to_text
+
+    for code, name in PRAX_AUTHORITY_NAMES.items():
+        assert urn_to_text(f"PRAX:{code}:CIRC:2020:1") == \
+            f"circolare {name} n. 1/2020"
+
+    date_types = {"CS", "TEL", "LCIRC"}
+    for code, name in PRAX_TYPE_NAMES.items():
+        urn = f"PRAX:AE:{code}:20200102" if code in date_types else \
+            f"PRAX:AE:{code}:2020:1"
+        expected_tail = "del 02/01/2020" if code in date_types else "n. 1/2020"
+        assert urn_to_text(urn) == f"{name} Agenzia delle Entrate {expected_tail}"
+
+
 def test_urn_column_equals_build_urn():
     # the engine's `urn` column is exactly build_urn(row) (the single source of identifiers)
     from linkengine import LinkEngine
@@ -895,9 +1467,86 @@ def test_urn_column_equals_build_urn():
             assert r["urn"] == build_urn(r)
 
 
-# --- HTML annotation (html.annotate_html / render_html_document) -------------------
+def test_partitioned_multi_act_frames_do_not_form_cross_products():
+    first = "art. 19, co. 3, D. lgs. 596/92 e art. 7 1. n. 212/2000"
+    rows = ENG.extract(first).rows
+    assert [(row["text"], row["urn"]) for row in rows] == [
+        ("art. 19, co. 3, D. lgs. 596/92",
+         "urn:nir:stato:decreto.legislativo:1992;596~art19-comma3"),
+        ("art. 7 1. n. 212/2000", "urn:nir:stato:legge:2000;212~art7"),
+    ]
+    assert all(row["text"] for row in rows)
+
+    second = ("art. 19, co. 2, e 20 del D.lgs 546/92, nonché dell'art. 3, "
+              "co. 4, 1. 241/90")
+    assert _urns(second) == [
+        "urn:nir:stato:decreto.legislativo:1992;546~art19-comma2",
+        "urn:nir:stato:decreto.legislativo:1992;546~art20",
+        "urn:nir:stato:legge:1990;241~art3-comma4",
+    ]
+
+    # With OCR accommodations disabled, the damaged second act is sacrificed; it must not
+    # inherit the preceding decreto legislativo and recreate a false branch.
+    strict = LinkEngine(ocr_accommodations=False).extract(first).rows
+    assert [row["urn"] for row in strict] == [
+        "urn:nir:stato:decreto.legislativo:1992;596~art19-comma3"]
+
+
+def test_regio_decreto_chronology_and_document_year_ceiling():
+    assert _urns("artt. 69 e 70 R.D. n. 2440/23") == [
+        "urn:nir:stato:regio.decreto:1923;2440~art69",
+        "urn:nir:stato:regio.decreto:1923;2440~art70",
+    ]
+    assert _urns("R.D. n. 639/10") == ["urn:nir:stato:regio.decreto:1910;639"]
+
+    impossible = _one("Regio Decreto 13/02/1986 n. 65")
+    assert impossible["number"] == "65"
+    assert impossible["year"] == impossible["doc-date"] == impossible["urn"] == ""
+
+    future = ENG.extract(
+        "Cass. Civ. n. 14874/2026", context=DocumentContext(document_year=2022)
+    ).rows[0]
+    assert future["number"] == "14874"
+    assert future["year"] == future["urn"] == ""
+
+    with pytest.raises(ValueError, match="invalid document year"):
+        DocumentContext(document_year=1700)
+
+
+def test_procedural_header_lines_bound_the_citation_anchor():
+    text = ("Sentenza n. 156/2022\nDepositato il 04/07/2022\n"
+            "Con ricorsi in data 12.02.18")
+    row = _one(text)
+    assert row["text"] == row["context"] == "Sentenza n. 156/2022"
+    assert row["number"] == "156" and row["year"] == "2022"
+    assert row["doc-date"] == ""
+
+
+def test_bare_ce_treaty_alias_respects_article_range():
+    assert ENG.extract("art. 2303 ce").rows == []
+    assert _urns("art. 234 CE") == ["CELEX:12002E/TXT~art234"]
+    assert _urns("art. 174 del Trattato CE") == ["CELEX:12002E/TXT~art174"]
+
+
+def test_procedural_docket_runs_and_object_numbers_stay_unbound():
+    samples = (
+        "CTP di Vercelli RGR 138/18 e 2019/209 conclusi con esito sfavorevole",
+        "Commissione Tributaria Provinciale Milano - Sez. 17 -- Rgr n. 24 73/2021",
+        "legge, in relazione\nalle cartelle indicate dalla n. 1 alla n. 7",
+        "DECISIONE\nRicorrente_1 ha impugnato l'avviso di accertamento n. 428 "
+        "del 7 dicembre 2020",
+    )
+    for text in samples:
+        assert ENG.extract(text).rows == [], text
+
+    row = _one("n. 1312, ricorsi respinti dalla CTP di Novara con\nsentenza n. 36/09")
+    assert row["text"] == "CTP di Novara con\nsentenza n. 36/09"
+    assert row["urn"] == "ECLI:IT:CTPNO:2009:36"
+
+
+# --- HTML highlighting (html.annotate_html, fragment + page=True) -----------------
 import re as _re_html
-from linkengine.html import annotate_html, render_html_document
+from linkengine.html import annotate_html
 
 
 def _strip_tags(html):
@@ -951,9 +1600,16 @@ def test_html_escapes_non_reference_text():
     assert html == "1&lt;2 &amp; 3&gt;0"
 
 
-def test_html_document_is_standalone():
-    doc = render_html_document("art. 2697 c.c.", only_with_urn=True)
+def test_html_page_is_standalone():
+    doc = annotate_html("art. 2697 c.c.", page=True, only_with_urn=True)
     assert doc.startswith("<!doctype html>")
     assert "<style>" in doc and "lkn-ref" in doc
     assert "<pre class=\"lkn-doc\">" in doc
     assert "data-urn=" in doc
+
+
+def test_html_no_inline_details():
+    # the fragment carries details only in data-* attributes, never as a visible `title` tooltip
+    html = annotate_html("art. 2697 c.c.")
+    assert "title=" not in html
+    assert "data-urn=" in html

@@ -16,6 +16,7 @@ from typing import Dict, List, Optional
 class Entity(str, Enum):
     # partition pieces (ranked; see PARTITION_RANK)
     ALLEGATO = "ALLEGATO"
+    CONSIDERANDO = "CONSIDERANDO"  # EU legislative recital
     ARTICLE = "ARTICLE"
     COMMA = "COMMA"
     PARAGRAPH = "PARAGRAPH"
@@ -28,12 +29,12 @@ class Entity(str, Enum):
     YEAR = "YEAR"
     NUM_YEAR = "NUM_YEAR"      # "600/1973" style: a number bound to a year
     CASE_NUMBER = "CASE_NUMBER"
+    RV_NUMBER = "RV_NUMBER"    # Cassazione official maxim number ("Rv. 246838-01")
     DATE = "DATE"
     # act / actor identifiers
     DOCTYPE = "DOCTYPE"        # value = doc-type code (L, DL, DLGS, DECR, ...)
     AUTHORITY = "AUTHORITY"    # value = case-law/legislative authority code
     OTHER_AUTH = "OTHER_AUTH"
-    MINISTRY = "MINISTRY"
     ALIAS = "ALIAS"            # value = legislative alias code (COD_CIV, TUIR, ...)
     EU_ACRONYM = "EU_ACRONYM"  # UE / CE / CEE / CECA
     REGION = "REGION"
@@ -46,15 +47,17 @@ class Entity(str, Enum):
 # Partition hierarchy (higher = coarser/shallower). comma and paragrafo are siblings
 # (national vs EU); numero and punto are siblings (sub-item vs EU-caselaw point).
 PARTITION_RANK = {
-    Entity.ALLEGATO: 9, Entity.ARTICLE: 8, Entity.COMMA: 7, Entity.PARAGRAPH: 7,
-    Entity.LETTER: 6, Entity.NUMERO: 5, Entity.PUNTO: 5, Entity.PERIODO: 4,
+    Entity.ALLEGATO: 9, Entity.CONSIDERANDO: 8, Entity.ARTICLE: 8,
+    Entity.COMMA: 7, Entity.PARAGRAPH: 7, Entity.LETTER: 6,
+    Entity.NUMERO: 5, Entity.PUNTO: 5, Entity.PERIODO: 4,
 }
 
 # Canonical partition label used when serializing the `partition` field.
 PARTITION_LABEL = {
-    Entity.ALLEGATO: "allegato", Entity.ARTICLE: "articolo", Entity.COMMA: "comma",
-    Entity.PARAGRAPH: "paragrafo", Entity.LETTER: "lettera", Entity.NUMERO: "numero",
-    Entity.PUNTO: "punto", Entity.PERIODO: "periodo",
+    Entity.ALLEGATO: "allegato", Entity.CONSIDERANDO: "considerando",
+    Entity.ARTICLE: "articolo", Entity.COMMA: "comma", Entity.PARAGRAPH: "paragrafo",
+    Entity.LETTER: "lettera", Entity.NUMERO: "numero", Entity.PUNTO: "punto",
+    Entity.PERIODO: "periodo",
 }
 
 MONTHS = {
@@ -63,14 +66,13 @@ MONTHS = {
     "novembre": "11", "dicembre": "12",
 }
 
-# The feature-row schema (28 columns): the recognition fields the engine fills, plus the
-# canonical ``urn`` it appends. ``empty_row`` seeds every field to "".
+# The feature-row schema: the recognition fields the engine fills. The canonical ``urn`` is
+# appended after normalization. ``empty_row`` seeds every field to "".
 FEATURE_FIELDS: List[str] = [
-    "id", "source-name", "source-partition-id", "ref-type", "ref-scope", "text",
-    "context", "alias", "partition", "doc-type", "authority", "region", "city",
-    "detached-city", "section", "ministry", "other-authority", "eu-acronym",
-    "number", "year", "full-number", "case-number", "area", "doc-date",
-    "ro-number", "rv-number", "gu-series", "url",
+    "id", "ref-type", "ref-scope", "text", "context", "alias", "partition",
+    "doc-type", "authority", "ministry", "region", "city", "section", "other-authority",
+    "eu-acronym", "number", "year", "full-number", "case-number", "doc-date",
+    "rv-number", "url",
 ]
 
 

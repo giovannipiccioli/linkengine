@@ -8,7 +8,8 @@ references and builds each reference's canonical identifier directly from its fi
 
 Public API::
 
-    from linkengine import LinkEngine, urn_to_text, annotate_html
+    from linkengine import (DocumentContext, LinkEngine, generate_prax_urn, urn_to_text,
+                            annotate_html)
 
     eng = LinkEngine()
     result = eng.extract("art. 43 del d.P.R. n. 600 del 1973", debug=True)
@@ -17,14 +18,18 @@ Public API::
     result.trace                   # per-recognizer spans (debug=True)
 
     urn_to_text("ECLI:IT:CASS:2020:1234CIV")     # -> "Cassazione civile n. 1234/2020"
-    annotate_html("art. 2697 c.c.")               # -> the text with the reference wrapped in a tag
+    generate_prax_urn("Min. Finanze", "risoluzione", "1982-08-03", "271112")
+    # -> "PRAX:MEF:RIS:1982:271112"
+    annotate_html(text)                           # -> the text with citations highlighted (HTML)
+    annotate_html(text, page=True)                # -> a complete standalone HTML document
 
 ``runner.run_linkengine_string(text)`` returns a pipe-separated CSV view of the rows.
 """
+from .context import DocumentContext
 from .engine import LinkEngine
 from .model import Entity, Span, Reference, ExtractResult
-from .urn import urn_to_text
-from .html import annotate_html, render_html_document
+from .urn import generate_prax_urn, urn_to_text
+from .html import annotate_html
 
-__all__ = ["LinkEngine", "Entity", "Span", "Reference", "ExtractResult",
-           "urn_to_text", "annotate_html", "render_html_document"]
+__all__ = ["LinkEngine", "DocumentContext", "Entity", "Span", "Reference", "ExtractResult",
+           "generate_prax_urn", "urn_to_text", "annotate_html"]
