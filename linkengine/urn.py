@@ -20,7 +20,7 @@ from . import catalog
 from .geo import (AUTONOMOUS_TAX_CITY_TO_GEO, AUTONOMOUS_TAX_GEO_NAMES, city_name,
                   region_name)
 from .normalize import (build_nir, build_regional_nir, build_celex, build_celex_caselaw,
-                        normattiva_url)
+                        normattiva_url, partition_to_locator)
 from .aliases import ALIAS_NIR, ALIAS_CELEX, alias_nir
 
 _CASE_ID_RE = re.compile(r"([ct])\D*(\d+)\s*/\s*(\d{4})", re.I)
@@ -202,41 +202,6 @@ def _year_only(urn):
         return urn
     date_part = urn.split('~')[0].split(';')[0].split(':')[-1]
     return urn.replace(date_part, date_part[:4]) if len(date_part) == 10 else urn
-
-
-_ROMAN_VAL = {"i": 1, "v": 5, "x": 10, "l": 50, "c": 100, "d": 500, "m": 1000}
-
-
-def _roman_to_int_token(s: str) -> str:
-    s = (s or "").lower()
-    if not s or any(ch not in _ROMAN_VAL for ch in s):
-        return s
-    total, prev = 0, 0
-    for ch in reversed(s):
-        v = _ROMAN_VAL[ch]
-        total += -v if v < prev else v
-        prev = max(prev, v)
-    return str(total)
-
-
-def partition_to_locator(partition, extra_num=()):
-    """linkengine partition field -> urn:nir / CELEX locator suffix. ``articolo``->``art``,
-    ``lettera``->``let``, ``numero``/``paragrafo``->``num`` always; names in ``extra_num``
-    (``comma`` for EU, ``punto`` for CJEU) collapse to ``num`` too."""
-    if not partition:
-        return ''
-    partition = re.sub(
-        r'allegato-([ivxlcdm]+)',
-        lambda m: 'allegato-' + _roman_to_int_token(m.group(1)),
-        partition,
-        flags=re.I)
-    s = (partition.replace('articolo', 'art').replace('lettera', 'let')
-                  .replace('considerando', 'cons')
-                  .replace('allegato', 'all')
-                  .replace('numero', 'num').replace('paragrafo', 'num'))
-    for name in extra_num:
-        s = s.replace(name, 'num')
-    return s.replace('-', '').replace('_', '-')
 
 
 # ── number/year recovery for case law ─────────────────────────────────────────

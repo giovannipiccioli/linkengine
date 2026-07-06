@@ -46,18 +46,43 @@ EU_PROV_LETTER = {"REG": "R", "DIR": "L", "DECIS": "D", "RACC": "H"}
 # Alias -> urn:nir resolution lives in aliases.py (alias_nir).
 
 
-def partition_to_locator(partition_field: str) -> str:
-    """The partition-field -> URN-locator transform.
+_ROMAN_VAL = {"i": 1, "v": 5, "x": 10, "l": 50, "c": 100, "d": 500, "m": 1000}
 
-    ``"articolo-43_comma-1"`` -> ``"art43-comma1"``;  ``"articolo-3-bis"`` -> ``"art3bis"``.
+
+def _roman_to_int_token(s: str) -> str:
+    s = (s or "").lower()
+    if not s or any(ch not in _ROMAN_VAL for ch in s):
+        return s
+    total, prev = 0, 0
+    for ch in reversed(s):
+        v = _ROMAN_VAL[ch]
+        total += -v if v < prev else v
+        prev = max(prev, v)
+    return str(total)
+
+
+def partition_to_locator(partition_field: str, extra_num=()) -> str:
+    """The partition-field -> URN-locator transform (the single implementation).
+
+    ``"articolo-43_comma-1"`` -> ``"art43-comma1"``; ``"allegato-iv"`` -> ``"all4"``.
+    ``articolo``->``art``, ``lettera``->``let``, ``numero``/``paragrafo``->``num`` always;
+    names in ``extra_num`` (``comma`` for EU acts, ``punto`` for CJEU) collapse to ``num`` too.
     """
     if not partition_field:
         return ""
-    return (partition_field
-            .replace("articolo", "art").replace("lettera", "let")
-            .replace("considerando", "cons")
-            .replace("numero", "num").replace("paragrafo", "num")
-            .replace("-", "").replace("_", "-"))
+    partition_field = re.sub(
+        r"allegato-([ivxlcdm]+)",
+        lambda m: "allegato-" + _roman_to_int_token(m.group(1)),
+        partition_field,
+        flags=re.IGNORECASE)
+    s = (partition_field
+         .replace("articolo", "art").replace("lettera", "let")
+         .replace("considerando", "cons")
+         .replace("allegato", "all")
+         .replace("numero", "num").replace("paragrafo", "num"))
+    for name in extra_num:
+        s = s.replace(name, "num")
+    return s.replace("-", "").replace("_", "-")
 
 
 def split_annex(partition_field: str):

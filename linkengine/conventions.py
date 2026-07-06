@@ -71,7 +71,7 @@ RATIFICA = {
     "GHA": (48, 2006), "MAR": (504, 1981), "MOZ": (110, 2003), "SEN": (417, 2000),
     "TUN": (388, 1981), "UGA": (18, 2005), "JAM": (93, 2020), "MEX": (710, 1994),
     "PAN": (208, 2016), "USA": (20, 2009), "ARG": (282, 1982), "COL": (92, 2020),
-    "TTO": (167, 1973), "VEN": (200, 1992), "AUS": (292, 1985), "NZL": (566, 1982),
+    "TTO": (167, 1973), "VEN": (200, 1992), "AUS": (292, 1985), "NZL": (566, 1982),"BGR":(389,1990),
     # Italy–Switzerland (1976) ratified by l. 23 dic. 1978, n. 943; Italy–Czechoslovakia (1981,
     # honoured by both successor states) ratified by l. 2 mag. 1983, n. 303.
     "CHE": (943, 1978), "SVK": (303, 1983), "CZE": (303, 1983),

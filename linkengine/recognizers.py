@@ -17,6 +17,14 @@ from .special_cases import (
     is_agenzia_composite_number_prefix,
     protocol_is_provvedimento_number,
 )
+# Partition element recognition lives in partitions.py (recognition + segmentation);
+# legislative aliases in aliases.py (data + recognition + urn resolution).
+from .partitions import recognize_elements as recognize_partitions
+from .geo import (AUTONOMOUS_TAX_CITY_TO_GEO, CITY_RE, REGION_RE,
+                  REGION_NAME_TO_CODE, city_code, region_urn as _region_urn)
+from .aliases import EU_ALIASES, INTL_ALIASES, recognize_aliases as _recognize_aliases
+from .conventions import recognize_conventions
+from .budget_laws import recognize_budget_laws
 
 I = re.IGNORECASE
 
@@ -118,10 +126,6 @@ def _is_docket(text: str, start: int, end: int) -> bool:
 
 def _is_non_citation_object_number(text: str, start: int) -> bool:
     return bool(_NON_CITATION_OBJECT_BEFORE.search(text[max(0, start - 90):start]))
-
-
-# Partition element recognition lives in partitions.py (recognition + segmentation).
-from .partitions import recognize_elements as recognize_partitions  # noqa: E402,F401
 
 
 # ---------------------------------------------------------------------------
@@ -777,9 +781,6 @@ _OTHER_AUTH_PATTERNS = [
 ]
 _OTHER_AUTH_COMPILED = [(re.compile(p, I), v) for p, v in _OTHER_AUTH_PATTERNS]
 
-from .geo import (AUTONOMOUS_TAX_CITY_TO_GEO, CITY_RE, REGION_RE,  # noqa: E402
-                  REGION_NAME_TO_CODE, city_code)
-
 
 def _geo_after(text: str, pos: int, want: str):
     """Look just past a court keyword for a province/region/comune name. Returns
@@ -1035,13 +1036,6 @@ def recognize_authorities(text: str) -> List[Span]:
                 continue
         filtered.append(s)
     return _nonoverlap(filtered)
-
-
-# Legislative aliases live in aliases.py (data + recognition + urn resolution).
-from .aliases import EU_ALIASES, INTL_ALIASES, recognize_aliases as _recognize_aliases  # noqa: E402,F401
-from .conventions import recognize_conventions  # noqa: E402
-from .budget_laws import recognize_budget_laws  # noqa: E402
-from .geo import REGION_NAME_TO_CODE, region_urn as _region_urn  # noqa: E402
 
 
 def recognize_aliases(text: str) -> List[Span]:

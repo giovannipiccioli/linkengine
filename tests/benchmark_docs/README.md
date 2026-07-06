@@ -31,6 +31,10 @@ and partial full-document tests do not depend on external paths.
 - `corte_cost_2010_368.txt`: Corte costituzionale judgment.
 - `corte_cost_2020_281.txt`: Corte costituzionale judgment with regional-law and EU-law references.
 - `corte_cost_2024_204.txt`: Corte costituzionale judgment with tax-justice organization references.
+- `cgt1_bologna_2024_538.txt`: first-grade tax-court (CGT/CTP Bologna) judgment on R&D tax
+  credits, with periodo partitions and a joined Sezioni Unite citation series.
+- `cgt2_lombardia_2024_1229.txt`: second-grade tax-court (CGT/CTR Lombardia) appeal on
+  COVID payment-term suspensions, dense in decreto-legge and conversion-law references.
 - `cgue_62024cc0043_it.txt`: Italian CGUE Advocate General opinion with EU-law references.
 - `cgue_62024cj0367_it.txt`: Italian CGUE judgment with Telenor case references and EU
   regulation anchors.
@@ -38,6 +42,10 @@ and partial full-document tests do not depend on external paths.
 - `law_199_2025_budget.txt`: large national budget-law text.
 - `law_dl_326_1987_spettacoli.txt`: national decree-law text with tariff-reference traps.
 - `law_dpr_917_1986_tuir.txt`: legislation text for D.P.R. 917/1986 (TUIR).
+- `massima_cass_2020_10019_civ.txt`: Cassazione civil massima (headnote) citing c.c. articles.
+- `massima_cass_2020_10024_civ.txt`: Cassazione civil massima (headnote) citing c.c. articles.
+- `prassi_ae_circolare_2020_18.txt`: Agenzia Entrate circolare (Credito d'imposta Vacanze)
+  with DPCM, TUIR-alias, and AE provvedimento references.
 - `prassi_ae_interpello_2025_26.txt`: Agenzia Entrate interpello.
 - `prassi_ae_interpello_2025_10.txt`: Agenzia Entrate interpello with TUIR
   article 67 aliases and prassi resolution references.

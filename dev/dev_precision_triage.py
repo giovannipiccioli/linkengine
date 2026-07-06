@@ -4,7 +4,7 @@ Each case is (text, note). We print, per case, the references the engine current
 the anchored `text`, the `urn` (or '∅'), and the salient fields. Use this to see current
 behaviour and to verify fixes interactively. Run:
 
-    PYTHONPATH=. python dev_precision_triage.py [substring-filter]
+    PYTHONPATH=. python dev/dev_precision_triage.py [substring-filter]   (from the repo root)
 """
 import sys
 from linkengine import LinkEngine
@@ -98,6 +98,10 @@ CASES = [
      "wrong binding of partitions to the two acts"),
     ("dalla BCE il 31 marzo 2021, e accrescendo formalmente la sua motivazione",
      "false positive"),
+    ("impugna la sentenza emessa dalla Corte di Giustizia Tributaria di Primo grado di Modena n. XX/3/2024 del 10 gennaio 2024",
+     "anonymized docket 'n. XX/3/2024' (CERDEF-style redaction): year stolen as the number -> spurious ECLI:IT:CGT1MO:2024:2024; should stay unresolved"),
+    ("v. a titolo esemplificativo, Cass. 12.6.2024 n. 16285; Corte di giust. di primo grado di Milano 930/6/2024",
+     "recall: 'Corte di giust. di primo grado di Milano 930/6/2024' (num/sez/year, no 'n.') not recognized -> missing ECLI:IT:CGT1MI:2024:930"),
 ]
 
 

@@ -15,15 +15,15 @@ even at the cost of some recall. The cardinal rule the user set:
 - **Env / how to run** (the env is `ml`; filter the harmless numpy/JVM import noise):
   ```bash
   cd src/utils/linkengine
-  /opt/anaconda3/envs/ml/bin/python -m pytest -q          # 121 unit tests — MUST stay green
+  /opt/anaconda3/envs/ml/bin/python -m pytest -q          # unit tests — MUST stay green
   /opt/anaconda3/envs/ml/bin/python -m tests.goldeval     # the hand-verified gold gates
-  PYTHONPATH=. /opt/anaconda3/envs/ml/bin/python dev_precision_triage.py [filter]
+  PYTHONPATH=. /opt/anaconda3/envs/ml/bin/python dev/dev_precision_triage.py [filter]
   ```
-- **The gold gates are the contract.** Current baseline that must NOT regress:
-  `pytest` 121 passed · gold **manual 258/258 · partitions 31/31 · precision F1=1.000 (40 excerpts)
-  · fields 222/222**. After *every* change run pytest + goldeval. If gold drops, you broke a
+- **The gold gates are the contract.** Current baseline that must NOT regress (as of 2026-07-05):
+  `pytest` 195 passed · gold **manual 258/258 · partitions 31/31 · precision F1=1.000 (141 excerpts)
+  · fields 303/303**. After *every* change run pytest + goldeval. If gold drops, you broke a
   verified behavior — fix or revert before moving on.
-- **`dev_precision_triage.py`** holds ~48 real-document examples (each with a note on what's wrong).
+- **`dev/dev_precision_triage.py`** holds ~48 real-document examples (each with a note on what's wrong).
   It is the working scratchpad for this effort (NOT a gate). Cases are referenced below as `[NN]`.
 - **When you fix a case, lock it in**: add a row to `tests/gold/gold_precision.csv`
   (`id|authority|note|expected_urns|text`; empty `expected_urns` = a false-positive guard) and/or
