@@ -84,7 +84,7 @@ def test_two_digit_year_and_no_n_prefix():
 
 def test_costituzione_alias():
     assert _one("art. 117 Cost.")["alias"] == "COST"
-    assert _urns("art. 117 Cost.") == ["urn:nir:stato:costituzione:1947~art117"]
+    assert _urns("art. 117 Cost.") == ["urn:nir:stato:costituzione~art117"]
 
 
 def test_cassazione_number_list_split():
@@ -810,15 +810,15 @@ def test_constitution_alias_does_not_propagate_to_later_bare_article():
     urns = _urns(
         "Si richiamano l'art. 53 Cost. e l'art. 97 Cost.; "
         "il termine di cui al citato art. 2, comma 8-bis non rileva.")
-    assert "urn:nir:stato:costituzione:1947~art53" in urns
-    assert "urn:nir:stato:costituzione:1947~art97" in urns
-    assert "urn:nir:stato:costituzione:1947~art2-comma8bis" not in urns
+    assert "urn:nir:stato:costituzione~art53" in urns
+    assert "urn:nir:stato:costituzione~art97" in urns
+    assert "urn:nir:stato:costituzione~art2-comma8bis" not in urns
 
 
 def test_costituzione_common_noun_is_not_the_constitution():
     # lowercase "costituzione in giudizio" (joining proceedings) is NOT the Constitution
     assert _urns("la costituzione in giudizio del convenuto") == []
-    assert _urns("art. 117 Cost.") == ["urn:nir:stato:costituzione:1947~art117"]
+    assert _urns("art. 117 Cost.") == ["urn:nir:stato:costituzione~art117"]
 
 
 def test_range_not_captured_by_later_article_via_act_connector():
@@ -1317,9 +1317,9 @@ def test_c_cost_abbrev_is_the_court_with_number():
     # "C. Cost. n. 188/2018" is the Court (ECLI), not the Constitution
     assert _urns("sentenza C. Cost. n. 188 del 2018") == ["ECLI:IT:COST:2018:188"]
     # but a bare/standalone "Cost." is still the Constitution
-    assert _urns("art. 3 Cost.") == ["urn:nir:stato:costituzione:1947~art3"]
+    assert _urns("art. 3 Cost.") == ["urn:nir:stato:costituzione~art3"]
     assert _urns("ai sensi dell'art. 24 della Costituzione") == [
-        "urn:nir:stato:costituzione:1947~art24"]
+        "urn:nir:stato:costituzione~art24"]
 
 
 def test_attached_number_forms_no_space():
@@ -1416,7 +1416,7 @@ def test_urn_to_text_round_of_forms():
         "urn:nir:regione.campania:legge:2003;28~art13": "art. 13 legge regionale Campania n. 28/2003",
         "urn:nir:stato:regio.decreto:1942;262:2~art2697": "art. 2697 codice civile",
         "urn:nir:presidente.repubblica:decreto:1986;917~art109": "art. 109 TUIR",
-        "urn:nir:stato:costituzione:1947~art53": "art. 53 Costituzione",
+        "urn:nir:stato:costituzione~art53": "art. 53 Costituzione",
         "CELEX:32006L0112~art2": "art. 2 direttiva 2006/112/CE",
         "CELEX:62020CJ0123~num12": "punto 12 causa C-123/2020",
         "CELEX:62020TJ0045": "causa T-45/2020",

@@ -181,7 +181,8 @@ ALIASES: List[Alias] = [
     # — Costituzione. The proper noun is "Cost." or capitalized "Costituzione"; the lowercase
     #   common noun ("costituzione in giudizio", "...di parte civile", "...di società") is NOT
     #   the Constitution — match only the abbreviation or a capital-C full word. —
-    Alias("COST", nir="stato:costituzione:1947-12-27", display="Costituzione",
+    #   Normattiva resolves the Constitution without a date: urn:nir:stato:costituzione~art23
+    Alias("COST", nir="stato:costituzione", display="Costituzione",
           patterns=(r"(?-i:Costituzione)|\bcost\.",)),
 
     # — testi unici / codici present in the alias table but not recognized from free text —

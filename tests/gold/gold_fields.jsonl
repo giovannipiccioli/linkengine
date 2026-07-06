@@ -34,7 +34,7 @@
 {"cat": "alias", "text": "art. 109 del TUIR", "refs": [{"alias": "TU_IMPOSTE_REDDITO", "urn": "urn:nir:presidente.repubblica:decreto:1986;917~art109"}]}
 {"cat": "alias", "text": "art. 13 del TUF", "refs": [{"alias": "TU_FINANZE", "urn": "urn:nir:stato:decreto.legislativo:1998;58~art13"}]}
 {"cat": "alias", "text": "art. 2 dello Statuto dei diritti del contribuente", "refs": [{"alias": "STATUTO_CONTRIB", "urn": "urn:nir:stato:legge:2000;212~art2"}]}
-{"cat": "alias", "text": "art. 53 della Costituzione", "refs": [{"alias": "COST", "urn": "urn:nir:stato:costituzione:1947~art53"}]}
+{"cat": "alias", "text": "art. 53 della Costituzione", "refs": [{"alias": "COST", "urn": "urn:nir:stato:costituzione~art53"}]}
 {"cat": "alias", "text": "art. 256 del Codice dell'ambiente", "refs": [{"alias": "TU_AMBIENTE", "urn": "urn:nir:stato:decreto.legislativo:2006;152~art256"}]}
 {"cat": "seg", "text": "CGT Toscana n. 126/2024 e Cass. n. 5678/2023", "refs": [{"authority": "CORTE_GIUST_TRIBUT_2", "region": "TOS", "urn": "ECLI:IT:CGT2TOS:2024:126"}, {"authority": "CORTE_CASS", "urn": "ECLI:IT:CASS:2023:5678CIV"}]}
 {"cat": "seg", "text": "art. 19 del d.lgs. 546/1992 e CGT 2° grado Lazio n. 100/2024", "refs": [{"urn": "urn:nir:stato:decreto.legislativo:1992;546~art19"}, {"authority": "CORTE_GIUST_TRIBUT_2", "region": "LAZ", "urn": "ECLI:IT:CGT2LAZ:2024:100"}]}
@@ -94,7 +94,7 @@
 {"cat": "alias", "text": "art. 50 del TUEL", "refs": [{"alias": "TU_ENTI_LOCALI"}]}
 {"cat": "alias", "text": "art. 20 del T.U.R.", "refs": [{"alias": "TU_IMPOSTA_REGISTRO"}]}
 {"cat": "alias", "text": "art. 7 dello Statuto del contribuente", "refs": [{"alias": "STATUTO_CONTRIB", "urn": "urn:nir:stato:legge:2000;212~art7"}]}
-{"cat": "alias", "text": "art. 111 Cost.", "refs": [{"alias": "COST", "urn": "urn:nir:stato:costituzione:1947~art111"}]}
+{"cat": "alias", "text": "art. 111 Cost.", "refs": [{"alias": "COST", "urn": "urn:nir:stato:costituzione~art111"}]}
 {"cat": "alias", "text": "art. 8 della legge fallimentare", "refs": [{"alias": "LEGGE_FALL"}]}
 {"cat": "alias", "text": "art. 2 del codice della strada", "refs": [{"alias": "COD_STRADA", "urn": "urn:nir:stato:decreto.legislativo:1992;285~art2"}]}
 {"cat": "alias", "text": "art. 18 dello Statuto dei lavoratori", "refs": [{"alias": "STATUTO_LAVORATORI"}]}
@@ -104,7 +104,7 @@
 {"cat": "seg", "text": "artt. 3 e 4 della legge 241/1990 e art. 7 del d.lgs. 546/1992", "refs": [{"urn": "urn:nir:stato:legge:1990;241~art3"}, {"urn": "urn:nir:stato:legge:1990;241~art4"}, {"urn": "urn:nir:stato:decreto.legislativo:1992;546~art7"}]}
 {"cat": "seg", "text": "direttiva 2006/112/CE e direttiva 90/435", "refs": [{"urn": "CELEX:32006L0112"}, {"urn": "CELEX:31990L0435"}]}
 {"cat": "seg", "text": "causa C-123/20 e causa T-45/19", "refs": [{"urn": "CELEX:62020CJ0123"}, {"urn": "CELEX:62019TJ0045"}]}
-{"cat": "seg", "text": "art. 2697 c.c., art. 115 c.p.c. e art. 53 Cost.", "refs": [{"urn": "urn:nir:stato:regio.decreto:1942;262:2~art2697"}, {"urn": "urn:nir:stato:regio.decreto:1940;1443:1~art115"}, {"urn": "urn:nir:stato:costituzione:1947~art53"}]}
+{"cat": "seg", "text": "art. 2697 c.c., art. 115 c.p.c. e art. 53 Cost.", "refs": [{"urn": "urn:nir:stato:regio.decreto:1942;262:2~art2697"}, {"urn": "urn:nir:stato:regio.decreto:1940;1443:1~art115"}, {"urn": "urn:nir:stato:costituzione~art53"}]}
 {"cat": "cgt", "text": "CGT 2° grado Campania – Napoli – Sez. 15 08/07/2022 n. 5287", "refs": [{"authority": "CORTE_GIUST_TRIBUT_2", "region": "CAM", "section": "15", "number": "5287", "year": "2022", "doc-date": "2022-07-08", "urn": "ECLI:IT:CGT2CAM:2022:5287"}]}
 {"cat": "cgt", "text": "CGT di secondo grado del Veneto, 12/03/2024, n. 1731", "refs": [{"authority": "CORTE_GIUST_TRIBUT_2", "region": "VEN", "number": "1731", "doc-date": "2024-03-12", "urn": "ECLI:IT:CGT2VEN:2024:1731"}]}
 {"cat": "cgt", "text": "CGT 1 Firenze sentenza n. 300 del 5.6.2024", "refs": [{"authority": "CORTE_GIUST_TRIBUT_1", "city": "FI", "number": "300", "doc-date": "2024-06-05", "urn": "ECLI:IT:CGT1FI:2024:300"}]}

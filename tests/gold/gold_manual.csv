@@ -16,7 +16,7 @@ d.l. 70/2011|urn:nir:stato:decreto.legge:2011;70|norm|dl abbrev
 art. 2 del d.P.R. 26 aprile 1986, n. 131|urn:nir:presidente.repubblica:decreto:1986;131~art2|norm|dpr
 d.P.R. 22 dicembre 1986, n. 917|urn:nir:presidente.repubblica:decreto:1986;917|norm|dpr (TUIR act)
 legge costituzionale 18 ottobre 2001, n. 3|urn:nir:stato:legge.costituzionale:2001;3|norm|legge cost
-art. 53 della Costituzione|urn:nir:stato:costituzione:1947~art53|norm|costituzione
+art. 53 della Costituzione|urn:nir:stato:costituzione~art53|norm|costituzione
 D.M. 22 dicembre 2005|DM2005-12-22|norm|decreto ministeriale unnumbered (date id)
 decreto ministeriale n. 597 del 2018|urn:nir:ministero:decreto:2018;597|norm|dm numbered
 art. 13 del decreto-legge n. 201/2011|urn:nir:stato:decreto.legge:2011;201~art13|norm|dl
@@ -43,7 +43,7 @@ art. 13 del T.U.B.|urn:nir:stato:decreto.legislativo:1993;385~art13|alias|tub
 art. 50 del TUEL|urn:nir:stato:decreto.legislativo:2000;267~art50|alias|tuel
 art. 5 l. fall.|urn:nir:stato:regio.decreto:1942;267:1~art5|alias|legge fallimentare
 art. 18 dello statuto dei lavoratori|urn:nir:stato:legge:1970;300~art18|alias|statuto lavoratori
-art. 117 Cost.|urn:nir:stato:costituzione:1947~art117|alias|costituzione
+art. 117 Cost.|urn:nir:stato:costituzione~art117|alias|costituzione
 art. 2 codice della strada|urn:nir:stato:decreto.legislativo:1992;285~art2|alias|codice strada
 art. 2729 cod. civ.|urn:nir:stato:regio.decreto:1942;262:2~art2729|alias|cod civ variant
 art. 115 c.p.c.|urn:nir:stato:regio.decreto:1940;1443:1~art115|alias|cpc
