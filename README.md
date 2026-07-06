@@ -258,6 +258,29 @@ library — parsing, fields, segmentation, identifiers, aliases, configuration a
 
 ---
 
+
+
+## Cite
+
+If you use linkengine in academic work, technical reports, datasets, benchmarks, or other research outputs, please cite the specific version you used.
+
+Recommended citation pattern:
+
+Piccioli, Giovanni. linkengine: legal citation recognition and normalization for Italian legal documents. Version 1.0.0. https://github.com/giovannipiccioli/linkengine
+
+```bibtex
+@software{linkengine_2026,
+  author       = {Piccioli, Giovanni},
+  title        = {linkengine: legal citation recognition and normalization for Italian legal documents},
+  year         = {2026},
+  version      = {1.0.0},
+  url          = {https://github.com/giovannipiccioli/linkengine},
+  note         = {Python library}
+}
+```
+If your BibTeX style does not support @software, use @misc instead.
+
+---
 ## Inspiration
 
 linkengine was inspired by, and originally bootstrapped against, the **Linkoln** project for
