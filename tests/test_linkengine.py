@@ -845,8 +845,9 @@ def test_text_on_range_uses_symbol_for_interpolated():
 
 
 # --- real-world citation forms + regression fixes ---------------------------
-def test_preleggi_normalized_as_codice_civile():
-    assert _urns("art. 11 preleggi") == ["urn:nir:stato:regio.decreto:1942;262:2~art11"]
+def test_preleggi_is_not_the_codice_civile():
+    # Preleggi = R.D. 262/1942 part :1; the codice civile is part :2 of the same decree.
+    assert _urns("art. 11 preleggi") == ["urn:nir:stato:regio.decreto:1942;262:1~art11"]
 
 
 def test_statuto_contribuente_variants():

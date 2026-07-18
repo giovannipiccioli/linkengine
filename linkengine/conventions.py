@@ -29,7 +29,7 @@ COUNTRIES = {
     "slovacca": "SVK", "ceca": "CZE",
     "grecia": "GRC", "irlanda": "IRL", "islanda": "ISL", "liechtenstein": "LIE",
     "lussemburgo": "LUX", "malta": "MLT", "monaco": "MCO", "norvegia": "NOR",
-    "paesi bassi": "NLD", "polonia": "POL", "portogallo": "PRT", "portoghese": "PRT",
+    "paesi bassi": "NLD", 'regno dei paesi bassi': "NLD", "polonia": "POL", "portogallo": "PRT", "portoghese": "PRT",
     "romania": "ROU", "san marino": "SMR", "spagna": "ESP", "svezia": "SWE",
     "svizzera": "CHE", "ucraina": "UKR", "ungheria": "HUN", "federazione russa": "RUS",
     "estonia": "EST", "lettonia": "LVA", "lituania": "LTU", "croazia": "HRV",

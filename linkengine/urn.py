@@ -277,9 +277,10 @@ def _legislation_urn(row):
     if date_only_prefix and _g(row, 'doc-date'):
         loc = partition_to_locator(part)
         return f"{date_only_prefix}{_g(row, 'doc-date')}" + (f"~{loc}" if loc else "")
-    # last-resort named EU acts recognized only by their text
+    # last-resort named EU acts recognized only by their text ("nomenclatura combinata"
+    # is not here: it has its own token-URN alias, NOMENCLATURA_COMBINATA)
     t = _g(row, 'text').lower()
-    if 'tariffa doganale comune' in t or 'nomenclatura combinata' in t:
+    if 'tariffa doganale comune' in t:
         return "CELEX:31987R2658"
     if 'codice doganale comunitario' in t:
         return "CELEX:31992R2913"
@@ -294,9 +295,14 @@ def _eu_urn(row):
     if _g(row, 'alias') == 'TARIFFA_DOGANALE_COM':   # special: URN is the alias token itself
         loc = partition_to_locator(_g(row, 'partition'))
         return "TARIFFA_DOGANALE_COM" + (f"~{loc}" if loc else "")
+    if _g(row, 'alias') == 'NOMENCLATURA_COMBINATA':
+        # same token-URN scheme, but never with a locator: the CN is cited by
+        # voci/note/sezioni/capitoli, which are not URN-able partitions.
+        return "NOMENCLATURA_COMBINATA"
     year = _ns(row, 'year') or (_g(row, 'doc-date').split('-')[0] if _g(row, 'doc-date') else '')
     celex = (ALIAS_CELEX.get(_g(row, 'alias'))
-             or build_celex(_g(row, 'doc-type'), _ns(row, 'number'), year))
+             or build_celex(_g(row, 'doc-type'), _ns(row, 'number'), year,
+                            acronym=_g(row, 'eu-acronym')))
     if not celex:
         return None
     loc = partition_to_locator(_g(row, 'partition'), ('comma',))
@@ -329,6 +335,14 @@ def _caselaw_urn(row):
         return None
     if _g(row, 'authority') == "CORTE_COST":
         return f"ECLI:IT:COST:{year}:{number}"
+    # Corte EDU: the case identifier is the Strasbourg *application* number ("ricorso
+    # n. 33804/96" -> CEDU:1996:33804). Only a number introduced by "ricorso" is that pair;
+    # a bare "Corte EDU n. 123/2020" is a judgment number and stays unresolved rather than
+    # being mislabelled as an application.
+    if _g(row, 'authority') == "CEDU":
+        if 'ricorso' not in _g(row, 'text').lower():
+            return None
+        return f"CEDU:{year}:{number}"
     # CGUE with the authority clearly stated but no "C-"/"causa": a bare "n. 123/2020" (or
     # "77/72") IS the case number -> sector-6 CELEX (default kind: Court of Justice).
     if _g(row, 'authority') == "CGUE":
@@ -433,9 +447,14 @@ def urn_to_text(urn: str) -> str:
     if urn.startswith("CONV_EU_DIR_UOMO"):
         _, loc = _split_locator(urn)
         return f"{loc + ' ' if loc else ''}CEDU".strip()
+    m = re.fullmatch(r'CEDU:(\d{4}):(\d+)', urn)
+    if m:
+        return f"Corte EDU, ricorso n. {m.group(2)}/{m.group(1)[2:]}"
     if urn.startswith("TARIFFA_DOGANALE_COM"):
         _, loc = _split_locator(urn)
         return f"{loc + ' ' if loc else ''}tariffa doganale comune".strip()
+    if urn == "NOMENCLATURA_COMBINATA":
+        return "nomenclatura combinata"
     m = re.match(r'(DPCM|DM)(\d{4})-(\d{2})-(\d{2})(?:~(.*))?$', urn)
     if m:
         decree_name = {
@@ -519,13 +538,16 @@ def _celex_to_text(body):
     loc = _render_locator(rawloc) if rawloc else ""
     head = f"{loc} " if loc else ""
     # sectors 3 (legislation) and 1 (treaties)
-    m = re.match(r'3(\d{4})([RLDH])(\d+)', base)
+    m = re.match(r'3(\d{4})([RLDHS])(\d+)', base)
     if m:
         year, letter, num = m.group(1), m.group(2), int(m.group(3))
+        if letter == "S":   # ECSC general decisions are cited number-first with /CECA
+            return f"{head}decisione n. {num}/{year}/CECA".strip()
         doc = catalog.CELEX_DOCTYPE_NAME.get(letter, "atto")
         return f"{head}{doc} {year}/{num}/CE".strip()
     treaties = {"12012E/TXT": "TFUE", "12016ME/TXT": "TUE", "11957E/TXT": "Trattato CEE",
-                "12002E/TXT": "Trattato CE", "12012P/TXT": "Carta dei diritti fondamentali UE"}
+                "12002E/TXT": "Trattato CE", "11951K": "Trattato CECA",
+                "12012P/TXT": "Carta dei diritti fondamentali UE"}
     if base in treaties:
         return f"{head}{treaties[base]}".strip()
     return f"{head}{base}".strip()

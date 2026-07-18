@@ -283,9 +283,7 @@ If your BibTeX style does not support @software, use @misc instead.
 ---
 ## Inspiration
 
-linkengine was inspired by, and originally bootstrapped against, the **Linkoln** project for
-legal-citation detection at the Italian Senate. If you use this library in academic work,
-please also acknowledge that project:
+linkengine was inspired by, and originally bootstrapped against, the **Linkoln** library which is available at https://linkoln.gitlab.io/. If you use this library in academic work, please also acknowledge that project:
 
 ```bibtex
 @article{linkoln,

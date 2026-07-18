@@ -73,16 +73,26 @@ ALIASES: List[Alias] = [
     Alias("COD_PROC_PEN", nir="stato:decreto.del.presidente.della.repubblica:1988-09-22;447",
           display="codice di procedura penale",
           patterns=(r"codice\s+(?:di\s+)?procedura\s+penale|cod\.?\s*proc\.?\s*pen\.?|\bc\.?\s?p\.?\s?p\.?\b",)),
-    # COD_CIV also covers the "preleggi" (disposizioni preliminari al codice civile).
+    # — preleggi ("Disposizioni sulla legge in generale", premised to the codice civile).
+    #   Same R.D. 262/1942 as the codice civile but a different annex: preleggi are part :1,
+    #   the codice civile is part :2 — citing one as the other is a wrong reference. —
+    Alias("PRELEGGI", nir="stato:regio.decreto:1942-03-16;262:1", display="preleggi",
+          patterns=(r"\bpreleggi\b",
+                    r"disposizioni\s+preliminari\s+(?:al|del)\s+codice\s+civile",
+                    r"disposizioni\s+sulla\s+legge\s+in\s+generale",
+                    r"disp\.?\s*prel\.?\s*(?:al\s+)?c\.?\s?c\.?")),
     Alias("COD_CIV", nir="stato:regio.decreto:1942-03-16;262:2", display="codice civile",
-          patterns=(r"codice\s+civile|cod\.?\s*civ\.?|\bc\.?\s?c\.?\b(?!\.?\s*n\.?\s*l)",
-                    r"\bpreleggi\b")),
+          patterns=(r"codice\s+civile|cod\.?\s*civ\.?|\bc\.?\s?c\.?\b(?!\.?\s*n\.?\s*l)",)),
     Alias("COD_PEN", nir="stato:regio.decreto:1930-10-19;1398:1", display="codice penale",
           patterns=(r"codice\s+penale|cod\.?\s*pen\.?|\bc\.?\s?p\.?\b",)),
     Alias("COD_STRADA", nir="stato:decreto.legislativo:1992-04-30;285", display="codice della strada",
           patterns=(r"codice\s+della\s+strada|cod\.?\s*strada|\bc\.?\s?d\.?\s?s\.?\b",)),
     Alias("COD_CONSUMO", nir="stato:decreto.legislativo:2005-09-06;206", display="codice del consumo",
           patterns=(r"codice\s+del\s+consumo",)),
+    # — codice deontologico forense (CNF professional-conduct code): recognized as an alias,
+    #   but it is not a state act, so no identifier is derivable (nir/celex empty ⇒ urn "") —
+    Alias("COD_DEONT_FORENSE", display="codice deontologico forense",
+          patterns=(r"codice\s+deontologico\s+forense",)),
     Alias("COD_CONTR_PUBBL", nir="stato:decreto.legislativo:2016-04-18;50",
           display="codice dei contratti pubblici",
           patterns=(r"codice\s+dei\s+contratti\s+pubblici|codice\s+degli\s+appalti",)),
@@ -217,6 +227,9 @@ ALIASES: List[Alias] = [
           patterns=(r"trattato\s+sul\s+funzionamento\s+dell['’]?\s?unione\s+europea|\bt\.?f\.?u\.?e\.?\b",)),
     Alias("TRATTATO_UE", "eu", celex="CELEX:12016ME/TXT",             # TUE (consolidato 2016)
           patterns=(r"trattato\s+sull['’]?\s?unione\s+europea|\bt\.?u\.?e\.?\b",)),
+    Alias("TRATTATO_CECA", "eu", celex="CELEX:11951K",                # trattato CECA (Parigi 1951)
+          display="Trattato CECA",
+          patterns=(r"trattato\s+c\.?e\.?c\.?a\.?\b",)),
     # trattato CEE (Roma 1957) before CE (Maastricht) so "CEE" is not read as "CE".
     Alias("TRATTATO_CEE", "eu", celex="CELEX:11957E/TXT",             # trattato CEE (Roma 1957)
           patterns=(r"trattato\s+(?:c\.?e\.?e\.?|che\s+istituisce\s+la\s+comunit[aà]\s+economica\s+europea)\b",)),
@@ -237,10 +250,19 @@ ALIASES: List[Alias] = [
     # — special: the URN is a literal token coinciding with the alias (no nir/celex) —
     # CEDU (international) and the EU Common Customs Tariff (comunitario; its "voci"/"capitoli"
     # are not URN-able, so the URN is just the alias token).
+    # "CEDU" followed by a pronouncement ("CEDU, sentenza …") is the Strasbourg *court*
+    # (recognizers._COURT_PATTERNS), not the convention — hence the negative lookahead.
     Alias("CONV_EU_DIR_UOMO", "intl",
-          patterns=(r"convenzione\s+europea\s+dei\s+diritti\s+dell['’]?\s?uomo|\bc\.?e\.?d\.?u\.?\b",)),
+          patterns=(r"convenzione\s+europea\s+dei\s+diritti\s+dell['’]?\s?uomo"
+                    r"|convenzione\s+e\.?d\.?u\.?\b"
+                    r"|\bc\.?e\.?d\.?u\.?\b(?!\s*,?\s*(?:sentenz|ordinanz|decision|sent\.|ord\.))",)),
     Alias("TARIFFA_DOGANALE_COM", "eu", display="tariffa doganale comune",
           patterns=(r"tariffa\s+doganale\s+comune",)),
+    # Combined Nomenclature (Annex I of reg. CEE 2658/87, republished yearly): cited by
+    # voci/note/sezioni/capitoli, none of which is a URN-able locator — the URN is the bare
+    # alias token, always without partitions.
+    Alias("NOMENCLATURA_COMBINATA", "eu", display="nomenclatura combinata",
+          patterns=(r"nomenclatura\s+combinata",)),
 ]
 
 # aliases that are a complete reference on their own (no cited partition/number required) and
@@ -253,6 +275,7 @@ SELF_VALID_ALIASES = frozenset({
     "STATUTO_REG_TRENTINO_ALTO_ADIGE",
     "STATUTO_REG_FRIULI_VENEZIA_GIULIA",
     "TARIFFA_DOGANALE_COM",
+    "NOMENCLATURA_COMBINATA",
 })
 
 
@@ -266,10 +289,17 @@ ALIAS_PATTERNS = [(p, a.code) for a in ALIASES for p in a.patterns]
 
 _ALIAS_COMPILED = [(re.compile(p, I), v) for p, v in ALIAS_PATTERNS]
 
-# Bare "CE" as the EC Treaty, only after an article within the treaty's actual range. The upper
-# bound blocks common OCR damage where "c.c." becomes "ce" ("art. 2303 ce").
+# Bare "CE" / "TCE" as the EC Treaty ("art. 87 CE", "artt. 56 CE e 58 CE", "art. 234 TCE"),
+# only after an article within the treaty's actual range. Uppercase-only ("(?-i:...)") keeps
+# out the clitic pronoun "ce" and OCR damage where "c.c." becomes "ce" ("art. 2303 ce"); the
+# upper bound on the article number is a second, independent guard. The gap between article
+# number and the acronym excludes sentence punctuation but admits partition abbreviations
+# ("art. 88, n. 3, CE"; "art. 4, lett. b), CE") — and must never cross a doctype word:
+# in "art. 78 Regolamento CE 2913/1992" the "CE" qualifies the regolamento, not the treaty.
 _CE_TRATTATO = re.compile(
-    r"\bart(?:icol[oi]|\.)?\s*(\d{1,3})(?!\d)[^.;]{0,45}?[\s,]+(CE)\b", I)
+    r"\bartt?(?:icol[oi]|\.)?\s*(\d{1,3})(?!\d)"
+    r"(?:(?!regolament|direttiv|decision|raccomandazion)[^.;]|\b(?:nn?|lett|parr?)\.){0,45}?"
+    r"[\s,]+((?-i:T?CE))\b", I)
 
 
 def recognize_aliases(text: str, nonoverlap) -> List[Span]:

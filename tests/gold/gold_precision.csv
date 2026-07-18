@@ -140,3 +140,8 @@ X8||roman numeral capo I is not an OCR legge marker||capo I. 212/00
 X9||OCR d. I. is decreto legge and conversion law stays separate|urn:nir:stato:decreto.legge:2006;223~art36-comma2 urn:nir:stato:legge:2006;248|art. 36, comma 2, d. I. n. 223 del 2006, convertito, con modificazioni, dalla l.n. 248 del 2006
 PX1||positive: CGUE old-style cases with point locator|CELEX:61981CJ0245~num27 CELEX:61981CJ0052~num27|sentenza 15 luglio 1982, causa 245/81, Edeka, Race. 1982, pag. 2745, punto 27 della motivazione; sentenza 28 ottobre 1982, causa 52/81, Faust, Race. 1987, 3745, punto 27
 PX2||positive: cause riunite remains single smallest-number reference|CELEX:61985CJ0424~num33|sentenza 17 giugno 1987, cause riunite 424 e 425/85, Frico, Race. 1979, pag. 2755, punto 33
+X9||FP guard: decisione quadro (GAI) stays unresolved||articolo 4 della decisione quadro 2005/212/GAI
+X10||FP guard: decisione generale without CECA marker stays unresolved||decisione generale n. 3855/91 (quinto codice degli aiuti alla siderurgia)
+X11||FP guard: decisione di esecuzione without EU marker stays unresolved||decisione di esecuzione 2015/2349
+PX3||positive: parenthetical nickname must not spawn a second decision|CELEX:31999D0719|decisione della Commissione 30 marzo 1999, 1999/719/CE (decisione Renaissance)
+X12||FP guard: clitic "ce" after an article list is not the EC Treaty||artt. 30 e 31 ce lo impongono chiaramente

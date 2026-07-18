@@ -73,11 +73,19 @@ _ORD_ALT = "|".join(ORDINALS)
 
 # numeric value-list, allowing a leading "da" and ranges: "da 5 a 8", "14, 15 e 18", "5-7".
 _NUMLIST = r"(?:da\s+)?(" + _NUMV_OR_RANGE + r"(?:" + _SEP + _NUMV_OR_RANGE + r")*)"
+# EC-Treaty article lists repeat "CE" after each number ("artt. 45 CE, 46 CE, 55 CE").
+# The article list admits an uppercase-only "CE" after each value so the scan continues
+# past it; _emit_list skips the token (it is never a value). Uppercase-only ("(?-i:CE)"
+# inside the I-flagged pattern) keeps the clitic pronoun "ce" out.
+_CE_TOKEN = r"(?:\s+(?-i:CE)\b)?"
+_NUMLIST_CE = (r"(?:da\s+)?(" + _NUMV_OR_RANGE + _CE_TOKEN +
+               r"(?:" + _SEP + _NUMV_OR_RANGE + _CE_TOKEN + r")*)")
+_CE_TOKEN_RE = re.compile(r"\s+CE\b")   # case-sensitive on purpose
 
 # (entity, head-with-value-list regex, value-token regex, value normalizer)
 _LIST_PATTERNS = [
     (Entity.CONSIDERANDO, r"\bconsiderand[oi]\s*" + _NUMLIST, _NUMV_RE, norm_latin_suffix),
-    (Entity.ARTICLE, r"\bart(?:icol[oi]|t)?[\.,]?\s*" + _NUMLIST, _NUMV_RE, norm_latin_suffix),
+    (Entity.ARTICLE, r"\bart(?:icol[oi]|t)?[\.,]?\s*" + _NUMLIST_CE, _NUMV_RE, norm_latin_suffix),
     (Entity.COMMA, r"\b(?:commi|comma|co\.|c\.(?=\s*\d))\s*" + _NUMLIST, _NUMV_RE, norm_latin_suffix),
     (Entity.PARAGRAPH, r"\b(?:paragraf[oi]|par\.|§)\s*" + _NUMLIST, _NUMV_RE, norm_latin_suffix),
     (Entity.PUNTO, r"\bpunt[oi]\s*" + _NUMLIST, _NUMV_RE, norm_latin_suffix),
@@ -172,6 +180,9 @@ def _emit_list(text, m, entity, val_re, normfn, spans):
             end = base + vm.end()
             spans.append(Span(start, end, entity, normfn(vm.group(0)), text[start:end]))
             first, pos = False, vm.end()
+        cm = _CE_TOKEN_RE.match(list_str, pos)   # skip a treaty "CE" between value and sep
+        if cm:
+            pos = cm.end()
         sm = _SEP_RE.match(list_str, pos)
         if not sm:
             break

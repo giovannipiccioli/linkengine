@@ -632,6 +632,15 @@ def recognize_doctypes(text: str, *, ocr_accommodations: bool = True) -> List[Sp
             if code == "PROVV" and re.match(r"^\W*(?:prot(?:ocollo)?\.?|ai\s+sensi\b)",
                                             text[m.end():m.end() + 28], I):
                 continue
+            # A doctype inside a short digit-free parenthetical is a nickname for the act
+            # just cited — "decisione 1999/719/CE (decisione Renaissance)", "(regolamento
+            # di procedura)" — not a citation: a real parenthetical citation always carries
+            # a number or a year.
+            lp = text.rfind("(", max(0, m.start() - 30), m.start())
+            if lp >= 0 and ")" not in text[lp:m.start()]:
+                rp = text.find(")", m.end(), m.end() + 48)
+                if rp >= 0 and not any(ch.isdigit() for ch in text[lp:rp]):
+                    continue
             attrs = {"authority": auth, "scope": scope}
             if code == "L" and m.group(0).startswith("1."):
                 attrs["ocr"] = "1"
@@ -729,8 +738,11 @@ _COURT_PATTERNS = [
     (r"corte\s+europea\s+di\s+giustizia", "CGUE", None),
     (r"corte\s+(?:di\s+)?giustizia\s+c\.?e\.?e?\.?\b", "CGUE", None),
     (r"\bc\.?\s?g\.?\s?u\.?\s?e\.?\b|\bc\.?\s?g\.?\s?c\.?\s?e\.?\b", "CGUE", None),
-    # Corte EDU (European Court of Human Rights); bare "CEDU" stays the convention alias
-    (r"corte\s+e\.?\s?d\.?\s?u\.?|corte\s+europea\s+dei\s+diritti\s+dell['’]?\s?uomo", "CEDU", None),
+    # Corte EDU (European Court of Human Rights). Bare "CEDU" stays the convention alias,
+    # except when it introduces a pronouncement ("CEDU, sentenza Zullo c. Italia, ricorso
+    # n. 64897/01") — there it is the court (the alias yields via its own lookahead).
+    (r"corte\s+e\.?\s?d\.?\s?u\.?|corte\s+europea\s+dei\s+diritti\s+dell['’]?\s?uomo"
+     r"|\bcedu\b(?=\s*,?\s*(?:sentenz|ordinanz|decision|sent\.|ord\.))", "CEDU", None),
     # TAR — administrative regional court (region-qualified, like CTR)
     (r"tribunale\s+amministrativo\s+regionale|\bt\.?\s?a\.?\s?r\.?\b", "TRIB_AMM_REG", "region"),
     (r"tribunale\s+di\s+sorveglianza", "TRIBUNALE_SORVEGLIANZA", "city"),

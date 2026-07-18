@@ -257,3 +257,19 @@ legge finanziaria 2008|urn:nir:stato:legge:2007;244|norm|legge finanziaria -> en
 finanziaria 1999|urn:nir:stato:legge:1998;449|norm|finanziaria bare
 legge di bilancio 2023|urn:nir:stato:legge:2022;197|norm|legge di bilancio
 legge di bilancio 2018|urn:nir:stato:legge:2017;205|norm|legge di bilancio
+art. 87, n. 1, CE|CELEX:12002E/TXT~art87-num1|eu|trattato CE: articolo con numero, "CE" dopo la partizione
+art. 88, n. 3, CE|CELEX:12002E/TXT~art88-num3|eu|trattato CE: articolo con numero, "CE" dopo la partizione
+art. 95 Trattato CECA|CELEX:11951K~art95|eu|trattato CECA per esteso
+decisione della Commissione 30 marzo 1999, 1999/719/CE (decisione Renaissance)|CELEX:31999D0719|eu|decisione CE con nickname parentetico
+art. 9, nn. 1 e 4, decisione n. 3632/93/CECA|CELEX:31993S3632~art9-num1 CELEX:31993S3632~art9-num4|eu|decisione CECA: descrittore CELEX S
+Note esplicative della nomenclatura combinata|NOMENCLATURA_COMBINATA|alias|special self-urn, mai con partizioni
+art. 3 preleggi|urn:nir:stato:regio.decreto:1942;262:1~art3|alias|preleggi = R.D. 262/1942 parte 1, NON codice civile (parte 2)
+art. 11 disposizioni preliminari al codice civile|urn:nir:stato:regio.decreto:1942;262:1~art11|alias|preleggi, nome esteso
+art. 12 delle disposizioni sulla legge in generale|urn:nir:stato:regio.decreto:1942;262:1~art12|alias|preleggi, nome formale
+art. 78 Regolamento CE 2913/1992|CELEX:31992R2913~art78|eu|CE non parentesizzato dopo doctype
+art. 8 Convenzione EDU|CONV_EU_DIR_UOMO~art8|alias|variante "Convenzione EDU"
+art. 234 TCE|CELEX:12002E/TXT~art234|alias|TCE = trattato CE, guardia maiuscole + art <= 314
+Corte EDU sentenza 5 ottobre 2000, ricorso n. 33804/96|CEDU:1996:33804|jur|Corte EDU, urn custom CEDU:anno-ricorso:numero
+Corte EDU, sentenza 23 ottobre 2003, ricorso n. 39758/98|CEDU:1998:39758|jur|Corte EDU
+CEDU, sentenza Riccardi Pizzati c. Italia, ricorso n. 62361/00|CEDU:2000:62361|jur|CEDU + sentenza = corte, non convenzione
+CEDU, sentenza Zullo c. Italia, ricorso n. 64897/01|CEDU:2001:64897|jur|CEDU + sentenza = corte

@@ -119,8 +119,8 @@
 {"cat": "alias", "text": "art. 303 comma 3 TULD", "refs": [{"alias": "TU_DOGANALE", "urn": "urn:nir:presidente.repubblica:decreto:1973;43~art303-comma3"}], "reg-scope": "comunitario"}
 {"cat": "alias", "text": "art. 301 Testo Unico Legge Doganale", "refs": [{"alias": "TU_DOGANALE", "urn": "urn:nir:presidente.repubblica:decreto:1973;43~art301"}], "reg-scope": "comunitario"}
 {"cat": "alias", "text": "art. 156 ult. co. c.p.p.", "refs": [{"alias": "COD_PROC_PEN", "urn": "urn:nir:stato:decreto.del.presidente.della.repubblica:1988;447~art156"}], "reg-scope": "comunitario"}
-{"cat": "alias", "text": "art. 11 preleggi", "refs": [{"alias": "COD_CIV", "urn": "urn:nir:stato:regio.decreto:1942;262:2~art11"}], "reg-scope": "comunitario"}
-{"cat": "alias", "text": "art. 14 Preleggi c.c.", "refs": [{"alias": "COD_CIV", "urn": "urn:nir:stato:regio.decreto:1942;262:2~art14"}], "reg-scope": "comunitario"}
+{"cat": "alias", "text": "art. 11 preleggi", "refs": [{"alias": "PRELEGGI", "urn": "urn:nir:stato:regio.decreto:1942;262:1~art11"}], "reg-scope": "comunitario"}
+{"cat": "alias", "text": "art. 14 Preleggi c.c.", "refs": [{"alias": "PRELEGGI", "urn": "urn:nir:stato:regio.decreto:1942;262:1~art14"}], "reg-scope": "comunitario"}
 {"cat": "alias", "text": "art. 7 Statuto del Contribuente", "refs": [{"alias": "STATUTO_CONTRIB", "urn": "urn:nir:stato:legge:2000;212~art7"}], "reg-scope": "comunitario"}
 {"cat": "alias", "text": "art. 12, comma 7, dello Statuto del contribuente", "refs": [{"alias": "STATUTO_CONTRIB", "urn": "urn:nir:stato:legge:2000;212~art12-comma7"}], "reg-scope": "comunitario"}
 {"cat": "alias", "text": "art. 7 comma 1 Statuto dei diritti dei contribuenti", "refs": [{"alias": "STATUTO_CONTRIB", "urn": "urn:nir:stato:legge:2000;212~art7-comma1"}], "reg-scope": "comunitario"}
@@ -173,7 +173,7 @@
 {"cat": "seg", "text": "D.M. Trasporti n. 39/2008, art. 5 e 7", "refs": [{"urn": "urn:nir:ministero:decreto:2008;39~art5"}, {"urn": "urn:nir:ministero:decreto:2008;39~art7"}], "reg-scope": "comunitario"}
 {"cat": "seg", "text": "art. 2 Direttiva IVA 2006/112/CE e art. 19 del d.lgs. 546/1992", "refs": [{"urn": "CELEX:32006L0112~art2"}, {"urn": "urn:nir:stato:decreto.legislativo:1992;546~art19"}], "reg-scope": "comunitario"}
 {"cat": "seg", "text": "CGT Reg. Toscana n. 126/2024 e causa C-123/20", "refs": [{"urn": "ECLI:IT:CGT2TOS:2024:126"}, {"urn": "CELEX:62020CJ0123"}], "reg-scope": "comunitario"}
-{"cat": "seg", "text": "art. 7 Statuto del Contribuente e art. 12 preleggi", "refs": [{"urn": "urn:nir:stato:legge:2000;212~art7"}, {"urn": "urn:nir:stato:regio.decreto:1942;262:2~art12"}], "reg-scope": "comunitario"}
+{"cat": "seg", "text": "art. 7 Statuto del Contribuente e art. 12 preleggi", "refs": [{"urn": "urn:nir:stato:legge:2000;212~art7"}, {"urn": "urn:nir:stato:regio.decreto:1942;262:1~art12"}], "reg-scope": "comunitario"}
 {"cat": "seg", "text": "art. 2 del d.lgs. 546/1992 e art. 7 Statuto del Contribuente", "refs": [{"urn": "urn:nir:stato:decreto.legislativo:1992;546~art2"}, {"urn": "urn:nir:stato:legge:2000;212~art7"}], "reg-scope": "comunitario"}
 {"cat": "seg", "text": "Comm. Trib. Centr. n. 123/1989 e CTR Lazio n. 2291/2022", "refs": [{"urn": "ECLI:IT:CTCIT:1989:123"}, {"urn": "ECLI:IT:CTRLAZ:2022:2291"}], "reg-scope": "comunitario"}
 {"cat": "jur", "text": "Giudice di Pace di Roma n. 100/2020", "refs": [{"authority": "GIUDICE_PACE", "urn": "ECLI:IT:GDPRM:2020:100"}]}
@@ -301,3 +301,18 @@
 {"cat": "fp", "text": "Commissione Tributaria Provinciale Milano - Sez. 17 -- Rgr n. 24 73/2021", "refs": []}
 {"cat": "fp", "text": "legge, in relazione\nalle cartelle indicate dalla n. 1 alla n. 7", "refs": []}
 {"cat": "jur", "text": "n. 1312, ricorsi respinti dalla CTP di Novara con\nsentenza n. 36/09", "refs": [{"text": "CTP di Novara con\nsentenza n. 36/09", "authority": "COMM_TRIBUT_PROV", "doc-type": "SENT", "number": "36", "year": "2009", "urn": "ECLI:IT:CTPNO:2009:36"}]}
+{"cat": "eu", "text": "artt. 56 CE e 58 CE", "refs": [{"alias": "TRATTATO_CE", "urn": "CELEX:12002E/TXT~art56"}, {"alias": "TRATTATO_CE", "urn": "CELEX:12002E/TXT~art58"}]}
+{"cat": "eu", "text": "artt. 45 CE, 46 CE, 55 CE", "refs": [{"alias": "TRATTATO_CE", "urn": "CELEX:12002E/TXT~art45"}, {"alias": "TRATTATO_CE", "urn": "CELEX:12002E/TXT~art46"}, {"alias": "TRATTATO_CE", "urn": "CELEX:12002E/TXT~art55"}]}
+{"cat": "eu", "text": "art. 4, lett. b) e c), Trattato CECA", "refs": [{"alias": "TRATTATO_CECA", "partition": "articolo-4_lettera-b", "urn": "CELEX:11951K~art4-letb"}, {"alias": "TRATTATO_CECA", "partition": "articolo-4_lettera-c", "urn": "CELEX:11951K~art4-letc"}]}
+{"cat": "eu", "text": "decisione 2005/842/CE (decisione SIEG)", "refs": [{"doc-type": "DECIS", "number": "842", "year": "2005", "eu-acronym": "CE", "urn": "CELEX:32005D0842"}]}
+{"cat": "eu", "text": "art. 9, nn. 1 e 4, decisione n. 3632/93/CECA", "refs": [{"doc-type": "DECIS", "eu-acronym": "CECA", "partition": "articolo-9_numero-1", "urn": "CELEX:31993S3632~art9-num1"}, {"doc-type": "DECIS", "eu-acronym": "CECA", "partition": "articolo-9_numero-4", "urn": "CELEX:31993S3632~art9-num4"}]}
+{"cat": "alias", "text": "Voce 8471 della nomenclatura combinata", "refs": [{"alias": "NOMENCLATURA_COMBINATA", "partition": "", "urn": "NOMENCLATURA_COMBINATA"}]}
+{"cat": "alias", "text": "Nota 3 della sezione XVI della nomenclatura combinata", "refs": [{"alias": "NOMENCLATURA_COMBINATA", "partition": "", "urn": "NOMENCLATURA_COMBINATA"}]}
+{"cat": "alias", "text": "nota 2 del capitolo 82 della nomenclatura combinata", "refs": [{"alias": "NOMENCLATURA_COMBINATA", "partition": "", "urn": "NOMENCLATURA_COMBINATA"}]}
+{"cat": "alias", "text": "ai sensi dell'art. 3 preleggi e dell'art. 2697 c.c.", "refs": [{"alias": "PRELEGGI", "urn": "urn:nir:stato:regio.decreto:1942;262:1~art3"}, {"alias": "COD_CIV", "urn": "urn:nir:stato:regio.decreto:1942;262:2~art2697"}]}
+{"cat": "alias", "text": "art. 14 disp. prel. c.c.", "refs": [{"alias": "PRELEGGI", "urn": "urn:nir:stato:regio.decreto:1942;262:1~art14"}]}
+{"cat": "alias", "text": "art. 6 codice deontologico forense, art. 22 codice deontologico forense", "refs": [{"alias": "COD_DEONT_FORENSE", "urn": ""}, {"alias": "COD_DEONT_FORENSE", "urn": ""}]}
+{"cat": "eu", "text": "art. 78 Regolamento CE n. 2913/1992", "refs": [{"doc-type": "REG", "eu-acronym": "CE", "urn": "CELEX:31992R2913~art78"}]}
+{"cat": "fp", "text": "il valore del TCE nelle acque sotterranee non supera la soglia", "refs": []}
+{"cat": "jur", "text": "ai sensi dell'art. 6 CEDU e della CEDU, sentenza Zullo c. Italia, ricorso n. 64897/01", "refs": [{"alias": "CONV_EU_DIR_UOMO", "urn": "CONV_EU_DIR_UOMO~art6"}, {"authority": "CEDU", "urn": "CEDU:2001:64897"}]}
+{"cat": "fp", "text": "il ricorso n. 1234/2020 R.G. proposto dalla società contribuente", "refs": []}

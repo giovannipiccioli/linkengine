@@ -136,11 +136,16 @@ def normattiva_url(nir: str) -> str:
     return NORMATTIVA_PREFIX + nir
 
 
-def build_celex(doctype: str, number: str, year: str) -> Optional[str]:
+def build_celex(doctype: str, number: str, year: str, acronym: str = "") -> Optional[str]:
     """Build a CELEX id for an EU legislative act (sector 3), e.g. REG 1234/2020 ->
     ``CELEX:32020R1234``. The partition is NOT appended here — the URN layer appends it from
-    the ``partition`` field, so doing it here too would double it."""
+    the ``partition`` field, so doing it here too would double it.
+
+    ``acronym`` is the community marker cited with the number (CE/CEE/UE/CECA): an ECSC
+    decision ("decisione n. 3632/93/CECA") takes the sector-3 descriptor ``S``, not ``D``."""
     letter = EU_PROV_LETTER.get(doctype)
+    if doctype == "DECIS" and (acronym or "").upper() == "CECA":
+        letter = "S"
     if not letter or not number or not year:
         return None
     try:
