@@ -1,0 +1,155 @@
+La Corte di Giustizia Tributaria di secondo grado dell' E. ROMAGNA Sezione 14, riunita in udienza il
+05/05/2025 alle ore 11:00 con la seguente composizione collegiale:
+LICCARDO PASQUALE, Presidente e Relatore
+MASSARI BERNARDO, Giudice
+RIZZIERI ALESSANDRO, Giudice
+in data 05/05/2025 ha pronunciato la seguente
+SENTENZA 
+- sull'appello n. 1312/2021 depositato il 13/10/2021
+proposto da
+Ricorrente_1 Srl - P.IVA_1
+ Difeso da
+ Difensore_1 - CF_Difensore_1
+ ed elettivamente domiciliato presso Email_1
+contro
+Ag. Entrate Direzione Provinciale Ferrara
+ elettivamente domiciliato presso Email_2
+Avente ad oggetto l'impugnazione di: 
+- pronuncia sentenza n. 48/2021 emessa dalla Commissione Tributaria Provinciale FERRARA sez. 2 e
+pubblicata il 11/02/2021
+Atti impositivi:
+- AVVISO DI ACCERTAMENTO n. THD03I401385-2019 IRES-ALTRO 2015
+- AVVISO DI ACCERTAMENTO n. THD03I401385-2019 IVA-ALTRO 2015
+- AVVISO DI ACCERTAMENTO n. THD03I401385-2019 IRAP 2015
+- AVVISO DI ACCERTAMENTO n. THD03I401402-2019 IRES-ALTRO 2016
+- AVVISO DI ACCERTAMENTO n. THD03I401402-2019 IVA-ALTRO 2016
+- AVVISO DI ACCERTAMENTO n. THD03I401402-2019 IRAP 2016
+Sentenza n. 525/2025
+Depositato il 03/06/2025
+a seguito di discussione in pubblica udienza 
+Richieste delle parti:
+Ricorrente/Appellante:
+Resistente/Appellato: 
+SVOLGIMENTO DEL PROCESSO
+Con ricorso in appello, la società Ricorrente_1 srl proponeva gravame avverso la sentenza
+resa dalla Commissione tributaria provinciale di Ferrara n. 48/02/21, che aveva rigettato i ricorsi, proposti
+in via separata ed in corso di giudizio riuniti, avverso ricorsi separati, la società contribuente impugnava i
+due avvisi di ACCERTAMENTO SDC THD03I401385-2019, notificato in data 02/12/2019 Periodo
+d'imposta: 2015 Tributo: II.DD. + I.V.A. e l'avviso di ACCERTAMENTO SDC THD03I401402-2019,
+notificato in data 02/12/2019 Periodo d'imposta: 2016 Tributo: II.DD. + I.V.A., assumendo l'erroneità della
+sentenza resa in prime cure per la mancata considerazione del quadro probatorio dedotto dalla
+ricorrente con riferimento;
+a) alle operazioni intervenute con la Società_1 srl, di cui non si era provveduto ad una esame delle
+proprie schede contabili: la presunzione legale relativa all'omessa contabilizzazione dei ricavi delle
+vendite a Società_1 s.r.l. sarebbe il frutto, si fonda su una errata ricostruzione dei fatti , muovendo
+dall'assunto indimostrato che il metallo venduto da Società_2 s.r.l. a Società_1 s.r.l. venisse riconsegnato
+dopo l'affinazione, essendo viceversa dimostrato che i grammi 1.416,16 di oro acquistati da Società_3
+sarebbero stati regolarmente fatturati a Società_1 s.r.l., essendo a suo dire irrilevante la mancata
+emissione dei DDT;
+b) al nesso di causalità impropriamente ritenuto sussistenza tra i fatti contestati per il 2015 e quelli per il
+2016, con particolare riferimento alla accertata sopravvalutazione relativa al 2016, con indeducibilità del
+costo, e alla - mancata dimostrazione della sottovalutazione delle rimanenze finali di oro e argento.
+Nel costituirsi in giudizio, la Agenzia delle Entrate contestava ogni motivo di gravame affermando la piena
+legittimità della decisione assunta, chiedendo il rigetto dall'appello con vittoria delle spese di entrambi i
+gradi di giudizio.
+MOTIVI DELLA DECISIONE
+L'appello è infondato e come tale va disatteso.
+In primo luogo, va osservato che ex articolo 14, comma 1, lett. d), D.P.R. 600/1973, la corretta tenuta
+della contabilità di magazzino implica la sistematica rilevazione di tutte le movimentazioni fisiche (carico/
+scarico), dei beni presenti in azienda, cosicché laddove si rilevino costanti differenze tra il magazzino
+contabile e quello fisico non giustificate dal contribuente (es. cali fisici, furti o distruzioni accidentali),
+devono trovare applicazione le c.d. "presunzioni legali di acquisto e cessione senza fattura", aventi ad
+oggetto tutti i prodotti commercializzati dall'impresa.
+Orbene, quanto alla ricostruzione dei rapporti tra Società_2 e Società_3 s.r.l., presupposto delle vendite a
+Società_1 s.r.l. contestate in accertamento, le dichiarazioni raccolte dal legale rappresentante e dal
+procuratore generale di Società_2 ( rispettivamente i sigg.ri Nominativo_1 e Nominativo_2) e dal
+rappresentante legale della Società_3 s.r.l., il sig. Nominativo_3, risultano coerenti con la documentazione
+oggetto di riscontro in sede di verifica, ed in particolare:
+a) la Società_3 commissionava la lavorazione di verghe contenenti oro alla Società_2 srl, come documentata
+anche nei documenti di trasporto;
+b) la Società_2 srl provvedeva alle lavorazioni commissionate ,emettendo regolare fattura per i servizi operati
+sulle verghe d'oro, con indicazione del costo delle custodie realizzate;
+c) l'oro puro che residuava dalla lavorazione era oggetto di cessione da parte della stessa società
+committente alla Società_2 srl., come documentata nelle fatture emesse.
+In sede di verifica, è emerso che la Società_2 s.r.l. ogni qualvolta restituiva lingotti realizzati alla
+committente Società_3 S.r.l., non emetteva mai i relativi ddt, non consentendo così un lineare riscontro tra le
+lavorazioni effettuate ed oggetto di restituzione alla società committente : in altri termini, la Società_2 , a
+lavorazione intervenuta delle verghe argentifere ricevute da Società_3 s.r.l., emetteva solo la fattura per la
+lavorazione operate e la cessione delle custodie per lingotti, indicando nella stessa solo il d.d.t. emesso
+da Società_3 s.r.l. per le verghe da affinare e la quantità di metallo prezioso - oro puro e/o argento puro -
+residuato dalla lavorazione delle verghe dopo la realizzazione di lingotti, con correlata fattura emessa
+dalla committente Società_3 s.r.l. per la vendita del residuo di lavorazione effettuata nei confronti della 
+Società_2, senza che alla fattura concernente la restituzione delle lavorazioni facesse seguito l'emissione di
+un d.d.t. e senza che all''acquisto del materiale di scarto, facesse seguito la sua registrazione nella
+cantabilità di magazzino.
+In altri termini, la mancata emissione del ddt da parte di Società_2 all'atto della restituzione delle
+lavorazioni commissionate, unitamente alla riscontrata divergenza tra le operazioni di acquisto degli
+scarti Società_3 s.r.l. e la contabilità di magazzino , fonda la ricostruzione operata in sede di accertamento in
+quanto non vi è registrazione contabile per gli scarti di lavorazione acquistati, con elusione di ogni
+correlata normativa civilistica e fiscale. Assai indicativa appare al riguardo la verifica operata quanto alla
+cessione da parte della Società_2 s.r.l. nei confronti di Società_3 s.r.l. di gr.1000 di oro puro, senza che ne risulti
+registrato il carico nella contabilità ed il relativo scarico.
+Sul punto la motivazione estesa resa dalla Corte territoriale merita sicura condivisione anche con
+riferimento ai richiami in diritto ivi operati.
+Non senza considerare nella sede che la contabilità della società contribuente ha registrato un
+(inammissibile) saldo negativo in talune date del 2015 e del 2016, rendendo evidente come l'errata
+rilevazione delle consistenze contabili di magazzino non evidenzi un mero per quanto inammissibile
+errore contabile, ma rifletta la condizione di inattendibilità delle scritture medesime, aprendo pertanto al
+doveroso ripristino tributario proprio delle presunzioni ricordate .
+Del pari, le operazioni realizzate nel 2015 dalla Società_2 srl con Società_5 s.r.l. pure documentate nelle
+fatture intercorse tra le parti, emergeva un acquisto di monete d'oro per gr. 6036,278 anziché 8.185,64,
+con una differenza di gr.2000,00, differenza per la quale la Società_2 s.r.l. aveva denunziato un costo di
+acquisto pari ad € 67.705,02 mai sostenuto, costo questo che correttamente veniva recuperato a
+tassazione Ires e Irap per l'anno 2015.
+ Del pari, per l'anno 2016, la Società_2 s.rl. acquistava dalla Società_3 s.r.l. quale materiale di scarto, oro puro
+per € 190.165,04 , oro non rinvenuto all'atto degli accertamenti operati e per il quale deve ritenersi
+intervenuta la vendita, oro per il quale si è correttamente proceduto al recupero ad imposizione fiscale
+Ires ed Irap.
+ Del pari, l'accertamento è emersa : i) la sopravvalutazione delle rimanenze di magazzino al 31 12 2015
+in quanto parte delle merce era stata venduta nel corso del 2015, con una differenza di gr. 52,000 di
+argento per un importo di € 16.000,00 ; ii) la sottovalutazione delle rimanenze finali al 31 12 2016 per
+€ 45.822,56, con ripresa a valore di magazzino delle differenze registrate con il reale magazzino
+presente alla data del 1.01.2016, con maggior reddito pari ad € 299.125,14.
+Ciò posto la documentazione analiticamente indicata nell'accertamento come riscontrata nelle
+operazioni realizzate con gli operatori economici del settore documenta ex sé la presenza di magazzino
+non registrato in contabilità , non senza ricordare che debba trovare applicazione la presunzione di cui
+all'art. 3 del D.P.R. 441/1997, secondo cui i beni che si trovano in uno dei luoghi in cui il contribuente
+svolge le proprie operazioni si presumono "acquistati senza fattura" qualora non venga dimostrato che il
+medesimo contribuente non li ha ricevuti in base ad un rapporto di rappresentanza, ossia sulla scorta di
+uno degli altri titoli previsti dalla legge.
+Né la società ha provveduto a superare le presunzioni operate in sede di accertamento, ovverosia che i
+beni siano andati distrutti ovvero siano stati impiegati in sede di lavorazione, in quanto la
+documentazione fiscale e i ddt dimostrano che sono state gestite nel magazzino quantità che non sono
+state oggetto di acquisto secondo regolare fattura.
+Al riguardo, va qui ricordato come è onere della parte provare che la contrazione registratasi nella
+consistenza del magazzino non sia frutto di cessioni o acquisizioni non contabilizzate; prova che, come
+pure ricordato, non può essere data con qualunque mezzo, ma solamente con le prove tassativamente
+indicate dagli art. 1 e 2 D.P.R. n. 441 del 1997" e che "soltanto se il contribuente dimostri che i beni non
+rinvenuti sono stati impiegati nella produzione, perduti o distrutti (art. 1, comma 2, lett. a) ovvero sono
+stati consegnati a terzi in lavorazione, deposito, comodato o in dipendenza di contratti estimatori, di
+contratti di opera, appalto, trasporto, mandato, commissione o altro titolo non traslativo della proprietà
+(lett. b) e sempre che la perdita - dovuta anche ad eventi fortuiti, accidentali e non imputabili a volontà del
+contribuente - sia attestata da documentazione o dichiarazione sostitutiva di notorietà, trasmessa entro
+trenta giorni dall'evento ad un organo della P.A., ovvero la cessione gratuita o la distruzione o
+trasformazione dei beni sia comunicata nel breve termine di cinque giorni alla Guardia di Finanza.
+Al riguardo, si ricorda come la Suprema Corte di Cassazione "...in presenza di contabilità formalmente
+regolare ma intrinsecamente inattendibile ..., l'Amministrazione finanziaria può desumere in via induttiva,
+ai sensi dell'art. 39, comma 1, lett. d), del D.P.R. n. 600 del 1973 e dell'art. 54, commi 2 e 3, del D.P.R. n.
+633 del 1972, sulla base di presunzioni semplici, purché gravi, precise e concordanti, il reddito del
+contribuente utilizzando le incongruenze tra i ricavi, i compensi ed i corrispettivi dichiarati e quelli
+desumibili dalle condizioni di esercizio della specifica attività svolta..." (da ultimo, Cassazione ord. n.
+7202/2025).
+Deve pertanto provvedersi al rigetto dell'appello, con condanna della parte appellante alla integrale
+rifusione delle spese di lite, spese che in considerazione del valore della causa e della natura delle difese
+rassegnate, si liquidano per entrambi i gradi di giudizio in complessivi € 19.800,00 oltre il rimborso
+forfettario delle spese di lite.
+P.Q.M.
+ La Corte di Giustizia Tributaria di secondo grado dell'Emilia Romagna, definitivamente pronunciando,
+così provvede :
+a) rigetta l'appello in quanto infondato in fatto ed in diritto, confermando per l'effetto di avvisi di
+accertamento gravati;
+b) condanna la parte ricorrente alla integrale rifusione delle spese di lita, liquidate in €19.800,00 oltre
+accessori di legge .
+ Bologna 5 maggio 2025
+ IL Presidente est.
+ Dott. Pasquale Liccardo

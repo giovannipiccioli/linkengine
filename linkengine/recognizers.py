@@ -754,6 +754,14 @@ _COURT_PATTERNS = [
 _COURT_COMPILED = [(re.compile(r"\b" + p if p[0] == "c" or p[0] == "t" or p[0] == "g"
                                else p, I), v, want) for p, v, want in _COURT_PATTERNS]
 
+# A bare "cassazione" can name the court ("Cassazione, sentenza n. ...") or the
+# procedural act of challenging a decision ("per la cassazione della sentenza ...").
+# In the latter construction, the authority belongs to the challenged decision named
+# afterwards.  Keep this lexical distinction in authority recognition so every caller
+# benefits from it without having to rewrite its input text.
+_PROCEDURAL_CASSAZIONE_BEFORE = re.compile(
+    r"(?:\bper\s+(?:la\s+)?|\bin\s+(?:sede\s+di\s+)?)$", I)
+
 _OTHER_AUTH_PATTERNS = [
     (r"agenzia\s+delle\s+dogane\s+e\s+dei\s+monopoli", "AG_DOGANE_MONOPOLI"),
     (r"agenzia\s+delle\s+entrate(?:\s+e\s+delle\s+dogane)?", "AG_ENTRATE"),
@@ -980,7 +988,8 @@ def recognize_authorities(text: str) -> List[Span]:
     for pat, value, want in _COURT_COMPILED:
         for m in pat.finditer(text):
             if value == "CORTE_CASS" and re.fullmatch(r"cass(?:azione)?\.?", m.group(0), I) \
-                    and re.search(r"\b(?:per|in)\s+$", text[max(0, m.start() - 8):m.start()], I):
+                    and _PROCEDURAL_CASSAZIONE_BEFORE.search(
+                        text[max(0, m.start() - 24):m.start()]):
                 continue
             end, attrs = m.end(), {}
             sec = _section_after(text, m.end())

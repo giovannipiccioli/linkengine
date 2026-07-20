@@ -75,6 +75,43 @@ def test_cassazione_caselaw_features():
     assert r["number"] == "12345" and r["year"] == "2020"
 
 
+@pytest.mark.parametrize("text, authority, geo, urn", [
+    (
+        "per la cassazione della sentenza della Commissione tributaria regionale "
+        "del Lazio n. 9903/2016, depositata il 30 dicembre 2016",
+        "COMM_TRIBUT_REG",
+        ("region", "LAZ"),
+        "ECLI:IT:CTRLAZ:2016:9903",
+    ),
+    (
+        "ricorso per la cassazione della sentenza del Tribunale di Roma n. 456/2019",
+        "TRIB",
+        ("city", "RM"),
+        "ECLI:IT:TRIBRM:2019:456",
+    ),
+    (
+        "ricorso in sede di cassazione avverso la sentenza della Corte d'appello "
+        "di Milano n. 123/2020",
+        "CORTE_APPELLO",
+        ("city", "MI"),
+        "ECLI:IT:CAPPMI:2020:123",
+    ),
+])
+def test_procedural_cassazione_does_not_override_challenged_court(
+        text, authority, geo, urn):
+    row = _one(text)
+    geo_field, geo_code = geo
+    assert row["authority"] == authority
+    assert row[geo_field] == geo_code
+    assert row["urn"] == urn
+
+
+def test_cassazione_as_named_court_is_still_an_authority():
+    row = _one("Cassazione, sentenza n. 9903/2016")
+    assert row["authority"] == "CORTE_CASS"
+    assert row["urn"] == "ECLI:IT:CASS:2016:9903CIV"
+
+
 def test_two_digit_year_and_no_n_prefix():
     # "DPR 602/73" — number right after doctype, no "n.", 2-digit year
     r = _one("art. 26 DPR 602/73")
