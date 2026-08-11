@@ -20,6 +20,7 @@ from .geo import AUTONOMOUS_TAX_CITY_TO_GEO
 from .assembler import CASELAW_AUTH, PARTITION_ENTITIES, assemble
 from .model import (Entity, ExtractResult, PARTITION_LABEL, PARTITION_RANK, Reference,
                     Span, empty_row)
+from .normativa import INTERNAL_ATTR, validate_mode
 from . import recognizers as RZ
 from .recognizers import RECOGNIZERS
 
@@ -40,6 +41,14 @@ _CODE_SUBPART = {Entity.COMMA, Entity.LETTER, Entity.NUMERO, Entity.PARAGRAPH,
 # doc-types that make a reference *prassi* (administrative practice) rather than legislation:
 # Agenzia Entrate circolari / risoluzioni / interpelli, ministerial provvedimenti, pareri, ...
 PRASSI_DOCTYPES = set(AGENCY_DOCTYPES)
+
+
+def _partition_token(span: Span) -> str:
+    """Serialize one recognized partition into the feature-row representation."""
+    attachment_kind = span.attrs.get("attachment_locator") if span.entity == Entity.ALLEGATO else ""
+    if attachment_kind:
+        return f"attachment-{attachment_kind}-{span.value}"
+    return f"{PARTITION_LABEL[span.entity]}-{span.value}"
 
 
 def _has_minimal_output_evidence(row: Dict[str, str]) -> bool:
@@ -142,6 +151,7 @@ def _resolve_overlaps(spans):
     # document NUMBER the numbers-recognizer also matched on the same "n. 4" is spurious — the
     # partition wins (the "4" is a sub-item, never the act's number).
     numeri = [s for s in spans if s.entity == Entity.NUMERO]
+    attachment_locators = [s for s in spans if s.attrs.get("attachment_locator")]
     # a budget law ("legge finanziaria 2008") subsumes the plain "legge" doctype and the bare
     # year that otherwise match inside it.
     budget = [s for s in spans if s.attrs.get("budget")]
@@ -162,6 +172,11 @@ def _resolve_overlaps(spans):
     out = []
     for s in spans:
         if id(s) in duplicate_budget:
+            continue
+        # A quoted attachment slug is an opaque identifier. Words such as ``note``, ``art``
+        # or ``cp`` inside it must not become competing doctypes, partitions or code aliases.
+        if not s.attrs.get("attachment_locator") and any(
+                a.start <= s.start and s.end <= a.end for a in attachment_locators):
             continue
         if s.entity == Entity.DOCTYPE and any(a.start <= s.start and s.end <= a.end
                                               for a in aliases):
@@ -233,9 +248,18 @@ class LinkEngine:
                 context: Optional[DocumentContext] = None,
                 default_authority: str = None, default_region: str = None,
                 default_regolamento_scope: str = None,
-                ocr_accommodations: bool = None) -> ExtractResult:
+                ocr_accommodations: bool = None,
+                mode: str = "standard",
+                current_unit_urn: str = None) -> ExtractResult:
+        """Extract citations from plain text.
+
+        ``mode="standard"`` keeps bare partitions conservative. Use ``mode="normativa"``
+        with the canonical NIR or CELEX identifier of the current structural unit to resolve
+        internal references such as ``comma 2`` against that unit.
+        """
         if text is None:
             text = ""
+        normativa_context = validate_mode(mode, current_unit_urn)
         if context is not None and not isinstance(context, DocumentContext):
             raise TypeError("context must be a DocumentContext")
         doc_context = context or self.default_context
@@ -263,20 +287,34 @@ class LinkEngine:
                 trace.append((mod_name, new))
 
         spans += _bare_code_articles(text, spans)
+        if normativa_context is not None:
+            relative = normativa_context.recognize_relative_partitions(text)
+            spans.extend(relative)
+            if debug:
+                trace.append(("normativa-relative", relative))
         spans = _resolve_overlaps(spans)
-        refs = assemble(spans, text)
+        refs = assemble(spans, text, normativa=normativa_context is not None)
         # two-step pipeline: phase 1 fills the recognition fields; phase 2 builds the canonical
         # ``urn`` directly from them (no url roundtrip) and derives the legacy url /
         # cited-doc-simple-id columns from it. A reference can be fully recognized even when no
         # identifier is built.
-        rows = [self._fill_fields(r, doc_context, reg_scope)
-                for r in refs]
-        for row in rows:
-            row["urn"] = build_urn(row)
+        rows = []
+        for ref in refs:
+            row = self._fill_fields(ref, doc_context, reg_scope)
+            if normativa_context is not None and ref.attrs.get(INTERNAL_ATTR):
+                normativa_context.seed_row(row)
+            rows.append(row)
+        for ref, row in zip(refs, rows):
+            if normativa_context is not None and ref.attrs.get(INTERNAL_ATTR):
+                row["urn"] = normativa_context.target_urn(ref.spans)
+            else:
+                row["urn"] = build_urn(row)
             row["url"] = compat_url(row["urn"])
         # Keep unresolved rows only when they have a minimally useful citation skeleton. These
         # rows are intentionally returned as candidates for later, more contextual resolvers.
-        keep = [i for i, row in enumerate(rows) if _has_minimal_output_evidence(row)]
+        keep = [i for i, row in enumerate(rows)
+                if _has_minimal_output_evidence(row)
+                and (not refs[i].attrs.get(INTERNAL_ATTR) or bool(row["urn"]))]
         rows = [rows[i] for i in keep]
         refs = [refs[i] for i in keep]
         for citation_id, row in enumerate(rows, 1):
@@ -436,8 +474,7 @@ class LinkEngine:
         parts = [s for s in ref.spans if s.entity in PARTITION_ENTITIES]
         parts.sort(key=lambda s: -PARTITION_RANK.get(s.entity, 0))
         if parts:
-            row["partition"] = "_".join(
-                f"{PARTITION_LABEL[s.entity]}-{s.value}" for s in parts)
+            row["partition"] = "_".join(_partition_token(s) for s in parts)
 
         # classification
         is_caselaw = (row["authority"] in CASELAW_AUTH) or row["doc-type"] == "SENT" or \

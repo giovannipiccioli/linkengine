@@ -50,6 +50,8 @@ aliases — is baked in, so no network or external service is needed.
   carrying its fields, so you can *see* what was picked up.
 - **Configurable context** — a deciding court for self-references (`questa Corte`), a default
   region for unqualified regional laws, and how to read a bare `regolamento`.
+- **Normativa mode** — inside a known legislative unit, resolve otherwise-bare internal
+  partitions (`articolo 15`, `comma 2`, `presente articolo`) against its NIR or CELEX identifier.
 
 ---
 
@@ -80,7 +82,7 @@ row["doc-type"], row["number"], row["year"], row["partition"]
 #               ('DECR', '600', '1973', 'articolo-43_comma-1')
 
 # 2) render an identifier back to text
-urn_to_text("CELEX:32016R0679")          # 'regolamento 2016/679/CE'
+urn_to_text("CELEX:32016R0679")          # 'regolamento (UE) 679/2016'
 urn_to_text("PRAX:DIF:DIR:2012:2")       # 'direttiva Dipartimento delle Finanze n. 2/2012'
 urn_to_text("DEL:COG274:2014:34")        # 'delibera del Comune di Palestrina n. 34/2014'
 
@@ -88,6 +90,33 @@ urn_to_text("DEL:COG274:2014:34")        # 'delibera del Comune di Palestrina n.
 annotate_html("Si vedano gli artt. 15-18 DPR 600/73.")
 #  -> the text with each article wrapped in <span class="lkn-ref" data-urn=… …>…</span>
 ```
+
+### Extracting legislation (`normativa` mode)
+
+The default mode stays conservative: a bare `articolo 15` is not a citation in ordinary legal
+prose. When processing one known structural unit of legislation, pass its canonical unit
+identifier:
+
+```python
+text = "Si applicano l'articolo 84, comma 2, e il comma 3 del medesimo articolo 84."
+result = engine.extract(
+    text,
+    mode="normativa",
+    current_unit_urn=(
+        "urn:nir:presidente.repubblica:decreto:1986-12-22;917~art8"
+    ),
+)
+[row["urn"] for row in result.rows]
+# ['urn:nir:presidente.repubblica:decreto:1986-12-22;917~art84-comma2',
+#  'urn:nir:presidente.repubblica:decreto:1986-12-22;917~art84-comma3']
+```
+
+The input is an ordinary string and requires no particular source format or preprocessing. Use
+the mode on one structural unit at a time. Explicit citations follow exactly the same rules as
+in standard mode, while the current act is a fallback for partition spans ordinary assembly left
+unclaimed. Structural `Art. N` headings are not citations. National units use their exact NIR,
+including the full promulgation date; EU units use a canonical CELEX locator such as
+`CELEX:32016R0679~art17`.
 
 ### Highlighting references in HTML
 
@@ -214,6 +243,7 @@ rows with `urn`
 |--------|----------------|
 | `model.py` | the span vocabulary (`Entity`, `Span`, `Reference`, `ExtractResult`) and the feature-row schema |
 | `context.py` | validated per-document court and geographic metadata |
+| `normativa.py` | validated current-unit NIR/CELEX context and internal locator resolution |
 | `recognizers.py` | regex recognizers (dates, numbers, doctypes, courts, …) → spans |
 | `special_cases.py` | narrow, named lexical exceptions; structural policies do not belong here |
 | `partitions.py` | partition recognition + range/list segmentation |
@@ -242,6 +272,14 @@ The behavior is pinned by **hand-verified gold sets** (`tests/gold/`), scored by
 - `gold_partitions.csv` — deep article/comma/lettera/numero partition chains;
 - `gold_precision.csv` — full-sentence excerpts scored as an exact set (false positives count);
 - `gold_fields.jsonl` — per citation: the expected segmentation **and** every recognition field.
+- `gold_normativa.jsonl` — 73 sourced excerpts covering 70 distinct legislative units and 65
+  acts (famous statutes plus ordinary acts, with the random samples selected using fixed seeds),
+  spanning 1940–2025, 45 distinct years, seven act types, and five issuing authorities. A few
+  unsupported constructions remain as measured limitations; the gate protects broad accuracy
+  without requiring every pattern to be parsed.
+- `gold_normativa_eu.jsonl` — 32 sourced excerpts covering 31 EU legislative units and 29 acts,
+  including well-known and fixed-seed ordinary regulations, directives, and decisions from
+  1958–2025. Complete external citations are also checked for exact equality with standard mode.
 
 ```bash
 pytest                          # unit tests + the gold gates
@@ -254,7 +292,8 @@ python -m tests.bench_full_docs  # throughput over copied full-document samples
 ## Example notebook
 
 [`examples/quickstart.ipynb`](examples/quickstart.ipynb) is a commented, runnable tour of the
-library — parsing, fields, segmentation, identifiers, aliases, configuration and HTML output.
+library — parsing, fields, segmentation, identifiers, aliases, context, normativa mode and HTML
+output.
 
 ---
 

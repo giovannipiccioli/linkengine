@@ -21,6 +21,7 @@ To add or edit an alias, change its one record here — the per-field maps consu
 from __future__ import annotations
 
 import re
+from collections import Counter
 from dataclasses import dataclass, field
 from typing import List, Optional, Tuple
 
@@ -70,7 +71,7 @@ ALIASES: List[Alias] = [
     Alias("COD_PROC_CIV", nir="stato:regio.decreto:1940-10-28;1443:1",
           display="codice di procedura civile",
           patterns=(r"codice\s+(?:di\s+)?procedura\s+civile|cod\.?\s*proc\.?\s*civ\.?|\bc\.?\s?p\.?\s?c\.?\b",)),
-    Alias("COD_PROC_PEN", nir="stato:decreto.del.presidente.della.repubblica:1988-09-22;447",
+    Alias("COD_PROC_PEN", nir="presidente.repubblica:decreto:1988-09-22;447",
           display="codice di procedura penale",
           patterns=(r"codice\s+(?:di\s+)?procedura\s+penale|cod\.?\s*proc\.?\s*pen\.?|\bc\.?\s?p\.?\s?p\.?\b",)),
     # — preleggi ("Disposizioni sulla legge in generale", premised to the codice civile).
@@ -126,7 +127,8 @@ ALIASES: List[Alias] = [
           patterns=(r"statuto(?:\s+speciale)?\s+(?:della\s+)?regione\s+(?:sicilia|siciliana)\b",)),
     Alias("STATUTO_REG_SARDEGNA", nir="stato:legge.costituzionale:1948-02-26;3",
           display="Statuto speciale della Sardegna",
-          patterns=(r"statuto(?:\s+speciale)?\s+(?:della\s+)?regione\s+(?:sardegna|sarda)\b",)),
+          patterns=(r"statuto(?:\s+speciale)?\s+(?:della\s+)?regione\s+(?:sardegna|sarda)\b",
+                    r"statuto\s+speciale\s+della\s+sardegna\b")),
     Alias("STATUTO_REG_VALLE_AOSTA", nir="stato:legge.costituzionale:1948-02-26;4",
           display="Statuto speciale della Valle d'Aosta",
           patterns=(
@@ -168,8 +170,9 @@ ALIASES: List[Alias] = [
           patterns=(r"testo\s+unico\s+(?:dell['’]?\s?)?edilizia",)),
     Alias("TU_IMMIGRAZIONE", nir="stato:decreto.legislativo:1998-07-25;286", display="Testo Unico Immigrazione",
           patterns=(r"testo\s+unico\s+(?:sull['’]?\s?)?immigrazione",)),
-    Alias("TU_IMPOSTA_REGISTRO", nir="stato:regio.decreto:1986-04-26;131", display="Testo Unico del Registro",
-          patterns=(r"testo\s+unico\s+(?:dell['’]?\s?imposta\s+di\s+)?registro"
+    Alias("TU_IMPOSTA_REGISTRO", nir="presidente.repubblica:decreto:1986-04-26;131",
+          display="Testo Unico del Registro",
+          patterns=(r"testo\s+unico\s+(?:(?:dell['’]?\s?imposta\s+di|del)\s+)?registro"
                     r"|\bt\.?\s?u\.?\s+(?:dell['’]?\s?imposta\s+di\s+)?registro\b|\bt\.?u\.?r\.?\b",)),
     Alias("TU_DOGANALE", nir="presidente.repubblica:decreto:1973-01-23;43", display="TULD",
           patterns=(r"testo\s+unico\s+(?:dell[ae]\s+)?legg[ei]\s+doganal[ei]|\bt\.?u\.?l\.?d\.?\b",)),
@@ -201,7 +204,8 @@ ALIASES: List[Alias] = [
     Alias("COD_ORDINAM_MIL", nir="stato:decreto.legislativo:2010-03-15;66"),
     Alias("COD_PARI_OPPOR", nir="stato:decreto.legislativo:2006-04-11;198"),
     Alias("COD_PROC_PEN_1930", nir="stato:regio.decreto:1930-10-19;1399",
-          display="codice di procedura penale 1930"),
+          display="codice di procedura penale 1930",
+          patterns=(r"codice\s+di\s+procedura\s+penale\s+1930\b",)),
     Alias("TU_ACQUE", nir="stato:regio.decreto:1933-12-11;1775:1"),
     Alias("TU_AVVOCATURA_STATO", nir="stato:regio.decreto:1933-10-30;1612:1"),
     Alias("TU_CASELLARIO_GIUDIZ", nir="presidente.repubblica:decreto:2002-11-14;313"),
@@ -209,7 +213,7 @@ ALIASES: List[Alias] = [
     Alias("TU_CORTE_CONTI", nir="stato:regio.decreto:1934-07-12;1214:1"),
     Alias("TU_DEBITO_PUBBL", nir="presidente.repubblica:decreto:2003-12-30;398"),
     Alias("TU_DOCUMENTAZIONE_AMM", nir="presidente.repubblica:decreto:2000-12-28;445"),
-    Alias("TU_ELEZIONE", nir="stato:decreto.del.presidente.della.repubblica:1960-05-16;570:1"),
+    Alias("TU_ELEZIONE", nir="presidente.repubblica:decreto:1960-05-16;570:1"),
     Alias("TU_ESPROPRIAZIONE_PUBBL", nir="presidente.repubblica:decreto:2001-06-08;327"),
     Alias("TU_IMPIEGATI", nir="presidente.repubblica:decreto:1957-03-30;3"),
     Alias("TU_LEGGI_CONS_STATO", nir="stato:regio.decreto:1924-06-26;1054:1"),
@@ -220,7 +224,7 @@ ALIASES: List[Alias] = [
     Alias("TU_SEQUESTRO", nir="presidente.repubblica:decreto:1950-01-05;180:1"),
     Alias("TU_SOCIETA_PART_PUBBL", nir="stato:decreto.legislativo:2016-08-19;175"),
     Alias("TU_SPESE_GIUST", nir="presidente.repubblica:decreto:2002-05-30;115"),
-    Alias("REG_COD_NAVIG", nir="stato:decreto.del.presidente.della.repubblica:1952-02-15;328:1"),
+    Alias("REG_COD_NAVIG", nir="presidente.repubblica:decreto:1952-02-15;328:1"),
 
     # — EU treaties / charters / regulations (scope "eu"; CELEX-backed) —
     Alias("TRATTATO_FUNZ_UE", "eu", celex="CELEX:12012E/TXT",          # TFUE (consolidato 2012)
@@ -265,9 +269,10 @@ ALIASES: List[Alias] = [
           patterns=(r"nomenclatura\s+combinata",)),
 ]
 
-# aliases that are a complete reference on their own (no cited partition/number required) and
-# whose URN is just the alias token.
-SELF_VALID_ALIASES = frozenset({
+# These aliases already accepted all their named variants standalone before the registry was
+# derived. Keep that established behavior; newly admitted aliases use the stricter exact-display
+# rule in the assembler.
+VARIANT_SELF_VALID_ALIASES = frozenset({
     "STATUTO_CONTRIB",
     "STATUTO_REG_SICILIA",
     "STATUTO_REG_SARDEGNA",
@@ -277,6 +282,15 @@ SELF_VALID_ALIASES = frozenset({
     "TARIFFA_DOGANALE_COM",
     "NOMENCLATURA_COMBINATA",
 })
+
+# A name emitted by ``urn_to_text`` must also be a complete reference when read back. Derive
+# the additional set from displayable, recognizable aliases with one unambiguous identifier.
+_ALIAS_IDENTIFIER_COUNTS = Counter(a.nir or a.celex for a in ALIASES if a.nir or a.celex)
+SELF_VALID_ALIASES = VARIANT_SELF_VALID_ALIASES | frozenset(
+    a.code for a in ALIASES
+    if a.patterns and a.display and (a.nir or a.celex)
+    and _ALIAS_IDENTIFIER_COUNTS[a.nir or a.celex] == 1
+)
 
 
 # ── Derived per-field maps (consumed elsewhere; do not edit — edit ALIASES above) ──

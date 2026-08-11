@@ -15,30 +15,13 @@ import datetime as _datetime
 import re
 from typing import Optional, Tuple
 
+from .act_kinds import EMANANTE_TIPO as ACT_KIND_EMANANTE_TIPO
+
 NORMATTIVA_PREFIX = "http://www.normattiva.it/uri-res/N2Ls?"
 
-# (doc-type code, authority code) -> (urn authority, urn doctype).
-# authority "" means "any / unspecified". URN forms use dotted doctypes, with DPR mapped
-# to presidente.repubblica:decreto.
-EMANANTE_TIPO = {
-    ("L", ""):            ("stato", "legge"),
-    ("LC", ""):           ("stato", "legge.costituzionale"),
-    ("DL", ""):           ("stato", "decreto.legge"),
-    ("DLGS", ""):         ("stato", "decreto.legislativo"),
-    ("DECR", "PRES_REP"): ("presidente.repubblica", "decreto"),
-    ("DECR", "PRES_CONS_MIN"): ("presidente.consiglio.ministri", "decreto"),  # numbered DPCM
-    ("DECR", "MINISTERO"): ("ministero", "decreto"),   # numbered D.M. (date-only -> DM{date})
-    ("RD", ""):           ("stato", "regio.decreto"),
-    # historical 1944–48 acts: luogotenenziali / del Capo Provvisorio dello Stato
-    ("DLGS_LGT", ""):     ("luogotenente", "decreto.legislativo"),
-    ("DL_LGT", ""):       ("luogotenente", "decreto.legge"),
-    ("DLGS_CPS", ""):     ("capo.provvisorio.stato", "decreto.legislativo"),
-    ("DL_CPS", ""):       ("capo.provvisorio.stato", "decreto.legge"),
-    # a bare "regolamento N/YYYY" (no EU acronym) defaults to a *national* regolamento
-    # (urn:nir:stato:regolamento). With "(UE)/(CE)" it goes EU (CELEX).
-    ("REG", ""):          ("stato", "regolamento"),
-}
-MINISTRY_NIR = {"ECONOMIA_FINANZE": "ministero.economia.finanze"}
+# Regolamento remains outside the national ActKind registry because the same lexical family
+# can be national or EU. Its national normalization is the one small compatibility entry.
+EMANANTE_TIPO = {**ACT_KIND_EMANANTE_TIPO, ("REG", ""): ("stato", "regolamento")}
 
 # doc-types whose default scope is EU and the CELEX provision letter.
 EU_PROV_LETTER = {"REG": "R", "DIR": "L", "DECIS": "D", "RACC": "H"}
@@ -70,6 +53,15 @@ def partition_to_locator(partition_field: str, extra_num=()) -> str:
     """
     if not partition_field:
         return ""
+    attachment = ""
+    for prefix, locator_prefix in (("attachment-compact-", "all"),
+                                   ("attachment-slug-", "all-")):
+        if partition_field.startswith(prefix):
+            value, separator, partition_field = partition_field[len(prefix):].partition("_")
+            attachment = locator_prefix + value
+            if not separator:
+                partition_field = ""
+            break
     partition_field = re.sub(
         r"allegato-([ivxlcdm]+)",
         lambda m: "allegato-" + _roman_to_int_token(m.group(1)),
@@ -82,7 +74,8 @@ def partition_to_locator(partition_field: str, extra_num=()) -> str:
          .replace("numero", "num").replace("paragrafo", "num"))
     for name in extra_num:
         s = s.replace(name, "num")
-    return s.replace("-", "").replace("_", "-")
+    locator = s.replace("-", "").replace("_", "-")
+    return "-".join(part for part in (attachment, locator) if part)
 
 
 def split_annex(partition_field: str):
@@ -108,8 +101,6 @@ def build_nir(doctype: str, authority: str, number: str, year: str,
     if not em or not number or not year:
         return None
     authority_urn, doctype_urn = em
-    if authority == "MINISTERO" and ministry in MINISTRY_NIR:
-        authority_urn = MINISTRY_NIR[ministry]
     annex, rest = split_annex(partition_field)
     urn = f"urn:nir:{authority_urn}:{doctype_urn}:{year};{number}"
     if annex:
@@ -203,7 +194,7 @@ def year_for_doctype(doctype: str, year: str, raw_year: str = "") -> str:
     left unresolved rather than silently rewritten.
     """
     year = (year or "").strip()
-    if doctype != "RD" or not year:
+    if doctype not in {"RD", "RDL", "RDLGS"} or not year:
         return year
     raw_year = (raw_year or "").strip()
     if re.fullmatch(r"\d{2}", raw_year):

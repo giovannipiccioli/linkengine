@@ -36,7 +36,7 @@ art. 39 del d.P.R. 600/1973|urn:nir:presidente.repubblica:decreto:1973;600~art39
 art. 360, comma 1, n. 3, c.p.c.|urn:nir:stato:regio.decreto:1940;1443:1~art360-comma1-num3|norm|NUMERO sub-partition (linkengine gap)
 art. 2697 c.c.|urn:nir:stato:regio.decreto:1942;262:2~art2697|alias|codice civile
 art. 112 c.p.c.|urn:nir:stato:regio.decreto:1940;1443:1~art112|alias|cpc
-art. 81 c.p.p.|urn:nir:stato:decreto.del.presidente.della.repubblica:1988;447~art81|alias|cpp
+art. 81 c.p.p.|urn:nir:presidente.repubblica:decreto:1988;447~art81|alias|cpp
 art. 633 codice penale|urn:nir:stato:regio.decreto:1930;1398:1~art633|alias|codice penale
 art. 73 del TUIR|urn:nir:presidente.repubblica:decreto:1986;917~art73|alias|tuir
 art. 13 del T.U.B.|urn:nir:stato:decreto.legislativo:1993;385~art13|alias|tub
@@ -47,7 +47,7 @@ art. 117 Cost.|urn:nir:stato:costituzione~art117|alias|costituzione
 art. 2 codice della strada|urn:nir:stato:decreto.legislativo:1992;285~art2|alias|codice strada
 art. 2729 cod. civ.|urn:nir:stato:regio.decreto:1942;262:2~art2729|alias|cod civ variant
 art. 115 c.p.c.|urn:nir:stato:regio.decreto:1940;1443:1~art115|alias|cpc
-art. 192 c.p.p.|urn:nir:stato:decreto.del.presidente.della.repubblica:1988;447~art192|alias|cpp
+art. 192 c.p.p.|urn:nir:presidente.repubblica:decreto:1988;447~art192|alias|cpp
 art. 40 c.p.|urn:nir:stato:regio.decreto:1930;1398:1~art40|alias|codice penale
 art. 38 TUIR|urn:nir:presidente.repubblica:decreto:1986;917~art38|alias|tuir
 art. 109 del TUIR|urn:nir:presidente.repubblica:decreto:1986;917~art109|alias|tuir
@@ -60,7 +60,7 @@ art. 33 codice del consumo|urn:nir:stato:decreto.legislativo:2005;206~art33|alia
 art. 80 del codice dei contratti pubblici|urn:nir:stato:decreto.legislativo:2016;50~art80|alias|codice contratti
 art. 2495 c.c.|urn:nir:stato:regio.decreto:1942;262:2~art2495|alias|cod civ
 art. 132 c.p.c.|urn:nir:stato:regio.decreto:1940;1443:1~art132|alias|cpc
-art. 606 c.p.p.|urn:nir:stato:decreto.del.presidente.della.repubblica:1988;447~art606|alias|cpp
+art. 606 c.p.p.|urn:nir:presidente.repubblica:decreto:1988;447~art606|alias|cpp
 art. 314 codice penale|urn:nir:stato:regio.decreto:1930;1398:1~art314|alias|codice penale
 art. 167 del TUIR|urn:nir:presidente.repubblica:decreto:1986;917~art167|alias|tuir
 art. 67 della legge fallimentare|urn:nir:stato:regio.decreto:1942;267:1~art67|alias|legge fall
@@ -191,7 +191,7 @@ art.23 della l.241/90|urn:nir:stato:legge:1990;241~art23|norm|attached 'l.241' n
 art.1, co.707, della L.147/2013|urn:nir:stato:legge:2013;147~art1-comma707|norm|dense no-space citation art.N/co.N/della L.N
 art. 69 cod.proc.civ.|urn:nir:stato:regio.decreto:1940;1443:1~art69|alias|no-space code alias cod.proc.civ. -> c.p.c.
 art. 2697 cod.civ.|urn:nir:stato:regio.decreto:1942;262:2~art2697|alias|no-space code alias cod.civ. -> c.c.
-art. 81 cod.proc.pen.|urn:nir:stato:decreto.del.presidente.della.repubblica:1988;447~art81|alias|no-space cod.proc.pen. -> c.p.p.
+art. 81 cod.proc.pen.|urn:nir:presidente.repubblica:decreto:1988;447~art81|alias|no-space cod.proc.pen. -> c.p.p.
 direttiva 90/435|CELEX:31990L0435|eu|old EU directive 2-digit-year-first (90/435 = number 435, year 1990)
 art. 12 della direttiva 69/335|CELEX:31969L0335~art12|eu|EU directive year/number with article
 art. 5, n. 1, della direttiva 90/435|CELEX:31990L0435~art5-num1|eu|EU directive year/number with article+numero partition

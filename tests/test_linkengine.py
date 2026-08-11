@@ -468,7 +468,7 @@ def test_numbered_ministerial_decree():
     assert _urns("decreto ministeriale n. 597/2018") == ["urn:nir:ministero:decreto:2018;597"]
 
 
-def test_mef_ministerial_decree_has_specific_issuer():
+def test_mef_ministerial_decree_keeps_issuer_metadata_but_uses_generic_urn():
     text = "decreto del Ministro dell'economia e delle finanze 23 dicembre 2013, n. 163"
     row = _one(text)
     assert row["text"] == text
@@ -478,7 +478,7 @@ def test_mef_ministerial_decree_has_specific_issuer():
     assert row["ministry"] == "ECONOMIA_FINANZE"
     assert row["number"] == "163"
     assert row["doc-date"] == "2013-12-23"
-    assert row["urn"] == "urn:nir:ministero.economia.finanze:decreto:2013;163"
+    assert row["urn"] == "urn:nir:ministero:decreto:2013;163"
 
 
 def test_tribunale_small_city_catastale():
@@ -926,7 +926,8 @@ def test_special_region_statute_is_self_valid_and_renderable():
 
 
 def test_testo_unico_registro_and_doganale():
-    assert _urns("art. 78 T.U. Registro") == ["urn:nir:stato:regio.decreto:1986;131~art78"]
+    assert _urns("art. 78 T.U. Registro") == [
+        "urn:nir:presidente.repubblica:decreto:1986;131~art78"]
     assert _urns("art. 303 comma 3 TULD") == [
         "urn:nir:presidente.repubblica:decreto:1973;43~art303-comma3"]
 
@@ -1198,7 +1199,7 @@ def test_number_marker_trim_does_not_cut_codice_penale_anchor():
     rows = LinkEngine().extract("art. 240 cod. pen. e artt. 444 e 445 cod. proc. pen.").rows
     texts = {r["urn"]: r["text"] for r in rows}
     assert texts["urn:nir:stato:regio.decreto:1930;1398:1~art240"] == "art. 240 cod. pen."
-    assert texts["urn:nir:stato:decreto.del.presidente.della.repubblica:1988;447~art445"] == \
+    assert texts["urn:nir:presidente.repubblica:decreto:1988;447~art445"] == \
         "445 cod. proc. pen."
 
 
@@ -1377,7 +1378,7 @@ def test_nospace_code_aliases():
     assert _urns("art. 69 cod.proc.civ.") == ["urn:nir:stato:regio.decreto:1940;1443:1~art69"]
     assert _urns("art. 2697 cod.civ.") == ["urn:nir:stato:regio.decreto:1942;262:2~art2697"]
     assert _urns("art. 81 cod.proc.pen.") == [
-        "urn:nir:stato:decreto.del.presidente.della.repubblica:1988;447~art81"]
+        "urn:nir:presidente.repubblica:decreto:1988;447~art81"]
     # spaced + bare forms still work
     assert _urns("art. 360 c.p.c.") == ["urn:nir:stato:regio.decreto:1940;1443:1~art360"]
     assert _urns("art. 69 cod. proc. civ.") == ["urn:nir:stato:regio.decreto:1940;1443:1~art69"]
@@ -1455,7 +1456,7 @@ def test_urn_to_text_round_of_forms():
         "urn:nir:stato:regio.decreto:1942;262:2~art2697": "art. 2697 codice civile",
         "urn:nir:presidente.repubblica:decreto:1986;917~art109": "art. 109 TUIR",
         "urn:nir:stato:costituzione~art53": "art. 53 Costituzione",
-        "CELEX:32006L0112~art2": "art. 2 direttiva 2006/112/CE",
+        "CELEX:32006L0112~art2": "art. 2 direttiva (CE) 112/2006",
         "CELEX:62020CJ0123~num12": "punto 12 causa C-123/2020",
         "CELEX:62020TJ0045": "causa T-45/2020",
         "PRAX:AE:CIRC:2005:47": "circolare Agenzia delle Entrate n. 47/2005",

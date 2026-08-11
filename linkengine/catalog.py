@@ -9,6 +9,7 @@ or an alias display name — every component picks the change up automatically.
 """
 from .geo import (PROVINCE_CODE_TO_NAME, REGION_CODE_TO_NAME, REGION_URN_TO_NAME,  # noqa: F401
                   city_name, region_name)
+from .act_kinds import URN_DOCTYPE_NAME as _ACT_KIND_URN_DOCTYPE_NAME
 
 # ── Courts ────────────────────────────────────────────────────────────────────
 # authority code -> ECLI prefix (None when the court has no ECLI), the geo it carries
@@ -65,21 +66,7 @@ CONDITIONAL_AGENCY_DOCTYPES = {"DEL", "DIR"}
 
 
 # ── Document types (urn:nir "authority:doctype" -> display name) ────────────────
-URN_DOCTYPE_NAME = {
-    "stato:legge": "legge",
-    "stato:legge.costituzionale": "legge costituzionale",
-    "stato:decreto.legge": "decreto-legge",
-    "stato:decreto.legislativo": "decreto legislativo",
-    "stato:regolamento": "regolamento",
-    "stato:regio.decreto": "regio decreto",
-    "presidente.repubblica:decreto": "D.P.R.",
-    "presidente.consiglio.ministri:decreto": "D.P.C.M.",
-    "ministero:decreto": "decreto ministeriale",
-    "luogotenente:decreto.legislativo": "decreto legislativo luogotenenziale",
-    "luogotenente:decreto.legge": "decreto-legge luogotenenziale",
-    "capo.provvisorio.stato:decreto.legislativo": "decreto legislativo del Capo provvisorio dello Stato",
-    "capo.provvisorio.stato:decreto.legge": "decreto-legge del Capo provvisorio dello Stato",
-}
+URN_DOCTYPE_NAME = {**_ACT_KIND_URN_DOCTYPE_NAME, "stato:regolamento": "regolamento"}
 # EU CELEX provision letter -> doctype display.
 CELEX_DOCTYPE_NAME = {"R": "regolamento", "L": "direttiva", "D": "decisione", "H": "raccomandazione"}
 

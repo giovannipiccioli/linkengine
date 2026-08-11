@@ -22,6 +22,7 @@ from .geo import (AUTONOMOUS_TAX_CITY_TO_GEO, AUTONOMOUS_TAX_GEO_NAMES, city_nam
 from .normalize import (build_nir, build_regional_nir, build_celex, build_celex_caselaw,
                         normattiva_url, partition_to_locator)
 from .aliases import ALIAS_NIR, ALIAS_CELEX, alias_nir
+from .act_kinds import display_name_for_nir
 
 _CASE_ID_RE = re.compile(r"([ct])\D*(\d+)\s*/\s*(\d{4})", re.I)
 
@@ -407,22 +408,40 @@ def _other_urn(row):
 # urn_to_text: identifier -> human-readable citation (URN alone, no other input)
 # ══════════════════════════════════════════════════════════════════════════════
 _LOC_LABEL = {"art": "art.", "comma": "comma", "let": "let.", "num": "num.",
-              "all": "allegato", "allegato": "allegato"}
+              "cons": "considerando", "all": "allegato", "allegato": "allegato"}
 # longest first so "comma"/"allegato" win over a bare prefix scan
-_LOC_PREFIX_RE = re.compile(r'^(allegato|comma|art|let|num|all)(.*)$')
+_LOC_PREFIX_RE = re.compile(r'^(allegato|comma|cons|art|let|num|all)(.*)$')
 
 
-def _render_locator(locator: str, num_label: str = "num.") -> str:
+def _render_locator(locator: str, num_label: str = "num.", deep_num_label: str = "") -> str:
     """``art14-comma4-letb-num1`` -> ``art. 14 comma 4 let. b num. 1``. ``num_label`` overrides
-    the rendering of the ``num`` segment (CJEU judgments render it as "punto")."""
+    the rendering of the first ``num`` segment (CJEU judgments render it as "punto").
+    ``deep_num_label`` can distinguish a deeper ``num`` after a letter/another ``num``; CELEX
+    legislation uses this to reverse its lossy paragraph/number locator normalization."""
+    if locator.startswith("all-"):
+        return f"Allegato «{locator[len('all-'):]}»"
     parts = []
+    previous_prefix = ""
+    seen_num = False
     for seg in locator.split('-'):
+        if seg.startswith("all") and len(seg) > 3:
+            parts.append(f"Allegato {seg[3:]}")
+            previous_prefix = "all"
+            continue
         m = _LOC_PREFIX_RE.match(seg)
         if not m:
             parts.append(seg)
+            previous_prefix = ""
             continue
-        label = num_label if m.group(1) == "num" else _LOC_LABEL[m.group(1)]
+        prefix = m.group(1)
+        if prefix == "num":
+            is_deep = seen_num or previous_prefix in {"let", "num"}
+            label = deep_num_label if is_deep and deep_num_label else num_label
+            seen_num = True
+        else:
+            label = _LOC_LABEL[prefix]
         parts.append(f"{label} {m.group(2)}".strip())
+        previous_prefix = prefix
     return " ".join(parts)
 
 
@@ -510,7 +529,7 @@ def _nir_to_text(body):
     alias_name = catalog.ALIAS_BASE_TO_NAME.get(base)
     if alias_name:
         return f"{loc + ' ' if loc else ''}{alias_name}".strip()
-    m = re.match(r'(.+?):(\d{4});(\d+)', base)
+    m = re.match(r'(.+?):(\d{4})(?:-\d{2}-\d{2})?;(\d+)', base)
     if not m:
         # costituzione / treaties without number
         if base.startswith("stato:costituzione"):
@@ -521,7 +540,10 @@ def _nir_to_text(body):
         region = auth_doc[len("regione."):].split(':')[0]
         doc = f"legge regionale {region_name(region)}"
     else:
-        doc = catalog.URN_DOCTYPE_NAME.get(auth_doc, auth_doc.split(':')[-1].replace('.', ' '))
+        authority, doctype = auth_doc.rsplit(':', 1)
+        doc = (display_name_for_nir(authority, doctype)
+               or catalog.URN_DOCTYPE_NAME.get(auth_doc)
+               or doctype.replace('.', ' '))
     head = f"{loc} " if loc else ""
     return f"{head}{doc} n. {number}/{year}".strip()
 
@@ -535,16 +557,31 @@ def _celex_to_text(body):
         letter = "T" if court.startswith("T") else "C"
         loc = _render_locator(rawloc, num_label="punto") if rawloc else ""   # CJEU: ~num -> "punto"
         return f"{loc + ' ' if loc else ''}causa {letter}-{num}/{year}".strip()
-    loc = _render_locator(rawloc) if rawloc else ""
+    # EU provisions conventionally call the numbered subdivision of an article a
+    # "paragrafo".  Besides being more readable than the generic "num.", this is the
+    # spelling the partition recognizer maps back to the CELEX ``~num`` locator.
+    loc = _render_locator(rawloc, num_label="paragrafo", deep_num_label="numero") \
+        if rawloc else ""
     head = f"{loc} " if loc else ""
     # sectors 3 (legislation) and 1 (treaties)
     m = re.match(r'3(\d{4})([RLDHS])(\d+)', base)
     if m:
         year, letter, num = m.group(1), m.group(2), int(m.group(3))
-        if letter == "S":   # ECSC general decisions are cited number-first with /CECA
-            return f"{head}decisione n. {num}/{year}/CECA".strip()
-        doc = catalog.CELEX_DOCTYPE_NAME.get(letter, "atto")
-        return f"{head}{doc} {year}/{num}/CE".strip()
+        doc = "decisione" if letter == "S" else catalog.CELEX_DOCTYPE_NAME.get(letter, "atto")
+        # CELEX does not carry the act's full title, adoption date, or community domain.
+        # Render a stable modern citation using only what sector-3 identifiers do contain:
+        # descriptor, four-digit year, and number.  Whole-year cut-offs deliberately favour
+        # a useful historical best guess over exceptions around the Maastricht/Lisbon
+        # transitions.  ``S`` is self-identifying: it is the CECA decision descriptor.
+        if letter == "S":
+            acronym = "CECA"
+        elif int(year) <= 1993:
+            acronym = "CEE"
+        elif int(year) <= 2009:
+            acronym = "CE"
+        else:
+            acronym = "UE"
+        return f"{head}{doc} ({acronym}) {num}/{year}".strip()
     treaties = {"12012E/TXT": "TFUE", "12016ME/TXT": "TUE", "11957E/TXT": "Trattato CEE",
                 "12002E/TXT": "Trattato CE", "11951K": "Trattato CECA",
                 "12012P/TXT": "Carta dei diritti fondamentali UE"}

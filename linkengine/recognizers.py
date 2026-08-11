@@ -23,6 +23,7 @@ from .partitions import recognize_elements as recognize_partitions
 from .geo import (AUTONOMOUS_TAX_CITY_TO_GEO, CITY_RE, REGION_RE,
                   REGION_NAME_TO_CODE, city_code, region_urn as _region_urn)
 from .aliases import EU_ALIASES, INTL_ALIASES, recognize_aliases as _recognize_aliases
+from .act_kinds import DOCTYPE_PATTERNS as ACT_KIND_PATTERNS
 from .conventions import recognize_conventions
 from .budget_laws import recognize_budget_laws
 
@@ -499,43 +500,7 @@ def recognize_numbers(text: str) -> List[Span]:
 # (regex, doc-type code, authority code, default ref-scope). Patterns carry their own
 # boundaries; abbreviations end with (?!\w) so a trailing '.' doesn't break the match.
 _DOCTYPE_PATTERNS = [
-    # historical 1944–48 acts (before the plain DL/DLGS): luogotenenziale and del Capo
-    # Provvisorio dello Stato -> luogotenente:... and capo.provvisorio.stato:...
-    (r"\bdecreto\s+legislativo\s+luogotenenziale\b|\bd\.?\s?lgs\.?\s?lgt\.?(?!\w)", "DLGS_LGT", "", "nazionale"),
-    (r"\bdecreto[-\s]?legge\s+luogotenenziale\b|\b(?:decreto\s+)?luogotenenziale\b|\bd\.?\s?l\.?\s?lgt\.?(?!\w)", "DL_LGT", "", "nazionale"),
-    (r"\bdecreto\s+legislativo\s+del\s+capo\s+provvisorio\s+dello\s+stato\b|\bd\.?\s?lgs\.?\s?c\.?\s?p\.?\s?s\.?(?!\w)", "DLGS_CPS", "", "nazionale"),
-    (r"\bdecreto[-\s]?legge\s+del\s+capo\s+provvisorio\s+dello\s+stato\b|\bd\.?\s?l\.?\s?c\.?\s?p\.?\s?s\.?(?!\w)", "DL_CPS", "", "nazionale"),
-    # DPCM (decreto del Presidente del Consiglio dei Ministri) — before D.P.R.
-    (r"\bdecreto\s+del\s+presidente\s+del\s+consiglio\s+dei\s+ministri\b|\bd\.?\s?p\.?\s?c\.?\s?m\.?(?!\w)", "DECR", "PRES_CONS_MIN", "nazionale"),
-    (r"\bdecreto\s+del\s+presidente\s+della\s+repubblica\b", "DECR", "PRES_REP", "nazionale"),
-    (r"\bd\.?\s?p\.?\s?r\.?(?!\w)", "DECR", "PRES_REP", "nazionale"),
-    (r"\bdecreto\s+legislativo\b", "DLGS", "", "nazionale"),
-    (r"\bdecreto\s+lgs\.?(?!\w)", "DLGS", "", "nazionale"),
-    (r"\bd\.?\s?l\.?gs\.?(?!\w)", "DLGS", "", "nazionale"),
-    (r"\bd\.?\s?lgs\.?(?!\w)", "DLGS", "", "nazionale"),
-    # "...vo" variants of decreto legislativo: d.l.vo / D.Lg.vo / D. Lgv. / d.lgv.
-    (r"\bd\.?\s?lg?\.?\s?v\.?o?\.?(?!\w)", "DLGS", "", "nazionale"),
-    # "Dec. Leg.vo" / "Decr. Leg.vo" / "Dec. Legisl." — decreto legislativo abbreviated with "Dec."
-    (r"\bdec(?:r|reto)?\.?\s*leg(?:isl(?:ativo)?|\.?\s*v\.?o?)\.?(?!\w)", "DLGS", "", "nazionale"),
-    (r"\bdecreto(?:[-\s]|\u00ad)?legge\b", "DL", "", "nazionale"),
-    # "Dec. Legge" / "Decr. Legge" — decreto legge abbreviated with "Dec."
-    (r"\bdec(?:r|reto)?\.?\s*legge\b", "DL", "", "nazionale"),
-    (r"\blegge\s+costituzionale\b", "LC", "", "nazionale"),
-    (r"\bregio\s+decreto\b", "RD", "", "nazionale"),
-    (r"\br\.?\s?d\.?(?!\w)", "RD", "", "nazionale"),
-    (r"\bdecreto\s+del\s+ministro\s+dell['’]?\s*economia\s+e\s+delle\s+finanze\b",
-     "DECR", "MINISTERO", "nazionale"),
-    (r"\bdecreto\s+ministeriale\b", "DECR", "MINISTERO", "nazionale"),
-    # "decreto MEF/MiSE/MIT …" — a ministry acronym after "decreto" makes it a D.M.
-    (r"\bdecreto\s+(?:del\s+)?(?:m\.?e\.?f\.?|mef|m\.?i\.?s\.?e\.?|mise|mit|mims|m\.?i\.?u\.?r\.?|miur)\b",
-     "DECR", "MINISTERO", "nazionale"),
-    (r"\bd\.?\s?m\.?(?!\w)", "DECR", "MINISTERO", "nazionale"),
-    (r"\bd\.?\s?l\.?(?!gs)(?!\w)", "DL", "", "nazionale"),
-    (r"\bl\.\s*n[.°]*(?=\s*\d)", "L", "", "nazionale"),     # "l. n. 212" / "l. n° 212"
-    (r"\bl\.(?=\s*\d)", "L", "", "nazionale"),               # "l. 212"
-    (r"\bl\s+(?=\d{1,5}\s*/\s*\d{2,4}\b)", "L", "", "nazionale"),   # dot-less "L 197/2022"
-    # plain legge, but not "legge regionale / della Regione" (handled by recognize_regional_laws)
-    (r"\blegg[ei]\b(?!\s+(?:regional|(?:della\s+)?regione))", "L", "", "nazionale"),
+    *ACT_KIND_PATTERNS,
     # a nationally-qualified regolamento is always national (never follows the EU default flag)
     (r"\bregolament[oi]\s+europe[oi]", "REG", "", "comunitario"),
     (r"\bregolament[oi]\s+(?:ministerial[ei]|comunal[ei]|regional[ei]|governativ[oi]|"
@@ -596,6 +561,15 @@ _OCR_I_LEGGE_BEFORE = re.compile(
 )
 _OCR_ONE_LEGGE_BEFORE = re.compile(r"\bart(?:icol[oi]|\.)?\s*\d[^;]{0,36}$", I)
 
+_MINISTRY_IN_DOCTYPE = (
+    (re.compile(r"m\.?e\.?f\.?|economia\s+e\s+(?:delle\s+)?finanze", I),
+     "ECONOMIA_FINANZE"),
+    (re.compile(r"m\.?i\.?s\.?e\.?(?!\w)", I), "SVILUPPO_ECONOMICO"),
+    (re.compile(r"mims(?!\w)", I), "INFRASTRUTTURE_MOBILITA_SOSTENIBILI"),
+    (re.compile(r"mit(?!\w)", I), "INFRASTRUTTURE_TRASPORTI"),
+    (re.compile(r"m\.?i\.?u\.?r\.?(?!\w)", I), "ISTRUZIONE_UNIVERSITA_RICERCA"),
+)
+
 
 def recognize_doctypes(text: str, *, ocr_accommodations: bool = True) -> List[Span]:
     spans = []
@@ -644,9 +618,11 @@ def recognize_doctypes(text: str, *, ocr_accommodations: bool = True) -> List[Sp
             attrs = {"authority": auth, "scope": scope}
             if code == "L" and m.group(0).startswith("1."):
                 attrs["ocr"] = "1"
-            if code == "DECR" and auth == "MINISTERO" and re.search(
-                    r"(?:m\.?e\.?f\.?|economia\s+e\s+(?:delle\s+)?finanze)", m.group(0), I):
-                attrs["ministry"] = "ECONOMIA_FINANZE"
+            if code == "DECR" and auth == "MINISTERO":
+                for ministry_pattern, ministry in _MINISTRY_IN_DOCTYPE:
+                    if ministry_pattern.search(m.group(0)):
+                        attrs["ministry"] = ministry
+                        break
             if code == "REG" and re.search(r"europe[oi]", m.group(0), I):
                 attrs["eu_hint"] = "1"
             spans.append(Span(m.start(), m.end(), Entity.DOCTYPE, code, m.group(0), attrs))

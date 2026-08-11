@@ -1,7 +1,7 @@
 """
 Gold-based evaluation for linkengine — self-contained (uses only the ``linkengine`` package).
 
-Four hand-verified gold sets live in ``tests/gold/``:
+Six hand-verified gold sets live in ``tests/gold/``:
 
 * ``gold_manual.csv``     — ``text|expected_urn|category|note``; recall (the expected URNs must
   all be produced). Multiple expected URNs are space-separated.
@@ -12,6 +12,10 @@ Four hand-verified gold sets live in ``tests/gold/``:
 * ``gold_fields.jsonl``   — per citation, the expected **segmentation** (number of references)
   and every recognition field + the ``urn`` (a subset match: an entry pins only what it cares
   about). Optional top-level ``default-authority`` / ``default-region`` / ``reg-scope``.
+* ``gold_normativa.jsonl`` / ``gold_normativa_eu.jsonl`` — famous and fixed-seed random
+  real-legislation excerpts, each with its exact current-unit NIR or CELEX identifier; scored
+  for exact segmentation, anchors, partitions and identifiers. They intentionally retain a few
+  unsupported cases as an evaluation corpus.
 
 Run::
 
@@ -146,12 +150,50 @@ def score_fields(path, verbose=False):
     return npass, len(gold)
 
 
+# ── normativa mode: real legislation + exact internal-link anchors ────────────
+def score_normativa(path, verbose=False, title="GOLD NORMATIVA"):
+    gold = _load_jsonl(path)
+    eng = LinkEngine()
+    byselection, byselection_ok, npass = Counter(), Counter(), 0
+    for entry in gold:
+        produced = []
+        result = eng.extract(
+            entry["text"],
+            mode="normativa",
+            current_unit_urn=entry["current-unit-urn"],
+        )
+        for row in result.rows:
+            produced.append({
+                "text": row.get("text", ""),
+                "partition": row.get("partition", ""),
+                "urn": row.get("urn", ""),
+            })
+        expected = entry["refs"]
+        ok = len(produced) == len(expected) and all(_match(ref, produced) for ref in expected)
+        npass += ok
+        selection = entry.get("selection", "unspecified")
+        byselection[selection] += 1
+        byselection_ok[selection] += ok
+        if verbose and not ok:
+            print(f"  NORM  [{entry['id']}] {entry.get('source', '')}")
+            print(f"        want: {expected}")
+            print(f"        got : {produced}")
+    print(f"\n==== {title} (real legislation, exact anchors + identifiers) ====")
+    print(f"  PASS: {npass}/{len(gold)} = {100*npass/max(len(gold),1):.0f}%")
+    for selection in sorted(byselection):
+        print(f"    {selection:9s} {byselection_ok[selection]}/{byselection[selection]}")
+    return npass, len(gold)
+
+
 def run_all(verbose=False):
     n1, t1 = score_recall(os.path.join(GOLD_DIR, "gold_manual.csv"), verbose, "GOLD (hand-verified)")
     n2, t2 = score_recall(os.path.join(GOLD_DIR, "gold_partitions.csv"), verbose, "GOLD PARTITIONS")
     score_precision(os.path.join(GOLD_DIR, "gold_precision.csv"), verbose)
     n3, t3 = score_fields(os.path.join(GOLD_DIR, "gold_fields.jsonl"), verbose)
-    return (n1, t1), (n2, t2), (n3, t3)
+    n4, t4 = score_normativa(os.path.join(GOLD_DIR, "gold_normativa.jsonl"), verbose)
+    n5, t5 = score_normativa(
+        os.path.join(GOLD_DIR, "gold_normativa_eu.jsonl"), verbose, "GOLD NORMATIVA EU")
+    return (n1, t1), (n2, t2), (n3, t3), (n4, t4), (n5, t5)
 
 
 if __name__ == "__main__":

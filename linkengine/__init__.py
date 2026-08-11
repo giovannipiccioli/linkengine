@@ -17,6 +17,10 @@ Public API::
         print(row["text"], row["urn"])
     result.trace                   # per-recognizer spans (debug=True)
 
+    # Resolve bare internal references while processing a known legislative unit.
+    eng.extract("Si applica il comma 2 del presente articolo.", mode="normativa",
+                current_unit_urn="CELEX:32016R0679~art17")
+
     urn_to_text("ECLI:IT:CASS:2020:1234CIV")     # -> "Cassazione civile n. 1234/2020"
     generate_prax_urn("Min. Finanze", "risoluzione", "1982-08-03", "271112")
     # -> "PRAX:MEF:RIS:1982:271112"

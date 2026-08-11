@@ -114,6 +114,12 @@ _PERIODO = re.compile(r"\bperiod[oi]\s*(\d+)\b(?!\s*[/.-]\s*\d)", I)
 # "allegato A" / "allegati" / "alleg. A" / "All. A" -> annex marker. The "all." abbreviation
 # requires the dot so the common words "alla/alle/allo" are not matched.
 _ALLEGATO = re.compile(r"\b(?:allegat[oi]|alleg\.|all\.)\s*([0-9]+|[ivxlcdm]+|[a-z])\b", I)
+# Attachment-documents use a speaking slug and are distinct from the NIR ``:K`` annex marker.
+# ``urn_to_text`` quotes the slug so the distinction remains explicit and reversible.
+_ATTACHMENT_SLUG = re.compile(r"\ballegato\s+[«\"]([a-z0-9][a-z0-9-]*)[»\"]", I)
+_ANNEX_CONNECTOR_AFTER = re.compile(
+    r"^\s*(?:del|della|delle|dello|dei|degli|dell['’]|al|alla|alle|allo|ai|agli|all['’])\b", I)
+_ATTACHMENT_ACT_AFTER = re.compile(r"^\s+[a-zà-ÿ]", I)
 # NUMERO candidate ("n. 3", "numero 3", "nn. 3 e 4") — only kept if inside a partition chain
 _NUMERO = re.compile(r"\b(?:numero|nn\.?|n\.)\s*(" + _NUMV + r"(?:" + _SEP + _NUMV + r")*)", I)
 _ELIDED_ARTICLE = re.compile(r"(?:^|[,\s])(?:e|ed)\s+(" + _NUMV + r")\b", I)
@@ -251,8 +257,19 @@ def recognize_elements(text: str) -> List[Span]:
         spans.append(Span(m.start(), m.end(), Entity.PERIODO, ORDINALS[m.group(1).lower()], m.group(0)))
     for m in _PERIODO.finditer(text):
         spans.append(Span(m.start(), m.end(), Entity.PERIODO, m.group(1), m.group(0)))
+    for m in _ATTACHMENT_SLUG.finditer(text):
+        spans.append(Span(m.start(), m.end(), Entity.ALLEGATO, m.group(1), m.group(0),
+                          {"attachment_locator": "slug"}))
     for m in _ALLEGATO.finditer(text):
-        spans.append(Span(m.start(), m.end(), Entity.ALLEGATO, norm_latin_suffix(m.group(1)), m.group(0)))
+        # The full, connector-free form is the compact ``~allA`` locator emitted by
+        # ``urn_to_text``. Abbreviations and "allegato A del/della ..." keep the established
+        # ``:A`` annex semantics.
+        compact = (m.group(0).lower().startswith("allegato")
+                   and _ATTACHMENT_ACT_AFTER.match(text[m.end():m.end() + 16])
+                   and not _ANNEX_CONNECTOR_AFTER.match(text[m.end():m.end() + 16]))
+        spans.append(Span(m.start(), m.end(), Entity.ALLEGATO,
+                          m.group(1) if compact else norm_latin_suffix(m.group(1)), m.group(0),
+                          {"attachment_locator": "compact"} if compact else {}))
 
     base = _nonoverlap(spans)
     # NUMERO only when it directly follows a partition element ("lettera a), n. 3"); this
@@ -266,7 +283,12 @@ def recognize_elements(text: str) -> List[Span]:
     return _nonoverlap(spans)
 
 
-def _resolve_backward(elements: List[Span], text: str) -> List[Span]:
+_DEICTIC_OWNER = re.compile(
+    r"^\s*(?:medesim[oaie]|stess[oaie]|predett[oaie]|citat[oaie])\s*$", I)
+
+
+def _resolve_backward(elements: List[Span], text: str, *,
+                      deictic_connectors: bool = False) -> List[Span]:
     """"comma 1 dell'art. 19": a shallower element introduced by 'del…' owns the deeper run
     before it. Move it in front of that run (repeat until stable).
 
@@ -280,7 +302,10 @@ def _resolve_backward(elements: List[Span], text: str) -> List[Span]:
         for i in range(1, len(els)):
             conn = text[els[i - 1].end:els[i].start]
             dm = list(_DEL_RE.finditer(conn))
-            adjacent = (bool(dm) and len(conn) - dm[-1].end() <= 4
+            tail = conn[dm[-1].end():] if dm else ""
+            adjacent = (bool(dm)
+                        and (len(tail) <= 4
+                             or (deictic_connectors and _DEICTIC_OWNER.fullmatch(tail)))
                         and not re.search(r"\b(?:e|ed)\b", conn[:dm[-1].start()], I))
             if RANK[els[i].entity] < RANK[els[i - 1].entity] and adjacent:
                 j = i - 1
@@ -295,12 +320,15 @@ def _resolve_backward(elements: List[Span], text: str) -> List[Span]:
     return els
 
 
-def segment(elements: List[Span], text: str) -> List[List[Span]]:
+def segment(elements: List[Span], text: str, *,
+            deictic_connectors: bool = False) -> List[List[Span]]:
     """Turn a run of partition element spans into leaf paths (each a list of spans,
     shallow→deep). Empty input -> no leaves."""
     if not elements:
         return []
-    els = _resolve_backward(sorted(elements, key=lambda s: s.start), text)
+    els = _resolve_backward(
+        sorted(elements, key=lambda s: s.start), text,
+        deictic_connectors=deictic_connectors)
     leaves: List[List[Span]] = []
     path: List[tuple] = []          # list of (rank, span)
     for el in els:

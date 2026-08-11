@@ -87,8 +87,8 @@
 {"cat": "cgue", "text": "Sentenza CGUE n. 567/2019", "refs": [{"authority": "CGUE", "doc-type": "SENT", "number": "567", "year": "2019", "urn": "CELEX:62019CJ0567"}]}
 {"cat": "cgue", "text": "Corte di giustizia dell'Unione europea, sentenza n. 88/2021", "refs": [{"authority": "CGUE", "number": "88", "year": "2021"}]}
 {"cat": "alias", "text": "art. 1218 del codice civile", "refs": [{"alias": "COD_CIV", "urn": "urn:nir:stato:regio.decreto:1942;262:2~art1218"}]}
-{"cat": "alias", "text": "art. 81 del codice di procedura penale", "refs": [{"alias": "COD_PROC_PEN", "urn": "urn:nir:stato:decreto.del.presidente.della.repubblica:1988;447~art81"}]}
-{"cat": "alias", "text": "art. 24 c.p.p.", "refs": [{"alias": "COD_PROC_PEN", "urn": "urn:nir:stato:decreto.del.presidente.della.repubblica:1988;447~art24"}]}
+{"cat": "alias", "text": "art. 81 del codice di procedura penale", "refs": [{"alias": "COD_PROC_PEN", "urn": "urn:nir:presidente.repubblica:decreto:1988;447~art81"}]}
+{"cat": "alias", "text": "art. 24 c.p.p.", "refs": [{"alias": "COD_PROC_PEN", "urn": "urn:nir:presidente.repubblica:decreto:1988;447~art24"}]}
 {"cat": "alias", "text": "art. 416 del codice penale", "refs": [{"alias": "COD_PEN", "urn": "urn:nir:stato:regio.decreto:1930;1398:1~art416"}]}
 {"cat": "alias", "text": "art. 73 del TUB", "refs": [{"alias": "TU_BANCARIO"}]}
 {"cat": "alias", "text": "art. 50 del TUEL", "refs": [{"alias": "TU_ENTI_LOCALI"}]}
@@ -111,14 +111,14 @@
 {"cat": "prassi", "text": "circolare 12/E/2020 e risoluzione 22/E/2005", "refs": [{"doc-type": "CIRC", "urn": "PRAX:AE:CIRC:2020:12"}, {"doc-type": "RIS", "urn": "PRAX:AE:RIS:2005:22/E"}]}
 {"cat": "norm", "text": "art. 36-bis del d.P.R. 600/1973", "refs": [{"doc-type": "DECR", "authority": "PRES_REP", "urn": "urn:nir:presidente.repubblica:decreto:1973;600~art36bis"}]}
 {"cat": "norm", "text": "D.M. 7 settembre 1998, n. 503", "refs": [{"doc-type": "DECR", "authority": "MINISTERO", "number": "503", "doc-date": "1998-09-07", "urn": "urn:nir:ministero:decreto:1998;503"}]}
-{"cat": "alias", "text": "art. 78 T.U. Registro", "refs": [{"alias": "TU_IMPOSTA_REGISTRO", "urn": "urn:nir:stato:regio.decreto:1986;131~art78"}], "reg-scope": "comunitario"}
-{"cat": "alias", "text": "art. 25 Testo Unico Registro", "refs": [{"alias": "TU_IMPOSTA_REGISTRO", "urn": "urn:nir:stato:regio.decreto:1986;131~art25"}], "reg-scope": "comunitario"}
+{"cat": "alias", "text": "art. 78 T.U. Registro", "refs": [{"alias": "TU_IMPOSTA_REGISTRO", "urn": "urn:nir:presidente.repubblica:decreto:1986;131~art78"}], "reg-scope": "comunitario"}
+{"cat": "alias", "text": "art. 25 Testo Unico Registro", "refs": [{"alias": "TU_IMPOSTA_REGISTRO", "urn": "urn:nir:presidente.repubblica:decreto:1986;131~art25"}], "reg-scope": "comunitario"}
 {"cat": "alias", "text": "art. 221 comma 3 Codice Doganale Comunitario", "refs": [{"alias": "COD_DOGANALE_COMUN", "urn": "CELEX:31992R2913~art221-num3"}], "reg-scope": "comunitario"}
 {"cat": "alias", "text": "art. 32 Codice Doganale Comunitario (CDC)", "refs": [{"alias": "COD_DOGANALE_COMUN", "urn": "CELEX:31992R2913~art32"}], "reg-scope": "comunitario"}
 {"cat": "alias", "text": "art. 10 codice doganale dell’unione europea", "refs": [{"alias": "COD_DOGANALE_UNIONE", "urn": "CELEX:32013R0952~art10"}], "reg-scope": "comunitario"}
 {"cat": "alias", "text": "art. 303 comma 3 TULD", "refs": [{"alias": "TU_DOGANALE", "urn": "urn:nir:presidente.repubblica:decreto:1973;43~art303-comma3"}], "reg-scope": "comunitario"}
 {"cat": "alias", "text": "art. 301 Testo Unico Legge Doganale", "refs": [{"alias": "TU_DOGANALE", "urn": "urn:nir:presidente.repubblica:decreto:1973;43~art301"}], "reg-scope": "comunitario"}
-{"cat": "alias", "text": "art. 156 ult. co. c.p.p.", "refs": [{"alias": "COD_PROC_PEN", "urn": "urn:nir:stato:decreto.del.presidente.della.repubblica:1988;447~art156"}], "reg-scope": "comunitario"}
+{"cat": "alias", "text": "art. 156 ult. co. c.p.p.", "refs": [{"alias": "COD_PROC_PEN", "urn": "urn:nir:presidente.repubblica:decreto:1988;447~art156"}], "reg-scope": "comunitario"}
 {"cat": "alias", "text": "art. 11 preleggi", "refs": [{"alias": "PRELEGGI", "urn": "urn:nir:stato:regio.decreto:1942;262:1~art11"}], "reg-scope": "comunitario"}
 {"cat": "alias", "text": "art. 14 Preleggi c.c.", "refs": [{"alias": "PRELEGGI", "urn": "urn:nir:stato:regio.decreto:1942;262:1~art14"}], "reg-scope": "comunitario"}
 {"cat": "alias", "text": "art. 7 Statuto del Contribuente", "refs": [{"alias": "STATUTO_CONTRIB", "urn": "urn:nir:stato:legge:2000;212~art7"}], "reg-scope": "comunitario"}
@@ -135,7 +135,7 @@
 {"cat": "norm", "text": "art. 11 d.lgv. 504/92", "refs": [{"doc-type": "DLGS", "urn": "urn:nir:stato:decreto.legislativo:1992;504~art11"}], "reg-scope": "comunitario"}
 {"cat": "norm", "text": "art. 59, comma 1, lett. g, D.Lgs. n. 446/1997", "refs": [{"urn": "urn:nir:stato:decreto.legislativo:1997;446~art59-comma1-letg"}], "reg-scope": "comunitario"}
 {"cat": "norm", "text": "DM MEF 19.11.2012 n. 200", "refs": [{"doc-type": "DECR", "authority": "MINISTERO", "urn": "urn:nir:ministero:decreto:2012;200"}], "reg-scope": "comunitario"}
-{"cat": "norm", "text": "art. 9 decreto MEF 23/12/2013 n. 163", "refs": [{"authority": "MINISTERO", "ministry": "ECONOMIA_FINANZE", "urn": "urn:nir:ministero.economia.finanze:decreto:2013;163~art9"}], "reg-scope": "comunitario"}
+{"cat": "norm", "text": "art. 9 decreto MEF 23/12/2013 n. 163", "refs": [{"authority": "MINISTERO", "ministry": "ECONOMIA_FINANZE", "urn": "urn:nir:ministero:decreto:2013;163~art9"}], "reg-scope": "comunitario"}
 {"cat": "eu", "text": "art. 2 Direttiva IVA 2006/112/CE", "refs": [{"doc-type": "DIR", "urn": "CELEX:32006L0112~art2"}], "reg-scope": "comunitario"}
 {"cat": "eu", "text": "Regolamento UE nº 910/2014", "refs": [{"doc-type": "REG", "urn": "CELEX:32014R0910"}], "reg-scope": "comunitario"}
 {"cat": "eu", "text": "regolamento (CE) 261/2004", "refs": [{"doc-type": "REG", "urn": "CELEX:32004R0261"}], "reg-scope": "comunitario"}
@@ -291,7 +291,7 @@
 {"cat": "prassi", "text": "Circolare Ministero delle Finanze n. 9/1993", "refs": [{"text": "Circolare Ministero delle Finanze n. 9/1993", "doc-type": "CIRC", "other-authority": "MEF", "number": "9", "year": "1993", "urn": "PRAX:MEF:CIRC:1993:9"}]}
 {"cat": "fp", "text": "Circolare n. 6/2012", "refs": []}
 {"cat": "prassi", "text": "Circolare Agenzia delle entrate n.13/E 2006", "refs": [{"text": "Circolare Agenzia delle entrate n.13/E 2006", "doc-type": "CIRC", "other-authority": "AG_ENTRATE", "number": "13", "year": "2006", "full-number": "13/E", "urn": "PRAX:AE:CIRC:2006:13"}]}
-{"cat": "norm", "text": "decreto del Ministro dell'economia e delle finanze 23 dicembre 2013, n. 163", "refs": [{"text": "decreto del Ministro dell'economia e delle finanze 23 dicembre 2013, n. 163", "doc-type": "DECR", "authority": "MINISTERO", "ministry": "ECONOMIA_FINANZE", "number": "163", "year": "2013", "doc-date": "2013-12-23", "urn": "urn:nir:ministero.economia.finanze:decreto:2013;163"}]}
+{"cat": "norm", "text": "decreto del Ministro dell'economia e delle finanze 23 dicembre 2013, n. 163", "refs": [{"text": "decreto del Ministro dell'economia e delle finanze 23 dicembre 2013, n. 163", "doc-type": "DECR", "authority": "MINISTERO", "ministry": "ECONOMIA_FINANZE", "number": "163", "year": "2013", "doc-date": "2013-12-23", "urn": "urn:nir:ministero:decreto:2013;163"}]}
 {"cat": "norm", "text": "Statuto del contribuente", "refs": [{"text": "Statuto del contribuente", "alias": "STATUTO_CONTRIB", "urn": "urn:nir:stato:legge:2000;212"}]}
 {"cat": "norm", "text": "art. 19, co. 3, D. lgs. 596/92 e art. 7 1. n. 212/2000", "refs": [{"text": "art. 19, co. 3, D. lgs. 596/92", "doc-type": "DLGS", "number": "596", "year": "1992", "partition": "articolo-19_comma-3", "urn": "urn:nir:stato:decreto.legislativo:1992;596~art19-comma3"}, {"text": "art. 7 1. n. 212/2000", "doc-type": "L", "number": "212", "year": "2000", "partition": "articolo-7", "urn": "urn:nir:stato:legge:2000;212~art7"}]}
 {"cat": "norm", "text": "artt. 69 e 70 R.D. n. 2440/23", "refs": [{"text": "artt. 69", "doc-type": "RD", "number": "2440", "year": "1923", "partition": "articolo-69", "urn": "urn:nir:stato:regio.decreto:1923;2440~art69"}, {"text": "70 R.D. n. 2440/23", "doc-type": "RD", "number": "2440", "year": "1923", "partition": "articolo-70", "urn": "urn:nir:stato:regio.decreto:1923;2440~art70"}]}

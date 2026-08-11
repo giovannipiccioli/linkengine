@@ -18,10 +18,11 @@ from collections import Counter
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Set, Tuple
 
-from .aliases import ALIAS_NIR, SELF_VALID_ALIASES
+from .aliases import (ALIAS_DISPLAY, ALIAS_NIR, SELF_VALID_ALIASES,
+                      VARIANT_SELF_VALID_ALIASES)
 from .catalog import AGENCY_DOCTYPES, CASELAW_AUTH, CONDITIONAL_AGENCY_DOCTYPES
 from .model import Entity, Reference, Span
-from .partitions import segment, _resolve_backward
+from .partitions import RANK as PARTITION_DEPTH, segment, _resolve_backward
 
 # Partition→act pairing connectors. A partition *run* (a contiguous block of partition spans
 # with no act inside it) attaches to an act either on its RIGHT through a genitive
@@ -438,7 +439,41 @@ def _year_should_bind(s: Span, a: Span, ref: Reference, text: str) -> bool:
                and _YEAR_AFTER_NUMBER.match(text[n.end:s.start]) for n in nums)
 
 
-def _article_groups(part_spans: List[Span], anchors: List[Span], text: str) -> List[List[Span]]:
+_DEICTIC_HEAD_LINK = re.compile(
+    r"\b(?:del|della|dello|delle|dei|degli|dell['’])\s+"
+    r"(?:medesim[oaie]|stess[oaie]|predett[oaie]|citat[oaie])\s*$",
+    re.I,
+)
+_BACKWARD_PARTITION_LINK = re.compile(
+    r"\b(?:del|della|dello|delle|dei|degli|dell['’])\s*$", re.I)
+
+
+def _deictic_subruns(run: List[Span], text: str) -> List[List[Span]]:
+    """Isolate the path governed by ``del medesimo articolo`` from earlier siblings."""
+    heads = {Entity.ARTICLE, Entity.ALLEGATO, Entity.CONSIDERANDO}
+    cuts = {0, len(run)}
+    for i in range(1, len(run)):
+        if run[i].entity not in heads or run[i - 1].entity in heads or not \
+                _DEICTIC_HEAD_LINK.search(text[run[i - 1].end:run[i].start]):
+            continue
+        j = i - 1
+        while j > 0 and run[j - 1].entity not in heads:
+            left, right = run[j - 1], run[j]
+            left_depth = PARTITION_DEPTH[left.entity]
+            right_depth = PARTITION_DEPTH[right.entity]
+            connector = text[left.end:right.start]
+            if right_depth > left_depth or (
+                    right_depth < left_depth and _BACKWARD_PARTITION_LINK.search(connector)):
+                j -= 1
+                continue
+            break
+        cuts.update((j, i + 1))
+    ordered = sorted(cuts)
+    return [run[a:b] for a, b in zip(ordered, ordered[1:]) if a < b]
+
+
+def _article_groups(part_spans: List[Span], anchors: List[Span], text: str, *,
+                    deictic_connectors: bool = False) -> List[List[Span]]:
     """Split partition spans into **article-groups** — one article (ARTICLE/ALLEGATO) plus its
     dependent sub-partitions, or a top-level sub-partition run with no article ("commi 1 e 2").
     Each group is paired to one act. We first cut the spans into act-bounded *runs* (no act /
@@ -451,7 +486,9 @@ def _article_groups(part_spans: List[Span], anchors: List[Span], text: str) -> L
     for s in spans:
         if cur:
             gap = text[cur[-1].end:s.start]
-            if _SENT_BOUND.search(gap) or len(gap) > 80 or \
+            narrative_break = deictic_connectors and len(
+                re.findall(r"[A-Za-zÀ-ÖØ-öø-ÿ]+", gap)) >= 5
+            if _SENT_BOUND.search(gap) or len(gap) > 80 or narrative_break or \
                     any(cur[-1].end <= a.start and a.end <= s.start for a in anchors):
                 runs.append(cur); cur = []
         cur.append(s)
@@ -460,9 +497,14 @@ def _article_groups(part_spans: List[Span], anchors: List[Span], text: str) -> L
 
     HEAD = (Entity.ARTICLE, Entity.ALLEGATO, Entity.CONSIDERANDO)
     groups: List[List[Span]] = []
-    for run in runs:
+    resolved_runs = [part for run in runs
+                     for part in (_deictic_subruns(run, text)
+                                  if deictic_connectors else [run])]
+    for run in resolved_runs:
         g: List[Span] = []
-        for s in _resolve_backward(run, text):       # canonical shallow->deep order
+        for s in _resolve_backward(
+                run, text, deictic_connectors=deictic_connectors):
+            # canonical shallow->deep order
             if s.entity in HEAD and g:
                 groups.append(g); g = []
             g.append(s)
@@ -881,7 +923,84 @@ def _bind_cgue_partitions(state: AssemblyState) -> None:
             state.bind(partition, best)
 
 
-def _finalize_frames(state: AssemblyState) -> List[Reference]:
+_TOP_LEVEL_PARAGRAPH = re.compile(r"^\s*\d+(?:-[a-z]+)?\.\s+", re.I | re.M)
+_AMENDMENT = re.compile(
+    r"\b(?:sono\s+apportat[ei]|seguenti\s+modificazioni|(?:è|e')\s+(?:inserit[oa]|"
+    r"sostituit[oa]|abrogat[oa]|modificat[oa]))\b",
+    re.I,
+)
+_CURRENT_ACT_AFTER = re.compile(
+    r"^[^.;]{0,55}\b(?:del(?:la)?|dell['’])\s+presente\s+"
+    r"(?:atto|legge|decreto|regolamento|direttiva|decisione|provvedimento)\b",
+    re.I,
+)
+
+
+def _line_heading(text: str, group: List[Span]) -> bool:
+    """Whether an article group is the structural ``Art. N`` heading of the input unit."""
+    article = next((span for span in group if span.entity == Entity.ARTICLE), None)
+    if article is None or not re.match(r"art", article.text, re.I):
+        return False
+    line_start = text.rfind("\n", 0, article.start) + 1
+    line_end = text.find("\n", article.end)
+    line = text[line_start:line_end if line_end >= 0 else len(text)].strip()
+    return not text[line_start:article.start].strip() and bool(re.fullmatch(
+        r"art(?:icolo)?t?\.?\s*\d+(?:[-\s]?(?:bis|ter|quater|quinquies|sexies|"
+        r"septies|octies|novies|decies))?\.?",
+        line,
+        re.I,
+    ))
+
+
+def _inside_external_amendment(state: AssemblyState, start: int) -> bool:
+    """Reject an orphan partition in a clause that is amending a named external act."""
+    block_start = 0
+    for match in _TOP_LEVEL_PARAGRAPH.finditer(state.text, 0, start):
+        block_start = match.start()
+    prefix = state.text[block_start:start]
+    if not _AMENDMENT.search(prefix):
+        return False
+    return any(block_start <= anchor.start < start for anchor in state.anchors)
+
+
+def _points_to_current_act(state: AssemblyState, span: Span) -> bool:
+    """Whether a partition is explicitly qualified by ``del presente <atto>``.
+
+    Ordinary assembly correctly associates the partition with the following doctype, but that
+    doctype has no number and therefore cannot form an external citation. In normativa mode it
+    is instead an explicit self-reference and should remain available to the current-act
+    fallback.
+    """
+    return bool(_CURRENT_ACT_AFTER.match(state.text[span.end:span.end + 90]))
+
+
+def _normativa_fallback(state: AssemblyState, existing: List[Reference]) -> List[Reference]:
+    """Resolve only partition spans that ordinary assembly deliberately left unclaimed."""
+    claimed = {id(span) for ref in existing for span in ref.spans}
+    loose = [span for span in state.floating
+             if span.entity in PARTITION_ENTITIES and id(span) not in claimed
+             and (id(span) not in state.attached_partition_ids
+                  or _points_to_current_act(state, span))]
+    if not loose:
+        return []
+
+    groups = _article_groups(
+        loose, state.anchors, state.text, deictic_connectors=True)
+    out: List[Reference] = []
+    for group in groups:
+        start = min(span.start for span in group)
+        if _line_heading(state.text, group) or \
+                (_inside_external_amendment(state, start)
+                 and not any(_points_to_current_act(state, span) for span in group)):
+            continue
+        children = [Reference(spans=leaf, attrs={"normativa-internal": "1"})
+                    for leaf in segment(group, state.text, deictic_connectors=True)]
+        _assign_text_context(children, state.text)
+        out.extend(child for child in children if child.attrs.get("text"))
+    return out
+
+
+def _finalize_frames(state: AssemblyState, *, normativa: bool = False) -> List[Reference]:
     """Phase 6: branch partitions/numbers, validate references, and assign visible anchors."""
     out: List[Reference] = []
     for ref in state.references:
@@ -900,10 +1019,13 @@ def _finalize_frames(state: AssemblyState) -> List[Reference]:
 
     out += _propagate_acts(
         out, state.spans, state.text, state.attached_partition_ids)
+    if normativa:
+        out += _normativa_fallback(state, out)
+        out.sort(key=lambda ref: (ref.start, ref.end))
     return out
 
 
-def assemble(spans: List[Span], text: str) -> List[Reference]:
+def assemble(spans: List[Span], text: str, *, normativa: bool = False) -> List[Reference]:
     """Assemble recognized spans through explicit frame ownership phases."""
     state = AssemblyState.create(spans, text)
     _bind_anchor_slots(state)
@@ -911,7 +1033,7 @@ def assemble(spans: List[Span], text: str) -> List[Reference]:
     _bind_through_court_authorities(state)
     _build_orphan_frames(state)
     _bind_cgue_partitions(state)
-    return _finalize_frames(state)
+    return _finalize_frames(state, normativa=normativa)
 
 
 def _assign_text_context(children: List[Reference], text: str) -> None:
@@ -1149,8 +1271,14 @@ def _valid(r: Reference) -> bool:
     has_date = any(s.entity == Entity.DATE for s in r.spans)
     has_partition = any(s.entity in PARTITION_ENTITIES for s in r.spans)
 
-    # a self-sufficient named act ("tariffa doganale comune") is a reference on its own
-    if any(s.entity == Entity.ALIAS and s.value in SELF_VALID_ALIASES for s in r.spans):
+    # A renderer-emitted act name is a reference on its own. Newly derived aliases require that
+    # exact display, which avoids abbreviation fragments and broad descriptive phrases. The
+    # small pre-existing statute/tariff set keeps its deliberately accepted named variants.
+    if any(s.entity == Entity.ALIAS and s.value in SELF_VALID_ALIASES and (
+            s.value in VARIANT_SELF_VALID_ALIASES
+            or re.sub(r"\s+", " ", s.text.strip()).casefold()
+            == re.sub(r"\s+", " ", ALIAS_DISPLAY.get(s.value, "").strip()).casefold()
+    ) for s in r.spans):
         return True
 
     # an alias with a partition (e.g. "codice civile, art. 2697") is a valid reference
