@@ -801,8 +801,11 @@ def _geo_after(text: str, pos: int, want: str):
     return None, None, pos
 
 
-# case-law section just after a court keyword ("Cass. sez. trib.", "C.T.R. … Sez. V"). The
-# section does not change the ECLI (which is …CIV) but completes the `section` feature field.
+# case-law section just after a court keyword ("Cass. sez. trib.", "C.T.R. … Sez. V"). For
+# every court but the Cassazione the section only completes the `section` feature field and
+# does not change the ECLI; on the Cassazione a chamber reading "penale" flips the ECLI
+# suffix to PEN (see `urn._cass_chamber_suffix`), because civil and penal decisions are
+# numbered independently.
 _SEZ_SEARCH = re.compile(
     r"\bsez(?:ione|\.)?\.?\s*(?:n\.?\s*)?"
     r"(trib(?:ut(?:aria)?)?|lavoro|lav|unit[ei]|un|penal[ei]|pen|civil[ei]|civ|feriale|"
@@ -836,10 +839,17 @@ def _section_after(text: str, pos: int) -> str:
     return str(r) if r else raw
 
 
-# Cassazione sezione: the section field combines the chamber NUMBER with its kind. Numbered
-# civil sections render "<n>CIV" ("sesta sez. civ." -> "6CIV", "sez. V" -> "5CIV"); the
-# tributaria is the fifth civil section ("sez. trib." -> "5CIV"); Sezioni Unite -> "UNITE";
-# "lavoro"/"feriale" carry their own name. Cassazione-specific (other courts keep _section_after).
+# Cassazione sezione: the section field combines the chamber NUMBER with its kind, and it
+# writes the kind ONLY when the text states it — the branch is the half of a Cassazione
+# citation Italian practice most often omits, and a value that guesses it cannot be told
+# apart from one that read it.
+#   "sesta sez. civ."  -> "6CIV"      kind stated
+#   "sez. V"           -> "5"         kind NOT stated (civil in a civil judgment, penal in
+#                                     a penal one) — what DocumentContext.chamber completes
+#   "sez. trib."       -> "5CIV"      the tributaria IS the fifth civil section
+#   "sezioni unite"    -> "UNITE"     both branches have one; "UNITEPEN" when text says penali
+#   "lavoro"/"feriale" -> their own name; lavoro is civil by definition, feriale is not
+# Cassazione-specific (other courts keep _section_after).
 _CASS_ORDINAL = {"prima": "1", "primo": "1", "seconda": "2", "secondo": "2",
                  "terza": "3", "terzo": "3", "quarta": "4", "quarto": "4",
                  "quinta": "5", "quinto": "5", "sesta": "6", "sesto": "6"}
@@ -849,30 +859,74 @@ _CASS_KIND = [(r"sezioni\s+unite|\bss\.?\s?uu\b|\bs\.\s?u\.?|\bsez(?:ione|\.)?\.
               (r"\btribut(?:aria)?\b|\btrib\b", "TRIB"), (r"\bpenal[ei]\b|\bpen\b", "PEN"),
               (r"\bcivil[ei]\b|\bciv\b", "CIV")]
 _CASS_KIND_RE = [(re.compile(p, I), k) for p, k in _CASS_KIND]
+# The penal marker on its own, taken from the table above so the two cannot drift. UNITE and
+# FERIALE outrank PEN in the precedence race, and both exist on the penal side too ("sezioni
+# unite penali"), so the named chambers have to re-test for it rather than swallow it.
+_CASS_PEN_RE = next(rx for rx, k in _CASS_KIND_RE if k == "PEN")
 _CASS_SEZ_MARK = re.compile(r"\bsez(?:ione|\.)?\.?", I)
 _CASS_SEZ_NUM = re.compile(r"\s*(?:n\.?\s*)?(\d{1,2}|[ivxlcdm]{1,4})\b", I)
+
+
+def _cass_chamber_window(text: str, pos: int) -> str:
+    """The stretch after the court keyword that may name the chamber, cut at the decision
+    number or date so it cannot read into the citation that follows."""
+    win = text[pos:pos + 50]
+    stop = re.search(r"\bnn?\.?\s*\d|\d{1,2}\s*[./-]\s*\d{1,2}\s*[./-]\s*\d{2,4}", win, I)
+    return win[:stop.start()] if stop else win
+
+
+def _cass_between_court_and_chamber(text: str, pos: int) -> str:
+    """What sits between the Cassazione keyword and a chamber keyword starting at `pos`.
+
+    "Cass. pen. s.u." puts the branch BEFORE the chamber, and the bare "s.u." matches as an
+    authority span of its own that shadows the fuller reading — so for that span the marker
+    is behind, not ahead. Anchoring the window to the last "Cass" keeps it inside the same
+    citation and keeps "art. 240 cod. pen. e Cass. s.u." from reading the code as a chamber.
+    """
+    win = text[max(0, pos - 24):pos]
+    last = None
+    for m in re.finditer(r"cass(?:azione)?", win, I):
+        last = m
+    return win[last.end():] if last else ""
+
+
+def _cass_unite_section(text: str, pos: int) -> str:
+    """"UNITE", with the branch when the text around the keyword names it.
+
+    The authority pattern matches "Cassazione, sezioni unite" as one span, so the "penali"
+    that qualifies it falls outside the match — which is why this cannot be read off the
+    matched text the way the other chambers are."""
+    penal = (_CASS_PEN_RE.search(_cass_chamber_window(text, pos))
+             or _CASS_PEN_RE.search(_cass_between_court_and_chamber(text, pos)))
+    return "UNITE" + ("PEN" if penal else "")
 
 
 def _cass_section(text: str, pos: int) -> str:
     """The Cassazione `section` value just after the court keyword. Empty when neither a
     "sez(ione)" marker nor a chamber keyword is present."""
-    win = text[pos:pos + 50]
-    stop = re.search(r"\bnn?\.?\s*\d|\d{1,2}\s*[./-]\s*\d{1,2}\s*[./-]\s*\d{2,4}", win, I)
-    if stop:
-        win = win[:stop.start()]
+    win = _cass_chamber_window(text, pos)
     kind = next((k for rx, k in _CASS_KIND_RE if rx.search(win)), None)
     msez = _CASS_SEZ_MARK.search(win)
     if not msez and kind is None:
         return ""
-    if kind == "UNITE":
-        return "UNITE"
-    if kind == "FERIALE":
-        return "FERIALE"
+    # A named chamber keeps its branch: "sezioni unite penali" is a different court from the
+    # civil Sezioni Unite and numbers its decisions separately, so collapsing both to "UNITE"
+    # sent every penal SS.UU. citation to the civil twin. The PEN suffix is the convention the
+    # numbered chambers already use ("3PEN"), which keeps `endswith("PEN")` the single test
+    # for "penale" everywhere downstream. Bare "UNITE" still means "branch not stated".
+    if kind in ("UNITE", "FERIALE"):
+        return kind + ("PEN" if _CASS_PEN_RE.search(win) else "")
     if kind == "LAVORO":
         return "LAVORO"
     if kind == "TRIB":
         return "5CIV"
-    suffix = "PEN" if kind == "PEN" else "CIV"
+    # A NUMBERED chamber says nothing about the branch: "Sez. 1" is the first civil section
+    # in a civil judgment and the first penal one in a penal judgment. So the suffix is
+    # written only when the text states the kind, and "1" (bare) means "branch unknown" —
+    # the value the document context is allowed to complete. It used to render "1CIV",
+    # indistinguishable from an explicit "sez. 1 civ.", which left nothing for a default
+    # to fill.
+    suffix = kind if kind in ("CIV", "PEN") else ""
     # the chamber number: an ordinal word ("sesta") anywhere, else the token right after "sez"
     # (arabic or roman; a range "5-6"/"5^6" keeps the first).
     num = ""
@@ -884,9 +938,7 @@ def _cass_section(text: str, pos: int) -> str:
         if mn:
             tok = mn.group(1).lower()
             num = tok if tok.isdigit() else (str(_roman(tok)) if _roman(tok) else "")
-    if num:
-        return f"{num}{suffix}"
-    return suffix if kind in ("CIV", "PEN") else ""
+    return f"{num}{suffix}"
 
 
 # Corte di Giustizia Tributaria grade: first grade carries city/province geography, second
@@ -977,8 +1029,9 @@ def recognize_authorities(text: str) -> List[Span]:
                 mtext = text[m.start():m.end()]
                 if re.match(r"\s*sez", mtext, I) and not re.match(r"\s*sezioni\s+unite\b", mtext, I):
                     attrs["implicit_sez_cass"] = "1"
-                cs = ("UNITE" if re.search(r"sezioni\s+unite|\bss\.?\s?uu|\bs\.\s*u\.?|\bsez(?:ione|\.)?\.?\s*u",
-                                           mtext, I)
+                cs = (_cass_unite_section(text, m.end())
+                      if re.search(r"sezioni\s+unite|\bss\.?\s?uu|\bs\.\s*u\.?|\bsez(?:ione|\.)?\.?\s*u",
+                                   mtext, I)
                       else (_cass_section(mtext, 0) if re.search(r"\bsez", mtext, I) else "")
                       or _cass_section(text, m.end()))
                 if cs:

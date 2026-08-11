@@ -19,7 +19,19 @@ class DocumentContext:
     explicitly provided (an empty string disables that fallback).
 
     The context is deliberately applied only to explicit self-references such as "questa
-    Corte". A bare "sentenza n. 123/2020" remains unresolved.
+    Corte". A bare "sentenza n. 123/2020" remains unresolved. ``chamber`` is the one
+    exception, and it is a considered one — see below.
+
+    ``chamber`` ("CIV" | "PEN") is the Cassazione branch of THIS document. Italian citation
+    practice routinely omits it ("Cass. n. 13808/2025", "Sez. 1, n. 41738"), yet `snciv` and
+    `snpen` number independently, so those citations name two different real decisions and
+    nothing in the citation itself can separate them. Absent a signal the engine reads them
+    as civile, which is right for ~98.8% of the corpus but wrong for essentially every
+    citation inside a penal judgment. Setting ``chamber="PEN"`` supplies the missing branch
+    for Cassazione citations that state none. It is an assumption, not a fact — measured at
+    roughly 50:1 in its favour (see ``_apply_context_chamber`` in engine.py) — so it fills
+    silence only: a citation that names its own chamber always wins, and ``chamber="CIV"``
+    is accepted but changes nothing, civile being the fallback already.
     """
 
     authority: str = ""
@@ -27,6 +39,7 @@ class DocumentContext:
     region: str = ""
     regional_law_region: Optional[str] = None
     document_year: Optional[int] = None
+    chamber: str = ""
 
     def __post_init__(self):
         authority = str(self.authority or "").strip()
@@ -63,6 +76,11 @@ class DocumentContext:
             if not MIN_YEAR <= document_year <= MAX_YEAR:
                 raise ValueError(f"invalid document year {self.document_year!r}")
 
+        chamber = str(self.chamber or "").strip().upper()
+        if chamber and chamber not in ("CIV", "PEN"):
+            raise ValueError(f"unknown document chamber {self.chamber!r}; expected 'CIV' or 'PEN'")
+
+        object.__setattr__(self, "chamber", chamber)
         object.__setattr__(self, "authority", authority)
         object.__setattr__(self, "city", city)
         object.__setattr__(self, "region", region)

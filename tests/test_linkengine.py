@@ -1031,8 +1031,145 @@ def test_caselaw_section_captured():
     assert sec == {"5CIV"}
     sec = {r["section"] for r in eng.extract("Cass. sez. un. n. 12345/2018").rows if r["section"]}
     assert sec == {"UNITE"}
+    # a NUMBER is not a branch: "sez. V" is the fifth civil section in a civil judgment and
+    # the fifth penal one in a penal judgment, so the suffix is written only when the text
+    # says which ("sez. V civ." -> "5CIV"). Bare "5" is what the document context completes.
     sec = {r["section"] for r in eng.extract("Cassazione, sez. V, n. 5953/2021").rows if r["section"]}
-    assert sec == {"5CIV"}                       # roman numeral -> arabic, civil chamber
+    assert sec == {"5"}                          # roman numeral -> arabic, branch unstated
+    sec = {r["section"] for r in eng.extract("Cass. civ., sez. V, n. 5953/2021").rows if r["section"]}
+    assert sec == {"5CIV"}
+
+
+# --- Cassazione civile / penale reaches the ECLI -----------------------------------------
+# `snciv` and `snpen` number their decisions independently, so numero+anno is not an identity:
+# 1,087 pairs in the Cassazione corpus name one civil AND one penal decision. The chamber used
+# to be recognized (`section`) and then dropped when the ECLI was assembled, which pointed
+# every penal citation at its civil twin. These tests pin the WHOLE path, prose -> urn: the
+# recognizer and `urn_to_text` were each tested on their own and both already knew about PEN,
+# which is exactly why nothing failed.
+
+def test_penale_chamber_reaches_the_ecli():
+    for text in ("Cass. pen. n. 13808/2025",
+                 "Cass. penale sez. III n. 13808/2025",
+                 "Cassazione penale, sez. 3, n. 13808 del 2025",
+                 "Cass. sez. 6 pen. n. 13808/2025"):
+        assert _urns(text) == ["ECLI:IT:CASS:2025:13808PEN"], text
+
+
+def test_sezioni_unite_and_feriale_keep_their_branch():
+    # SS.UU. and the sezione feriale exist on both sides (~30% of the penal corpus is unite),
+    # and UNITE outranks PEN in the chamber precedence — so the branch has to survive it.
+    for text in ("Cass. sez. un. pen. n. 25161/2002",
+                 "Cassazione, sezioni unite penali, n. 25161 del 2002",
+                 "Cass. S.U. penali n. 25161/2002",
+                 "Cass. pen. s.u., 24.4.2002, n. 25161"):   # branch BEFORE the chamber keyword
+        assert _urns(text) == ["ECLI:IT:CASS:2002:25161PEN"], text
+    assert _urns("Cass. sez. feriale penale n. 123/2020") == ["ECLI:IT:CASS:2020:123PEN"]
+
+
+def test_civile_is_the_default_when_the_chamber_is_not_stated():
+    # PEN needs a positive signal. A bare citation and the civil-side chambers stay CIV —
+    # 98.8% of the corpus, and what these citations already resolved to.
+    for text in ("Cass. n. 123/2020", "Cass. civ. n. 123/2020", "Cass. sez. trib. n. 123/2020",
+                 "Cass. SS.UU. n. 123/2020", "Cass. sez. un. civ. n. 123/2020",
+                 "Cass. sez. lavoro n. 123/2020", "Cass. sez. feriale n. 123/2020"):
+        assert _urns(text) == ["ECLI:IT:CASS:2020:123CIV"], text
+
+
+def test_penale_marker_does_not_leak_from_a_neighbouring_citation():
+    # the marker must sit between the court keyword and the chamber, inside ONE citation
+    assert _urns("art. 240 cod. pen. e Cass. n. 123/2020") == [
+        "ECLI:IT:CASS:2020:123CIV", "urn:nir:stato:regio.decreto:1930;1398:1~art240"]
+    assert _urns("art. 240 cod. pen. e Cass. s.u. n. 5/2020") == [
+        "ECLI:IT:CASS:2020:5CIV", "urn:nir:stato:regio.decreto:1930;1398:1~art240"]
+    assert _urns("Cass. pen. n. 100/2020; Cass. s.u. n. 200/2021") == [
+        "ECLI:IT:CASS:2020:100PEN", "ECLI:IT:CASS:2021:200CIV"]
+
+
+def test_chamber_survives_the_urn_round_trip():
+    """The seam that was broken: extract -> urn -> urn_to_text.
+
+    `_cass_section` produced PEN and `urn_to_text` rendered PEN, and each had its own test.
+    Only the composition shows the assembler in between throwing the chamber away."""
+    from linkengine.urn import urn_to_text
+    for text, expected in (("Cass. pen. n. 4866/2020", "Cassazione penale n. 4866/2020"),
+                           ("Cass. n. 4866/2020", "Cassazione civile n. 4866/2020"),
+                           ("Cass. sez. un. pen. n. 4866/2020", "Cassazione penale n. 4866/2020")):
+        assert urn_to_text(_urns(text)[0]) == expected, text
+
+
+def test_civile_and_penale_do_not_collapse_onto_one_identifier():
+    # the failure in one line: same numero+anno, two decisions, two identifiers
+    assert _urns("Cass. civ. n. 13808/2025") != _urns("Cass. pen. n. 13808/2025")
+
+
+# --- DocumentContext.chamber: the branch the citation never states -----------------------
+# Italian practice omits it ("Sez. 1, n. 41738"), so it can only come from the document doing
+# the citing. That is an assumption, and these pin the three limits that keep it defensible:
+# it fills silence only, it only ever supplies PEN, and without a context nothing changes.
+
+def _pen_ctx():
+    return LinkEngine(default_context=DocumentContext(authority="CORTE_CASS", chamber="PEN"))
+
+
+def _u1(eng, text):
+    return next(r["urn"] for r in eng.extract(text).rows if r["urn"].startswith("ECLI"))
+
+
+def test_penal_document_completes_an_unstated_chamber():
+    eng = _pen_ctx()
+    for text, expected in (("Cass. n. 13808/2025", "ECLI:IT:CASS:2025:13808PEN"),
+                           ("Sez. 1, n. 41738 del 19/10/2011", "ECLI:IT:CASS:2011:41738PEN"),
+                           ("Cass. sez. V n. 123/2020", "ECLI:IT:CASS:2020:123PEN"),
+                           ("Cass. SS.UU. n. 123/2020", "ECLI:IT:CASS:2020:123PEN"),
+                           ("questa Corte, sent. n. 4091 dell'8 luglio 1985",
+                            "ECLI:IT:CASS:1985:4091PEN")):
+        assert _u1(eng, text) == expected, text
+
+
+def test_a_stated_chamber_beats_the_document_context():
+    # the citation names its own branch: the assumption must not overrule what was written
+    eng = _pen_ctx()
+    for text, expected in (("Cass. civ. n. 123/2020", "ECLI:IT:CASS:2020:123CIV"),
+                           ("Cass. sez. trib. n. 123/2020", "ECLI:IT:CASS:2020:123CIV"),
+                           ("Cass. sez. lavoro n. 123/2020", "ECLI:IT:CASS:2020:123CIV"),
+                           ("Cass. pen. n. 123/2020", "ECLI:IT:CASS:2020:123PEN")):
+        assert _u1(eng, text) == expected, text
+
+
+def test_chamber_context_never_reaches_another_court():
+    # a penal Cassazione reading a tax judgment must not stamp PEN on the court below
+    assert _u1(_pen_ctx(), "CGT 2 Sicilia n. 2693/2022") == "ECLI:IT:CGT2SIC:2022:2693"
+
+
+def test_civ_context_and_no_context_are_both_no_ops():
+    """CIV is already the fallback: supplying it must change nothing at all.
+
+    Stating it explicitly would add a way to be wrong without adding an answer, so only PEN
+    is ever supplied — and a caller that does not know the branch keeps today's behaviour."""
+    civ = LinkEngine(default_context=DocumentContext(authority="CORTE_CASS", chamber="CIV"))
+    none = LinkEngine(default_context=DocumentContext(authority="CORTE_CASS"))
+    for text in ("Cass. n. 13808/2025", "Sez. 1, n. 41738 del 19/10/2011",
+                 "Cass. SS.UU. n. 123/2020", "Cass. pen. n. 123/2020"):
+        assert _u1(civ, text) == _u1(none, text), text
+
+
+def test_unknown_chamber_is_rejected():
+    with pytest.raises(ValueError):
+        DocumentContext(authority="CORTE_CASS", chamber="penale")
+    assert DocumentContext(chamber="pen").chamber == "PEN"      # normalized, like city/region
+
+
+def test_chamber_survives_the_context_rebuild_paths():
+    # extract(default_authority=...) and LinkEngine(default_authority=...) both rebuild the
+    # context field by field — a new field is silently dropped there unless it is carried
+    eng = _pen_ctx()
+    assert _u1(eng, "Cass. n. 123/2020") == "ECLI:IT:CASS:2020:123PEN"
+    rows = eng.extract("Cass. n. 123/2020", default_authority="CORTE_CASS").rows
+    assert next(r["urn"] for r in rows if r["urn"]) == "ECLI:IT:CASS:2020:123PEN"
+    eng2 = LinkEngine(default_authority="CORTE_CASS",
+                      default_context=DocumentContext(chamber="PEN"))
+    assert _u1(eng2, "Cass. n. 123/2020") == "ECLI:IT:CASS:2020:123PEN"
 
 
 # --- edge cases surfaced while growing the gold ------------------------------

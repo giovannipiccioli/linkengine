@@ -377,8 +377,24 @@ def _court_ecli(row, year, number):
         if _g(row, 'authority') in _TWO_LETTER_GEO and len(val) > 2:
             return None
         geo = val
-    suffix = "CIV" if _g(row, 'authority') == "CORTE_CASS" else ""
+    suffix = _cass_chamber_suffix(row) if _g(row, 'authority') == "CORTE_CASS" else ""
     return f"ECLI:IT:{prefix}{geo}:{year}:{number}{suffix}"
+
+
+def _cass_chamber_suffix(row) -> str:
+    """CIV or PEN — the last segment of a Cassazione ECLI, from the recognized chamber.
+
+    The two archives number independently (`snciv` / `snpen`), so numero+anno is NOT an
+    identity: 1,087 pairs in the Cassazione corpus name one civil AND one penal decision.
+    Dropping the chamber here made every one of those citations point at the civil twin.
+
+    PEN needs a POSITIVE signal in the text ("penale", "pen."), which `_cass_section`
+    reports as a section ending in PEN. Everything else stays CIV — a bare "Cass. n.
+    123/2020" carries no chamber, and "Sezioni Unite" exist on both sides, so neither can
+    be resolved from the citation alone. CIV is the right default for both: it is 98.8%
+    of the corpus, and it is what these citations already resolved to.
+    """
+    return "PEN" if _g(row, 'section').endswith("PEN") else "CIV"
 
 
 def _prassi_urn(row):

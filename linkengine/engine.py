@@ -201,6 +201,43 @@ def _resolve_overlaps(spans):
     return out
 
 
+#: Section values that STATE the Cassazione branch: anything ending in one of these, plus
+#: "LAVORO", which is civil by definition. Everything else — "" (no chamber named), "1"
+#: (numbered but unqualified), "UNITE", "FERIALE" — left the branch unsaid.
+_STATED_BRANCH = ("CIV", "PEN")
+
+
+def _apply_context_chamber(row, context) -> None:
+    """Fill a Cassazione citation's unstated branch from the branch of THIS document.
+
+    The information is simply not in the citation: "Cass. n. 13808/2025" and "Sez. 1, n.
+    41738" name a civil and a penal decision equally well, and both exist. So this is an
+    assumption, and the question is only whether it is the most reasonable one. Measured
+    against the massime corpora (86,621 penal + 224,729 civil ECLIs), unqualified Cassazione
+    citations resolve penale-only in 52.4% of cases inside penal judgments against 1.2%
+    inside civil ones — and the apparent civil remainder is largely instrument error, since
+    23.5% of citations that explicitly say "Cass. pen." are also reported civile-only by that
+    index (the civil set is 2.6x larger and the two share 15,209 numero/anno pairs).
+    Correcting for it puts the true civil share inside penal judgments at approximately zero.
+
+    So: right nearly always, and wrong in the residual case of a penal judgment citing a
+    genuinely civil decision (a prejudicial civil question, damages to the civil party).
+    Three limits keep that residual small and the behaviour predictable:
+
+    * it fills SILENCE only — a citation that names its own chamber always wins;
+    * only PEN is ever supplied. CIV is already the fallback, so a "CIV" context would
+      change no output while adding a way to be wrong;
+    * no context, no assumption — a caller that does not know the branch gets today's
+      behaviour unchanged.
+    """
+    if row.get("authority") != "CORTE_CASS" or context.chamber != "PEN":
+        return
+    section = row.get("section") or ""
+    if section.endswith(_STATED_BRANCH) or section == "LAVORO":
+        return
+    row["section"] = section + "PEN"
+
+
 class LinkEngine:
     """Pure-Python citation engine. Stateless; safe to reuse across calls."""
 
@@ -227,6 +264,7 @@ class LinkEngine:
                 region=default_context.region,
                 regional_law_region=default_region or default_context.regional_law_region,
                 document_year=default_context.document_year,
+                chamber=default_context.chamber,
             )
         else:
             self.default_context = default_context
@@ -272,6 +310,7 @@ class LinkEngine:
                 regional_law_region=(doc_context.regional_law_region if default_region is None
                                      else default_region),
                 document_year=doc_context.document_year,
+                chamber=doc_context.chamber,
             )
         reg_scope = (self.default_regolamento_scope if default_regolamento_scope is None
                      else default_regolamento_scope)
@@ -409,6 +448,7 @@ class LinkEngine:
                 row["city"] = authority.attrs["city"]
             if authority.attrs.get("section"):
                 row["section"] = authority.attrs["section"]
+            _apply_context_chamber(row, context)
         if rv_num:
             row["rv-number"] = rv_num.value
             if not row["authority"]:

@@ -175,6 +175,13 @@ engine.extract(
 ).rows[0]["urn"]
 #  -> 'ECLI:IT:CASS:2019:50CIV'
 
+# Cassazione: the civil/penal branch, when the citation does not state it
+cass_pen = DocumentContext(authority="CORTE_CASS", chamber="PEN")
+engine.extract("Sez. 1, n. 41738 del 19/10/2011", context=cass_pen).rows[0]["urn"]
+#  -> 'ECLI:IT:CASS:2011:41738PEN'      (without the context: ...41738CIV)
+engine.extract("Cass. civ. n. 41738/2011", context=cass_pen).rows[0]["urn"]
+#  -> 'ECLI:IT:CASS:2011:41738CIV'      the citation names its branch: context does not apply
+
 # a bare "regolamento N/AAAA": national (default) vs EU
 LinkEngine(default_regolamento_scope="comunitario").extract("il regolamento n. 123/2018").rows[0]["urn"]
 #  -> 'CELEX:32018R0123'
@@ -195,9 +202,31 @@ values raise `ValueError`.
 Modern CGT authorities emit the distinct ECLI court components `CGT1` and `CGT2`; historical
 `COMM_TRIBUT_PROV` and `COMM_TRIBUT_REG` references retain `CTP` and `CTR`.
 
-Context is used conservatively: it resolves explicit self-references such as `questa Corte` and
-unqualified regional laws, but does not turn every bare `Sentenza n. 123/2020` into a decision of
-the current court. `document_year` is optional; when supplied, a citation from a later year remains
+#### `chamber` — the Cassazione civil/penal branch
+
+`snciv` and `snpen` number their decisions independently, so `Cass. n. 13808/2025` names two
+real and different decisions. Italian citation practice routinely omits the branch
+(`Sez. 1, n. 41738`), and nothing in the citation can recover it — with no signal the engine
+reads it as `CIV`, right for the overwhelming majority of citations but wrong for nearly every
+one inside a penal judgment.
+
+`chamber="PEN"` supplies the missing branch from the document doing the citing. It is an
+assumption, deliberately made, and bounded by three rules:
+
+- **it fills silence only** — `Cass. civ.`, `sez. trib.`, `sez. lavoro` and `Cass. pen.` all
+  state their branch and always win;
+- **only `PEN` is ever supplied** — `CIV` is already the fallback, so `chamber="CIV"` is
+  accepted and changes no output;
+- **no context, no assumption** — omit it and behaviour is unchanged.
+
+Accordingly a *numbered* chamber carries no branch of its own: `sez. V` yields section `5`
+(unstated), and `5CIV` only when the text says `civ`/`trib`. Measured on 150 penal judgments,
+the context resolves 95.8% of their Cassazione citations to the penal twin; the residual risk
+is a penal judgment citing a genuinely civil decision, which the corpus puts near zero.
+
+Context is otherwise used conservatively: it resolves explicit self-references such as `questa
+Corte` and unqualified regional laws, but does not turn every bare `Sentenza n. 123/2020` into a
+decision of the current court. `document_year` is optional; when supplied, a citation from a later year remains
 an unresolved candidate instead of receiving an impossible identifier. Set `regional_law_region`
 when the regional-law fallback should differ from the deciding court's region.
 
