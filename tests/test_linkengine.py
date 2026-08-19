@@ -1789,3 +1789,70 @@ def test_html_no_inline_details():
     html = annotate_html("art. 2697 c.c.")
     assert "title=" not in html
     assert "data-urn=" in html
+
+
+# --- anchoring (html.reference_anchors) ------------------------------------------
+# The offsets under annotate_html, public for callers that emit their own markup. What the
+# library owes them is exactness: every recognized partition keeps its own anchor and its own
+# identifier. Deciding that a list of letters deserves one link rather than five is the
+# caller's presentation choice, and must not be made here.
+from linkengine import reference_anchors
+
+
+def test_anchors_index_the_source_exactly():
+    text = "Si veda l'art. 2697 c.c. e poi l'art. 43 DPR 600/73."
+    anchors = reference_anchors(text, only_with_urn=True)
+    assert [text[s:e] for s, e, _ in anchors] == [row[0]["text"] for *_, row in anchors]
+    assert [urn for *_, rows in anchors for urn in (rows[0]["urn"],)] == [
+        "urn:nir:stato:regio.decreto:1942;262:2~art2697",
+        "urn:nir:presidente.repubblica:decreto:1973;600~art43",
+    ]
+
+
+def test_anchors_are_ordered_and_never_overlap():
+    text = "artt. 15-18 DPR 600/73 e art. 2697 c.c."
+    anchors = reference_anchors(text)
+    assert [s for s, _e, _r in anchors] == sorted(s for s, _e, _r in anchors)
+    for (_s1, end1, _r1), (start2, _e2, _r2) in zip(anchors, anchors[1:]):
+        assert end1 <= start2
+
+
+def test_anchors_keep_every_partition_of_an_enumeration():
+    """A list of lettere is one reference per letter, each with its own span and its own
+    locator. Collapsing them is a rendering decision and does not belong to the library."""
+    text = "l'articolo 15, comma 1, lettere d), e), f), del d.lgs. 546/1992"
+    anchors = reference_anchors(text, only_with_urn=True)
+    surfaces = [text[s:e] for s, e, _ in anchors]
+    assert [rows[0]["urn"].split("~")[1] for *_, rows in anchors] == [
+        "art15-comma1-letd", "art15-comma1-lete", "art15-comma1-letf",
+    ]
+    # Each letter is anchored where it is written. The surfaces are not uniform — the first
+    # carries the article and comma, the last the act that identifies the whole list — but no
+    # letter is dropped or folded into its neighbour.
+    assert surfaces[0].endswith("d)") and surfaces[1] == "e)" and surfaces[2].startswith("f)")
+
+
+def test_anchors_reuse_a_supplied_extraction():
+    """The result carries the extraction options — normativa mode among them — so anchoring
+    must not silently re-extract in standard mode."""
+    engine = LinkEngine()
+    unit = "urn:nir:stato:decreto.legislativo:1992-12-31;546~art18"
+    text = "Si applica il comma 2 dell'articolo 20."
+    result = engine.extract(text, mode="normativa", current_unit_urn=unit)
+    anchors = reference_anchors(text, result, only_with_urn=True)
+    assert [rows[0]["urn"] for *_, rows in anchors] == [
+        "urn:nir:stato:decreto.legislativo:1992-12-31;546~art20-comma2"]
+    assert reference_anchors(text, only_with_urn=True) == [], "standard mode resolves no bare comma"
+
+
+def test_anchors_and_annotate_html_agree():
+    text = "art. 2697 c.c. e artt. 15-18 DPR 600/73"
+    surfaces = [text[s:e] for s, e, _ in reference_anchors(text, only_with_urn=True)]
+    assert all(f">{surface}</span>" in annotate_html(text, only_with_urn=True)
+               for surface in surfaces)
+
+
+def test_anchors_of_empty_text():
+    assert reference_anchors("") == []
+    assert reference_anchors(None) == []
+

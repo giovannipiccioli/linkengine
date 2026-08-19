@@ -20,7 +20,8 @@ from .geo import AUTONOMOUS_TAX_CITY_TO_GEO
 from .assembler import CASELAW_AUTH, PARTITION_ENTITIES, assemble
 from .model import (Entity, ExtractResult, PARTITION_LABEL, PARTITION_RANK, Reference,
                     Span, empty_row)
-from .normativa import INTERNAL_ATTR, validate_mode
+from .normativa import INTERNAL_ATTR, target_urn_for, validate_mode
+from .novelle import NovellaScopes, seed_row_from_target
 from . import recognizers as RZ
 from .recognizers import RECOGNIZERS
 
@@ -293,7 +294,8 @@ class LinkEngine:
 
         ``mode="standard"`` keeps bare partitions conservative. Use ``mode="normativa"``
         with the canonical NIR or CELEX identifier of the current structural unit to resolve
-        internal references such as ``comma 2`` against that unit.
+        internal references such as ``comma 2`` against that unit. Common amendment clauses
+        may instead resolve those bare partitions against a confidently named amended act.
         """
         if text is None:
             text = ""
@@ -340,15 +342,30 @@ class LinkEngine:
         rows = []
         for ref in refs:
             row = self._fill_fields(ref, doc_context, reg_scope)
-            if normativa_context is not None and ref.attrs.get(INTERNAL_ATTR):
-                normativa_context.seed_row(row)
             rows.append(row)
+
+        # Build ordinary references first.  The novella scope pass consumes those already-
+        # recognized act identities; it never reparses or rewrites a complete citation.
         for ref, row in zip(refs, rows):
-            if normativa_context is not None and ref.attrs.get(INTERNAL_ATTR):
-                row["urn"] = normativa_context.target_urn(ref.spans)
-            else:
-                row["urn"] = build_urn(row)
+            row["urn"] = "" if ref.attrs.get(INTERNAL_ATTR) else build_urn(row)
             row["url"] = compat_url(row["urn"])
+
+        if normativa_context is not None:
+            scopes = NovellaScopes(text, spans, refs, rows)
+            for ref, row in zip(refs, rows):
+                if not ref.attrs.get(INTERNAL_ATTR):
+                    continue
+                target = scopes.target_for(ref)
+                if target is None:
+                    continue
+                if target.is_current:
+                    normativa_context.seed_row(row)
+                    row["urn"] = normativa_context.target_urn(ref.spans)
+                else:
+                    seed_row_from_target(row, target.row or {})
+                    row["urn"] = target_urn_for(
+                        target.act_base or "", target.locator, ref.spans)
+                row["url"] = compat_url(row["urn"])
         # Keep unresolved rows only when they have a minimally useful citation skeleton. These
         # rows are intentionally returned as candidates for later, more contextual resolvers.
         keep = [i for i, row in enumerate(rows)

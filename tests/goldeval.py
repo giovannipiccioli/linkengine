@@ -1,7 +1,7 @@
 """
 Gold-based evaluation for linkengine — self-contained (uses only the ``linkengine`` package).
 
-Six hand-verified gold sets live in ``tests/gold/``:
+Seven hand-verified gold sets live in ``tests/gold/``:
 
 * ``gold_manual.csv``     — ``text|expected_urn|category|note``; recall (the expected URNs must
   all be produced). Multiple expected URNs are space-separated.
@@ -16,6 +16,9 @@ Six hand-verified gold sets live in ``tests/gold/``:
   real-legislation excerpts, each with its exact current-unit NIR or CELEX identifier; scored
   for exact segmentation, anchors, partitions and identifiers. They intentionally retain a few
   unsupported cases as an evaluation corpus.
+* ``gold_normativa_novelle.jsonl`` — real amendment clauses and editorial notes. Supported
+  entries are regression gates; entries labelled ``known-miss`` deliberately record the
+  semantic result that a more complete amendment parser would produce.
 
 Run::
 
@@ -151,25 +154,32 @@ def score_fields(path, verbose=False):
 
 
 # ── normativa mode: real legislation + exact internal-link anchors ────────────
+def normativa_case(entry, engine=None):
+    """Return ``(matches, produced)`` for one exact normativa gold entry."""
+    engine = engine or LinkEngine()
+    result = engine.extract(
+        entry["text"],
+        mode="normativa",
+        current_unit_urn=entry["current-unit-urn"],
+    )
+    produced = [{
+        "text": row.get("text", ""),
+        "partition": row.get("partition", ""),
+        "urn": row.get("urn", ""),
+    } for row in result.rows]
+    expected = entry["refs"]
+    matches = len(produced) == len(expected) and all(
+        _match(ref, produced) for ref in expected)
+    return matches, produced
+
+
 def score_normativa(path, verbose=False, title="GOLD NORMATIVA"):
     gold = _load_jsonl(path)
     eng = LinkEngine()
     byselection, byselection_ok, npass = Counter(), Counter(), 0
     for entry in gold:
-        produced = []
-        result = eng.extract(
-            entry["text"],
-            mode="normativa",
-            current_unit_urn=entry["current-unit-urn"],
-        )
-        for row in result.rows:
-            produced.append({
-                "text": row.get("text", ""),
-                "partition": row.get("partition", ""),
-                "urn": row.get("urn", ""),
-            })
+        ok, produced = normativa_case(entry, eng)
         expected = entry["refs"]
-        ok = len(produced) == len(expected) and all(_match(ref, produced) for ref in expected)
         npass += ok
         selection = entry.get("selection", "unspecified")
         byselection[selection] += 1
@@ -193,7 +203,10 @@ def run_all(verbose=False):
     n4, t4 = score_normativa(os.path.join(GOLD_DIR, "gold_normativa.jsonl"), verbose)
     n5, t5 = score_normativa(
         os.path.join(GOLD_DIR, "gold_normativa_eu.jsonl"), verbose, "GOLD NORMATIVA EU")
-    return (n1, t1), (n2, t2), (n3, t3), (n4, t4), (n5, t5)
+    n6, t6 = score_normativa(
+        os.path.join(GOLD_DIR, "gold_normativa_novelle.jsonl"), verbose,
+        "GOLD NORMATIVA NOVELLE")
+    return (n1, t1), (n2, t2), (n3, t3), (n4, t4), (n5, t5), (n6, t6)
 
 
 if __name__ == "__main__":

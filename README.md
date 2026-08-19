@@ -48,10 +48,14 @@ aliases — is baked in, so no network or external service is needed.
   (`ECLI:IT:CASS:2020:1234CIV` → `"Cassazione civile n. 1234/2020"`).
 - **HTML annotation** — re-emit the input with each recognized reference wrapped in a tag
   carrying its fields, so you can *see* what was picked up.
+- **Anchors** — `reference_anchors` gives the character offsets underneath that rendering, so a
+  caller producing something other than HTML (JSON spans, `<a>` elements, a text editor's
+  highlights) locates each citation in the source without searching for it again.
 - **Configurable context** — a deciding court for self-references (`questa Corte`), a default
   region for unqualified regional laws, and how to read a bare `regolamento`.
 - **Normativa mode** — inside a known legislative unit, resolve otherwise-bare internal
-  partitions (`articolo 15`, `comma 2`, `presente articolo`) against its NIR or CELEX identifier.
+  partitions (`articolo 15`, `comma 2`, `presente articolo`) and conservatively follow a named
+  amended act through common replacement and insertion clauses.
 
 ---
 
@@ -118,6 +122,32 @@ unclaimed. Structural `Art. N` headings are not citations. National units use th
 including the full promulgation date; EU units use a canonical CELEX locator such as
 `CELEX:32016R0679~art17`.
 
+Common *novelle* are scoped to their explicitly named target. In the example below, neither
+bare reference belongs to the decree currently being processed:
+
+```python
+text = (
+    "Al decreto legislativo 19 giugno 1997, n. 218, sono apportate le seguenti "
+    "modificazioni: all'articolo 5 il comma 1 è sostituito dal seguente: "
+    "«1. Nei casi di cui all'articolo 6 si applica il comma 2.»"
+)
+result = engine.extract(
+    text,
+    mode="normativa",
+    current_unit_urn="urn:nir:stato:decreto.legislativo:2024;13~art1",
+)
+[row["urn"] for row in result.rows]
+# ['urn:nir:stato:decreto.legislativo:1997;218',
+#  'urn:nir:stato:decreto.legislativo:1997;218~art5-comma1',
+#  'urn:nir:stato:decreto.legislativo:1997;218~art6-comma2']
+```
+
+This is deliberately a scope resolver, not a general legislative-amendment parser. It handles
+only a named target, nearby amendment wording, numbered blocks and balanced quotation marks.
+When an excerpt omits the target act or ownership is genuinely ambiguous, the incomplete
+reference is left unresolved instead of being linked to the wrong act. Complete citations,
+including those inside replacement text, stay on the ordinary extraction path.
+
 ### Highlighting references in HTML
 
 `annotate_html` re-emits the **original text** with every recognized citation highlighted (styled
@@ -141,6 +171,35 @@ with open("sentenza.html", "w") as f:
 
 Pass `only_with_urn=True` to highlight only the citations that resolved to a `urn`. To reuse an
 extraction (or a configured engine), pass the result in: `annotate_html(text, engine.extract(text))`.
+
+### Locating citations in the source (`reference_anchors`)
+
+HTML is one way to present what was recognized; the offsets underneath it are reusable.
+`reference_anchors` returns `[(start, end, [rows…]), …]` in document order, where `text[start:end]`
+is the citation surface and the rows carry its fields. Anchors never overlap, so they can be
+walked in one pass to rebuild the text with markup of your own:
+
+```python
+from linkengine import LinkEngine, reference_anchors
+
+text = "Si applica l'articolo 15, comma 1, lettere d), e), del d.lgs. 546/1992."
+
+for start, end, rows in reference_anchors(text, only_with_urn=True):
+    print(start, end, repr(text[start:end]), rows[0]["urn"])
+# 13 45 'articolo 15, comma 1, lettere d)' ...:1992;546~art15-comma1-letd
+# 47 70 'e), del d.lgs. 546/1992'          ...:1992;546~art15-comma1-lete
+```
+
+Each recognized partition keeps its own anchor and its own identifier, down to the letter — an
+enumeration is *not* collapsed. Surfaces are not uniform, as above: the first item of a list
+carries the article and comma, the last carries the act that identifies the whole list. What is
+guaranteed is that anchors are exact, ordered and non-overlapping, and that no reference is
+dropped or folded into its neighbour. Presentation decisions — whether a list of lettere deserves
+one link or five, what granularity a target opens at — belong to the caller, not here.
+
+Same options as `annotate_html`: `only_with_urn=True` for resolved citations only, and a
+precomputed `result` to reuse an extraction or a configured engine —
+`reference_anchors(text, engine.extract(text, mode="normativa", current_unit_urn=urn))`.
 
 ### Configuring context
 
@@ -273,6 +332,7 @@ rows with `urn`
 | `model.py` | the span vocabulary (`Entity`, `Span`, `Reference`, `ExtractResult`) and the feature-row schema |
 | `context.py` | validated per-document court and geographic metadata |
 | `normativa.py` | validated current-unit NIR/CELEX context and internal locator resolution |
+| `novelle.py` | conservative amendment-scope classification for normativa-only candidates |
 | `recognizers.py` | regex recognizers (dates, numbers, doctypes, courts, …) → spans |
 | `special_cases.py` | narrow, named lexical exceptions; structural policies do not belong here |
 | `partitions.py` | partition recognition + range/list segmentation |
@@ -284,7 +344,7 @@ rows with `urn`
 | `conventions.py`, `budget_laws.py` | parametrized law lookups (tax treaties; annual budget laws) |
 | `geo.py` | provinces / regions / comuni ↔ codes (for ECLI geography) |
 | `normalize.py` | URN-NIR / CELEX construction and validation |
-| `html.py` | `annotate_html(text, page=…)` — highlight recognized references in HTML |
+| `html.py` | `reference_anchors(text)` — where each citation sits in the source; `annotate_html(text, page=…)` — the same, rendered as highlighted HTML |
 | `runner.py` | `run_linkengine_string(text)` → pipe-separated CSV of the rows |
 
 Adding coverage is localized: a new court goes in `catalog.py`, an alias in `aliases.py`, a
@@ -309,11 +369,15 @@ The behavior is pinned by **hand-verified gold sets** (`tests/gold/`), scored by
 - `gold_normativa_eu.jsonl` — 32 sourced excerpts covering 31 EU legislative units and 29 acts,
   including well-known and fixed-seed ordinary regulations, directives, and decisions from
   1958–2025. Complete external citations are also checked for exact equality with standard mode.
+- `gold_normativa_novelle.jsonl` — 33 real amendment clauses and editorial notes from 14 famous
+  and ordinary Italian legislative units, across 22 patterns and seven source years. Supported
+  cases are exact regression gates; 12 named limitation cases preserve the semantic result and
+  currently document where the intentionally small scope resolver stops.
 
 ```bash
 pytest                          # unit tests + the gold gates
 python -m tests.goldeval -v     # the gold scores, with any misses
-python -m tests.bench_full_docs  # throughput over copied full-document samples
+python -m tests.bench_full_docs  # throughput over full documents and amendment units
 ```
 
 ---

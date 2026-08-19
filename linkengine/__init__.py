@@ -17,7 +17,8 @@ Public API::
         print(row["text"], row["urn"])
     result.trace                   # per-recognizer spans (debug=True)
 
-    # Resolve bare internal references while processing a known legislative unit.
+    # Resolve bare internal references (including common amendment scopes) while processing
+    # a known legislative unit.
     eng.extract("Si applica il comma 2 del presente articolo.", mode="normativa",
                 current_unit_urn="CELEX:32016R0679~art17")
 
@@ -26,6 +27,7 @@ Public API::
     # -> "PRAX:MEF:RIS:1982:271112"
     annotate_html(text)                           # -> the text with citations highlighted (HTML)
     annotate_html(text, page=True)                # -> a complete standalone HTML document
+    reference_anchors(text, result)               # -> [(start, end, [rows…])] to build your own
 
 ``runner.run_linkengine_string(text)`` returns a pipe-separated CSV view of the rows.
 """
@@ -33,7 +35,7 @@ from .context import DocumentContext
 from .engine import LinkEngine
 from .model import Entity, Span, Reference, ExtractResult
 from .urn import generate_prax_urn, urn_to_text
-from .html import annotate_html
+from .html import annotate_html, reference_anchors
 
 __all__ = ["LinkEngine", "DocumentContext", "Entity", "Span", "Reference", "ExtractResult",
-           "generate_prax_urn", "urn_to_text", "annotate_html"]
+           "generate_prax_urn", "urn_to_text", "annotate_html", "reference_anchors"]

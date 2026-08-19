@@ -21,6 +21,8 @@ STANDARD_MODE = "standard"
 NORMATIVA_MODE = "normativa"
 MODES = {STANDARD_MODE, NORMATIVA_MODE}
 INTERNAL_ATTR = "normativa-internal"
+ATTACHED_ATTR = "normativa-attached"
+CURRENT_ATTR = "normativa-current"
 
 _NIR_UNIT = re.compile(
     r"^(urn:nir:([^:;~]+):([^:;~]+):(\d{4}(?:-\d{2}-\d{2})?);([^~]+))"
@@ -62,6 +64,66 @@ def _value_for(tokens: Iterable[Tuple[str, int]], prefix: str) -> str:
         if token.startswith(prefix) and len(token) > len(prefix):
             return token[len(prefix):]
     return ""
+
+
+def target_urn_for(act_base: str, current_locator: str, spans: Iterable[Span]) -> str:
+    """Resolve a partition path against an arbitrary legislative act and local locator.
+
+    ``NormativaContext`` uses this for the act supplied by the caller.  Novella handling uses
+    the same function with the already-recognized amended act and the article selected by the
+    amendment.  Keeping identifier merging here prevents the scope classifier from learning
+    anything about NIR or CELEX syntax.
+    """
+    scheme = "celex" if act_base.upper().startswith("CELEX:") else "nir"
+    current_tokens = tuple(_locator_tokens((current_locator or "").lower()))
+    effective = []
+    for span in spans:
+        if span.entity not in PARTITION_RANK:
+            continue
+        value = span.value
+        if span.attrs.get("normativa-relative"):
+            prefix = "art" if span.entity == Entity.ARTICLE else "comma"
+            value = _value_for(current_tokens, prefix)
+        if value:
+            effective.append((span.entity, value))
+    effective.sort(key=lambda part: -PARTITION_RANK[part[0]])
+    if not effective:
+        return ""
+
+    entity, value = effective[0]
+    if entity == Entity.ALLEGATO:
+        annex_locator = partition_to_locator(f"{PARTITION_LABEL[entity]}-{value}")
+        if scheme == "celex":
+            return f"{act_base}~{annex_locator}" if annex_locator else ""
+        annex = annex_locator[3:] if annex_locator.startswith("all") else ""
+        prefix, payload = act_base.rsplit(";", 1)
+        act_root = prefix + ";" + payload.split(":", 1)[0]
+        return f"{act_root}:{annex}" if annex else ""
+
+    if entity == Entity.CONSIDERANDO:
+        if scheme != "celex":
+            return ""
+        recital = partition_to_locator(f"{PARTITION_LABEL[entity]}-{value}")
+        return f"{act_base}~{recital}" if recital else ""
+
+    first_rank = PARTITION_RANK[entity]
+    current_prefix = [(token, rank) for token, rank in current_tokens if rank > first_rank]
+    if entity != Entity.ARTICLE:
+        if not any(token.startswith("art") for token, _ in current_prefix):
+            return ""
+        if first_rank < PARTITION_RANK[Entity.COMMA] and not any(
+                PARTITION_RANK[Entity.ARTICLE] > rank > first_rank
+                for _, rank in current_prefix):
+            return ""
+
+    field = "_".join(
+        f"{PARTITION_LABEL[part_entity]}-{part_value}"
+        for part_entity, part_value in effective)
+    candidate = partition_to_locator(field)
+    if not candidate:
+        return ""
+    locator = "-".join([token for token, _ in current_prefix] + candidate.split("-"))
+    return act_base + "~" + locator
 
 
 @dataclass(frozen=True)
@@ -172,46 +234,7 @@ class NormativaContext:
         Still-deeper bare partitions require a sub-article parent in the supplied unit URN;
         this avoids inventing a comma for an isolated ``lettera b)`` in an article body.
         """
-        parts = sorted(
-            (span for span in spans if span.entity in PARTITION_RANK),
-            key=lambda span: -PARTITION_RANK[span.entity],
-        )
-        if not parts:
-            return ""
-
-        if parts[0].entity == Entity.ALLEGATO:
-            annex_locator = partition_to_locator(
-                f"{PARTITION_LABEL[Entity.ALLEGATO]}-{parts[0].value}")
-            if self.scheme == "celex":
-                return f"{self.act_base}~{annex_locator}" if annex_locator else ""
-            annex = annex_locator[3:] if annex_locator.startswith("all") else ""
-            return f"{self.act_root}:{annex}" if annex else ""
-
-        if parts[0].entity == Entity.CONSIDERANDO:
-            if self.scheme != "celex":
-                return ""
-            recital = partition_to_locator(
-                f"{PARTITION_LABEL[Entity.CONSIDERANDO]}-{parts[0].value}")
-            return f"{self.act_base}~{recital}" if recital else ""
-
-        first_rank = PARTITION_RANK[parts[0].entity]
-        current_prefix = [(token, rank) for token, rank in self.current_tokens
-                          if rank > first_rank]
-        if parts[0].entity != Entity.ARTICLE:
-            if not any(token.startswith("art") for token, _ in current_prefix):
-                return ""
-            if first_rank < PARTITION_RANK[Entity.COMMA] and not any(
-                    PARTITION_RANK[Entity.ARTICLE] > rank > first_rank
-                    for _, rank in current_prefix):
-                return ""
-
-        field = "_".join(
-            f"{PARTITION_LABEL[span.entity]}-{span.value}" for span in parts)
-        candidate = partition_to_locator(field)
-        if not candidate:
-            return ""
-        locator = "-".join([token for token, _ in current_prefix] + candidate.split("-"))
-        return self.act_base + "~" + locator
+        return target_urn_for(self.act_base, self.current_locator, spans)
 
 
 def validate_mode(mode: str, current_unit_urn: Optional[str]) -> Optional[NormativaContext]:

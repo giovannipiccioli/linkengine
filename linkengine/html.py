@@ -2,12 +2,22 @@
 HTML highlighting — re-emit the input text with every recognized legal reference highlighted
 (styled like a link), so you can *see* in the text which citations were found.
 
-**One function**, ``annotate_html`` — pick what you get with the ``page`` flag::
+``annotate_html`` is the rendering entry point; ``reference_anchors`` is the anchoring step
+underneath it, public because a caller that emits something other than HTML (a JSON span list
+for a web reader) needs the same offsets and must not re-derive them.
+
+Pick what ``annotate_html`` gives you with the ``page`` flag::
 
     from linkengine import annotate_html
 
     annotate_html(text)                  # -> an inline HTML fragment (embed it in your own page)
     annotate_html(text, page=True)       # -> a complete standalone HTML document (save & open)
+
+``reference_anchors`` exposes the step underneath it — where each citation sits in the source —
+for callers that build their own markup (a web reader turning citations into ``<a>`` elements)::
+
+    for start, end, rows in reference_anchors(text, only_with_urn=True):
+        ...                              # text[start:end] is the clickable surface
 
 Each citation is wrapped in ``<span class="lkn-ref" data-urn=… data-…>…</span>``: the visible
 text is unchanged (just highlighted via CSS), while the extracted fields live in ``data-*``
@@ -70,10 +80,26 @@ def _find_anchor(text: str, anchor: str, ref_start: int) -> Tuple[int, int]:
     return -1, -1
 
 
-def _build_anchors(text: str, result: ExtractResult,
-                   only_with_urn: bool) -> List[Tuple[int, int, List[Dict[str, str]]]]:
+def reference_anchors(text: str, result: Optional[ExtractResult] = None, *,
+                      only_with_urn: bool = False,
+                      ) -> List[Tuple[int, int, List[Dict[str, str]]]]:
     """Return ``[(start, end, [rows…]), …]`` in document order, with co-anchored rows merged
-    and any overlapping anchors dropped (keep the first/longest)."""
+    and any overlapping anchors dropped (keep the first/longest).
+
+    The offsets index ``text`` directly, so a caller can slice the source itself instead of
+    searching for citation strings again: ``text[start:end]`` is the clickable/highlightable
+    surface, and the rows carry the extracted fields (``urn`` first). This is what
+    ``annotate_html`` renders; callers that build their own output (a JSON span list for a
+    web reader, say) use it directly rather than re-deriving offsets.
+
+    ``result`` reuses an ``engine.extract(text)`` — pass one to keep the extraction options
+    (``mode="normativa"``, a configured engine); omitted, the text is extracted with a
+    default engine in standard mode.
+    """
+    if not text:
+        return []
+    if result is None:
+        result = _engine().extract(text)
     rows, refs = result.rows, result.references
     spans = []
     for i, row in enumerate(rows):
@@ -169,9 +195,7 @@ def annotate_html(text: str, result: Optional[ExtractResult] = None, *, page: bo
     """
     if text is None:
         return ""
-    if result is None:
-        result = _engine().extract(text)
-    anchors = _build_anchors(text, result, only_with_urn)
+    anchors = reference_anchors(text, result, only_with_urn=only_with_urn)
 
     buf: List[str] = []
     cursor = 0

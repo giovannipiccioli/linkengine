@@ -2,6 +2,7 @@
 import pytest
 
 from linkengine import LinkEngine
+from linkengine.normativa import INTERNAL_ATTR
 
 
 ENGINE = LinkEngine()
@@ -146,6 +147,143 @@ def test_external_amendment_block_is_not_resolved_against_current_act():
         "modificazioni: a) all'articolo 2 sono aggiunte le parole indicate."
     )
     assert not any("1986-12-22;917" in urn for urn in _urns(text))
+
+
+def test_novella_selector_and_replacement_text_use_the_amended_act():
+    text = (
+        "Al decreto legislativo 19 giugno 1997, n. 218, sono apportate le seguenti "
+        "modificazioni: all'articolo 5, il comma 1 è sostituito dal seguente: "
+        "«1. Nei casi di cui all'articolo 6 si applica il comma 2.»"
+    )
+    assert _urns(text) == [
+        "urn:nir:stato:decreto.legislativo:1997;218",
+        "urn:nir:stato:decreto.legislativo:1997;218~art5-comma1",
+        "urn:nir:stato:decreto.legislativo:1997;218~art6-comma2",
+    ]
+
+
+def test_inserted_article_heading_supplies_the_quote_local_article():
+    text = (
+        "Al decreto legislativo 19 giugno 1997, n. 218, sono apportate le seguenti "
+        "modificazioni: dopo l'articolo 5-ter è inserito il seguente: "
+        "«5-quater (Adesione). - 1. Nel caso di cui al comma 1 si applicano le "
+        "indicazioni previste dall'articolo 7.»"
+    )
+    assert _urns(text) == [
+        "urn:nir:stato:decreto.legislativo:1997;218",
+        "urn:nir:stato:decreto.legislativo:1997;218~art5ter",
+        "urn:nir:stato:decreto.legislativo:1997;218~art5quater-comma1",
+        "urn:nir:stato:decreto.legislativo:1997;218~art7",
+    ]
+
+
+def test_structural_article_heading_inside_replacement_is_context_not_a_citation():
+    text = (
+        "Nel decreto del Presidente della Repubblica 29 settembre 1973, n. 600, "
+        "l'articolo 38 è sostituito dal seguente: «Art. 38 (Accertamento). - 1. "
+        "Si applica il comma 2.»"
+    )
+    urns = _urns(text)
+    assert urns.count("urn:nir:presidente.repubblica:decreto:1973;600~art38") == 1
+    assert "urn:nir:presidente.repubblica:decreto:1973;600~art38-comma2" in urns
+
+
+def test_word_substitution_quotes_keep_the_amended_act_scope():
+    text = (
+        "Al testo unico approvato con decreto del Presidente della Repubblica "
+        "23 gennaio 1973, n. 43, sono apportate le seguenti modificazioni: "
+        "nell'articolo 307 le parole \"la pena stabilita nell'articolo 305\" sono "
+        "sostituite dalle seguenti: \"la sanzione stabilita nell'articolo 305\"."
+    )
+    assert _urns(text).count(
+        "urn:nir:presidente.repubblica:decreto:1973;43~art305") == 2
+    assert "urn:nir:presidente.repubblica:decreto:1973;43~art307" in _urns(text)
+
+
+def test_target_changes_at_the_next_real_numbered_paragraph_not_inside_quotes():
+    text = (
+        "1. Al decreto legislativo 19 giugno 1997, n. 218, sono apportate le seguenti "
+        "modificazioni: all'articolo 5 il comma 1 è sostituito dal seguente: "
+        "«1. Si applica l'articolo 7.»\n"
+        "2. Al decreto del Presidente della Repubblica 29 settembre 1973, n. 600, "
+        "sono apportate le seguenti modificazioni: all'articolo 31 è aggiunto il "
+        "seguente comma: «Si applica l'articolo 32.»"
+    )
+    urns = _urns(text)
+    assert "urn:nir:stato:decreto.legislativo:1997;218~art7" in urns
+    assert "urn:nir:presidente.repubblica:decreto:1973;600~art32" in urns
+    assert "urn:nir:stato:decreto.legislativo:1997;218~art32" not in urns
+
+
+def test_present_decree_explicitly_escapes_the_amended_act_scope():
+    text = (
+        "Al decreto del Presidente della Repubblica 29 settembre 1973, n. 600, sono "
+        "apportate le seguenti modificazioni; i richiami si intendono introdotti dal "
+        "comma 2, lettera b), del presente decreto."
+    )
+    assert TUIR_ART8.rsplit("~", 1)[0] + "~art8-comma2-letb" in _urns(text)
+
+
+def test_ambiguous_amendment_without_a_named_target_is_not_guessed():
+    text = "All'articolo 12 le parole indicate sono sostituite dalle seguenti: «altre parole»."
+    assert _urns(text) == []
+
+
+def test_ha_disposto_parenthetical_uses_the_subject_act():
+    text = (
+        "Il D.L. 30 settembre 2015, n. 153, convertito con modificazioni dalla "
+        "L. 20 novembre 2015, n. 187, ha disposto (con l'art. 2, comma 2, lettera a)) "
+        "che il termine è prorogato."
+    )
+    assert "urn:nir:stato:decreto.legge:2015;153~art2-comma2-leta" in _urns(text)
+
+
+def test_complete_external_rows_are_untouched_when_novella_rows_are_added():
+    text = (
+        "Al decreto legislativo 19 giugno 1997, n. 218, sono apportate le seguenti "
+        "modificazioni: all'articolo 5 è aggiunto il richiamo all'articolo 24 della "
+        "legge 7 gennaio 1929, n. 4."
+    )
+    standard = ENGINE.extract(text)
+    normativa = _result(text)
+
+    def without_id(row):
+        return {key: value for key, value in row.items() if key != "id"}
+
+    ordinary = [without_id(row) for row, ref in zip(normativa.rows, normativa.references)
+                if not ref.attrs.get(INTERNAL_ATTR)]
+    key = lambda row: (row["urn"], row["text"], row["partition"])
+    assert sorted(ordinary, key=key) == sorted(
+        (without_id(row) for row in standard.rows), key=key)
+
+
+def test_eu_amendment_scope_uses_the_amended_celex_act():
+    text = (
+        "La direttiva 87/402/CEE è modificata come segue: l'articolo 2 è sostituito "
+        "dal seguente: «Articolo 2. Si applica l'articolo 3.»"
+    )
+    urns = _urns(text, "CELEX:32010L0022~art4")
+    assert "CELEX:31987L0402~art2" in urns
+    assert "CELEX:31987L0402~art3" in urns
+    assert not any(urn.startswith("CELEX:32010L0022~art2") for urn in urns)
+
+
+def test_ha_disposto_after_conversion_law_still_uses_the_subject_decree():
+    text = (
+        "Il D.L. 30 aprile 2019, n. 34, convertito con modificazioni dalla L. 28 giugno "
+        "2019, n. 58, ha disposto (con l'art. 4-octies, comma 2) che la modifica si applica."
+    )
+    assert "urn:nir:stato:decreto.legge:2019;34~art4octies-comma2" in _urns(text)
+
+
+@pytest.mark.xfail(strict=False, reason="backward ownership across a quoted article list")
+def test_known_miss_quoted_list_owned_by_trailing_external_act():
+    text = (
+        "La legge 23 dicembre 2014, n. 190 ha disposto che \"Le disposizioni di cui agli "
+        "articoli 5, commi da 1-bis a 1-quinquies, e 11, comma 1-bis, del decreto "
+        "legislativo 19 giugno 1997, n. 218, continuano ad applicarsi\"."
+    )
+    assert "urn:nir:stato:decreto.legislativo:1997;218~art5-comma1bis" in _urns(text)
 
 
 def test_internal_rows_keep_exact_urn_fields_and_offsets():

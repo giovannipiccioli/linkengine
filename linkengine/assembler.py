@@ -488,7 +488,8 @@ def _article_groups(part_spans: List[Span], anchors: List[Span], text: str, *,
             gap = text[cur[-1].end:s.start]
             narrative_break = deictic_connectors and len(
                 re.findall(r"[A-Za-zÀ-ÖØ-öø-ÿ]+", gap)) >= 5
-            if _SENT_BOUND.search(gap) or len(gap) > 80 or narrative_break or \
+            quote_boundary = any(mark in gap for mark in ('"', '«', '»', '“', '”'))
+            if _SENT_BOUND.search(gap) or len(gap) > 80 or narrative_break or quote_boundary or \
                     any(cur[-1].end <= a.start and a.end <= s.start for a in anchors):
                 runs.append(cur); cur = []
         cur.append(s)
@@ -525,6 +526,22 @@ def _pair_group(i: int, tokens, text: str) -> Optional[Span]:
        ("art. 156 ult. co. c.p.p."), to the closest act within a short window.
     Returns the act anchor Span, or None (leave unpaired)."""
     n, (_, g, gs, ge) = len(tokens), tokens[i]
+
+    # Editorial application notes use a very stable grammar: ``X, converted by Y, has
+    # provided (with art. Z) ...``.  The article belongs to grammatical subject X, not to the
+    # nearer conversion law Y.  This is ordinary complete-citation assembly and therefore
+    # applies identically in standard and normativa modes.
+    prefix_start = max(0, text.rfind("\n", max(0, gs - 600), gs) + 1)
+    prefix = text[prefix_start:gs]
+    disposed = list(re.finditer(
+        r"\bha\s+disposto\s*\(\s*con\s+l['’]\s*$", prefix, re.I))
+    if disposed:
+        disposed_start = prefix_start + disposed[-1].start()
+        subjects = [token for token in tokens
+                    if token[0] == "act" and prefix_start <= token[2]
+                    and token[3] <= disposed_start]
+        if subjects:
+            return min(subjects, key=lambda token: token[2])[1]
     # 1. right-direct
     if i + 1 < n and tokens[i + 1][0] == "act" and _GEN_R.match(text[ge:tokens[i + 1][2]]):
         return tokens[i + 1][1]
@@ -547,8 +564,14 @@ def _pair_group(i: int, tokens, text: str) -> Optional[Span]:
     # for the CGUE catch-all rather than latch onto a legislation act)
     if any(s.entity in (Entity.ARTICLE, Entity.ALLEGATO, Entity.CONSIDERANDO) for s in g):
         best, cand = 26, None
+        group_span = Span(gs, ge, Entity.ARTICLE, "", text[gs:ge])
         for t in tokens:
             if t[0] != "act":
+                continue
+            if _is_conversion_law_source([t[1]], text):
+                continue
+            act_span = Span(t[2], t[3], Entity.DOCTYPE, "", text[t[2]:t[3]])
+            if _hard_boundary_between(text, group_span, act_span):
                 continue
             d = max(0, t[2] - ge, gs - t[3])
             if d < best:
@@ -599,6 +622,10 @@ def _pair_partitions(state: AssemblyState) -> None:
 
     for i, tok in enumerate(tokens):
         if tok[0] != "grp":
+            continue
+        if _quoted_article_heading(state.text, tok[1]):
+            for span in tok[1]:
+                state.attach_partition(span)
             continue
         if _unknown_right_act_after_group(i, tokens, state.text):
             for span in tok[1]:
@@ -923,12 +950,6 @@ def _bind_cgue_partitions(state: AssemblyState) -> None:
             state.bind(partition, best)
 
 
-_TOP_LEVEL_PARAGRAPH = re.compile(r"^\s*\d+(?:-[a-z]+)?\.\s+", re.I | re.M)
-_AMENDMENT = re.compile(
-    r"\b(?:sono\s+apportat[ei]|seguenti\s+modificazioni|(?:è|e')\s+(?:inserit[oa]|"
-    r"sostituit[oa]|abrogat[oa]|modificat[oa]))\b",
-    re.I,
-)
 _CURRENT_ACT_AFTER = re.compile(
     r"^[^.;]{0,55}\b(?:del(?:la)?|dell['’])\s+presente\s+"
     r"(?:atto|legge|decreto|regolamento|direttiva|decisione|provvedimento)\b",
@@ -952,15 +973,21 @@ def _line_heading(text: str, group: List[Span]) -> bool:
     ))
 
 
-def _inside_external_amendment(state: AssemblyState, start: int) -> bool:
-    """Reject an orphan partition in a clause that is amending a named external act."""
-    block_start = 0
-    for match in _TOP_LEVEL_PARAGRAPH.finditer(state.text, 0, start):
-        block_start = match.start()
-    prefix = state.text[block_start:start]
-    if not _AMENDMENT.search(prefix):
+def _quoted_article_heading(text: str, group: List[Span]) -> bool:
+    """Whether an article span starts quoted replacement text rather than a citation."""
+    article = next((span for span in group if span.entity == Entity.ARTICLE), None)
+    if article is None or not re.match(r"art", article.text, re.I):
         return False
-    return any(block_start <= anchor.start < start for anchor in state.anchors)
+    line_start = text.rfind("\n", 0, article.start) + 1
+    if text[line_start:article.start].strip() not in ('"', '«', '“'):
+        return False
+    tail = text[article.end:article.end + 150]
+    return bool(re.match(
+        r"\s*(?:\([^)]{0,100}\))?\s*(?:[.:–—-]\s*)?(?:-\s*)?\d+"
+        r"(?:[-\s]?(?:bis|ter|quater|quinquies|sexies))?\.\s+",
+        tail,
+        re.I,
+    ))
 
 
 def _points_to_current_act(state: AssemblyState, span: Span) -> bool:
@@ -975,12 +1002,17 @@ def _points_to_current_act(state: AssemblyState, span: Span) -> bool:
 
 
 def _normativa_fallback(state: AssemblyState, existing: List[Reference]) -> List[Reference]:
-    """Resolve only partition spans that ordinary assembly deliberately left unclaimed."""
+    """Keep partition-only candidates for the normativa scope resolver.
+
+    Some candidates were tentatively attached to an invalid frame (for example ``articolo 53
+    del testo unico delle leggi ...`` may first attach to the generic word ``leggi``).  Standard
+    extraction rightly discards that frame.  Normativa mode retains the partition, together
+    with an ``attached`` marker, so the later scope pass can recover it only inside a confidently
+    identified amendment and otherwise preserve the old conservative behaviour.
+    """
     claimed = {id(span) for ref in existing for span in ref.spans}
     loose = [span for span in state.floating
-             if span.entity in PARTITION_ENTITIES and id(span) not in claimed
-             and (id(span) not in state.attached_partition_ids
-                  or _points_to_current_act(state, span))]
+             if span.entity in PARTITION_ENTITIES and id(span) not in claimed]
     if not loose:
         return []
 
@@ -988,13 +1020,16 @@ def _normativa_fallback(state: AssemblyState, existing: List[Reference]) -> List
         loose, state.anchors, state.text, deictic_connectors=True)
     out: List[Reference] = []
     for group in groups:
-        start = min(span.start for span in group)
-        if _line_heading(state.text, group) or \
-                (_inside_external_amendment(state, start)
-                 and not any(_points_to_current_act(state, span) for span in group)):
+        if _line_heading(state.text, group) or _quoted_article_heading(state.text, group):
             continue
-        children = [Reference(spans=leaf, attrs={"normativa-internal": "1"})
-                    for leaf in segment(group, state.text, deictic_connectors=True)]
+        children = []
+        for leaf in segment(group, state.text, deictic_connectors=True):
+            attrs = {"normativa-internal": "1"}
+            if any(id(span) in state.attached_partition_ids for span in leaf):
+                attrs["normativa-attached"] = "1"
+            if any(_points_to_current_act(state, span) for span in leaf):
+                attrs["normativa-current"] = "1"
+            children.append(Reference(spans=leaf, attrs=attrs))
         _assign_text_context(children, state.text)
         out.extend(child for child in children if child.attrs.get("text"))
     return out

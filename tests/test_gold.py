@@ -6,12 +6,17 @@ import pytest
 
 import goldeval
 from linkengine import LinkEngine
+from linkengine.normativa import INTERNAL_ATTR
 
 G = goldeval.GOLD_DIR
 
 
 def _has(name):
     return os.path.exists(os.path.join(G, name))
+
+
+def _canonical_rows(rows):
+    return sorted(tuple(sorted(row.items())) for row in rows)
 
 
 @pytest.mark.skipif(not _has("gold_manual.csv"), reason="gold file missing")
@@ -115,3 +120,60 @@ def test_normativa_eu_complete_external_citations_equal_standard_mode():
             current_unit_urn=entry["current-unit-urn"],
         )
         assert normativa.rows == standard.rows, entry["id"]
+
+
+@pytest.mark.skipif(not _has("gold_normativa_novelle.jsonl"),
+                    reason="novella gold file missing")
+def test_normativa_novelle_gold():
+    path = os.path.join(G, "gold_normativa_novelle.jsonl")
+    gold = goldeval._load_jsonl(path)
+    results = [(entry, *goldeval.normativa_case(entry)) for entry in gold]
+    supported = [(entry, ok) for entry, ok, _ in results
+                 if entry.get("coverage", "supported") != "known-miss"]
+    known_misses = [(entry, ok) for entry, ok, _ in results
+                    if entry.get("coverage") == "known-miss"]
+
+    ids = {entry["id"] for entry in gold}
+    units = {entry["current-unit-urn"] for entry in gold}
+    years = {entry["act-year"] for entry in gold}
+    doctypes = {entry["document-type"] for entry in gold}
+    patterns = {entry["pattern"] for entry in gold}
+    famous = sum(entry["selection"] == "famous" for entry in gold)
+    random = sum(entry["selection"] == "random" for entry in gold)
+
+    assert len(gold) >= 30, f"novella gold shrank unexpectedly ({len(gold)} entries)"
+    assert len(ids) == len(gold), "novella gold contains duplicate ids"
+    assert len(units) >= 12, f"novella source diversity narrowed ({len(units)} units)"
+    assert famous >= 12 and random >= 15, \
+        f"novella selection mix shrank (famous={famous}, random={random})"
+    assert len(patterns) >= 15, f"novella pattern coverage narrowed ({len(patterns)})"
+    assert len(doctypes) >= 4, f"novella document-type coverage narrowed ({doctypes})"
+    assert min(years) <= 1986 and max(years) >= 2025
+    assert len(known_misses) >= 10, "novella gold no longer records its known limitations"
+    failures = [entry["id"] for entry, ok in supported if not ok]
+    assert not failures, f"supported novella regression: {failures}"
+    # Known misses carry semantic expected output, not the engine's present output. They are
+    # evaluation cases rather than expected failures, so a future implementation may fix them.
+    assert all(entry.get("limitation") for entry, _ in known_misses)
+
+
+@pytest.mark.skipif(not _has("gold_normativa_novelle.jsonl"),
+                    reason="novella gold file missing")
+def test_normativa_novelle_preserves_complete_external_citations():
+    gold = goldeval._load_jsonl(os.path.join(G, "gold_normativa_novelle.jsonl"))
+    engine = LinkEngine()
+
+    for entry in gold:
+        standard = engine.extract(entry["text"])
+        normativa = engine.extract(
+            entry["text"],
+            mode="normativa",
+            current_unit_urn=entry["current-unit-urn"],
+        )
+        external = [row for row, ref in zip(normativa.rows, normativa.references)
+                    if not ref.attrs.get(INTERNAL_ATTR)]
+        for rows in (standard.rows, external):
+            for row in rows:
+                row.pop("id", None)
+        assert _canonical_rows(external) == _canonical_rows(standard.rows), entry["id"]
+
