@@ -181,7 +181,14 @@
 {"cat": "jur", "text": "Corte d'Assise di Napoli n. 5/2018", "refs": [{"authority": "CORTE_ASSISE", "urn": "ECLI:IT:ASSNA:2018:5"}]}
 {"cat": "jur", "text": "Corte d'Assise d'Appello di Torino n. 3/2017", "refs": [{"authority": "CORTE_ASSISE_APPELLO", "urn": "ECLI:IT:ASSAPPTO:2017:3"}]}
 {"cat": "jur", "text": "Tribunale di Sorveglianza di Bologna n. 10/2021", "refs": [{"authority": "TRIBUNALE_SORVEGLIANZA", "urn": "ECLI:IT:TRIBSORVBO:2021:10"}]}
-{"cat": "jur", "text": "Corte dei Conti n. 200/2022", "refs": [{"authority": "CORTE_CONTI", "urn": "ECLI:IT:CCONTI:2022:200"}]}
+{"cat": "jur", "text": "Corte dei Conti n. 200/2022", "refs": [{"authority": "CORTE_CONTI", "section": "", "number": "200", "year": "2022", "urn": ""}]}
+{"cat": "jur", "text": "Corte dei conti, Sez. III App., n. 172/2022", "refs": [{"authority": "CORTE_CONTI", "section": "APP3", "number": "172", "year": "2022", "urn": "ECLI:IT:CONT:2022:172APP3"}]}
+{"cat": "jur", "text": "SS.RR. n. 1/QM/2021", "refs": [{"authority": "CORTE_CONTI", "section": "SSR", "number": "1", "year": "2021", "urn": "ECLI:IT:CONT:2021:1SSR"}]}
+{"cat": "jur", "text": "deliberazione n. 102/2023/SRCPIE/PAR", "refs": [{"ref-type": "caselaw", "doc-type": "DEL", "authority": "CORTE_CONTI", "section": "SRCPIE-PAR", "number": "102", "year": "2023", "full-number": "102/2023/SRCPIE/PAR", "urn": "ECLI:IT:CONT:2023:102SRCPIE-PAR"}]}
+{"cat": "jur", "text": "Corte dei conti, Sez. contr. Lombardia, delib. n. 60/2021", "refs": [{"doc-type": "DEL", "authority": "CORTE_CONTI", "section": "SRCLOM", "number": "60", "year": "2021", "urn": ""}]}
+{"cat": "jur", "text": "Delibera n. 13/2012/SSR della Sezione del controllo per la Regione Sardegna", "refs": [{"doc-type": "DEL", "authority": "CORTE_CONTI", "section": "SRCSAR-SSR", "number": "13", "year": "2012", "urn": "ECLI:IT:CONT:2012:13SRCSAR-SSR"}]}
+{"cat": "jur", "text": "le Sezioni Riunite, con la deliberazione n. 25/2011", "refs": [{"doc-type": "DEL", "authority": "CORTE_CONTI", "section": "SSRRCO", "urn": ""}]}
+{"cat": "jur", "text": "decisione n. 7/2007/QM delle Sezioni Riunite", "refs": [{"doc-type": "DECIS", "authority": "CORTE_CONTI", "section": "SSR", "urn": "ECLI:IT:CONT:2007:7SSR"}]}
 {"cat": "jur", "text": "Tribunale di Milano n. 500/2020", "refs": [{"authority": "TRIB", "urn": "ECLI:IT:TRIBMI:2020:500"}]}
 {"cat": "jur", "text": "Consiglio di Stato n. 1234/2021", "refs": [{"authority": "CONS_STATO", "urn": "ECLI:IT:CONSSTATO:2021:1234"}]}
 {"cat": "prassi", "text": "risposta a interpello n. 342 del 13 maggio 2021", "refs": [{"doc-type": "INTERPELLO", "urn": "PRAX:AE:INT:2021:342"}]}

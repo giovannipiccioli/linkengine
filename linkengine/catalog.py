@@ -18,7 +18,7 @@ COURTS = {
     "CORTE_CASS":              {"ecli": "CASS",      "geo": None,     "name": "Cassazione"},
     "CORTE_COST":              {"ecli": "COST",      "geo": None,     "name": "Corte Costituzionale"},
     "CONS_STATO":              {"ecli": "CONSSTATO", "geo": None,     "name": "Consiglio di Stato"},
-    "CORTE_CONTI":             {"ecli": "CCONTI",    "geo": None,     "name": "Corte dei Conti"},
+    "CORTE_CONTI":             {"ecli": "CONT",      "geo": None,     "name": "Corte dei Conti"},
     "TRIB":                    {"ecli": "TRIB",      "geo": "city",   "name": "Tribunale"},
     "COMM_TRIBUT_REG":         {"ecli": "CTR",       "geo": "region", "name": "Commissione Tributaria Regionale"},
     "CORTE_GIUST_TRIBUT_2":    {"ecli": "CGT2",      "geo": "region", "name": "Corte di Giustizia Tributaria di secondo grado"},
@@ -39,6 +39,99 @@ COURTS = {
 CASELAW_AUTH = set(COURTS) | {"THIS_COURT"}
 FIRST_GRADE_TAX_AUTHORITIES = {"COMM_TRIBUT_PROV", "CORTE_GIUST_TRIBUT_1"}
 SECOND_GRADE_TAX_AUTHORITIES = {"COMM_TRIBUT_REG", "CORTE_GIUST_TRIBUT_2"}
+
+
+# ── Corte dei conti sections ──────────────────────────────────────────────────
+# The Corte dei conti ECLI carries its section as a suffix on the decision NUMBER
+# ("ECLI:IT:CONT:2023:89SGCAL"), the way the Cassazione carries CIV/PEN — not as an ECLI
+# geo component, which is why COURTS["CORTE_CONTI"]["geo"] stays None. A controllo
+# deliberation adds its procedural type after a hyphen ("…:102SRCPIE-PAR"); the type is
+# part of the identifier, so a controllo citation that omits it stays unresolved.
+#
+# Sentenze and ordinanze share one number series per section, so the giurisdizionale
+# identifier carries no doc-type marker, and the rubrics that decorate such a citation
+# ("n. 7/2007/QM", "n. 11/2023/RGC", "n. 653/2013-A") are NOT part of it.
+def _corte_conti_regional():
+    """The regional sections, one entry per region on each side, so a region is spelled
+    once. Trentino-Alto Adige is excluded: it sits in two seats and is spelled out below.
+
+    Every geographic component of a section code is the standard code from ``geo.py`` — the
+    three-letter region code, or the two-letter province targa for a section that sits in a
+    seat rather than a region. The Corte dei conti's own archive is not consistent about
+    this (it writes SRCERO for Emilia-Romagna, SGTAB for Bolzano, SSRRTN for the Trentino
+    REGION); those identifiers are therefore ours, not the portal's, and the payoff is that
+    a caller who knows a region knows its section code. Change it here, not in the caller,
+    if they ever have to match the portal exactly."""
+    out = {}
+    for code, name in REGION_CODE_TO_NAME.items():
+        if code == "TAA":
+            continue
+        out["SG" + code] = f"Sezione giurisdizionale {name}"
+        out["SRC" + code] = f"Sezione regionale di controllo {name}"
+    return out
+
+
+# code -> display name, for every section that can appear in a Corte dei conti identifier.
+CORTE_CONTI_SECTIONS = {
+    **_corte_conti_regional(),
+    # Trentino-Alto Adige has one section per seat on each side, so these four carry the
+    # province targa (TN/BZ) where every other regional code carries a region.
+    "SGTN":   "Sezione giurisdizionale Trentino-Alto Adige, sede di Trento",
+    "SGBZ":   "Sezione giurisdizionale Trentino-Alto Adige, sede di Bolzano",
+    "SRCTN":  "Sezione regionale di controllo Trentino-Alto Adige, sede di Trento",
+    "SRCBZ":  "Sezione regionale di controllo Trentino-Alto Adige, sede di Bolzano",
+    # giurisdizionale — central
+    "APP1":   "Prima Sezione centrale d'appello",
+    "APP2":   "Seconda Sezione centrale d'appello",
+    "APP3":   "Terza Sezione centrale d'appello",
+    "APPSIC": "Sezione d'appello per la Regione Siciliana",
+    "SSR":    "Sezioni riunite in sede giurisdizionale",
+    # controllo — central
+    "SEZAUT": "Sezione delle Autonomie",
+    "SSRRCO": "Sezioni riunite in sede di controllo",
+    "SCE":    "Sezione del controllo sugli enti",
+    "SCCGAS": "Sezione centrale di controllo sulla gestione delle amministrazioni dello Stato",
+    "SCCLEG": "Sezione centrale di controllo di legittimità sugli atti del Governo",
+    "CCC":    "Collegio del controllo concomitante",
+    "SACEI":  "Sezione di controllo affari comunitari e internazionali",
+    "SCAEI":  "Sezione di controllo per gli affari europei e internazionali",
+    "SCCS":   "Sezione centrale per il controllo dei contratti secretati",
+    "CONS":   "Sezioni riunite in sede consultiva",
+    # ...and the regional benches of those two, which are the central code plus the region.
+    "SSRRCOSIC": "Sezioni riunite per la Regione Siciliana in sede di controllo",
+    "SSRRCOTAA": "Sezioni riunite per la Regione Trentino-Alto Adige in sede di controllo",
+    "SSRRCOSAR": "Sezioni riunite per la Regione Sardegna in sede di controllo",
+    "CONSSIC":   "Sezioni riunite per la Regione Siciliana in sede consultiva",
+}
+# The sections whose identifier needs a deliberation type. Everything else is
+# giurisdizionale and is complete with number + year alone.
+CORTE_CONTI_CONTROLLO = {c for c in CORTE_CONTI_SECTIONS if c.startswith("SRC")} | {
+    "SEZAUT", "SSRRCO", "SCE", "SCCGAS", "SCCLEG", "CCC", "SACEI", "SCAEI", "SCCS",
+    "CONS", "SSRRCOSIC", "SSRRCOTAA", "SSRRCOSAR", "CONSSIC",
+}
+# Procedural type codes a controllo deliberation can carry, from the whole 1991-2026
+# archive. A flat set: an unrecognized token simply fails to classify, which is the
+# behaviour we want.
+CORTE_CONTI_DELIB_TYPES = {
+    "PRSE", "PRSP", "PAR", "VSG", "FRG", "PRNO", "REG", "RGES", "VSGO", "PASP", "CSE",
+    "INPR", "GEST", "PRSS", "PREV", "VSGC", "PARI", "VSGF", "SUCC", "RQ", "QMIG", "CCR",
+    "DEL", "OICERT", "CCN", "PNRR", "SSR", "AUD", "DORG", "CONS", "IADC", "DASS", "COMP",
+    "RSUE", "REF", "PRS", "FUEFC", "AFC", "CEPAR", "OICERN", "PENS", "RCFP", "RCL",
+    "PRAS", "CCSE",
+}
+# Doc-types that mean something else everywhere else and are Corte dei conti pronouncements
+# only when paired with it: its controllo channel deliberates and gives pareri, and its
+# giurisdizionale benches still call some rulings "decisione" (elsewhere an EU act). The
+# pairing is what licenses them — never the doc-type on its own, so a bare "delibera
+# n. 60/2021" stays a local act and a "decisione 2011/278/UE" stays an EU act.
+CORTE_CONTI_DOCTYPES = {"DEL", "PARERE", "DECIS"}
+# ...of which these two are the controllo channel's own, and these three the giurisdizionale
+# one's. Which side a bare "Sezioni riunite" sits on is readable from nothing else.
+CORTE_CONTI_CONTROLLO_DOCTYPES = {"DEL", "PARERE"}
+CORTE_CONTI_GIUR_DOCTYPES = {"SENT", "ORD", "DECIS"}
+# Rubrics that decorate a GIURISDIZIONALE citation and are absent from its identifier:
+# "n. 7/2007/QM" is ECLI:IT:CONT:2007:7SSR, not "…7SSR-QM".
+CORTE_CONTI_GIUR_RUBRICS = {"QM", "QMI", "RGC", "EL", "RIS", "DELC", "A", "M", "ADS", "PENS"}
 # ECLI prefix -> (court name, geo kind), longest prefix first so "ASSAPP"/"CONSSTATO"/"TRIBSORV"
 # win over "ASS"/"CTC"/"TRIB". "COST" is handled specially (Corte Costituzionale).
 ECLI_PREFIX_TO_COURT = {}

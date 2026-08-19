@@ -261,6 +261,33 @@ values raise `ValueError`.
 Modern CGT authorities emit the distinct ECLI court components `CGT1` and `CGT2`; historical
 `COMM_TRIBUT_PROV` and `COMM_TRIBUT_REG` references retain `CTP` and `CTR`.
 
+#### `cc_section` — the Corte dei conti section
+
+The Corte dei conti decides through some fifty benches that number independently, and its
+ECLI carries the deciding one as a suffix on the number — `ECLI:IT:CONT:2023:89SGCAL`. So
+number and year alone name no decision, and a citation that states no section stays
+unresolved with its recognition fields filled, rather than receiving an identifier that
+resolves to nothing.
+
+`cc_section` supplies the section of the document doing the citing, so its self-references
+resolve — about a fifth of what a Corte dei conti decision cites is its own prior work:
+
+```python
+cc = DocumentContext(authority="CORTE_CONTI", cc_section="SGCAL")
+engine.extract("questa Sezione n. 527/2009", context=cc).rows[0]["urn"]
+#  -> 'ECLI:IT:CONT:2009:527SGCAL'
+```
+
+Values are the codes in `linkengine.catalog.CORTE_CONTI_SECTIONS`; an unknown one raises
+`ValueError`. Like every other self-reference, it fills silence only: a citation that names
+its own section always wins.
+
+Every geographic part of a section code is the standard code from `geo.py` — the
+three-letter region (`SGCAL`, `SRCLOM`, `SSRRCOSAR`), or the province targa for a section
+that sits in a seat rather than a region (`SGTN`, `SGBZ`, `SRCTN`, `SRCBZ`). The Court's own
+archive is not consistent about this, so these identifiers are linkengine's rather than the
+portal's; the payoff is that knowing a region means knowing its section code.
+
 #### `chamber` — the Cassazione civil/penal branch
 
 `snciv` and `snpen` number their decisions independently, so `Cass. n. 13808/2025` names two
@@ -288,6 +315,18 @@ Corte` and unqualified regional laws, but does not turn every bare `Sentenza n. 
 decision of the current court. `document_year` is optional; when supplied, a citation from a later year remains
 an unresolved candidate instead of receiving an impossible identifier. Set `regional_law_region`
 when the regional-law fallback should differ from the deciding court's region.
+
+The Corte dei conti resolves its section from the citation, in whatever order it arrives —
+`Sez. III App.`, `Prima Sezione Centrale d'Appello` and `Terza Sezione giurisdizionale
+centrale d'appello` are read as sections, and so are `Sez. contr. Lombardia`, `Sezioni
+riunite` and `Sez. Autonomie`, which name the court on their own. Its controllo channel
+pronounces by `deliberazione` and `parere`, and their procedural type is part of the
+identifier: `deliberazione n. 102/2023/SRCPIE/PAR` -> `ECLI:IT:CONT:2023:102SRCPIE-PAR`.
+The type is read out of the citation's slash chain whichever way round it is written
+(`9/SEZAUT/2009/INPR`, `130/PRSE/2012`, `LOMBARDIA/164/2019/PAR`), and a controllo citation
+that omits it stays unresolved. The rubrics that decorate a *giurisdizionale* citation
+(`n. 7/2007/QM`, `n. 11/2023/RGC`, `n. 653/2013-A`) are not part of the identifier and are
+dropped.
 
 For the second-grade tax courts of Trentino-Alto Adige, include `city="Trento"` or
 `city="Bolzano"` in the context. Their ECLIs use the autonomous-province components `CGT2TN`
@@ -369,6 +408,12 @@ The behavior is pinned by **hand-verified gold sets** (`tests/gold/`), scored by
 - `gold_normativa_eu.jsonl` — 32 sourced excerpts covering 31 EU legislative units and 29 acts,
   including well-known and fixed-seed ordinary regulations, directives, and decisions from
   1958–2025. Complete external citations are also checked for exact equality with standard mode.
+- `gold_corte_conti_docs.jsonl` — 13 whole Corte dei conti decisions (regional and central
+  giurisdizionale, appello Sicilia, Sezioni riunite, regional and central controllo, Sezione
+  delle Autonomie), with every citation of the Court read out of them by hand and checked
+  against the Court's archive. Scored as an evaluation — precision and recall over the
+  identifiers, gated below the current score — because recall is bounded by how these
+  documents cite, not by the parser alone.
 - `gold_normativa_novelle.jsonl` — 33 real amendment clauses and editorial notes from 14 famous
   and ordinary Italian legislative units, across 22 patterns and seven source years. Supported
   cases are exact regression gates; 12 named limitation cases preserve the semantic result and

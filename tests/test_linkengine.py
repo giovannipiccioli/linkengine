@@ -1856,3 +1856,103 @@ def test_anchors_of_empty_text():
     assert reference_anchors("") == []
     assert reference_anchors(None) == []
 
+
+# ── Corte dei conti ────────────────────────────────────────────────────────────
+# The gold sets cover recognition; these pin the pieces around it — the section table's
+# own consistency, the two rules that refuse to guess, and the identifier round-trip.
+def test_corte_conti_section_codes_use_the_standard_geography():
+    from linkengine.catalog import CORTE_CONTI_CONTROLLO, CORTE_CONTI_SECTIONS
+    from linkengine.geo import PROVINCE_CODE_TO_NAME, REGION_CODE_TO_NAME
+
+    for prefix in ("SG", "SRC"):
+        geo = {c[len(prefix):] for c in CORTE_CONTI_SECTIONS if c.startswith(prefix)}
+        # every region has a section on both sides, except Trentino-Alto Adige, which sits
+        # in two seats and so carries their province codes instead
+        assert geo == (set(REGION_CODE_TO_NAME) - {"TAA"}) | {"TN", "BZ"}
+        assert {"TN", "BZ"} <= set(PROVINCE_CODE_TO_NAME)
+    assert CORTE_CONTI_CONTROLLO <= set(CORTE_CONTI_SECTIONS)
+    assert "SSR" in CORTE_CONTI_SECTIONS and "SSR" not in CORTE_CONTI_CONTROLLO
+
+
+def test_corte_conti_section_is_required_for_an_identifier():
+    engine = LinkEngine()
+    (row,) = engine.extract("Corte dei Conti n. 45/2019").rows
+    assert row["authority"] == "CORTE_CONTI"
+    assert (row["number"], row["year"]) == ("45", "2019")
+    assert row["urn"] == ""          # some fifty benches number independently
+
+
+def test_corte_conti_controllo_needs_its_deliberation_type():
+    engine = LinkEngine()
+    (bare,) = engine.extract("Corte dei conti, Sez. contr. Lombardia, delib. n. 60/2021").rows
+    assert bare["section"] == "SRCLOM" and bare["urn"] == ""
+    (typed,) = engine.extract("deliberazione n. 60/2021/SRCLOM/PAR").rows
+    assert typed["urn"] == "ECLI:IT:CONT:2021:60SRCLOM-PAR"
+
+
+def test_corte_conti_riunite_need_a_positive_signal():
+    engine = LinkEngine()
+    # the same bench sits in sede giurisdizionale and in sede di controllo and numbers
+    # independently, so only the doc-type, the rubric or the sede decides
+    assert engine.extract("Corte dei conti, SS.RR., n. 9/2018").rows[0]["urn"] == ""
+    assert engine.extract("SS.RR., ord. n. 9/2018").rows[0]["urn"] == \
+        "ECLI:IT:CONT:2018:9SSR"
+    assert engine.extract("SS.RR. n. 1/QM/2021").rows[0]["urn"] == "ECLI:IT:CONT:2021:1SSR"
+    assert engine.extract("Sezioni riunite, deliberazione n. 23/SSRRCO/PARI/23").rows[0]["urn"] \
+        == "ECLI:IT:CONT:2023:23SSRRCO-PARI"
+
+
+def test_corte_conti_giurisdizionale_rubric_is_not_in_the_identifier():
+    engine = LinkEngine()
+    (row,) = engine.extract("Corte dei conti, Sez. I App., sent. n. 653/2013-A").rows
+    assert row["urn"] == "ECLI:IT:CONT:2013:653APP1"
+
+
+def test_corte_conti_named_appeal_section_keeps_its_number():
+    # "appello n. NNN" is a docket number in ordinary prose; after a "sezione" it is a
+    # citation of that section
+    engine = LinkEngine()
+    assert engine.extract("Terza Sezione di Appello n. 388/2012").rows[0]["urn"] == \
+        "ECLI:IT:CONT:2012:388APP3"
+    assert not [r for r in engine.extract(
+        "nel giudizio di appello n. 58456 del ruolo generale").rows if r["urn"]]
+
+
+def test_corte_conti_context_section_resolves_self_references():
+    engine = LinkEngine()
+    cc = DocumentContext(authority="CORTE_CONTI", cc_section="SGCAL")
+    assert engine.extract("questa Sezione n. 527/2009", context=cc).rows[0]["urn"] == \
+        "ECLI:IT:CONT:2009:527SGCAL"
+    # a citation that names its own section always wins over the context
+    assert engine.extract("Sez. contr. Lombardia, delib. n. 60/2021/PAR",
+                          context=cc).rows[0]["urn"] == "ECLI:IT:CONT:2021:60SRCLOM-PAR"
+    with pytest.raises(ValueError):
+        DocumentContext(authority="CORTE_CONTI", cc_section="SGXXX")
+
+
+def test_corte_conti_urn_to_text():
+    from linkengine import urn_to_text
+    assert urn_to_text("ECLI:IT:CONT:2023:89SGCAL") == \
+        "Corte dei Conti, Sezione giurisdizionale Calabria n. 89/2023"
+    assert urn_to_text("ECLI:IT:CONT:2023:102SRCPIE-PAR") == (
+        "Corte dei Conti, Sezione regionale di controllo Piemonte, "
+        "deliberazione n. 102/2023/PAR")
+    assert urn_to_text("ECLI:IT:CONT:2023:26SGBZ") == (
+        "Corte dei Conti, Sezione giurisdizionale Trentino-Alto Adige, "
+        "sede di Bolzano n. 26/2023")
+
+
+def test_corte_conti_deliberation_id_reads_in_any_order():
+    engine = LinkEngine()
+    expected = {
+        "deliberazione n. 102/2023/SRCPIE/PAR":  "ECLI:IT:CONT:2023:102SRCPIE-PAR",
+        "deliberazione n. 9/SEZAUT/2009/INPR":   "ECLI:IT:CONT:2009:9SEZAUT-INPR",
+        "deliberazione n. 10/AUT/2012/INPR":     "ECLI:IT:CONT:2012:10SEZAUT-INPR",
+        "deliberazione n. 23/SSRRCO/PARI/23":    "ECLI:IT:CONT:2023:23SSRRCO-PARI",
+        "Deliberazione n. SCCLEG/2/2023/PREV":   "ECLI:IT:CONT:2023:2SCCLEG-PREV",
+        "deliberazioni LOMBARDIA/164/2019/PAR":  "ECLI:IT:CONT:2019:164SRCLOM-PAR",
+    }
+    for text, urn in expected.items():
+        assert [r["urn"] for r in engine.extract(text).rows if r["urn"]] == [urn], text
+    # a chain that carries the type but not the section names no bench: unresolved
+    assert [r["urn"] for r in engine.extract("pronuncia n. 130/PRSE/2012").rows if r["urn"]] == []

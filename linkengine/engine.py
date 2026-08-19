@@ -14,6 +14,9 @@ from typing import Dict, List, Optional
 from . import normalize as NZ
 from .aliases import ALIAS_CELEX, alias_nir
 from .catalog import (AGENCY_DOCTYPES, CONDITIONAL_AGENCY_DOCTYPES, COURTS,
+                      CORTE_CONTI_CONTROLLO, CORTE_CONTI_CONTROLLO_DOCTYPES,
+                      CORTE_CONTI_GIUR_DOCTYPES,
+                      CORTE_CONTI_SECTIONS,
                       SECOND_GRADE_TAX_AUTHORITIES)
 from .context import DocumentContext
 from .geo import AUTONOMOUS_TAX_CITY_TO_GEO
@@ -239,6 +242,58 @@ def _apply_context_chamber(row, context) -> None:
     row["section"] = section + "PEN"
 
 
+def _corte_conti_riunite_seat(row, num_year):
+    """Which bench an unqualified "Sezioni riunite" names: "SSR" in sede giurisdizionale,
+    "SSRRCO" in sede di controllo, or "" when the citation does not say.
+
+    The two sit as the same magistrates but number their acts independently, so guessing
+    names a real and different act. Only a positive signal decides: the doc-type
+    (a sentenza is never a deliberazione), the rubric the citation carries
+    ("n. 1/2021/QM"), or the sede spelled out.
+    """
+    if row.get("doc-type") in CORTE_CONTI_CONTROLLO_DOCTYPES:
+        return "SSRRCO"
+    if row.get("doc-type") in CORTE_CONTI_GIUR_DOCTYPES:
+        return "SSR"
+    if num_year and num_year.attrs.get("cc_rubric"):
+        return "SSR"
+    if num_year and num_year.attrs.get("cc_type"):
+        return "SSRRCO"
+    if _re2.search(r"giurisdizional|speciale\s+composizione", row.get("text", ""), _re2.I):
+        return "SSR"
+    return ""
+
+
+def _apply_corte_conti_section(row, num_year):
+    """Assemble the Corte dei conti ECLI section component into ``section``.
+
+    ``section`` holds the component exactly as the identifier spells it — "SGCAL",
+    "APP3", "SRCPIE-PAR" — because that is the one thing the Corte dei conti ECLI needs
+    beyond number and year (``urn._court_ecli`` appends it to the number, the way the
+    Cassazione appends CIV/PEN).
+
+    A deliberation id ("n. 102/2023/SRCPIE/PAR") states its own section and type and wins
+    over whatever the court phrase said; a bare "Sezioni riunite" is the giurisdizionale
+    bench unless the doc-type says otherwise, which only the assembled row can tell.
+    """
+    if row.get("authority") != "CORTE_CONTI":
+        return
+    chain_section = num_year.attrs.get("cc_section") if num_year else ""
+    chain_type = num_year.attrs.get("cc_type") if num_year else ""
+    section = chain_section or row.get("section") or ""
+    if section not in CORTE_CONTI_SECTIONS:
+        row["section"] = ""
+        return
+    if section == "SSR":
+        section = _corte_conti_riunite_seat(row, num_year)
+        if not section:
+            row["section"] = ""
+            return
+    if chain_type and section in CORTE_CONTI_CONTROLLO:
+        section += "-" + chain_type
+    row["section"] = section
+
+
 class LinkEngine:
     """Pure-Python citation engine. Stateless; safe to reuse across calls."""
 
@@ -459,6 +514,8 @@ class LinkEngine:
                         row["city"] = context.city
                     elif geo_kind == "region" and context.region:
                         row["region"] = context.region
+                    if value == "CORTE_CONTI" and context.cc_section:
+                        row["section"] = context.cc_section
             if authority.attrs.get("region"):
                 row["region"] = authority.attrs["region"]
             if authority.attrs.get("city"):
@@ -466,6 +523,11 @@ class LinkEngine:
             if authority.attrs.get("section"):
                 row["section"] = authority.attrs["section"]
             _apply_context_chamber(row, context)
+        # A deliberation id identifies the Corte dei conti on its own: no other authority
+        # numbers its acts "9/SEZAUT/2009/INPR".
+        if num_year and num_year.attrs.get("cc_section") and not row["authority"]:
+            row["authority"] = "CORTE_CONTI"
+        _apply_corte_conti_section(row, num_year)
         if rv_num:
             row["rv-number"] = rv_num.value
             if not row["authority"]:

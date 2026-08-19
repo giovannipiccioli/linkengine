@@ -4,7 +4,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Optional
 
-from .catalog import COURTS
+from .catalog import CORTE_CONTI_SECTIONS, COURTS
 from .geo import city_code, region_code, region_urn
 from .normalize import MAX_YEAR, MIN_YEAR
 
@@ -22,6 +22,12 @@ class DocumentContext:
     Corte". A bare "sentenza n. 123/2020" remains unresolved. ``chamber`` is the one
     exception, and it is a considered one — see below.
 
+    ``cc_section`` is the Corte dei conti section of THIS document, as its ECLI spells it
+    ("SGCAL", "APP3", "SRCLOM"). The Corte's sections number their decisions independently,
+    so a self-reference — "questa Sezione n. 527/2009", the form roughly a fifth of its
+    internal citations take — carries no identity without it. Like the geo of every other
+    self-reference, it fills nothing else: a citation that names its own section wins.
+
     ``chamber`` ("CIV" | "PEN") is the Cassazione branch of THIS document. Italian citation
     practice routinely omits it ("Cass. n. 13808/2025", "Sez. 1, n. 41738"), yet `snciv` and
     `snpen` number independently, so those citations name two different real decisions and
@@ -37,6 +43,7 @@ class DocumentContext:
     authority: str = ""
     city: str = ""
     region: str = ""
+    cc_section: str = ""
     regional_law_region: Optional[str] = None
     document_year: Optional[int] = None
     chamber: str = ""
@@ -76,10 +83,15 @@ class DocumentContext:
             if not MIN_YEAR <= document_year <= MAX_YEAR:
                 raise ValueError(f"invalid document year {self.document_year!r}")
 
+        cc_section = str(self.cc_section or "").strip().upper()
+        if cc_section and cc_section not in CORTE_CONTI_SECTIONS:
+            raise ValueError(f"unknown Corte dei conti section {self.cc_section!r}")
+
         chamber = str(self.chamber or "").strip().upper()
         if chamber and chamber not in ("CIV", "PEN"):
             raise ValueError(f"unknown document chamber {self.chamber!r}; expected 'CIV' or 'PEN'")
 
+        object.__setattr__(self, "cc_section", cc_section)
         object.__setattr__(self, "chamber", chamber)
         object.__setattr__(self, "authority", authority)
         object.__setattr__(self, "city", city)

@@ -248,7 +248,8 @@ EXPECTED_URNS = {
         "ECLI:IT:CASS:2009:20434CIV",
         "ECLI:IT:CASS:2011:17212CIV",
         "ECLI:IT:CASS:2011:4748CIV",
-        "ECLI:IT:CCONTI:2016:220",
+        "ECLI:IT:CONT:2016:220SGVEN",
+        "ECLI:IT:CONT:2012:347APP2",
         "urn:nir:stato:legge:1994;19~art5",
         "urn:nir:stato:legge:1996;639",
         "urn:nir:stato:regio.decreto:1930;1398:1~art316",
@@ -256,8 +257,8 @@ EXPECTED_URNS = {
         "urn:nir:stato:regio.decreto:1940;1443:1~art140",
     },
     "corte_conti_2016_45_sgbas.txt": {
-        "ECLI:IT:CCONTI:2012:2443",
-        "ECLI:IT:CCONTI:2016:45",
+        "ECLI:IT:CONT:2012:2443SGSIC",
+        "ECLI:IT:CONT:2016:45SGBAS",
         "urn:nir:presidente.repubblica:decreto:1973;1092~art204",
         "urn:nir:stato:decreto.legislativo:1997;165",
         "urn:nir:stato:decreto.legislativo:2003;196~art52",
@@ -270,9 +271,9 @@ EXPECTED_URNS = {
     },
     "corte_conti_2016_682_app3.txt": {
         "ECLI:IT:CASS:2015:2087CIV",
-        "ECLI:IT:CCONTI:2012:135",
-        "ECLI:IT:CASS:2016:476CIV",
-        "ECLI:IT:CCONTI:2016:682",
+        "ECLI:IT:CONT:2012:135SGPUG",
+        "ECLI:IT:CONT:2016:682APP3",
+        "ECLI:IT:CONT:2016:476APP2",
         "urn:nir:presidente.repubblica:decreto:1973;1092~art204",
         "urn:nir:presidente.repubblica:decreto:1973;1092~art205",
         "urn:nir:presidente.repubblica:decreto:1973;1092~art206",
@@ -288,7 +289,10 @@ EXPECTED_URNS = {
         "urn:nir:stato:regio.decreto:1942;262:2~art2056",
     },
     "corte_conti_2024_36_app3.txt": {
-        "ECLI:IT:CCONTI:2024:36",
+        "ECLI:IT:CONT:2024:36APP3",
+        "ECLI:IT:CONT:2021:58SGLOM",
+        "ECLI:IT:CONT:2021:1SSR",
+        "ECLI:IT:CONT:2021:5APP3",
         "urn:nir:presidente.repubblica:decreto:1973;1092~art54",
         "urn:nir:presidente.repubblica:decreto:1973;1092~art54-comma1",
         "urn:nir:stato:decreto.legislativo:2003;196~art52",
@@ -607,7 +611,7 @@ FORBIDDEN_URNS = {
         "ECLI:IT:CTREMR:2021:1202",
     },
     "corte_conti_2024_36_app3.txt": {
-        "ECLI:IT:CCONTI:1936:202",
+        "ECLI:IT:CONT:1936:202",
     },
     "corte_cost_2024_204.txt": {
         "CONV_EU_DIR_UOMO~art47",
@@ -662,7 +666,7 @@ EXPECTED_TEXT_ANCHOR_SUBSTRINGS = {
         },
     },
     "corte_conti_2024_36_app3.txt": {
-        "ECLI:IT:CCONTI:2024:36": {
+        "ECLI:IT:CONT:2024:36APP3": {
             "SENTENZA\nN. 36/2024/2023",
         },
     },

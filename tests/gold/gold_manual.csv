@@ -93,7 +93,7 @@ Tribunale di Tivoli n. 7/2021|ECLI:IT:TRIBL182:2021:7|jur|tribunale small city (
 Tribunale di Busto Arsizio n. 5/2021|ECLI:IT:TRIBB300:2021:5|jur|tribunale catastale
 Tribunale di Verona n. 33/2018|ECLI:IT:TRIBVR:2018:33|jur|tribunale capoluogo
 Giudice di Pace di Roma n. 3/2020|ECLI:IT:GDPRM:2020:3|jur|giudice di pace
-Corte dei Conti n. 45/2019|ECLI:IT:CCONTI:2019:45|jur|corte conti
+Corte dei conti, Sez. III App., n. 172/2022|ECLI:IT:CONT:2022:172APP3|jur|corte conti, sezione centrale d'appello
 Direttiva 2006/112/CE|CELEX:32006L0112|eu|directive (year/number)
 direttiva 2006/112/CE del Consiglio|CELEX:32006L0112|eu|directive
 Direttiva 2008/9/CE|CELEX:32008L0009|eu|directive
@@ -130,7 +130,7 @@ regolamento (CE) n. 1083/2006|CELEX:32006R1083|eu|EU regulation, "(CE)" form
 cause riunite C-1/20 e C-2/20|CELEX:62020CJ0001|eu|joined cases -> single celex (smallest)
 sentenza del Tribunale UE T-456/19|CELEX:62019TJ0456|eu|General Court (T-) -> TJ
 Consiglio di Stato, sez. IV, n. 567/2019|ECLI:IT:CONSSTATO:2019:567|jur|Consiglio di Stato ECLI
-Corte dei Conti, sez. giurisdizionale, n. 89/2021|ECLI:IT:CCONTI:2021:89|jur|Corte dei Conti ECLI
+Corte dei conti, Sezione Giurisdizionale per la Regione Abruzzo, sentenza n. 91/2020|ECLI:IT:CONT:2020:91SGABR|jur|corte conti, sezione giurisdizionale regionale
 Tribunale di Milano, ord. 15 marzo 2021, n. 99|ECLI:IT:TRIBMI:2021:99|jur|tribunale ordinanza + capoluogo targa
 Corte cost., sentenza n. 10/2020|ECLI:IT:COST:2020:10|jur|Corte Costituzionale ECLI
 legge 23 dicembre 2014, n. 190|urn:nir:stato:legge:2014;190|norm|legge with full date
@@ -273,3 +273,28 @@ Corte EDU sentenza 5 ottobre 2000, ricorso n. 33804/96|CEDU:1996:33804|jur|Corte
 Corte EDU, sentenza 23 ottobre 2003, ricorso n. 39758/98|CEDU:1998:39758|jur|Corte EDU
 CEDU, sentenza Riccardi Pizzati c. Italia, ricorso n. 62361/00|CEDU:2000:62361|jur|CEDU + sentenza = corte, non convenzione
 CEDU, sentenza Zullo c. Italia, ricorso n. 64897/01|CEDU:2001:64897|jur|CEDU + sentenza = corte
+Sezione Prima Centrale sent. n. 151/2021|ECLI:IT:CONT:2021:151APP1|jur|sezione centrale, ordinale prima del nome
+Sezione Terza Centrale sent. n. 24/2021|ECLI:IT:CONT:2021:24APP3|jur|sezione centrale terza
+Sez. II App., n. 14/2024|ECLI:IT:CONT:2024:14APP2|jur|sezione d'appello abbreviata, senza il nome della corte
+c. conti, sez.II n. 347/2012|ECLI:IT:CONT:2012:347APP2|jur|abbreviazione 'c. conti' + sezione numerata
+sentenza n. 296/2020 della Sezione giurisdizionale della Corte dei conti per la Regione Toscana|ECLI:IT:CONT:2020:296SGTOS|jur|sezione prima del nome della corte, regione dopo
+ordinanza n. 9/2023 della Sezione giurisdizionale della Corte dei conti per le Marche|ECLI:IT:CONT:2023:9SGMAR|jur|ordinanza: stessa serie di numerazione delle sentenze
+Corte dei conti, Sez. Giur. Sardegna, n. 93/2014|ECLI:IT:CONT:2014:93SGSAR|jur|sezione giurisdizionale abbreviata
+Corte dei Conti Sezione Lombardia sent. n. 442/2005|ECLI:IT:CONT:2005:442SGLOM|jur|sezione regionale senza 'giurisdizionale'
+Sezione giurisdizionale per il Trentino-Alto Adige, sede di Bolzano, sentenza n. 26/2023|ECLI:IT:CONT:2023:26SGBZ|jur|Trentino: la sede distingue SGTN da SGBZ
+Sez. App. Sicilia, sent. n. 283/2023|ECLI:IT:CONT:2023:283APPSIC|jur|appello siciliano: nessun ordinale
+Sezione giurisdizionale d'appello della Corte dei conti per la Regione Siciliana, sentenza n. 216 del 2022|ECLI:IT:CONT:2022:216APPSIC|jur|appello siciliano per esteso
+SS.RR. n. 1/QM/2021|ECLI:IT:CONT:2021:1SSR|jur|sezioni riunite: la rubrica QM non entra nell'ECLI
+decisione n. 7/2007/QM delle Sezioni Riunite|ECLI:IT:CONT:2007:7SSR|jur|'decisione' e' una pronuncia della Corte dei conti, non un atto UE
+deliberazione n. 102/2023/SRCPIE/PAR|ECLI:IT:CONT:2023:102SRCPIE-PAR|jur|delibera: numero/anno/sezione/tipo
+Delibera n. 332/2012/SRCPIE/PRSE|ECLI:IT:CONT:2012:332SRCPIE-PRSE|jur|stesso ordine, tipo diverso
+deliberazione n. 9/SEZAUT/2009/INPR|ECLI:IT:CONT:2009:9SEZAUT-INPR|jur|numero/sezione/anno/tipo
+deliberazione n. 10/AUT/2012/INPR|ECLI:IT:CONT:2012:10SEZAUT-INPR|jur|AUT: sigla storica della Sezione delle Autonomie
+Sezione delle Autonomie, deliberazione n. 3/SEZAUT/2014/QMIG|ECLI:IT:CONT:2014:3SEZAUT-QMIG|jur|sezione nominata e ripetuta nella sigla
+deliberazione n. 23/SSRRCO/PARI/23|ECLI:IT:CONT:2023:23SSRRCO-PARI|jur|anno a due cifre in coda
+deliberazione n. 12/SSRRCO/AUD/18|ECLI:IT:CONT:2018:12SSRRCO-AUD|jur|anno a due cifre, sezioni riunite in sede di controllo
+Deliberazione n. SCCLEG/2/2023/PREV|ECLI:IT:CONT:2023:2SCCLEG-PREV|jur|sezione in testa alla catena
+deliberazioni LOMBARDIA/164/2019/PAR|ECLI:IT:CONT:2019:164SRCLOM-PAR|jur|regione per esteso al posto della sigla di sezione
+Sezione controllo Marche deliberazione n. 18/2016/PAR|ECLI:IT:CONT:2016:18SRCMAR-PAR|jur|sezione dal testo, tipo dalla catena
+Delibera n. 13/2012/SSR della Sezione del controllo per la Regione Sardegna|ECLI:IT:CONT:2012:13SRCSAR-SSR|jur|SSR qui e' il TIPO, non la sezione
+Sezione regionale di controllo per l'Emilia-Romagna, deliberazione n. 182/2023/PRSE|ECLI:IT:CONT:2023:182SRCEMR-PRSE|jur|Emilia-Romagna: codice EMR (l'archivio della Corte scrive ERO)

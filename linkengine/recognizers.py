@@ -22,6 +22,8 @@ from .special_cases import (
 from .partitions import recognize_elements as recognize_partitions
 from .geo import (AUTONOMOUS_TAX_CITY_TO_GEO, CITY_RE, REGION_RE,
                   REGION_NAME_TO_CODE, city_code, region_urn as _region_urn)
+from .catalog import (CORTE_CONTI_CONTROLLO, CORTE_CONTI_DELIB_TYPES,
+                      CORTE_CONTI_GIUR_RUBRICS, CORTE_CONTI_SECTIONS)
 from .aliases import EU_ALIASES, INTL_ALIASES, recognize_aliases as _recognize_aliases
 from .act_kinds import DOCTYPE_PATTERNS as ACT_KIND_PATTERNS
 from .conventions import recognize_conventions
@@ -109,6 +111,10 @@ _NON_CITATION_OBJECT_BEFORE = re.compile(
 # exception: at the European Court of Human Rights the *ricorso* number IS the case identifier
 # ("Corte EDU ... ricorso n. 43395/09"), so it must not be suppressed.
 _CEDU_CUE = re.compile(r"\b(?:c\.?\s?edu|corte\s+e\.?\s?d\.?\s?u|europea\s+dei\s+diritti)\b", I)
+# exception: "appello" introduces a docket number in the ordinary case ("nel giudizio di
+# appello iscritto al n. 58456"), but NAMES a section once a "sezione" comes first — the
+# Corte dei conti's appeal benches are cited as "Terza Sezione di Appello n. 388/2012".
+_APPEAL_SECTION_CUE = re.compile(r"\bsez(?:ion[ei]|\.)[^.;:]{0,40}app(?:ello|\.)\s*n?[.°]*\s*$", I)
 
 
 def _is_docket(text: str, start: int, end: int) -> bool:
@@ -121,6 +127,8 @@ def _is_docket(text: str, start: int, end: int) -> bool:
     rgr_run = _RGR_RUN_BEFORE.search(before) if "r" in folded and "g" in folded else None
     if rgr_run and not _CITATION_CUE_AFTER_RGR.search(rgr_run.group(0)):
         return True
+    if _APPEAL_SECTION_CUE.search(before):
+        return False
     return bool(_DOCKET_BEFORE.search(before)
                or _DOCKET_AFTER.match(text[end:end + 10]))
 
@@ -167,6 +175,52 @@ _BARE_NUM_YEAR = re.compile(r"(?<![\w/])(?<!\d\.)(\d{1,6})\s*/\s*(\d{1,5})(?!\d)
 # form is unambiguous; bare, it is accepted only when it cannot be a date (see _BARE_SEZ_YEAR).
 _NUM_SEZ_YEAR = re.compile(r"\bn(?:n|um(?:ero)?)?\.?\s*(\d{1,5})\s*/\s*(\d{1,3})\s*/\s*(\d{2}|\d{4})\b", I)
 _BARE_SEZ_YEAR = re.compile(r"(?<![\w/.])(\d{1,5})\s*/\s*(\d{1,3})\s*/\s*(\d{2}|\d{4})\b")
+# Corte dei conti deliberation ids. "102/2023/SRCPIE/PAR", "9/SEZAUT/2009/INPR",
+# "130/PRSE/2012", "23/SSRRCO/PARI/23", "Lombardia/187/2012/PAR" and "SCCLEG/2/2023/PREV"
+# state the same four facts in six orders, so classify each token rather than enumerate the
+# shapes. Claimed before the generic number/year forms because the procedural type at the
+# end IS part of the identifier and the 2-part reading would drop it.
+# The one-letter alternative is the historic appeal rubric of "SENTENZA N. 65/A/2023" and
+# is deliberately limited to A and M: a wider one would swallow the Agenzia Entrate's
+# "36/E/2016".
+_CC_CHAIN_TOKEN = r"[A-Za-z]{2,14}|[AaMm]|\d{1,4}"
+_CC_CHAIN = re.compile(
+    r"(?<![\w/])(?:nn?[.°]\s*)?"
+    r"(" + _CC_CHAIN_TOKEN + r")(?:\s*/\s*(" + _CC_CHAIN_TOKEN + r")){1,3}(?![\w/])")
+
+
+def _cc_chain_parse(raw: str):
+    """The tokens of a Corte dei conti deliberation id -> {number, year, section, type},
+    or None when they do not make one.
+
+    Only *controllo* section codes are read here: a giurisdizionale citation never spells
+    its section in the number ("n. 11/2023/RGC" is a rubric, not a section), which is what
+    lets the codes that are both a section and a type — SSR, above all — resolve."""
+    out = {"number": None, "year": None, "section": None, "type": None, "rubric": None}
+    for tok in re.split(r"\s*/\s*", raw.strip()):
+        up = tok.upper()
+        region = REGION_NAME_TO_CODE.get(tok.lower().replace("-", " "))
+        if re.fullmatch(r"(?:19|20)\d{2}", tok):
+            out["year"] = out["year"] or tok
+        elif up == "AUT" or up in CORTE_CONTI_CONTROLLO:
+            out["section"] = out["section"] or ("SEZAUT" if up == "AUT" else up)
+        elif region and "SRC" + region in CORTE_CONTI_SECTIONS:
+            out["section"] = out["section"] or "SRC" + region
+        elif up in CORTE_CONTI_DELIB_TYPES:
+            out["type"] = out["type"] or up
+        elif up in CORTE_CONTI_GIUR_RUBRICS:
+            out["rubric"] = out["rubric"] or up
+        elif tok.isdigit() and len(tok) <= 4:
+            if out["number"] is None:
+                out["number"] = tok
+            elif out["year"] is None and len(tok) == 2:     # "23/SSRRCO/PARI/23"
+                out["year"] = ("20" if int(tok) < 40 else "19") + tok
+    if not (out["number"] and out["year"]
+            and (out["section"] or out["type"] or out["rubric"])):
+        return None
+    return out
+
+
 # "NNN del <day month>" -> NNN is the act number; the year comes from the DATE span
 # ("D.P.R. 600 del 29 settembre 1973" -> number 600, year 1973).
 _NUM_DEL_DATE = re.compile(
@@ -353,6 +407,21 @@ def recognize_numbers(text: str) -> List[Span]:
                 pos = sep.end()
             else:
                 break
+
+    # 1b-bis) Corte dei conti deliberation ids -- claimed first: the procedural type is
+    # part of the identifier, and the generic 2-part reading would leave it behind.
+    for m in _CC_CHAIN.finditer(text):
+        if not free(m.start(), m.end()):
+            continue
+        raw = m.group(0)[m.group(0).index(m.group(1)):] if m.group(1) in m.group(0) else m.group(0)
+        cc = _cc_chain_parse(raw)
+        if not cc:
+            continue
+        spans.append(Span(m.start(), m.end(), Entity.NUM_YEAR, f"{cc['number']}/{cc['year']}",
+                          raw, {"number": cc["number"], "year": cc["year"], "full": raw,
+                                "cc_section": cc["section"] or "", "cc_type": cc["type"] or "",
+                                "cc_rubric": cc["rubric"] or ""}))
+        taken.append((m.start(), m.end()))
 
     # 1c) tax-court "NNN/SEZ/YYYY" (number/section/year) — claim the 3-part form before the
     # 2-part number/year so the section is not mistaken for the year. The "n."/"nn." marked form
@@ -654,6 +723,11 @@ _GEO_LEAD = re.compile(
     r"^[\s,.:;]*(?:di\s+|della\s+|dell['’]\s*|del\s+|d['’]\s*|presso\s+)?"
     r"(?:sez(?:ione)?\.?\s*[ivxlcdm0-9]+[°ªa-z]*[,\s]*)?", I)
 
+_CC_HEAD_SRC = (r"(?:(?:prima|seconda|terza|iii|ii|i)\s+)?\bsez(?:ion[ei]|\b\.?)"
+                r"|\bss\.?\s?rr\.?"
+                r"|collegio\s+del\s+controllo")
+_CC_HEAD = re.compile(_CC_HEAD_SRC, I)
+
 _COURT_PATTERNS = [
     # self-references ("questa Corte", "questo Tribunale", ...) -> THIS_COURT, resolved to
     # the document's authority via default_authority (e.g. a Cassazione decision citing its
@@ -704,7 +778,16 @@ _COURT_PATTERNS = [
     # overlapping alias is dropped by _resolve_overlaps, so "C. Cost. n. 188/2018" -> ECLI.
     (r"\bc\.\s?cost(?:ituzionale)?\b\.?", "CORTE_COST", None),
     (r"consiglio\s+di\s+stato|cons\.?\s+stato", "CONS_STATO", None),
-    (r"corte\s+dei\s+conti", "CORTE_CONTI", None),
+    # Corte dei conti. The section is the identifying part of its ECLI, so the court
+    # keyword resolves it forward ("Corte dei conti, Sez. III App.") and, failing that,
+    # backward ("Sezione giurisdizionale ... della Corte dei conti").
+    (r"corte\s+(?:dei\s+)?conti|\bc\.\s?conti\b", "CORTE_CONTI", "corteconti"),
+    # A Corte dei conti section names the court on its own — "Sez. contr. Lombardia",
+    # "Sezioni riunite", "Prima Sezione Centrale d'Appello" are nobody else's. The trigger
+    # is deliberately broad (every "sezione" becomes a candidate) because
+    # `_corte_conti_resolve` is the gate: it returns None for any section that is not one
+    # of the Corte's own, and the candidate never becomes a span.
+    (_CC_HEAD_SRC, "CORTE_CONTI", "cc_section"),
     # Court of Justice EU/EC — the former "Corte di Giustizia CE / delle Comunità europee"
     # (and its CGCE abbreviation) is mapped to CGUE: it is the same court, renamed in 2009.
     (r"corte\s+di\s+giustizia\s+(?:dell[e'’\s]\s?unione\s+europea|dell[e'’\s]\s?ue\b|"
@@ -967,6 +1050,181 @@ def _cgt_second_grade_geo(kind, code):
     return {}
 
 
+# ── Corte dei conti sections ──────────────────────────────────────────────────
+# The section IS the identifying part of a Corte dei conti ECLI
+# ("ECLI:IT:CONT:2023:89SGCAL"), so it has to be read out of the citation the way a geo is
+# read for a CTR. Two things make it unlike `_geo_after`: the qualifiers arrive in any
+# order — "Sez. III centr. App.", "Prima Sezione Centrale d'Appello" and "Terza Sezione
+# giurisdizionale centrale d'appello" are one and the same section — and most citations
+# name the section INSTEAD of the court ("Sez. contr. Lombardia, delib. n. 60/2021").
+#
+# So: scan the qualifiers as an unordered token bag, then decide. `_corte_conti_resolve`
+# is also the gate that keeps the broad "sezione" trigger honest — it returns None for
+# every section that is not the Corte dei conti's, and the candidate span is dropped.
+_CC_ORD_VALUE = {"prima": 1, "primo": 1, "i": 1, "1": 1,
+                 "seconda": 2, "secondo": 2, "ii": 2, "2": 2,
+                 "terza": 3, "terzo": 3, "iii": 3, "3": 3}
+_CC_TOKEN = re.compile(
+    r"[\s,.;:()\-–—]*(?:"
+    r"(?P<ord>prima|primo|seconda|secondo|terza|terzo|iii|ii|i|[123])[°ºª^]?"
+    r"|(?P<sez>sezion[ei]|sez\.?)"
+    r"|(?P<riunite>riunit[ei]|ss\.?\s?rr\.?)"
+    r"|(?P<autonomie>autonomie)"
+    r"|(?P<app>d['’]\s*appello|di\s+appello|appello|app\.)"
+    r"|(?P<centr>central[ei]|centr\.)"
+    r"|(?P<giur>giurisdizional[ei]|giur\.)"
+    r"|(?P<contr>controllo|contr\.)"
+    r"|(?P<conc>concomitante)"
+    r"|(?P<reg>regional[ei]|reg\.)"
+    # the court is noise INSIDE a section phrase, named or referred back to: "Sezione
+    # giurisdizionale della Corte dei conti per le Marche" puts the region on the far side
+    # of it, and "le Sezioni riunite di questa Corte" would otherwise read as a bare
+    # self-reference — losing the one thing the citation actually says about the bench.
+    r"|(?P<noise>dell[ae]|degli|dei|del|d['’]|di|per|la|le|lo|gli|il|l['’]|in|sede|"
+    r"collegio|speciale|composizione|corte\s+(?:dei\s+)?conti|c\.\s?conti|"
+    r"quest[ao]\s+cort[ei](?:\s+dei\s+conti)?|"
+    r"a|ad|alla|alle|nella|nelle|presso)"
+    r")(?![\w'’])", I)
+_CC_REGION_LEAD = re.compile(
+    r"^[\s,.;:/]*(?:per\s+)?(?:l['’]\s*|la\s+|le\s+|lo\s+|il\s+|i\s+|gli\s+)?"
+    r"(?:regione\s+|regioni\s+)?", I)
+_CC_PRONOUNCEMENT = re.compile(
+    r"^[\s,.;:()\-–—]*(?:sent(?:enz[ae]|t?\.)|ordinanz[ae]|ord\.|decision[ei]|"
+    r"deliberazion[ei]|delib(?:er[ae])?\.?|pronunc|parer[ei]|nn?[.°]|\d{1,4}\s*/\s*(?:19|20)\d{2})", I)
+_CC_BOLZANO = re.compile(r"^[\s,.;:/\-–—]*(?:s[uü]dtirol\s*[-/]?\s*)?(?:sede\s+di\s+)?"
+                         r"(?:bolzano|bozen|bz)\b", I)
+
+
+def _cc_geo_after(text: str, pos: int):
+    """The place a Corte dei conti section is named after -> (code, new_end).
+
+    A region code for the twenty regional sections, or the province targa of a seat: the
+    Trentino sections sit in Trento and Bolzano and are named either way round, "per il
+    Trentino-Alto Adige, sede di Bolzano" and plain "di Bolzano" alike."""
+    win = text[pos:pos + 60]
+    lead = _CC_REGION_LEAD.match(win)
+    off = lead.end() if lead else 0
+    sub = win[off:].translate(_ACCENTS).replace("-", " ")   # both length-preserving
+    m = REGION_RE.match(sub)
+    if m:
+        code = REGION_NAME_TO_CODE[m.group(1).lower()]
+        end = pos + off + m.end()
+        if code == "TAA":                                   # which of the two seats
+            code = "BZ" if _CC_BOLZANO.match(text[end:]) else "TN"
+        return code, end
+    m = re.match(r"sicilian[ao]\b", sub, I)                 # "la Regione Siciliana"
+    if m:
+        return "SIC", pos + off + m.end()
+    m = re.match(r"(?:bolzano|bozen)\b", sub, I)
+    if m:
+        return "BZ", pos + off + m.end()
+    m = re.match(r"trento\b", sub, I)
+    if m:
+        return "TN", pos + off + m.end()
+    return None, pos
+
+
+def _corte_conti_resolve(text: str, pos: int, standalone: bool = False):
+    """The Corte dei conti ECLI section component at `pos` -> (code, new_end).
+
+    `standalone=True` when the section phrase is what identified the court in the first
+    place. A bare ordinal ("Sez. III") and a bare region ("Sezione Lombardia") are then
+    not enough — they name no court on their own — but they are conclusive once the
+    citation has said "Corte dei conti".
+    """
+    flags, reg, end = {}, None, pos
+    limit = min(len(text), pos + 95)
+    while len(flags) < 10:
+        if reg is None:                     # the place can sit anywhere in the phrase:
+            code, geo_end = _cc_geo_after(text, end)    # "Corte dei conti Sicilia Sez.
+            if code and geo_end <= limit:               #  giurisdiz." reads like the rest
+                reg, end = code, geo_end
+                continue
+        m = _CC_TOKEN.match(text, end)
+        if not m or m.end() > limit or m.end() == end:
+            break
+        if m.lastgroup == "ord":
+            flags.setdefault("ord", _CC_ORD_VALUE.get(m.group("ord").lower()))
+        elif m.lastgroup != "noise":
+            flags[m.lastgroup] = True
+        end = m.end()
+    if not flags:
+        return None, pos
+    tail = after = text[end:end + 60]
+    reg_end = end
+
+    # Sezioni riunite. The seat wins; otherwise this is the giurisdizionale bench, and
+    # engine.py flips it to SSRRCO when the doc-type turns out to be a deliberazione.
+    if flags.get("riunite"):
+        consultiva = re.match(r"[\s,.;:]*(?:in\s+sede\s+)?consultiv", after, I)
+        if reg == "SIC":
+            return ("CONSSIC" if consultiva else "SSRRCOSIC"), reg_end
+        if reg in ("TAA", "TN", "BZ"):
+            return "SSRRCOTAA", reg_end
+        if reg == "SAR":
+            return "SSRRCOSAR", reg_end
+        if consultiva:
+            return "CONS", end
+        return ("SSRRCO" if flags.get("contr") else "SSR"), end
+    if flags.get("autonomie"):
+        return "SEZAUT", end
+
+    # Controllo. The central sections are named by what they control; the regional ones
+    # by their region.
+    if flags.get("contr"):
+        if flags.get("conc"):
+            return "CCC", end
+        for pat, code in ((r"[\s,.;:]*sull[ae]\s+gestione", "SCCGAS"),
+                          (r"[\s,.;:]*(?:di\s+)?legittimit", "SCCLEG"),
+                          (r"[\s,.;:]*sugli\s+enti", "SCE"),
+                          (r"[\s,.;:]*(?:per\s+gli\s+|degli\s+)?affari\s+comunitari", "SACEI"),
+                          (r"[\s,.;:]*(?:per\s+gli\s+|degli\s+)?affari\s+europei", "SCAEI")):
+            m = re.match(pat, tail, I)
+            if m:
+                return code, end + m.end()
+        if reg:
+            return "SRC" + reg, reg_end
+        return None, pos
+
+    # Central appeal. "Centrale"/"appello" is what separates these from the regional
+    # giurisdizionale sections; Sicilia has its own appeal bench and no ordinal.
+    if flags.get("app") or flags.get("centr"):
+        if reg == "SIC":
+            return "APPSIC", reg_end
+        if flags.get("ord"):
+            return "APP%d" % flags["ord"], end
+        return None, pos
+
+    # Regional giurisdizionale.
+    if reg:
+        # A region-named section belongs to the Corte dei conti and to no other court, but
+        # "Sezione Lombardia" on its own is also an ordinary noun phrase. Unqualified, it
+        # needs a pronouncement right after it — the same guard the bare Cassazione chamber
+        # uses. With "giurisdizionale" spelled out, or with the court already named, it
+        # stands by itself.
+        if standalone and not flags.get("giur") and not _CC_PRONOUNCEMENT.match(text[reg_end:]):
+            return None, pos
+        return "SG" + reg, reg_end
+    # A bare ordinal is one of the three central appeal sections — but only when it
+    # actually qualifies a "sezione". Without that, "Corte dei conti, i giudici …" and
+    # "Corte dei conti 3 marzo 2020" would each name a section they never mentioned.
+    if flags.get("ord") and flags.get("sez") and not standalone:
+        return "APP%d" % flags["ord"], end          # "Corte dei conti, Sez. III"
+    return None, pos
+
+
+def _corte_conti_before(text: str, start: int):
+    """The section of a "Sezione giurisdizionale ... della Corte dei conti" — the order in
+    which roughly half of these citations put the two. Only consulted when nothing follows
+    the court keyword."""
+    code = None
+    for m in _CC_HEAD.finditer(text, max(0, start - 90), start):
+        found, _ = _corte_conti_resolve(text, m.start(), standalone=True)
+        if found:
+            code = found
+    return code
+
+
 def _cgt_resolve(text: str, pos: int):
     """Resolve a modern CGT grade and geography.
 
@@ -1038,7 +1296,22 @@ def recognize_authorities(text: str) -> List[Span]:
                     attrs["section"] = cs
                 else:
                     attrs.pop("section", None)
-            if want == "cgt":
+            if want == "cc_section":
+                code, new_end = _corte_conti_resolve(text, m.start(), standalone=True)
+                if not code:
+                    continue                      # not a Corte dei conti section
+                attrs["section"], end = code, new_end
+            elif want == "corteconti":
+                code, new_end = _corte_conti_resolve(text, m.end())
+                if code:
+                    attrs["section"], end = code, new_end
+                else:
+                    code = _corte_conti_before(text, m.start())
+                    if code:
+                        attrs["section"] = code
+                    else:
+                        attrs.pop("section", None)
+            elif want == "cgt":
                 value, geo_attrs, end = _cgt_resolve(text, m.end())
                 attrs.update(geo_attrs)
             elif want:

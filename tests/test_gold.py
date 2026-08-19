@@ -177,3 +177,23 @@ def test_normativa_novelle_preserves_complete_external_citations():
                 row.pop("id", None)
         assert _canonical_rows(external) == _canonical_rows(standard.rows), entry["id"]
 
+
+@pytest.mark.skipif(not _has("gold_corte_conti_docs.jsonl"),
+                    reason="Corte dei conti document gold missing")
+def test_corte_conti_document_gold():
+    """Every Corte dei conti citation in thirteen real decisions, scored over whole files.
+
+    An evaluation with a floor, not a demand for perfection: recall is bounded by how these
+    documents cite (a decision whose own number sits a paragraph away from the section that
+    decided it, a list whose second item names its own court), so the gate is set below the
+    current score. Precision is the half that matters — an identifier the engine does emit
+    has to be the right one, because a wrong Corte dei conti ECLI names a real but different
+    decision. Run `python -m tests.goldeval -v` to see each miss.
+    """
+    tp, fp, fn = goldeval.score_corte_conti_docs(
+        os.path.join(G, "gold_corte_conti_docs.jsonl"))
+    precision = tp / max(tp + fp, 1)
+    recall = tp / max(tp + fn, 1)
+    assert tp + fn >= 50, f"Corte dei conti document gold shrank unexpectedly ({tp + fn})"
+    assert precision >= 0.90, f"Corte dei conti precision fell to {precision:.3f}"
+    assert recall >= 0.80, f"Corte dei conti recall fell to {recall:.3f}"

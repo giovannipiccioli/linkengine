@@ -377,8 +377,31 @@ def _court_ecli(row, year, number):
         if _g(row, 'authority') in _TWO_LETTER_GEO and len(val) > 2:
             return None
         geo = val
-    suffix = _cass_chamber_suffix(row) if _g(row, 'authority') == "CORTE_CASS" else ""
+    suffix = ""
+    if _g(row, 'authority') == "CORTE_CASS":
+        suffix = _cass_chamber_suffix(row)
+    elif _g(row, 'authority') == "CORTE_CONTI":
+        suffix = _corte_conti_suffix(row)
+        if not suffix:
+            return None
     return f"ECLI:IT:{prefix}{geo}:{year}:{number}{suffix}"
+
+
+def _corte_conti_suffix(row) -> str:
+    """The section component of a Corte dei conti ECLI, appended to the number the way the
+    Cassazione appends CIV/PEN — "…:2023:89SGCAL", "…:2023:102SRCPIE-PAR".
+
+    Empty means unresolved, and there are two ways to get there: no section at all (a bare
+    "Corte dei conti n. 45/2019" names none of the ~50 benches that number independently),
+    and a controllo section whose deliberation type the citation left out. Both would
+    otherwise produce a well-formed identifier that points at nothing."""
+    section = _g(row, 'section')
+    base = section.split('-')[0]
+    if base not in catalog.CORTE_CONTI_SECTIONS:
+        return ""
+    if base in catalog.CORTE_CONTI_CONTROLLO and '-' not in section:
+        return ""
+    return section
 
 
 def _cass_chamber_suffix(row) -> str:
@@ -523,6 +546,8 @@ def _ecli_to_text(body):
         number, suffix = number[:-3], " civile"
     elif number.endswith("PEN"):
         number, suffix = number[:-3], " penale"
+    if court_geo == "CONT":
+        return _corte_conti_to_text(year, number)
     for prefix in catalog.ECLI_PREFIXES:
         if court_geo.startswith(prefix):
             name, geo_kind = catalog.ECLI_PREFIX_TO_COURT[prefix]
@@ -537,6 +562,23 @@ def _ecli_to_text(body):
                     place = f" di {city_name(geo_code)}"
             return f"{name}{suffix}{place} n. {number}/{year}"
     return f"{court_geo} n. {number}/{year}"
+
+
+def _corte_conti_to_text(year, number):
+    """"89SGCAL" -> "Corte dei Conti, Sezione giurisdizionale Calabria n. 89/2023";
+    "102SRCPIE-PAR" -> "…, Sezione regionale di controllo Piemonte, deliberazione
+    n. 102/2023/PAR" — the deliberation type is kept because it identifies the act."""
+    court = catalog.COURTS["CORTE_CONTI"]["name"]
+    m = re.fullmatch(r'(\d+)([A-Z0-9]+?)(?:-([A-Z0-9]+))?', number)
+    if not m:
+        return f"{court} n. {number}/{year}"
+    num, section, delib = m.group(1), m.group(2), m.group(3)
+    name = catalog.CORTE_CONTI_SECTIONS.get(section)
+    if not name:
+        return f"{court} n. {num}/{year}"
+    if delib:
+        return f"{court}, {name}, deliberazione n. {num}/{year}/{delib}"
+    return f"{court}, {name} n. {num}/{year}"
 
 
 def _nir_to_text(body):

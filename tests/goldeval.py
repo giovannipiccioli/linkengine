@@ -34,7 +34,7 @@ import os
 import re
 from collections import Counter
 
-from linkengine import LinkEngine
+from linkengine import DocumentContext, LinkEngine
 
 GOLD_DIR = os.path.join(os.path.dirname(__file__), "gold")
 
@@ -195,6 +195,42 @@ def score_normativa(path, verbose=False, title="GOLD NORMATIVA"):
     return npass, len(gold)
 
 
+# ── Corte dei conti, full documents ─────────────────────────────────────────────
+def score_corte_conti_docs(path, verbose=False):
+    """Score every Corte dei conti identifier produced over whole real decisions.
+
+    An evaluation, not a regression gate: recall is bounded by how these documents actually
+    cite (a controllo deliberation cited without its procedural type has no identifier to
+    find), so the number to watch is precision — an identifier that is produced must be the
+    right one. Returns (tp, fp, fn).
+    """
+    docs_dir = os.path.join(os.path.dirname(__file__), "benchmark_docs")
+    gold = _load_jsonl(path)
+    tp = fp = fn = 0
+    for entry in gold:
+        text = open(os.path.join(docs_dir, entry["doc"]), encoding="utf-8").read()
+        context = DocumentContext(authority="CORTE_CONTI", cc_section=entry["cc-section"])
+        produced = {norm_urn(r["urn"]) for r in LinkEngine().extract(text, context=context).rows
+                    if r["urn"].startswith("ECLI:IT:CONT:")}
+        expected = {norm_urn(r["urn"]) for r in entry["refs"]}
+        tp += len(produced & expected)
+        fp += len(produced - expected)
+        fn += len(expected - produced)
+        if verbose and (produced != expected):
+            print(f"  {entry['doc']}")
+            for u in sorted(expected - produced):
+                text_of = next(r["text"] for r in entry["refs"] if norm_urn(r["urn"]) == u)
+                print(f"      MISS {u:34s} {text_of}")
+            for u in sorted(produced - expected):
+                print(f"      FP   {u}")
+    prec = tp / max(tp + fp, 1)
+    rec = tp / max(tp + fn, 1)
+    print("\n==== GOLD CORTE DEI CONTI (whole documents, every citation of the Court) ====")
+    print(f"  documents: {len(gold)}   citations: {tp + fn}   TP={tp} FP={fp} FN={fn}")
+    print(f"  precision={prec:.3f}  recall={rec:.3f}  F1={2*prec*rec/max(prec+rec, 1e-9):.3f}")
+    return tp, fp, fn
+
+
 def run_all(verbose=False):
     n1, t1 = score_recall(os.path.join(GOLD_DIR, "gold_manual.csv"), verbose, "GOLD (hand-verified)")
     n2, t2 = score_recall(os.path.join(GOLD_DIR, "gold_partitions.csv"), verbose, "GOLD PARTITIONS")
@@ -206,6 +242,7 @@ def run_all(verbose=False):
     n6, t6 = score_normativa(
         os.path.join(GOLD_DIR, "gold_normativa_novelle.jsonl"), verbose,
         "GOLD NORMATIVA NOVELLE")
+    score_corte_conti_docs(os.path.join(GOLD_DIR, "gold_corte_conti_docs.jsonl"), verbose)
     return (n1, t1), (n2, t2), (n3, t3), (n4, t4), (n5, t5), (n6, t6)
 
 

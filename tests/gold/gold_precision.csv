@@ -145,3 +145,9 @@ X10||FP guard: decisione generale without CECA marker stays unresolved||decision
 X11||FP guard: decisione di esecuzione without EU marker stays unresolved||decisione di esecuzione 2015/2349
 PX3||positive: parenthetical nickname must not spawn a second decision|CELEX:31999D0719|decisione della Commissione 30 marzo 1999, 1999/719/CE (decisione Renaissance)
 X12||FP guard: clitic "ce" after an article list is not the EC Treaty||artt. 30 e 31 ce lo impongono chiaramente
+CC1||Corte dei conti: delibera comunale, non una pronuncia contabile|DEL:CORM:2021:60|Con delibera n. 60/2021 il Comune di Roma ha approvato il bilancio.
+CC2|CORTE_CASS|Corte dei conti: una sezione numerata della Cassazione resta Cassazione|ECLI:IT:CASS:2003:1954CIV|Cass. civ. Sez. III, n. 1954 del 2003.
+CC3||Corte dei conti: 'Sezione Prima' di un TAR non e' una sezione centrale d'appello|ECLI:IT:TARLAZ:2020:100|TAR Lazio, Sezione Prima, n. 100/2020.
+CC4||Corte dei conti: 'sezione <regione>' senza pronuncia non e' una citazione|urn:nir:stato:legge:2003;131~art7-comma8|La sezione Lombardia dell'ente ha applicato l'art. 7, comma 8, della legge n. 131 del 2003.
+CC5||Corte dei conti: una decisione UE resta un atto UE|CELEX:32011D0278|La decisione 2011/278/UE della Commissione stabilisce le regole armonizzate.
+CC6||Corte dei conti: un ordinale che non qualifica una sezione non e' una sezione|ECLI:IT:CONT:2020:45SGLOM|La Corte dei conti 3 marzo 2020, Sezione Lombardia, sentenza n. 45/2020.

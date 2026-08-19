@@ -20,7 +20,8 @@ from typing import Dict, List, Optional, Set, Tuple
 
 from .aliases import (ALIAS_DISPLAY, ALIAS_NIR, SELF_VALID_ALIASES,
                       VARIANT_SELF_VALID_ALIASES)
-from .catalog import AGENCY_DOCTYPES, CASELAW_AUTH, CONDITIONAL_AGENCY_DOCTYPES
+from .catalog import (AGENCY_DOCTYPES, CASELAW_AUTH, CONDITIONAL_AGENCY_DOCTYPES,
+                      CORTE_CONTI_DOCTYPES)
 from .model import Entity, Reference, Span
 from .partitions import RANK as PARTITION_DEPTH, segment, _resolve_backward
 
@@ -313,7 +314,11 @@ def _frame_accepts_slot(frame: AnchorFrame, span: Span) -> bool:
     if span.entity in (Entity.CASE_NUMBER, Entity.RV_NUMBER):
         return frame.is_caselaw
     if span.entity == Entity.AUTHORITY and span.value in CASELAW_AUTH:
-        return frame.is_caselaw
+        # The Corte dei conti's controllo channel pronounces by deliberazione and parere,
+        # which seed an act frame. The pairing is what admits it: a bare "delibera n.
+        # 60/2021" stays a local act, exactly as before.
+        return frame.is_caselaw or (span.value == "CORTE_CONTI"
+                                    and frame.doctype in CORTE_CONTI_DOCTYPES)
     if span.entity == Entity.OTHER_AUTH:
         return frame.is_prassi or frame.doctype in CONDITIONAL_AGENCY_DOCTYPES
     if span.entity == Entity.AUTHORITY and span.value in LOCAL_AUTH_DOCTYPE:
