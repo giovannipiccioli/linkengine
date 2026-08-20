@@ -195,56 +195,46 @@ def score_normativa(path, verbose=False, title="GOLD NORMATIVA"):
     return npass, len(gold)
 
 
-# ── Corte dei conti, full documents ─────────────────────────────────────────────
-def score_corte_conti_docs(path, verbose=False):
-    """Score every Corte dei conti identifier produced over whole real decisions.
+# ── whole-document golds, one court family at a time ───────────────────────────
+# Four corpora, one contract: the gold lists every ruling of ONE family cited in each
+# document, including the ones the engine cannot reach, so recall records how far the
+# recognition gets rather than how much was asked of it. Precision is the half that matters:
+# an identifier that is produced has to be the right one.
+# family regex, title, subtitle, and the deciding court each document is -- which a caller
+# reading one of these corpora always knows, and which some citations need to resolve.
+DOCUMENT_GOLDS = {
+    "gold_corte_conti_docs.jsonl": (
+        r"^ECLI:IT:CONT:", "CORTE DEI CONTI", "every citation of the Court", "CORTE_CONTI"),
+    "gold_giustizia_amm_docs.jsonl": (
+        r"^ECLI:IT:(TAR|CDS|CGARS|TRGA|CONSSTATO)", "GIUSTIZIA AMMINISTRATIVA",
+        "every decision cited", ""),
+    "gold_corte_cost_docs.jsonl": (
+        r"^ECLI:IT:COST:", "CORTE COSTITUZIONALE", "every ruling of the Court cited",
+        "CORTE_COST"),
+    "gold_merito_docs.jsonl": (
+        r"^ECLI:IT:(TRIB|CAPP|ASS|GDP)", "MERITO CIVILE",
+        "every Tribunale or Corte d'appello ruling cited", ""),
+}
 
-    An evaluation, not a regression gate: recall is bounded by how these documents actually
-    cite (a controllo deliberation cited without its procedural type has no identifier to
-    find), so the number to watch is precision — an identifier that is produced must be the
-    right one. Returns (tp, fp, fn).
+
+def score_document_gold(path, verbose=False):
+    """Score one whole-document gold -> (tp, fp, fn).
+
+    ``cc-section`` in an entry, where present, is the deciding section of the document
+    itself, which a caller reading that corpus always knows.
     """
+    name = os.path.basename(path)
+    family, title, subtitle, authority = DOCUMENT_GOLDS[name]
+    family = re.compile(family)
     docs_dir = os.path.join(os.path.dirname(__file__), "benchmark_docs")
     gold = _load_jsonl(path)
     tp = fp = fn = 0
     for entry in gold:
         text = open(os.path.join(docs_dir, entry["doc"]), encoding="utf-8").read()
-        context = DocumentContext(authority="CORTE_CONTI", cc_section=entry["cc-section"])
+        context = DocumentContext(authority=authority,
+                                  cc_section=entry.get("cc-section", "")) if authority else None
         produced = {norm_urn(r["urn"]) for r in LinkEngine().extract(text, context=context).rows
-                    if r["urn"].startswith("ECLI:IT:CONT:")}
-        expected = {norm_urn(r["urn"]) for r in entry["refs"]}
-        tp += len(produced & expected)
-        fp += len(produced - expected)
-        fn += len(expected - produced)
-        if verbose and (produced != expected):
-            print(f"  {entry['doc']}")
-            for u in sorted(expected - produced):
-                text_of = next(r["text"] for r in entry["refs"] if norm_urn(r["urn"]) == u)
-                print(f"      MISS {u:34s} {text_of}")
-            for u in sorted(produced - expected):
-                print(f"      FP   {u}")
-    prec = tp / max(tp + fp, 1)
-    rec = tp / max(tp + fn, 1)
-    print("\n==== GOLD CORTE DEI CONTI (whole documents, every citation of the Court) ====")
-    print(f"  documents: {len(gold)}   citations: {tp + fn}   TP={tp} FP={fp} FN={fn}")
-    print(f"  precision={prec:.3f}  recall={rec:.3f}  F1={2*prec*rec/max(prec+rec, 1e-9):.3f}")
-    return tp, fp, fn
-
-
-# ── Giustizia amministrativa, full documents ───────────────────────────────────
-def score_giustizia_amm_docs(path, verbose=False):
-    """Score every TAR / Consiglio di Stato / CGARS identifier produced over whole real
-    decisions. An evaluation, like the Corte dei conti one: what it watches is precision,
-    and the recall figure records how far the recognition currently reaches.
-    Returns (tp, fp, fn)."""
-    docs_dir = os.path.join(os.path.dirname(__file__), "benchmark_docs")
-    gold = _load_jsonl(path)
-    admin = re.compile(r"^ECLI:IT:(TAR|CDS|CGARS|TRGA|CONSSTATO)")
-    tp = fp = fn = 0
-    for entry in gold:
-        text = open(os.path.join(docs_dir, entry["doc"]), encoding="utf-8").read()
-        produced = {norm_urn(r["urn"]) for r in LinkEngine().extract(text).rows
-                    if admin.match(r["urn"])}
+                    if family.match(r["urn"])}
         expected = {norm_urn(r["urn"]) for r in entry["refs"]}
         tp += len(produced & expected)
         fp += len(produced - expected)
@@ -253,12 +243,11 @@ def score_giustizia_amm_docs(path, verbose=False):
             print(f"  {entry['doc']}")
             for u in sorted(expected - produced):
                 where = next(r["text"] for r in entry["refs"] if norm_urn(r["urn"]) == u)
-                print(f"      MISS {u:32s} {where}")
+                print(f"      MISS {u:34s} {where}")
             for u in sorted(produced - expected):
                 print(f"      FP   {u}")
-    prec = tp / max(tp + fp, 1)
-    rec = tp / max(tp + fn, 1)
-    print("\n==== GOLD GIUSTIZIA AMMINISTRATIVA (whole documents, every decision cited) ====")
+    prec, rec = tp / max(tp + fp, 1), tp / max(tp + fn, 1)
+    print(f"\n==== GOLD {title} (whole documents, {subtitle}) ====")
     print(f"  documents: {len(gold)}   citations: {tp + fn}   TP={tp} FP={fp} FN={fn}")
     print(f"  precision={prec:.3f}  recall={rec:.3f}")
     return tp, fp, fn
@@ -275,8 +264,8 @@ def run_all(verbose=False):
     n6, t6 = score_normativa(
         os.path.join(GOLD_DIR, "gold_normativa_novelle.jsonl"), verbose,
         "GOLD NORMATIVA NOVELLE")
-    score_corte_conti_docs(os.path.join(GOLD_DIR, "gold_corte_conti_docs.jsonl"), verbose)
-    score_giustizia_amm_docs(os.path.join(GOLD_DIR, "gold_giustizia_amm_docs.jsonl"), verbose)
+    for name in DOCUMENT_GOLDS:
+        score_document_gold(os.path.join(GOLD_DIR, name), verbose)
     return (n1, t1), (n2, t2), (n3, t3), (n4, t4), (n5, t5), (n6, t6)
 
 

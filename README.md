@@ -261,6 +261,30 @@ values raise `ValueError`.
 Modern CGT authorities emit the distinct ECLI court components `CGT1` and `CGT2`; historical
 `COMM_TRIBUT_PROV` and `COMM_TRIBUT_REG` references retain `CTP` and `CTR`.
 
+#### `authority="CORTE_COST"` — the Court's own citations
+
+The Corte costituzionale cites its own rulings by number and year alone — "sentenza n. 269
+del 2017", naming no court because inside its own judgment there is only one. That is its
+house style, 308 times across 24 sampled judgments, and the only form in which most of its
+precedent appears.
+
+Elsewhere the context is not allowed to claim a bare pronouncement: in ordinary prose
+"sentenza n. 123/2020" could be anyone's, and that stays true. This Court is the exception,
+and it rests on a fact rather than an assumption — it has neither geography nor sections, so
+number and year identify a ruling completely. Set the authority and the form resolves:
+
+```python
+cost = DocumentContext(authority="CORTE_COST")
+engine.extract("in senso conforme, la sentenza n. 269 del 2017", context=cost).rows[0]["urn"]
+#  -> 'ECLI:IT:COST:2017:269'
+```
+
+A citation that names a court is recognized the ordinary way and never reaches this. Three
+things disqualify an unattributed number: the docket ("registro ordinanze"), the gazette
+issue every referral arrives with, and any mention of a *sezione* — the Court sits as one
+bench, so a section belongs to a court that has them, which is what stops a list from
+defecting when it loses its name after the first item.
+
 #### `cc_section` — the Corte dei conti section
 
 The Corte dei conti decides through some fifty benches that number independently, and its
@@ -438,6 +462,16 @@ The behavior is pinned by **hand-verified gold sets** (`tests/gold/`), scored by
   and ordinary Italian legislative units, across 22 patterns and seven source years. Supported
   cases are exact regression gates; 12 named limitation cases preserve the semantic result and
   currently document where the intentionally small scope resolver stops.
+
+- **whole-document golds** — every ruling of one court family cited in a real decision, read
+  by hand and checked against that court's own archive: `gold_corte_conti_docs.jsonl` (20
+  documents, 99 citations), `gold_giustizia_amm_docs.jsonl` (26 / 100),
+  `gold_corte_cost_docs.jsonl` (15 / 141) and `gold_merito_docs.jsonl` (9 / 7). They list the
+  citations the engine cannot reach as well as the ones it can, so recall records how far the
+  recognition gets rather than how much was asked of it; precision is the half gated tightly.
+  The merito judgments were pseudonymized before being added: the ministry replaces the
+  parties, and the names, birth data, addresses and house numbers that survived that are
+  role placeholders here.
 
 ```bash
 pytest                          # unit tests + the gold gates

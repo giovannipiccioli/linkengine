@@ -813,7 +813,9 @@ _COURT_PATTERNS = [
     (r"tribunale\s+regionale\s+di\s+giustizia\s+amministrativa|\bt\.?\s?r\.?\s?g\.?\s?a\.?\b",
      "TRIB_REG_GIUST_AMM", "city"),
     (r"tribunale\s+di\s+sorveglianza", "TRIBUNALE_SORVEGLIANZA", "city"),
-    (r"tribunale(?!\s+amministrativo|\s+superiore)", "TRIB", "city"),
+    # "Tribunale Ordinario di Roma" is the court's own formal name, and the one its
+    # judgments are published under.
+    (r"tribunale(?!\s+amministrativo|\s+superiore)(?:\s+ordinario)?", "TRIB", "city"),
     (r"giudice\s+di\s+pace", "GIUDICE_PACE", "city"),
     # comune (for a delibera comunale -> DEL:CO{city}); "di <City>" is required by the geo step
     (r"comune\s+di", "COMUNE", "city"),

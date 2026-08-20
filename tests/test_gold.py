@@ -190,7 +190,7 @@ def test_corte_conti_document_gold():
     has to be the right one, because a wrong Corte dei conti ECLI names a real but different
     decision. Run `python -m tests.goldeval -v` to see each miss.
     """
-    tp, fp, fn = goldeval.score_corte_conti_docs(
+    tp, fp, fn = goldeval.score_document_gold(
         os.path.join(G, "gold_corte_conti_docs.jsonl"))
     precision = tp / max(tp + fp, 1)
     recall = tp / max(tp + fn, 1)
@@ -211,10 +211,49 @@ def test_giustizia_amministrativa_document_gold():
     never a wrong ruling — court, year and number are read, not guessed.
     Run `python -m tests.goldeval -v` to see each one.
     """
-    tp, fp, fn = goldeval.score_giustizia_amm_docs(
+    tp, fp, fn = goldeval.score_document_gold(
         os.path.join(G, "gold_giustizia_amm_docs.jsonl"))
     precision = tp / max(tp + fp, 1)
     recall = tp / max(tp + fn, 1)
     assert tp + fn >= 95, f"administrative document gold shrank unexpectedly ({tp + fn})"
     assert precision >= 0.88, f"administrative precision fell to {precision:.3f}"
     assert recall >= 0.90, f"administrative recall fell to {recall:.3f}"
+
+
+@pytest.mark.skipif(not _has("gold_corte_cost_docs.jsonl"),
+                    reason="Corte costituzionale document gold missing")
+def test_corte_costituzionale_document_gold():
+    """Every Corte costituzionale ruling cited in fifteen of its own decisions.
+
+    The Court cites itself as "sentenza n. 269 del 2017", naming no court because inside its
+    own judgment there is only one — the house style, 308 times across 24 sampled judgments.
+    `DocumentContext(authority="CORTE_COST")` is what reads it, and precision is gated hard
+    because the licence is broad: what stops a neighbouring court's ruling from being claimed
+    when a list loses its name is that the Court has no sections and no docket numbers of its
+    own. The standing misses are its own identity, spelled "SENTENZA N. 78 ANNO 2022".
+    """
+    tp, fp, fn = goldeval.score_document_gold(os.path.join(G, "gold_corte_cost_docs.jsonl"))
+    precision = tp / max(tp + fp, 1)
+    recall = tp / max(tp + fn, 1)
+    assert tp + fn >= 160, f"Corte costituzionale document gold shrank ({tp + fn})"
+    assert precision >= 0.97, f"Corte costituzionale precision fell to {precision:.3f}"
+    assert recall >= 0.85, f"Corte costituzionale recall fell to {recall:.3f}"
+
+
+@pytest.mark.skipif(not _has("gold_merito_docs.jsonl"),
+                    reason="merito document gold missing")
+def test_merito_document_gold():
+    """Every Tribunale or Corte d'appello ruling cited in twenty-two merito judgments.
+
+    Half of what these test is what must NOT become a ruling: a merito judgment is dense with
+    numbers that look like one — the RG number, decreti ingiuntivi, which number in their own
+    series, invoice and contract numbers — and the two standing false positives are exactly
+    that kind of miss, a decreto ingiuntivo and "n. 2020/17" read as year 2020 rather than as
+    number 2020 of 2017.
+    """
+    tp, fp, fn = goldeval.score_document_gold(os.path.join(G, "gold_merito_docs.jsonl"))
+    precision = tp / max(tp + fp, 1)
+    recall = tp / max(tp + fn, 1)
+    assert tp + fn >= 24, f"merito document gold shrank ({tp + fn})"
+    assert precision >= 0.90, f"merito precision fell to {precision:.3f}"
+    assert recall >= 0.90, f"merito recall fell to {recall:.3f}"

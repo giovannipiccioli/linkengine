@@ -1,0 +1,33 @@
+// Merito civile, whole documents: every Tribunale or Corte d'appello ruling cited in each
+// file, the document's own included -- these judgments are published under a header line
+// that states it. They carry no official ECLI, so the identifier is the library's own; the
+// self-identifications are confirmed against the ministry's metadata.
+// Deliberately absent, and half the reason these documents earn their place: the numbers
+// that must NOT become rulings. A merito judgment is dense with them -- the RG number
+// ("iscritta al n. 1122/2015 R.G."), decreti ingiuntivi, which number in their own series,
+// invoice and contract numbers.
+// The parties were pseudonymized at source; names, birth data, addresses and house numbers
+// that survived that are replaced here with role placeholders.
+// Scored by tests.goldeval.score_document_gold.
+{"doc": "merito_capp_ancona_2024_1144.txt", "refs": [{"urn": "ECLI:IT:TRIBAP:2023:301", "text": "sentenza n. 301/2023 del 19 maggio 2023 resa dal Tribunale d"}]}
+{"doc": "merito_capp_firenze_2024_697.txt", "refs": [{"urn": "ECLI:IT:TRIBLU:2020:423", "text": "sentenza n. 423/2020 emessa dal Tribunale di Lucca"}]}
+{"doc": "merito_capp_laquila_2022_660.txt", "refs": [{"urn": "ECLI:IT:TRIBAQ:2019:450", "text": "sentenza n. 450/19 ... del Tribunale di L'Aquila (anno a due cifre)"}]}
+{"doc": "merito_capp_milano_2019_1621.txt", "refs": [{"urn": "ECLI:IT:CAPPMI:2019:1621", "text": "Corte D'Appello di Milano - 1621/2019 Data pubblicazione: 30"}, {"urn": "ECLI:IT:TRIBMI:2017:2020", "text": "sentenza del Tribunale di Milano n. 2020/2017"}]}
+{"doc": "merito_capp_milano_2024_729.txt", "refs": [{"urn": "ECLI:IT:TRIBMI:2023:247", "text": "sentenza n. 247/2023 pubblicata il 16.1.2023, il Tribunale d"}]}
+{"doc": "merito_capp_napoli_2024_3690.txt", "refs": [{"urn": "ECLI:IT:TRIBI234:2022:1153", "text": "sentenza n. 1153/2022 emessa dal Tribunale di Santa Maria Ca"}]}
+{"doc": "merito_capp_reggiocalabria_2019_869.txt", "refs": [{"urn": "ECLI:IT:CAPPRC:2019:869", "text": "Corte D'Appello di Reggio Calabria - 869/2019 Data pubblicaz"}, {"urn": "ECLI:IT:TRIBG288:2008:200", "text": "sentenza n. 200/08 del Tribunale di Palmi emessa il 13 marzo"}]}
+{"doc": "merito_capp_trento_2024_12.txt", "refs": [{"urn": "ECLI:IT:TRIBL378:2022:391", "text": "sentenza 391/2022 del Tribunale di Trento"}]}
+{"doc": "merito_capp_venezia_2024_1744.txt", "refs": [{"urn": "ECLI:IT:TRIBVR:2024:126", "text": "sentenza n. 126 emessa il 3/5/24 dal Tribunale di Verona"}]}
+{"doc": "merito_trib_cosenza_2019_2162.txt", "refs": [{"urn": "ECLI:IT:TRIBCS:2019:2162", "text": "Tribunale Ordinario di Cosenza - 2162/2019 Data pubblicazion"}]}
+{"doc": "merito_trib_cuneo_2022_934.txt", "refs": [{"urn": "ECLI:IT:TRIBCN:2022:934", "text": "Tribunale Ordinario di Cuneo - 934/2022 Data pubblicazione: "}]}
+{"doc": "merito_trib_firenze_2022_3465.txt", "refs": [{"urn": "ECLI:IT:TRIBFI:2022:3465", "text": "Tribunale Ordinario di Firenze - 3465/2022 Data pubblicazion"}]}
+{"doc": "merito_trib_gela_2019_288.txt", "refs": [{"urn": "ECLI:IT:TRIBD960:2019:288", "text": "Tribunale Ordinario di Gela - 288/2019 Data pubblicazione: 3"}]}
+{"doc": "merito_trib_milano_2019_5765.txt", "refs": [{"urn": "ECLI:IT:TRIBMI:2019:5765", "text": "Tribunale Ordinario di Milano - 5765/2019 Data pubblicazione"}]}
+{"doc": "merito_trib_nola_2024_1945.txt", "refs": [{"urn": "ECLI:IT:TRIBF924:2024:1945", "text": "TRIBUNALE DI NOLA - 1945/2024 Data pubblicazione: 17/06/2024"}]}
+{"doc": "merito_trib_palermo_2022_2732.txt", "refs": [{"urn": "ECLI:IT:TRIBPA:2022:2732", "text": "Tribunale Ordinario di Palermo - 2732/2022 Data pubblicazion"}]}
+{"doc": "merito_trib_palermo_2022_3897.txt", "refs": [{"urn": "ECLI:IT:TRIBPA:2022:3897", "text": "Tribunale Ordinario di Palermo - 3897/2022 Data pubblicazion"}]}
+{"doc": "merito_trib_potenza_2024_1782.txt", "refs": [{"urn": "ECLI:IT:TRIBPZ:2024:1782", "text": "TRIBUNALE DI POTENZA - 1782/2024 Data pubblicazione: 04/11/2"}]}
+{"doc": "merito_trib_roma_2019_6902.txt", "refs": [{"urn": "ECLI:IT:TRIBRM:2019:6902", "text": "Tribunale Ordinario di Roma - 6902/2019 Data pubblicazione: "}]}
+{"doc": "merito_trib_siracusa_2024_559.txt", "refs": [{"urn": "ECLI:IT:TRIBSR:2024:559", "text": "TRIBUNALE DI SIRACUSA - 559/2024 Data pubblicazione: 05/03/2"}]}
+{"doc": "merito_trib_terminiimerese_2024_795.txt", "refs": [{"urn": "ECLI:IT:TRIBL112:2024:795", "text": "TRIBUNALE DI TERMINI IMERESE - 795/2024 Data pubblicazione: "}]}
+{"doc": "merito_trib_trani_2024_38.txt", "refs": [{"urn": "ECLI:IT:TRIBL328:2024:38", "text": "TRIBUNALE DI TRANI - 38/2024 Data pubblicazione: 09/01/2024"}]}

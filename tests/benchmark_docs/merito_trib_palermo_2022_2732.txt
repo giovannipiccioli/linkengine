@@ -1,0 +1,472 @@
+Tribunale Ordinario di Palermo - 2732/2022
+Data pubblicazione: 18/06/2022
+Categoria: Contratti Bancari
+Tipo: Sentenza
+REPUBBLICA ITALIANA IN NOME DEL POPOLO ITALIANO
+Il Tribunale di Nome_1 in composizione monocratica (sezione V civile) in persona della dott.ssa Nome_2 ha
+pronunciato la seguente
+SENTENZA
+nella causa iscritta al N. 12687 del Ruolo Generale degli Affari Nome_3 Civili dell'anno 2018
+TRA
+-VOGLIA DI Nome_4 S.R.L., in persona del legale rappresentante pro tempore, rappresentata e difesa
+dall' Avv. Nome_5 ATTRICE E
+UNICREDIT S.P.A., in persona del legale rappresentante pro tempore, rappresentata e difesa dall'Avv. Nome_6 CONVENUTA
+CONCLUSIONI delle Nome_1 come da note tempestivamente depositate giusta decreto di trattazione scritta
+reso ai sensi degli artt. 83 d.l. 18/20, 36 d.l. 23/20, 221 co. 4^ d.l. 34/20, 1 co.3^ e ss. d.l. 125/20 così come
+convertiti e 1 co. 1 dl 2/21, depositate per l'udienza del 23.11.2021 e atti ivi richiamati.
+MOTIVI DELLA DECISIONE
+Con atto di citazione notificato in data 01/08/2018 Voglia di Nome_4 S.r.l., in persona del rappresentante
+legale pro tempore, conveniva in giudizio Unicredit S.p.a. e: (i) rappresentava di aver intrattenuto con tale
+istituto di credito il rapporto di conto corrente n. 300586401 (aperto nell'anno 2007 ed estinto nel giugno del
+2017, originariamente contraddistinto dal n. 309851) e il rapporto di conto anticipi n. 300706622 (aperto nel
+2009 ed estinto nel 2013); (ii) precisava di aver ottenuto sul conto principale, in data 08/04/2009, un
+affidamento di euro 20.000,00 e sul conto anticipi, in data 11/03/2010, un aumento dell'importo della linea di
+credito di euro 150.000,00; (iii) lamentava: 1. il mancato rispetto da parte dell'istituto di credito degli obblighi
+informativi, nonché la violazione dell'art. 118 TUB per aver unilateralmente modificato le condizioni
+contrattuali in senso sfavorevole alla società attrice senza fornire alcuna preventiva comunicazione e in
+assenza di "giustificato motivo"; 2. l'illegittima applicazione di spese, costi di gestione, commissioni, interessi
+ultralegali, cms, non preventivamente pattuiti (o pattuiti in maniera indeterminata) e la nullità delle
+commissioni applicate per mancanza di causa; 3. l'illegittima capitalizzazione trimestrale degli interessi, il
+superamento del tasso soglia anti usura (c.d. usura oggettiva), nonché la sussistenza della c.d. usura
+soggettiva; 4. la nullità dei contratti; e, per l'effetto, domandava la rideterminazione dei saldi depurati dagli
+effetti delle clausole (in tesi) nulle o invalide.
+In data 21/12/2018 si costituiva Unicredit S.p.a. che eccepiva, in via preliminare, la nullità dell'atto di citazione
+ex art. 164, comma 4, c.p.c., la prescrizione decennale delle poste solutorie ultradecennali in relazione al c/c
+n. 300586401, nonché il riconoscimento del debito e la rinuncia all'azione da parte dell'attrice, e che
+sosteneva nel merito: (i) il difetto di prova e la genericità delle contestazioni mosse dall'attrice; (ii) la legittimità
+della commissione di massimo scoperto validamente pattuita tra le parti; (iii) la legittimità dei tassi di interesse
+e delle ulteriori condizioni economiche applicate dalla banca e regolarmente pattuite e determinate nei
+
+rispettivi contratti; (iv) l'assenza della c.d. usura oggettiva, non dovendosi computare la commissione di
+massimo scoperto nel calcolo del Nome_7 e precisando che i tassi applicati erano conformi ai tassi soglia del
+periodo di riferimento, e che ai fini del calcolo dell'usura bisogna riferirsi esclusivamente al momento della
+pattuizione, non avendo alcun rilievo la c.d. usura sopravvenuta, sia per i rapporti di mutuo che per quelli di
+conto corrente; (v) l'insussistenza della c.d. usura soggettiva, giacché l'attrice ha omesso di dimostrare sia
+l'esistenza di una situazione di difficoltà economico-finanziaria della correntista nota alla banca,  sia che
+quest'ultima abbia imposto tassi di interesse differenti da quelli praticati sul mercato proprio in considerazione
+e speculando sul momento di difficoltà economico-finanziaria dell'attrice; la legittimità della capitalizzazione
+trimestrale degli interessi, in virtù di apposita ed espressa pattuizione; (vi) l'inattendibilità della perizia
+prodotta da parte attrice Nome_8 del 15/01/2019, il Giudice assegnava alle parti i termini di cui all'art. 183,
+comma 6, c.p.c..
+Con successiva ordinanza del 06/05/2019 veniva disposta una CTU contabile i cui esiti venivano integrati a
+seguito di ordinanza di richiamo dell'ausiliario resa l'08/06/2021.
+Esaurita l'istruttoria con il deposito della relazione integrativa, la causa veniva posta in decisione all'udienza
+in epigrafe indicata, con termini di cui all'art 190 c.p.c.
+ ***** 
+Così sinteticamente delineato l'oggetto della controversia - istruita mediante produzione documentale e c.t.u.
+(cfr. ord. del 06/05/2019, nonché la successiva ordinanza di richiamo e integrazione del 08/06/2021), le cui
+conclusioni, supportate dai necessari rilievi di competenza, questo giudice ritiene di condividere (cfr. rel. Dott. Giudice_1 Nome_9 così come definitivamente integrata con la relazione depositata il 18/10/2021) - il
+Tribunale, ritiene innanzitutto di doversi soffermare sulle eccezioni pregiudiziali e preliminari avanzate dalla
+convenuta.
+ **** 
+Quanto all'eccezione di nullità dell'atto di citazione ex art. 164, comma 4, c.p.c. avanzata dalla banca
+convenuta sull'assunto della genericità dello stesso per non aver esplicitamente fatto riferimento alle clausole
+presuntivamente affette da nullità, essa non può trovare accoglimento.
+Giova rilevare, infatti, che la nullità dell'atto di citazione per vizi attinenti alla c.d. editio actionis si ha
+esclusivamente laddove vi sia un'insufficiente determinatezza dell'oggetto della domanda (petitum) oppure
+manchi l'esposizione dei fatti che ne costituiscono le ragioni fondative (causa petendi), così da provocare
+un'assoluta incertezza sugli elementi identificativi del diritto fatto valere.
+Tale verifica, come è facile intuire, postula necessariamente una verifica da parte del giudice, caso per caso,
+attraverso un esame complessivo dell'atto introduttivo e dei documenti allegati (cfr., ex multis, Cass.
+14071/2016; Cass. 11751/2013).
+Ebbene, nel caso di specie, dall'esame dell'atto di citazione e della documentazione offerta in comunicazione
+da parte della società attrice, appaiono determinati in modo chiaro e comprensibile sia l'oggetto della
+domanda, sia la ragione giustificatrice della pretesa. Tanto risulta altresì comprovato dal fatto che parte
+convenuta ha potuto svolgere adeguate e pertinenti difese nel merito durante tutto il giudizio, sin dal
+momento della propria costituzione.
+Sicché, alla stregua di quanto precede, la predetta eccezione di nullità dell'atto introduttivo va rigettata.
+ **** 
+Con riferimento all'eccezione di prescrizione decennale sollevata dalla banca convenuta (relativa al rapporto
+di conto corrente ordinario n. 300586401, con riferimento alle operazioni anteriori all'1.08.2008), ritiene il
+Tribunale che, per comodità espositiva, essa vada esaminata successivamente.
+ **** 
+Per quanto attiene, invece, all'asserita ricognizione del debito da parte dell'attrice in relazione al rapporto di
+
+c/c n. 300586401, nonché alla conseguente rinuncia all'azione che avrebbe manifestato con la sottoscrizione,
+in data 16.05.2016, di un accordo tra le parti (qualificato "Atto di rimodulazione e rientro su affidamento
+regolamentato in conto corrente", v. all. 6.5 della produzione attorea), il Tribunale osserva quanto segue.
+Ad avviso della convenuta, le domande proposte dalla società attrice sono improcedibili a seguito della
+rinuncia all'azione che quest'ultima avrebbe fatto sottoscrivendo con la banca un accordo transattivo (in cui
+avrebbe anche riconosciuto un debito di EUR 16.894,03), a fronte di un rientro graduale dall'esposizione
+debitoria e di una mitigazione del tasso di interesse.
+Orbene, dall'analisi del piano di rientro sottoscritto tra le parti emerge un'efficacia ricognitiva della scrittura,
+dovendosene invece escludere tanto un contenuto transattivo (non essendovi stata alcuna reciproca rinuncia
+delle parti alle rispettive pretese al fine di prevenire una lite), quanto un carattere novativo (non essendosi
+prodotto alcun effetto estintivo delle obbligazioni preesistenti né alcun mutamento nel quadro della
+regolamentazione degli interessi delle parti, salva la previsione di una dilazionata scansione temporale ai fini
+dell'adempimento).
+Come correttamente affermato dalla giurisprudenza di legittimità, infatti, non può confondersi l'esigenza di
+definire i rapporti di dare-avere tra le parti (senz'altro sottesa al piano di rientro ma qualificabile
+esclusivamente come intento soggettivo), con la volontà espressa ed oggettivizzata in un negozio transattivo
+o novativo volto a realizzare tale intento con l'estinzione delle obbligazioni in precedenza assunte e la
+sostituzione delle stesse con un regolamento d'interessi mutato (Cass., n. 19792/2014).
+Quanto appena evidenziato è cristallizzato, expressis verbis, all'art. 2 del suddetto atto di rimodulazione, in
+cui, nell'enunciare gli scopi perseguiti dalle parti, si afferma "Le parti convengono, in relazione all'Affidamento
+in essere ed alla relativa Esposizione, senza soluzione di continuità e senza alcun effetto novativo sul
+Contratto di Affidamento in essere, una graduale riduzione dell'Esposizione, in base ai seguenti importi e
+scadenze, intendendosi il limite massimo dell'Affidamento progressivamente ridotto secondo il seguente
+piano di riduzione".
+Esclusa, dunque, dalle stesse parti la natura novativa, va altresì esclusa la natura transattiva, giacché, come
+si è avuto modo di chiarire, l'evidente scopo di tale atto non era certamente quello di prevenire una lite futura
+tramite reciproche concessioni (presupposti indefettibili dell'accordo transattivo ex art. 1965 c.c.), bensì quello
+di diminuire progressivamente il limite di fido e di ridurre l'esposizione debitoria della società correntista.
+Non può dunque in alcun modo convenirsi con la difesa della banca sulla qualificazione del piano di rientro
+(denominato "Atto di rimodulazione e rientro su affidamento regolato in conto corrente") come una
+transazione, quando appare evidente che con questo si sia operata una ricognizione del debito e introdotta,
+contestualmente, una modifica pro futuro dell'affidamento.
+Ciò risulta comprovato dal medesimo articolo 4 posto dalla convenuta a fondamento della propria eccezione,
+laddove fa esplicito riferimento al "contratto di affidamento come modificato con il presente atto", con ciò ad
+escludere la natura transattiva o novativa dell'accordo.
+Detto accordo, all'art. 4 ("Approvazione rendicontazione - Rinuncia alle eccezioni"), per la parte che qui
+principalmente rileva, statuisce INFATTI "Parimenti, con la sottoscrizione del presente atto l'impresa rinuncia
+all'esercizio di qualsiasi eccezione e/o contestazione, anche in sede giudiziale, relativa alla tenuta del
+rapporto di conto corrente derivante dal Contratto di Affidamento come modificato con il presente atto, con
+particolare ma non esclusivo riferimento alle metodologie di liquidazione e computo degli interessi applicate
+dalla Banca a far data dall'accensione del rapporto di Affidamento ai tassi e commissioni di volta in volta
+applicati, che l'impresa riconosce come regolarmente pattuiti ed accettati, approvando per l'effetto il saldo
+debitore del conto corrente come indicato al punto 2 delle premesse, come risultante alla data di
+perfezionamento del presente atto medesimo".
+Se dunque il piano di rientro ha effetti meramente ricognitivi e modificativi (pro futuro), da esso non può
+
+certamente discendere l'intangibilità delle clausole negoziali affette da nullità.
+È ampiamente noto, infatti, che la ricognizione di debito (art. 1988 c.c.), al pari della promessa di pagamento,
+non costituisce autonoma fonte di obbligazione, ma ha soltanto un effetto confermativo di un preesistente
+rapporto fondamentale, venendo ad operarsi un'astrazione meramente processuale della causa debendi,
+comportante una semplice "relevatio ab onere probandi" per la quale la controparte è dispensata dall'onere di
+provare l'esistenza del rapporto fondamentale (che si presume fino a prova contraria), della cui esistenza o
+validità, tuttavia, non può prescindersi sotto il profilo sostanziale, con il conseguente venir meno di ogni
+effetto vincolante della ricognizione ove rimanga giudizialmente provato che il rapporto fondamentale non è
+mai sorto, o è invalido, o si è estinto, ovvero che esista una condizione ovvero un altro elemento attinente al
+rapporto fondamentale che possa comunque incidere sull'obbligazione derivante dal riconoscimento (cfr., ex
+plurimis, Cass. n. 24451/2020; sul tema anche Cass., sez. un., 6459/2020; Cass., n. 2091/2022).
+ **** 
+Orbene, passando all'esame delle questioni relative ai rapporti di conto corrente (le quali devono essere
+esaminate congiuntamente, essendo strettamente connesse le une alle altre) il Tribunale osserva quanto
+segue.
+L'omessa impugnazione o l'approvazione (anche tacita) dell'estratto conto - se precludono, ex art. 1832 co 1^
+c.c., qualsiasi contestazione in ordine alla conformità delle singole annotazioni ai rapporti obbligatori dai quali
+derivano gli accrediti e gli addebiti iscritti nell'estratto conto (salva l'impugnazione per errori, omissioni e
+duplicazioni di carattere formale, ai sensi del secondo comma della medesima disposizione) - non
+impediscono di sollevare contestazioni in ordine alla validità e all'efficacia dei rapporti obbligatori dai quali
+derivano i suddetti addebiti e accrediti, e cioè quelle fondate su ragioni sostanziali attinenti alla legittimità, in
+relazione al titolo giuridico, dell'inclusione o dell'eliminazione di partite del conto corrente (così Cass. civ. nn.
+2871/2007 e 11749/2006). In nessun caso infatti l'eccezione di nullità della clausola avente ad oggetto la
+pattuizione degli interessi può restare preclusa dall'approvazione tacita del conto (Cass. civ. n. 10376/2006).
+Né - come la Corte di Cassazione ha avuto modo di precisare (cfr. Cass. civ. n. 2262/1984) - il pagamento di
+interessi ultralegali (illegittimi), in favore della banca che abbia proceduto al relativo addebito sul conto
+corrente del cliente, costituisce adempimento di una obbligazione naturale ed art. 2034 c.c.
+Con specifico riferimento al riparto dell'onere della prova in materia bancaria, la S.C. ha più volte affermato
+(cfr. ex multis Cass. sez. 1^ civ. n. 9201/15) che, "qualora l'attore proponga domanda di accertamento
+negativo del diritto del convenuto e quest'ultimo non si limiti a chiedere il rigetto della pretesa avversaria ma
+proponga domanda riconvenzionale per conseguire il credito negato dalla controparte, ambedue le parti
+hanno l'onere di provare le rispettive contrapposte pretese" (Cass. 3374/07; Cass. 12963/05; Cass. 7282/97).
+Con la suddetta pronuncia la S.C. - nel riaffermare la bontà dell'insegnamento secondo il quale, "quando è la
+banca ad agire, "una volta che sia stata esclusa la validità, per mancanza dei requisiti di legge, della
+pattuizione di interessi ultralegali a carico del correntista, la banca deve dimostrare l'entità del proprio credito
+mediante la produzione, degli estratti conto a partire dall'apertura del conto e cioè dal saldo zero" (Cass.
+23974/10) - ha altresì ribadito che "l'onere probatorio gravante, a norma dell'art. 2697 c.c., su chi intende far
+valere in giudizio un diritto, ovvero su chi eccepisce la modifica o l'estinzione del diritto da altri vantato, non
+subisce deroga neanche quando abbia ad oggetto "fatti negativi", in quanto la negatività dei fatti oggetto della
+prova non esclude né inverte il relativo onere, gravando esso pur sempre sulla parte che fa valere il diritto di
+cui il fatto, pur se negativo, ha carattere costitutivo; tuttavia, in tal caso la relativa prova può esser data
+mediante dimostrazione di uno specifico fatto positivo contrario, od anche mediante presunzioni dalle quali
+possa desumersi il fatto negativo" (Cass. 23229/04; Cass. 9099/12). Ha, pertanto, ritenuto corretto l'operato
+della corte d'appello che nel caso in esame (ove la banca era convenuta in ripetizione e non agiva in
+riconvenzionale) - considerando indimostrato il saldo "zero" - ha effettuato il ricalcolo dei saldi partendo dal
+
+primo degli e/c prodotti (dal correntista).
+Mentre l'onere di produrre gli estratti conto - che contengono la prova dei pagamenti - è regolato dai principi
+appena enunciati e sostanzialmente grava su chi agisce per il recupero del credito (la banca) o per la
+restituzione delle somme, in tesi non dovute per la mancanza di clausole validamente pattuite (il correntista);
+l'onere di produrre i contratti grava sempre sulla banca, non solo ove rivesta la posizione di attrice
+sostanziale (v. supra), ma pure ove sia convenuta in un'azione di accertamento negativo del credito
+evidenziato dal saldo negativo a una certa data (cfr. in proposito cass. Sez. L. n. 22862/10, sez. 6-L ord.
+16917/12) o in un'azione di accertamento del saldo e ripetizione dell'indebito (che si risolve nella
+rideterminazione del saldo a una certa data di un rapporto, ove pure ancora in corso), a fronte della
+produzione di estratti conto da parte del cliente che attestano il pagamento di interessi ultra legali e spese
+varie. Risulta determinante, in proposito, la portata delle norme dettate dal TUB sull'obbligo di forma scritta
+dei contratti bancari, dall'art. 1284 c.c. sull'obbligo di convenire in forma scritta interessi ultra legali (in
+proposito cfr. ex multis Cass. sez. I civ. n. 9791/94) e dagli articoli 1418 e 1346 c.c. sull'obbligo di
+determinatezza dell'oggetto del contratto e delle sue clausole, non assumendo invece rilievo il principio
+generale di "vicinanza dell'onere della prova" (pure invocato da parte della giurisprudenza) che è "criterio
+empirico il cui uso è consentito solo quando sia necessario dirimere un'eventuale sovrapposizione tra fatti
+costitutivi e fatti estintivi, impeditivi o modificativi, oppure quando, assolto l'onere probatorio dalla parte che
+ne sia onerata, sia l'altra a dover dimostrare, per prossimità alla suddetta fonte, fatti idonei ad inficiare la
+portata di quelli dimostrati dalla controparte" (cfr. Cass. sez. L. n. 7830/18).
+È evidente che il debito rappresentato da interessi, commissioni e spese, se non si fonda su clausole
+validamente pattuite nel rispetto degli obblighi di cui sopra, sarà inesistente, sicché indebito sarà il relativo
+pagamento di cui gli estratti conto danno prova.
+ **** 
+Nel caso di specie, come verificato pure dal ctu, sono stati depositati (cfr. indice produzione parte attrice) la
+documentazione contrattuale validamente sottoscritta, gli estratti conto relativi all'intervallo di tempo
+compreso tra il 22.01.2007 e il 08.06.2017 (per il conto ordinario) e tra l'11.05.2009 e il 30.06.2013 (per il
+conto anticipi), unitamente a due perizie di parte, una per ciascun conto.
+Il ctu - che ha eseguito gli accertamenti demandatigli nel rispetto dei criteri dettati dal Tribunale sulla scorta
+dei principi sopra illustrati, come si evince dalla lettura della relazione - ha dunque effettuato il ricalcolo dei
+saldi relativi ai conti correnti, utilizzando come saldo di partenza quello riportato nel più risalente tra gli estratti
+conto prodotti (punto A del quesito originario) che peraltro con riferimento a entrambi i conti è quello iniziale
+recante valore zero.
+Ha inoltre riscontrato continuità nelle serie di estratti conto prodotti.
+ **** 
+Come si è già avuto modo di sottolineare, il contratto bancario, per rispettare gli obblighi di forma,
+determinatezza e specificità sopra richiamati, deve essere scritto, deve essere sottoscritto dal cliente e - nel
+prevedere tassi d'interesse, spese e commissioni - deve quantificarne il valore (assoluto o percentuale), la
+base di calcolo (nella seconda ipotesi) e l'intervallo temporale di riferimento.
+La banca, ove sia contrattualmente previsto, può altresì mutare unilateralmente le condizioni già convenute,
+in senso sfavorevole al cliente, a condizione che gliene dia comunicazione scritta, avvisandolo della facoltà di
+recedere (cfr. Cass. sez. III civ. n. 8548/12 che ha altresì ribadito come tale obbligo non sussista allorquando
+"la variazione del saggio di interesse o di altre condizioni sia stata concordemente subordinata dalle parti alle
+corrispondenti variazioni di elementi obiettivi ed esterni (quali, ad esempio, il tasso di cambio di una valuta),
+trattandosi, in tal caso, di modifica non unilaterale del contratto, della quale il cliente ha assunto
+preventivamente il rischio").
+
+Il saldo del conto andrà dunque rideterminato (pt. A 1 e 2 del quesito), applicando i soli interessi legali ex art.
+1284 c.c. in mancanza di contratto sottoscritto dal cliente ovvero, in presenza dello stesso, tenendo conto
+delle condizioni pattuite nel contratto sottoscritto, così come eventualmente modificato dalla banca
+nell'esercizio dello jus variandi, e tuttavia: -applicando i tassi sostitutivi previsti dall'art. 117 TUB in caso
+d'indeterminatezza della clausola relativa al tasso di interessi, intendendosi per tale quella che faccia rinvio
+ad elementi estrinseci non individuabili mediante criteri prestabiliti, -escludendo qualunque costo e/o
+commissione eventualmente addebitato in mancanza di espressa specifica previsione contrattuale;
+-riconducendo entro i limiti delle previsioni contrattuali i costi eventualmente computati in maniera difforme
+dalle stesse.
+ ***** 
+Degli importi addebitati a titolo di cms il Tribunale ha disposto l'espunzione ove non espressamente pattuita o
+in mancanza di clausole specifiche che ne determinassero importo, base di calcolo e intervallo temporale di
+riferimento per il periodo anteriore all'entrata in vigore della l. 2/09 e, per il periodo successivo, in caso di
+mancato adeguamento alle nuove previsioni normative (pt. A 4 e 5 del quesito).
+Il d.l. 185/08 e l'art. 2 bis della relativa legge di conversione infatti, per la prima volta hanno delineato la
+struttura della cms e i suoi limiti di validità ancorandola alla presenza del fido e dell'effettiva scopertura del
+conto per un periodo continuativo di almeno 30 giorni e prevedendo l'obbligo di adeguamento dei vecchi
+contratti entro 150 giorni.
+Ne consegue che, con riferimento al periodo precedente, dovrà prescindersi da tale legge ai fini della verifica
+di validità delle clausole, mentre non potrà prescindersi dalle norme generali dettate dagli artt. 1346 e 1419
+c.c. dovendosi altresì osservare che: secondo l'orientamento tradizionale della giurisprudenza, la cms è la
+"remunerazione accordata alla banca per la messa a disposizione dei fondi a favore del correntista
+indipendentemente dall'effettivo prelevamento della somma" (cfr. cass. sez. III civ. n. 870/06); la clausola che
+la prevede - ove determinata nel suo contenuto (misura, base di calcolo e periodicità) - non può ritenersi nulla
+per difetto di causa, risolvendosi sostanzialmente tale commissione in una componente del costo del denaro
+ulteriore rispetto a quella rappresentata dal tasso di interesse nominale e, come tale, rilevante ai fini della
+verifica relativa al rispetto del tasso soglia aspetto sul quale ci si soffermerà in seguito.
+Con riferimento al periodo successivo all'entrata in vigore della disciplina sopra indicata, occorrerà invece
+verificare la conformità delle modifiche al dettato normativo, conformità che va esclusa in caso di mera
+riproduzione del testo normativo nella clausola contrattuale.
+ **** 
+Sempre in considerazione delle necessarie specificità e determinatezza delle clausole dei contratti bancari
+che disciplinano i tassi di interesse, il conto ordinario va depurato dai giroconti delle competenze maturate sui
+conti anticipi, da computare quali poste a debito su questo ultimo conto, in mancanza di una previsione
+contrattuale che contempli tali giroconti, indicandone altresì la periodicità.
+Il periodico giroconto sul conto ordinario delle competenze maturate sui conti anticipi comporta infatti una
+sostanziale capitalizzazione delle prime e si risolve dunque - ove tale modalità di addebito non sia stata
+specificamente prevista e regolata in contratto - in un surrettizio aumento dei tassi di interesse convenuto.
+ ***** 
+Con riferimento alla capitalizzazione periodica degli interessi passivi e delle competenze - la cui illiceità per
+contrasto con il divieto di anatocismo di cui all'art. 1283 c.c. è stata sancita dalle Sezioni Unite della S.C. con
+la sentenza n. 21095/04 in relazione al periodo anteriore all'entrata in vigore delle modifiche apportate all'art.
+120 TUB nel 1999 - il Tribunale osserva e rileva quanto segue.
+Invero l'art. 120 TUB, come modificato dall'art. 25 d. lg.vo 342/99, ha attribuito al CICR il potere di stabilire le
+modalità ed i criteri per la produzione di interessi sugli interessi maturati nelle operazioni poste in essere
+
+nell'esercizio dell'attività bancaria. Con l'emanazione della relativa deliberazione (in data 9.2.00, pubblicata
+nella G.U. 22 febbraio 2000), è divenuta legittima la capitalizzazione degli interessi pattuita mediante
+apposite clausole contenute nei contratti bancari che tuttavia rispettino i requisiti previsti dalla delibera
+stessa, dunque con riferimento ai contratti di conto corrente, quello della pari periodicità reciproca.
+La differenza di entità tra i due tassi (creditore e debitore) non vale invece - a parere di questo Tribunale - a
+integrare gli estremi di una condotta illecita atteso che la condizione di reciprocità prevista dalla legge attiene
+all'individuazione dell'intervallo temporale rilevante ai fini della capitalizzazione, non invece all'importo dei
+tassi, inevitabilmente differenti ove si consideri che la funzione del contratto di conto corrente non è quella di
+remunerare i depositi, bensì quella di svolgere un servizio di cassa e sono determinati dalle banche
+nell'ambito di valutazioni che riguardano le condizioni economiche contrattuali complessive offerte ai clienti in
+regime di concorrenza.
+Andranno invece escluse le somme addebitate a partire dal 1.1.14 in violazione del divieto di anatocismo
+reintrodotto dall'art. 120 TUB nella sua formulazione applicabile ratione temporis in ragione delle ulteriori
+modifiche intervenute a partire dalla legge di stabilità del 2014 (pt. A. 8 dei quesiti) L'art. 1, comma 629, L.
+27/12/2013, n. 147 (Legge di stabilità 2014) ha previsto la sostituzione, a far data dall'1/01/2014, del comma
+2 dell'art. 120 TUB, in materia di anatocismo bancario, disponendo che il CICR stabilisca «modalità e criteri
+per la produzione di interessi» nelle operazioni poste in essere nell'esercizio dell'attività bancaria,
+«prevedendo in ogni caso che»: a) nelle operazioni in conto corrente sia assicurata, nei confronti della
+clientela, la stessa periodicità nel conteggio degli interessi sia debitori sia creditori; b) gli interessi
+periodicamente capitalizzati non possano produrre interessi ulteriori che, nelle successive operazioni di
+capitalizzazione, sono calcolati esclusivamente sulla sorte capitale.
+Come illustrato dal Tribunale di Milano con due ordinanze collegiali del 25 marzo e del 3 aprile 2015 che
+questo Tribunale reputa pienamente condivisibili, il precetto che esclude l'anatocismo è immediatamente
+vincolante con l'entrata in vigore della legge, a prescindere dall'effettivo intervento del CICR (sopravvenuto
+ad agosto 2016) chiamato a definire le concrete modalità di computo di interessi che, pur capitalizzati, sono
+destinati a non produrre altri interessi.
+ ***** 
+Tanto chiarito, Il ctu ha svolto le verifiche demandategli sulla scorta di quesiti posti in coerenza con le
+considerazioni fino a ora illustrate, a proposito di ognuna delle questioni esaminate e - dopo avere analizzato
+la documentazione contrattuale e contabile relativa ai rapporti per cui è causa - ha operato gli aggiustamenti
+di seguito indicati.
+Avendo riscontrato l'assenza di una previsione contrattuale giustificativa dei giroconti sul conto ordinario delle
+competenze relative ai conti anticipi, ha correttamente depurato il primo dagli effetti di tali giroconti,
+applicando quale tasso debitorio il tasso man mano pattuito fra le parti o il tasso variato in forza dell'esercizio
+da parte dalla banca del diritto dello jus variandi; applicando al rapporto il tasso applicato dalla banca nel
+caso in cui quest'ultimo risultasse inferiore al tasso pattuito; eliminando dalla ricostruzione del rapporto la
+cms, in quanto non pattuita; escludendo i costi addebitati in assenza di corrispondenti specifiche previsioni
+contrattuali e riducendo, entro i limiti delle previsioni contrattuali, gli importi di fatto computati in eccedenza
+rispetto alle stesse; non girocontando le competenze ricalcolate trimestralmente sul conto ordinario n.
+300586401 per mancanza di pattuizione scritta; addebitando, direttamente sul conto anticipi, ed entro i limiti
+della sua previsione contrattuale, e non sul conto ordinario, la commissioni di EUR. 3,25 per ogni fattura
+anticipata (la commissione è stata imputata, nella ricostruzione del conto corrente, solo successivamente alla
+data della stipula del contratto dell'11/03/2010 mentre per il periodo antecedente la stessa è stata eliminata
+dal conteggio in quanto non pattuita) (v. relazione ctu pag. 8 e 9).
+Ha dunque rideterminato il saldo del conto anticipi alla data di chiusura del 30.06.2013 in EUR 33.490,41 a
+
+debito del correntista, a fronte di un saldo banca pari a EUR 863,64 a debito del correntista, frutto della
+registrazione delle sole poste di capitale.
+ ***** 
+In merito al conto corrente ordinario n. 300586401 (ex n. 309851) il ctu, tenuto altresì conto dell'atto,
+sottoscritto in data 16.05.2016, di rimodulazione e rientro sull'affidamento concesso il 08.04.2009, ha
+proceduto come segue: a) applicando quale tasso debitorio il tasso man mano pattuito fra le parti o il tasso
+variato in forza dell'esercizio da parte dalla banca del diritto dello jus variandi, aspetto in relazione al quale le
+censure della difesa della società attrice all'operato del ctu risultano totalmente generiche; b) applicando al
+rapporto il tasso applicato dalla banca nel caso in cui quest'ultimo risultasse essere inferiore al tasso pattuito;
+c) applicando la Nome_3 dalla data di apertura dell'estratto conto al I° trimestre 2009, in quanto la
+"Commissione di Nome_10 pari a 0,125% è espressamente pattuita in termini sufficientemente
+determinati; d) non imputando la Nome_3 per tutto il periodo successivo al I° trimestre 2009, in quanto essa dal
+Nome_11 trimestre 2009 è stata calcolata non più sulla massima esposizione debitoria del trimestre (come al
+punto precedente) ma direttamente sul fido accordato; e) riportando dal 15/12/2011 le spese per singola
+scrittura da EUR. 1,01 ad EUR. 0,98 come pattuito nel documento del 22.01.2007; f) eliminando dal Nome_11 trimestre 2012 la Nome_12 e la CIV perché non pattuite; g) applicando la Nome_12 dal Nome_11 trimestre 2016 poiché
+pattuita con il documento di rimodulazione e rientro affidamento del 16/5/16; h) eliminando dalla ricostruzione
+del conto ordinario in quanto mai pattuite: - il canone di EUR. 15,00 addebitato mensilmente dal 2007 al 2008
+per un totale di EUR. 255,00 (all. I); - le oltre 4.200 spese per commissioni bonifico per un totale di EUR.
+3.141,85 (all. L); -le commissioni per "recupero spese per assenza di provvista" pari ad EUR. 445,00 (all. M);
+i) eliminando dalla ricostruzione del conto ordinario i giroconti delle competenze maturate sul conto anticipi su
+fatture n. 300706622; j) eliminando dalla ricostruzione del conto ordinario le commissioni per ogni fattura
+anticipata, pari ad EUR. 5.123,52 e addebitandole direttamente sul conto anticipi (all. E) Sulla base delle
+suesposte operazioni, il saldo del conto corrente alla data del 08/06/2017 risulta essere a credito per la
+società correntista per EUR. 77.809,35 (all. N) a fronte di un saldo banca pari a EUR. 0,00.
+ ***** 
+In particolare, nel verificare il rispetto dei tassi soglia, il ctu ha operato nei termini indicati alle lettere B), C) ed
+D) dell'ordinanza del 06/05/2019, procedendo nei termini di seguito indicati: - individuazione del criterio di
+calcolo del TAEG applicato al rapporto sulla base della formula che tenga conto della commissione di
+massimo scoperto - ove determinata - delle condizioni convenute nei contratti di apertura di credito e di
+anticipo collegati e, in generale, del complessivo costo del credito effettivamente sostenuto dal cliente ai
+sensi dell'art. 644 comma 4 c.p.c. (in base al quale "per la determinazione del tasso di interesse usuraio si
+tiene conto delle commissioni, remunerazioni a qualsiasi titolo e delle spese escluse quelle per imposte e
+tasse, collegate alla erogazione del credito"), a prescindere dalle formule tempo per tempo indicate dalla
+Banca d'Italia nelle Istruzioni per la rilevazione dei Nome_7 - esclusione, al fine di tale verifica, delle voci di costo
+già escluse eventualmente, all'esito dei ricalcoli di cui al punto A) dell'ordinanza; - conseguente
+individuazione del TAEG del rapporto alla data di sottoscrizione del contratto e di ogni valido esercizio dello
+jus variandi, considerando tutti i costi remunerativi dell'erogazione del credito, vale a dire tutti i costi
+funzionalmente omogenei ai tassi di interesse nominali, pattuiti validamente; - verifica del rispetto della 1.
+108/96 trimestre per trimestre considerando la periodica rilevazione dei tassi soglia, ma computando
+secondo il disposto dell'art. 644 cp l'incidenza di tutte le voci di costo del denaro (compresa quella relativa
+alla cms) su base annuale, dunque individuando trimestralmente il TAEG; - effettuazione di autonome
+verifiche sui diversi rapporti nel periodo di riscontrata sussistenza di ipotesi di mero collegamento fattuale,
+considerazione degli effetti dell'applicazione congiunta delle clausole convenute ove il collegamento sia
+formalizzato; - esclusione di qualsivoglia interesse e costo in caso di usurarietà genetica del rapporto,
+
+sussistente ove tutte le componenti del TAEG (in ipotesi superiore a quello soglia di riferimento) pattuite
+siano pure strutturalmente omogenee rispetto al tasso di interesse utilizzato per la soglia, vale a dire
+determinate in funzione del tempo; - verificare il rispetto delle soglie nel corso del tempo, con riduzione entro
+la soglia, quale limite di esigibilità, del TAEG in ipotesi superiore o per effetto dell'abbassamento della soglia,
+o per effetto di costi fissi o percentuali disancorati dal fattore tempo, la cui incidenza sul TAEG può essere
+verificata solo a valle.
+Il ctu in particolare - dopo avere ricondotto l'entità delle competenze nei limiti del validamente pattuito - ha
+riscontrato: -per il conto anticipi n. 300706622, l'assenza di usura genetica e lo sforamento del tasso soglia
+per il I e il II trimestre 2013, a causa dell'incidenza spese addebitate (___ e regolarmente pattuite; -per il
+conto ordinario n. 300586401 (ex n. 309851), l'assenza di usura genetica e l'usura sopravvenuta
+relativamente ai trimestri I, II, III, IV del 2007, a trimestri I, II, III, IV del 2008, al I trimestre 2009 e al IV
+trimestre 2011, riconducibile alle spese collegate all'erogazione del credito (cms e spese per liquidazione
+interessi).
+Avendo riscontrato l'usura sopravvenuta in entrambi i conti, il ctu ha ricondotto gli interessi al tasso soglia
+solo per i trimestri ove è stata riscontrata detta usura.
+ **** 
+Ai fini del ricalcolo del saldo del rapporto il ctu - nel rispetto dei criteri posti con il quesito - ha altresì tenuto in
+considerazione gli effetti dell'eccezione di prescrizione, tempestivamente sollevata dalla banca convenuta per
+paralizzare gli effetti della domanda di ripetizione formulata da parte attrice.
+In proposito, va innanzitutto evidenziato che l'eccezione risulta tempestivamente sollevata in ragione della
+data di costituzione e validamente formulata nonostante la mancata specifica individuazione da parte della
+banca di singoli versamenti solutori (in ordine al contenuto dell'onere di allegazione della parte che eccepisca
+la prescrizione, cfr. ex multis Cass. sez. VI civ. n. 1064/14). A supporto di tale impostazione non possono
+trascurarsi neppure i principi, che non possono essere applicati a senso unico, enunciati dalla S.C. nella
+motivazione della sentenza n. 5091/16: "quando la parte chieda una consulenza contabile sulla base di una
+produzione documentale, il giudice non può qualificare come esplorativa la consulenza senza dimostrare che
+la documentazione esibita sarebbe comunque irrilevante. Come s'è detto, ha natura esplorativa infatti la
+consulenza finalizzata alla ricerca di fatti, circostanze o elementi non provati dalla parte che li allega (Cass.,
+sez. I, 5 luglio 2007, n. 15219, m.598314), non la consulenza intesa a ricostruire l'andamento di rapporti
+contabili non controversi nella loro esistenza. E secondo la giurisprudenza di questa corte, è consentito
+derogare finanche al limite costituito dal divieto di compiere indagini esplorative, «quando l'accertamento di
+determinate situazioni di fatto possa effettuarsi soltanto con l'ausilio di speciali cognizioni tecniche, essendo
+in questo caso consentito al c.t.u. anche di acquisire ogni elemento necessario a rispondere ai quesiti,
+sebbene risultante da documenti non prodotti dalle parti, sempre che si tratti di fatti accessori e rientranti
+nell'ambito strettamente tecnico della consulenza, e non di fatti e situazioni che, essendo posti direttamente a
+fondamento della domanda o delle eccezioni delle parti, debbano necessariamente essere provati dalle
+stesse» (Cass., sez. III civ. n. 3191/06)".
+Tanto chiarito, osserva ancora il Tribunale richiamando la pronuncia a sezioni unite n. 24418/10 che: - "il
+pagamento, per dar vita ad una eventuale pretesa restitutoria di chi assume di averlo indebitamente
+effettuato, deve essersi tradotto in uno spostamento patrimoniale in favore dell'accipiens e lo si può definire
+indebito quando difetti di una idonea causa giustificativa"; - "l'annotazione in conto di ogni singola posta di
+interessi illegittimamente addebitati dalla banca al correntista comporta un incremento del debito o una
+riduzione del credito di cui egli ancora dispone, ma in nessun modo si risolve in un pagamento perché non vi
+corrisponde alcuna attività solutoria in favore della banca"; - "occorre dunque avere riguardo alla natura e al
+funzionamento del contratto di apertura di credito bancario che in conto corrente è regolata".
+
+Ne consegue che: - "se pendente l'apertura di credito, il correntista non si sia avvalso della facoltà di
+effettuare versamenti, pare indiscutibile che non vi sia alcun pagamento da parte sua prima del momento in
+cui, chiuso il rapporto, egli provveda a restituire alla banca il denaro in concreto utilizzato", da tale momento
+decorrerà dunque la prescrizione dell'azione di ripetizione; - "qualora invece, durante lo svolgimento del
+rapporto il correntista abbia effettuato non solo prelevamenti ma anche versamenti, in tanto questi ultimi
+potranno essere considerati alla stregua di pagamenti, tali da formare oggetto di ripetizione (ove risultino
+indebiti), in quanto abbiano avuto lo scopo e l'effetto di uno spostamento patrimoniale in favore della banca";
+- "questo accadrà qualora si tratti di versamenti eseguiti su un conto in passivo cui non accede alcuna
+apertura di credito a favore del correntista o quando i versamenti siano destinati a coprire un passivo
+eccedente i limiti dell'accreditamento. Non è così, viceversa, in tutti i casi nei quali i versamenti in conto, non
+avendo il passivo superato il limite dell'affidamento concesso al cliente, fungano unicamente da atti
+ripristinatori della provvista della quale il correntista può ancora continuare a godere".
+ **** 
+Così riassunti i principi, considerata la data di messa in mora, da individuarsi in quella di notifica dell'atto di
+citazione, il periodo d'interesse ai fini dell'individuazione dei versamenti solutori rilevanti è quello anteriore
+all'1/08/2008.
+Nome_12 della documentazione è emerso che il conto risulta essere stato affidato solamente dall'8/04/2009 (data
+di stipula del contratto di affidamento per EUR. 20.000,00), sicché alle rimesse avvenute in data antecedente,
+non potendosi configurare l'ipotesi del c.d. fido di fatto, deve attribuirsi un'inequivoca natura solutoria.
+Dovendosi ritenere prescritte le rimesse solutorie antecedenti all'1/08/2008, il ctu ha quantificato le
+competenze prescritte individuando la relativa quota nell'ambito dei versamenti solutori individuandoli,
+secondo quanto indicato nell'ordinanza del 08.06.2021, sulla scorta dei dati riportati nell'estratto conto
+bancario - non già di quelli depurati dalle poste indebite come pure sostenuto altra parte della giurisprudenza
+- pena la vanificazione degli effetti dell'eccezione.
+Il consulente ha, infine, riaccreditato a favore della banca, dopo avere rideterminato i saldi alla luce dei criteri
+indicati nel quesito, la differenza tra le competenze pagate e quelle rideterminate nel periodo di interesse.
+Il risultato di tali operazioni è il seguente: -il saldo del rapporto di conto corrente n. 300586401 (ex n. 309851)
+alla data di chiusura del conto risulta pari ad EUR 77.762,05 a credito del correntista, a fronte di un saldo
+banca pari a zero euro; - il saldo del conto anticipi n. 300706622 alla data di chiusura risulta a debito del
+correntista per - EUR 33.205,53, a fronte di un saldo banca pari a - EUR 863,64; La ricostruzione effettuata
+evidenzia una differenza a favore del correntista pari a EUR 44.556,52. Entro questi limiti va dunque accolta
+la domanda di rideterminazione dei saldi e ripetizione dell'indebito formulata da parte attrice, con
+conseguente condanna della banca convenuta alla restituzione della suddetta somma alla società attrice
+essendo stati i conti chiusi.
+ **** 
+Va invece esclusa sia la sussistenza di una condotta illecita della banca convenuta nella fase precontrattuale
+(avendo essa osservato tutti gli obblighi informativi a suo carico), sia la configurabilità di una condotta della
+banca ascrivibile alla c.d. usura soggettiva.
+Nome_3 noto, infatti, perché possa ravvisarsi la cd. "usura soggettiva" occorre che sussistano i seguenti
+requisiti: a) il correntista deve versare in condizioni di difficoltà economica o finanziaria; b) gli interessi (pur
+inferiori al tasso -soglia usurario) ed i vantaggi e i compensi pattuiti risultano sproporzionati rispetto alla
+prestazione di denaro; c) la banca deve avere contezza sia della situazione di difficoltà della controparte, sia
+della sproporzione degli interessi pretesi, traendone consapevolmente vantaggio.
+Nel caso di specie, la società attrice non ha dimostrato (e a ben vedere neppure allegato) alcuno dei
+presupposti richiesti a tal fine.
+
+ **** 
+Le spese seguono la soccombenza ex art. 91 cpc e si liquidano in favore del procuratore antistatario ex dm
+55/14 e succ. mod. - applicati i valori medi per le prime due fasi e i minimi per quella istruttoria (risoltasi in
+una ctu) e per quella decisionale (che ha comportato l'esame di questioni sovrapponibili a quelle già
+affrontate negli atti introduttivi) - in complessivi EUR 5.355,00 a titolo di onorari, EUR 524,00 a titolo di
+contributo unificato (ridotto in proporzione rispetto a quello versato in relazione alla domanda di condanna al
+pagamento di un importo maggiore di quello riconosciuto) e accessori di legge.
+In ragione dei relativi esiti, vanno poste definitivamente a carico della banca soccombente le spese di c.t.u.
+già liquidate con separato decreto.
+P.Q.M.
+A) ACCERTA e DICHIARA che: -il saldo del rapporto di conto corrente n. 300586401 (ex n. 309851) alla data
+del 08/06/2017 risulta pari ad EUR 77.762,05 a credito della società correntista; - il saldo del conto anticipi n.
+300706622 al 30.06.2013 risulta a debito della società correntista per - EUR 33.205,53; B) CONDANNA
+Unicredit S.p.a., in persona del suo legale rappresentante pro tempore, al pagamento della somma di
+44.556,52 in favore della società attrice; C) CONDANNA Unicredit S.p.a. in persona del suo legale
+rappresentante pro tempore, al pagamento, in favore del procuratore di parte attrice delle spese di lite, che
+liquida in EUR 5.879,00 (di cui EUR 524,00 per esborsi) oltre CPA, spese generali e IVA come per legge C)
+Nome_1 definitivamente a carico di parte convenuta le spese di c.t.u. già liquidate con separato decreto.
+D) RIGETTA ogni altra domanda.
+Nome_13 lì 18.06.2022.
+Il Giudice dott.ssa Nome_14 Il presente provvedimento è stato redatto con la collaborazione del dott. Nome_15 magistrato ordinario in tirocinio

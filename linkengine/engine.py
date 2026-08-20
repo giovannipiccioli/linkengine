@@ -242,6 +242,39 @@ def _apply_context_chamber(row, context) -> None:
     row["section"] = section + "PEN"
 
 
+# What an unattributed number next to "sentenza"/"ordinanza" is NOT, inside a Corte
+# costituzionale judgment: the docket and the gazette issue that every referral it decides
+# arrives with, and -- decisively -- any mention of a section. The Court sits as a single
+# bench, so a citation naming one belongs to a court that has them. That last guard is what
+# keeps a list from defecting: "Consiglio di Stato, sezione prima, parere n. 1233 del 2020;
+# sezione terza, sentenza ... n. 1124" loses its court after the first item, and without it
+# the second would be read as this Court's.
+_NOT_CORTE_COST = _re2.compile(
+    r"registro\s+(?:delle\s+)?ordinanz|\br\.\s?o\.|gazzetta\s+ufficiale|\bsez(?:ion[ei]|\.)", _re2.I)
+
+
+def _apply_context_corte_cost(row, context, before=""):
+    """A bare "sentenza n. 269 del 2017" inside a Corte costituzionale judgment is one of
+    its own.
+
+    The library does not otherwise read an unattributed pronouncement as the citing court's:
+    in ordinary prose "sentenza n. 123/2020" could be anyone's, and that stays true. The
+    Corte costituzionale is the exception worth making, and it is a fact about how the Court
+    writes rather than an assumption about what it meant. It cites its own precedent by
+    number and year alone as a matter of house style -- 308 times across 24 sampled
+    judgments -- and it has neither geography nor sections, so number and year identify the
+    ruling completely. A citation that names a court, its own included, is recognized the
+    ordinary way and never reaches this.
+    """
+    if context.authority != "CORTE_COST" or row["authority"]:
+        return
+    if row["doc-type"] not in ("SENT", "ORD") or not (row["number"] and row["year"]):
+        return
+    if _NOT_CORTE_COST.search((row.get("context") or row.get("text") or "") + " " + before):
+        return
+    row["authority"] = "CORTE_COST"
+
+
 def _corte_conti_riunite_seat(row, num_year):
     """Which bench an unqualified "Sezioni riunite" names: "SSR" in sede giurisdizionale,
     "SSRRCO" in sede di controllo, or "" when the citation does not say.
@@ -396,7 +429,7 @@ class LinkEngine:
         # identifier is built.
         rows = []
         for ref in refs:
-            row = self._fill_fields(ref, doc_context, reg_scope)
+            row = self._fill_fields(ref, doc_context, reg_scope, text)
             rows.append(row)
 
         # Build ordinary references first.  The novella scope pass consumes those already-
@@ -434,7 +467,7 @@ class LinkEngine:
 
     # ------------------------------------------------------------------
     def _fill_fields(self, ref: Reference, context: Optional[DocumentContext] = None,
-                     reg_scope: str = "nazionale") -> Dict[str, str]:
+                     reg_scope: str = "nazionale", text: str = "") -> Dict[str, str]:
         """Phase 1: fill the recognition fields (ref-type, ref-scope, authority, region,
         city, section, doc-type, alias, number, year, doc-date, case-number, partition, ...)
         from the recognized spans. Builds no identifier — that is phase 2 (_build_identifier)."""
@@ -586,6 +619,11 @@ class LinkEngine:
         if row["other-authority"] and row["doc-type"] and \
                 row["doc-type"] not in AGENCY_DOCTYPES | CONDITIONAL_AGENCY_DOCTYPES:
             row["other-authority"] = ""
+
+        # the Corte costituzionale cites itself by number and year alone; this needs the
+        # number and the year, and has to run before the classification below reads the
+        # authority it may set.
+        _apply_context_corte_cost(row, context, text[max(0, ref.start - 90):ref.start])
 
         # partition (ordered by rank: allegato > articolo > comma > paragrafo > lettera > numero).
         # Kept faithful to the text here (e.g. "punto-12"); the URN layer normalizes a CGUE
