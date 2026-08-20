@@ -231,6 +231,39 @@ def score_corte_conti_docs(path, verbose=False):
     return tp, fp, fn
 
 
+# ── Giustizia amministrativa, full documents ───────────────────────────────────
+def score_giustizia_amm_docs(path, verbose=False):
+    """Score every TAR / Consiglio di Stato / CGARS identifier produced over whole real
+    decisions. An evaluation, like the Corte dei conti one: what it watches is precision,
+    and the recall figure records how far the recognition currently reaches.
+    Returns (tp, fp, fn)."""
+    docs_dir = os.path.join(os.path.dirname(__file__), "benchmark_docs")
+    gold = _load_jsonl(path)
+    admin = re.compile(r"^ECLI:IT:(TAR|CDS|CGARS|TRGA|CONSSTATO)")
+    tp = fp = fn = 0
+    for entry in gold:
+        text = open(os.path.join(docs_dir, entry["doc"]), encoding="utf-8").read()
+        produced = {norm_urn(r["urn"]) for r in LinkEngine().extract(text).rows
+                    if admin.match(r["urn"])}
+        expected = {norm_urn(r["urn"]) for r in entry["refs"]}
+        tp += len(produced & expected)
+        fp += len(produced - expected)
+        fn += len(expected - produced)
+        if verbose and produced != expected:
+            print(f"  {entry['doc']}")
+            for u in sorted(expected - produced):
+                where = next(r["text"] for r in entry["refs"] if norm_urn(r["urn"]) == u)
+                print(f"      MISS {u:32s} {where}")
+            for u in sorted(produced - expected):
+                print(f"      FP   {u}")
+    prec = tp / max(tp + fp, 1)
+    rec = tp / max(tp + fn, 1)
+    print("\n==== GOLD GIUSTIZIA AMMINISTRATIVA (whole documents, every decision cited) ====")
+    print(f"  documents: {len(gold)}   citations: {tp + fn}   TP={tp} FP={fp} FN={fn}")
+    print(f"  precision={prec:.3f}  recall={rec:.3f}")
+    return tp, fp, fn
+
+
 def run_all(verbose=False):
     n1, t1 = score_recall(os.path.join(GOLD_DIR, "gold_manual.csv"), verbose, "GOLD (hand-verified)")
     n2, t2 = score_recall(os.path.join(GOLD_DIR, "gold_partitions.csv"), verbose, "GOLD PARTITIONS")
@@ -243,6 +276,7 @@ def run_all(verbose=False):
         os.path.join(GOLD_DIR, "gold_normativa_novelle.jsonl"), verbose,
         "GOLD NORMATIVA NOVELLE")
     score_corte_conti_docs(os.path.join(GOLD_DIR, "gold_corte_conti_docs.jsonl"), verbose)
+    score_giustizia_amm_docs(os.path.join(GOLD_DIR, "gold_giustizia_amm_docs.jsonl"), verbose)
     return (n1, t1), (n2, t2), (n3, t3), (n4, t4), (n5, t5), (n6, t6)
 
 

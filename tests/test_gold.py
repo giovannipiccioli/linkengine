@@ -194,6 +194,27 @@ def test_corte_conti_document_gold():
         os.path.join(G, "gold_corte_conti_docs.jsonl"))
     precision = tp / max(tp + fp, 1)
     recall = tp / max(tp + fn, 1)
-    assert tp + fn >= 50, f"Corte dei conti document gold shrank unexpectedly ({tp + fn})"
-    assert precision >= 0.90, f"Corte dei conti precision fell to {precision:.3f}"
-    assert recall >= 0.80, f"Corte dei conti recall fell to {recall:.3f}"
+    assert tp + fn >= 95, f"Corte dei conti document gold shrank unexpectedly ({tp + fn})"
+    assert precision >= 0.92, f"Corte dei conti precision fell to {precision:.3f}"
+    assert recall >= 0.86, f"Corte dei conti recall fell to {recall:.3f}"
+
+
+@pytest.mark.skipif(not _has("gold_giustizia_amm_docs.jsonl"),
+                    reason="giustizia amministrativa document gold missing")
+def test_giustizia_amministrativa_document_gold():
+    """Every TAR / Consiglio di Stato / CGARS decision cited in fourteen real documents.
+
+    The gold states what each citation should resolve to, including where the engine cannot
+    get there, so the floors sit at the measured score rather than at perfection. Almost
+    every gap is one thing: a citation says "sentenza" and the ruling is filed as a *sentenza
+    breve*, which no citation saying only "sentenza" distinguishes. That costs an identifier,
+    never a wrong ruling — court, year and number are read, not guessed.
+    Run `python -m tests.goldeval -v` to see each one.
+    """
+    tp, fp, fn = goldeval.score_giustizia_amm_docs(
+        os.path.join(G, "gold_giustizia_amm_docs.jsonl"))
+    precision = tp / max(tp + fp, 1)
+    recall = tp / max(tp + fn, 1)
+    assert tp + fn >= 95, f"administrative document gold shrank unexpectedly ({tp + fn})"
+    assert precision >= 0.88, f"administrative precision fell to {precision:.3f}"
+    assert recall >= 0.90, f"administrative recall fell to {recall:.3f}"

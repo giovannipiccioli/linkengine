@@ -17,7 +17,7 @@ from .act_kinds import URN_DOCTYPE_NAME as _ACT_KIND_URN_DOCTYPE_NAME
 COURTS = {
     "CORTE_CASS":              {"ecli": "CASS",      "geo": None,     "name": "Cassazione"},
     "CORTE_COST":              {"ecli": "COST",      "geo": None,     "name": "Corte Costituzionale"},
-    "CONS_STATO":              {"ecli": "CONSSTATO", "geo": None,     "name": "Consiglio di Stato"},
+    "CONS_STATO":              {"ecli": "CDS",       "geo": None,     "name": "Consiglio di Stato"},
     "CORTE_CONTI":             {"ecli": "CONT",      "geo": None,     "name": "Corte dei Conti"},
     "TRIB":                    {"ecli": "TRIB",      "geo": "city",   "name": "Tribunale"},
     "COMM_TRIBUT_REG":         {"ecli": "CTR",       "geo": "region", "name": "Commissione Tributaria Regionale"},
@@ -32,13 +32,73 @@ COURTS = {
     "TRIBUNALE_SORVEGLIANZA":  {"ecli": "TRIBSORV",  "geo": "city",   "name": "Tribunale di Sorveglianza"},
     "CGUE":                    {"ecli": None,        "geo": None,     "name": "Corte di Giustizia UE"},
     "CEDU":                    {"ecli": None,        "geo": None,     "name": " Corte europea dei diritti dell'uomo"},
-    "TRIB_AMM_REG":            {"ecli": "TAR",       "geo": "region", "name": "TAR"},
+    # The administrative courts. A TAR ECLI names the SEAT that decided, not the region:
+    # "TARBS" is Brescia, "TARNA" Napoli. The Trentino tribunals are a separate court, and
+    # the Sicilian appeal instance is the CGA, not the Consiglio di Stato.
+    "TRIB_AMM_REG":            {"ecli": "TAR",       "geo": "city",   "name": "TAR"},
+    "TRIB_REG_GIUST_AMM":      {"ecli": "TRGA",      "geo": "city",   "name": "TRGA"},
+    "CGARS":                   {"ecli": "CGARS",     "geo": None,
+                                "name": "Consiglio di Giustizia Amministrativa per la Regione Siciliana"},
 }
 # every court is a case-law authority; "THIS_COURT" (a self-reference resolved to the document's
 # own authority) is one too. This is THE set — assembler and the eval dispatch derive from it.
 CASELAW_AUTH = set(COURTS) | {"THIS_COURT"}
 FIRST_GRADE_TAX_AUTHORITIES = {"COMM_TRIBUT_PROV", "CORTE_GIUST_TRIBUT_1"}
 SECOND_GRADE_TAX_AUTHORITIES = {"COMM_TRIBUT_REG", "CORTE_GIUST_TRIBUT_2"}
+
+
+# ── Giustizia amministrativa ──────────────────────────────────────────────────
+# A TAR identifier names the seat that decided. Eleven regions have one TAR and spell it with
+# the region code; the eight that also have a *sezione staccata* spell both seats with the
+# province targa — except Lazio, whose seat keeps LAZ. There is no rule under that, so this
+# is a table: the seat's city code -> the ECLI component.
+TAR_SEAT = {
+    "RM": "LAZ", "LT": "LT",                      # Lazio
+    "MI": "MI",  "BS": "BS",                      # Lombardia
+    "NA": "NA",  "SA": "SA",                      # Campania
+    "PA": "PA",  "CT": "CT",                      # Sicilia
+    "BA": "BA",  "LE": "LE",                      # Puglia
+    "CZ": "CZ",  "RC": "RC",                      # Calabria
+    "AQ": "AQ",  "PE": "PE",                      # Abruzzo
+    "BO": "BO",  "PR": "PR",                      # Emilia-Romagna
+    "FI": "TOS", "VE": "VEN", "TO": "PIE", "GE": "LIG", "AN": "MAR", "CA": "SAR",
+    "CB": "MOL", "PZ": "BAS", "PG": "UMB", "TS": "FVG", "AO": "VDA",
+}
+# A region named on its own means its seat: a sezione staccata is always named when it is the
+# one that decided ("TAR Sicilia" is Palermo, "TAR Sicilia sezione staccata di Catania" is not).
+TAR_REGION_SEAT = {
+    "LAZ": "RM", "LOM": "MI", "CAM": "NA", "SIC": "PA", "PUG": "BA", "CAL": "CZ",
+    "ABR": "AQ", "EMR": "BO", "TOS": "FI", "VEN": "VE", "PIE": "TO", "LIG": "GE",
+    "MAR": "AN", "SAR": "CA", "MOL": "CB", "BAS": "PZ", "UMB": "PG", "FVG": "TS",
+    "VDA": "AO",
+}
+# Trentino-Alto Adige has no TAR: the TRGA sits in Trento with an autonomous section in Bolzano.
+TRGA_SEAT = {"TN": "TN", "BZ": "BZ"}
+
+# The last component of an administrative identifier is the DOCUMENT TYPE, because each type
+# numbers independently — 41.5% of court+year+number triples in the Council's archive carry
+# more than one, so number and year alone name no decision.
+#
+# A citation names the family, not the code, and the family has more than one member: these
+# are the shares each takes when only the family is known — sentenza SENT 85.7% (SENB 13.7%),
+# ordinanza OCAU 75.8% (OCOL 22.4%), decreto DDEC 87.7%, parere PDEF 71.0%. A citation naming
+# no type at all is read as a sentenza; legal prose cites sentenze, and 78% of the typed
+# citations in the sampled decisions say so.
+#
+# Measured over 272 identifiers built from 106 real decisions: 85.3% are exactly right and
+# 11.8% carry the wrong type, most of them a sentenza breve read as an ordinary sentenza,
+# which no citation saying only "sentenza" can distinguish. That cost buys the other 85%, and
+# it is the cheap kind of wrong: the court, the year and the number are never guessed, so a
+# wrong type resolves to nothing rather than to somebody else's ruling.
+ADMIN_DOCTYPE = {"SENT": "SENT", "ORD": "OCAU", "DECR": "DDEC", "PARERE": "PDEF", "": "SENT"}
+# ...and the qualifiers a citation does spell out when they apply, which settle the family.
+# Checked in order, before the default above.
+ADMIN_DOCTYPE_QUALIFIED = {
+    "SENT": ((r"sentenz\w*\s+brev", "SENB"), (r"in\s+forma\s+semplificata", "SENB")),
+    "ORD":  ((r"ordinanz\w*\s+collegial", "OCOL"), (r"ordinanz\w*\s+presidenzial", "OPRE")),
+    "PARERE": ((r"parer\w*\s+interlocutori", "PINTE"),),
+}
+ADMIN_AUTHORITIES = {"CONS_STATO", "TRIB_AMM_REG", "TRIB_REG_GIUST_AMM", "CGARS"}
 
 
 # ── Corte dei conti sections ──────────────────────────────────────────────────
@@ -119,12 +179,18 @@ CORTE_CONTI_DELIB_TYPES = {
     "RSUE", "REF", "PRS", "FUEFC", "AFC", "CEPAR", "OICERN", "PENS", "RCFP", "RCL",
     "PRAS", "CCSE",
 }
-# Doc-types that mean something else everywhere else and are Corte dei conti pronouncements
-# only when paired with it: its controllo channel deliberates and gives pareri, and its
-# giurisdizionale benches still call some rulings "decisione" (elsewhere an EU act). The
-# pairing is what licenses them — never the doc-type on its own, so a bare "delibera
-# n. 60/2021" stays a local act and a "decisione 2011/278/UE" stays an EU act.
-CORTE_CONTI_DOCTYPES = {"DEL", "PARERE", "DECIS"}
+# Doc-types that mean something else everywhere else and are a court's pronouncements only
+# when paired with that court: the Corte dei conti's controllo channel deliberates and gives
+# pareri, its giurisdizionale benches still call some rulings "decisione" (elsewhere an EU
+# act), and the Consiglio di Stato advises. The pairing is what licenses them — never the
+# doc-type on its own, so a bare "delibera n. 60/2021" stays a local act and a "decisione
+# 2011/278/UE" stays an EU act.
+COURT_EXTRA_DOCTYPES = {
+    "CORTE_CONTI": {"DEL", "PARERE", "DECIS"},
+    # the Consiglio di Stato and the CGA also advise, in sede consultiva
+    "CONS_STATO": {"PARERE"},
+    "CGARS": {"PARERE"},
+}
 # ...of which these two are the controllo channel's own, and these three the giurisdizionale
 # one's. Which side a bare "Sezioni riunite" sits on is readable from nothing else.
 CORTE_CONTI_CONTROLLO_DOCTYPES = {"DEL", "PARERE"}

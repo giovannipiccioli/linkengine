@@ -23,7 +23,8 @@ from .partitions import recognize_elements as recognize_partitions
 from .geo import (AUTONOMOUS_TAX_CITY_TO_GEO, CITY_RE, REGION_RE,
                   REGION_NAME_TO_CODE, city_code, region_urn as _region_urn)
 from .catalog import (CORTE_CONTI_CONTROLLO, CORTE_CONTI_DELIB_TYPES,
-                      CORTE_CONTI_GIUR_RUBRICS, CORTE_CONTI_SECTIONS)
+                      CORTE_CONTI_GIUR_RUBRICS, CORTE_CONTI_SECTIONS,
+                      TAR_REGION_SEAT, TAR_SEAT)
 from .aliases import EU_ALIASES, INTL_ALIASES, recognize_aliases as _recognize_aliases
 from .act_kinds import DOCTYPE_PATTERNS as ACT_KIND_PATTERNS
 from .conventions import recognize_conventions
@@ -802,8 +803,15 @@ _COURT_PATTERNS = [
     # n. 64897/01") — there it is the court (the alias yields via its own lookahead).
     (r"corte\s+e\.?\s?d\.?\s?u\.?|corte\s+europea\s+dei\s+diritti\s+dell['’]?\s?uomo"
      r"|\bcedu\b(?=\s*,?\s*(?:sentenz|ordinanz|decision|sent\.|ord\.))", "CEDU", None),
-    # TAR — administrative regional court (region-qualified, like CTR)
-    (r"tribunale\s+amministrativo\s+regionale|\bt\.?\s?a\.?\s?r\.?\b", "TRIB_AMM_REG", "region"),
+    # TAR — the identifier names the SEAT that decided, so the geo is resolved by _tar_resolve
+    (r"tribunale\s+amministrativo\s+regionale|\bt\.?\s?a\.?\s?r\.?\b", "TRIB_AMM_REG", "tar"),
+    # ...and the two courts that are not TARs: the Sicilian appeal instance and the Trentino
+    # tribunal, which sits in Trento with an autonomous section in Bolzano.
+    (r"consiglio\s+di\s+giustizia\s+amministrativa(?:\s+per\s+la\s+regione\s+siciliana)?"
+     r"|\bc\.?\s?g\.?\s?a\.?\s?r\.?\s?s\.?(?!\w)|\bc\.?\s?g\.?\s?a\.?(?=\s*[,.]?\s*(?:sez|sent|ord|n[.°]|\d))",
+     "CGARS", None),
+    (r"tribunale\s+regionale\s+di\s+giustizia\s+amministrativa|\bt\.?\s?r\.?\s?g\.?\s?a\.?\b",
+     "TRIB_REG_GIUST_AMM", "city"),
     (r"tribunale\s+di\s+sorveglianza", "TRIBUNALE_SORVEGLIANZA", "city"),
     (r"tribunale(?!\s+amministrativo|\s+superiore)", "TRIB", "city"),
     (r"giudice\s+di\s+pace", "GIUDICE_PACE", "city"),
@@ -1225,6 +1233,38 @@ def _corte_conti_before(text: str, start: int):
     return code
 
 
+# The seat is what a TAR identifier names — "TARBS" is Brescia, "TARNA" Napoli — and a
+# citation reaches it three ways: by the seat alone ("TAR Brescia"), by the region alone
+# ("TAR Sicilia", which means its seat, Palermo), or by both, in either order and with a
+# sezione staccata spelled out in between.
+_TAR_SEAT_LEAD = re.compile(
+    r"^[\s,.;:()\-–—]*(?:sezione\s+staccata(?:\s+di)?\s*|sez\.?\s*stacc\w*\.?(?:\s*di)?\s*"
+    r"|sede\s+(?:staccata\s+)?di\s+)?", I)
+
+
+_TAR_LEAD = re.compile(r"^[\s,.;:()\-–—]*(?:per\s+(?:la|il|l['’]\s*|le|lo)?\s*)?", I)
+
+
+def _tar_resolve(text: str, pos: int):
+    """Which administrative tribunal decided, and where it sits -> (authority, attrs, end)."""
+    lead = _TAR_LEAD.match(text[pos:pos + 12])
+    pos += lead.end() if lead else 0
+    kind, code, end = _geo_after(text, pos, "either")
+    if kind == "city":
+        return ("TRIB_AMM_REG", {"city": code} if code in TAR_SEAT else {},
+                end if code in TAR_SEAT else pos)
+    if kind != "region":
+        return "TRIB_AMM_REG", {}, pos
+    seat = TAR_REGION_SEAT.get(code, "")
+    lead = _TAR_SEAT_LEAD.match(text[end:end + 34])
+    k2, c2, e2 = _geo_after(text, end + (lead.end() if lead else 0), "city")
+    if k2 == "city" and (c2 in TAR_SEAT or code == "TAA"):
+        seat, end = c2, e2                      # the sezione staccata that actually decided
+    if code == "TAA":                           # no TAR there: the TRGA, Trento or Bolzano
+        return "TRIB_REG_GIUST_AMM", {"city": seat} if seat else {}, end
+    return "TRIB_AMM_REG", {"city": seat} if seat else {}, end
+
+
 def _cgt_resolve(text: str, pos: int):
     """Resolve a modern CGT grade and geography.
 
@@ -1311,6 +1351,9 @@ def recognize_authorities(text: str) -> List[Span]:
                         attrs["section"] = code
                     else:
                         attrs.pop("section", None)
+            elif want == "tar":
+                value, geo_attrs, end = _tar_resolve(text, m.end())
+                attrs.update(geo_attrs)
             elif want == "cgt":
                 value, geo_attrs, end = _cgt_resolve(text, m.end())
                 attrs.update(geo_attrs)
@@ -1352,8 +1395,13 @@ def recognize_authorities(text: str) -> List[Span]:
                     r"\d{1,2}\s*[./-]\s*\d{1,2}\s*[./-]\s*\d{2,4}",
                     text[o.end:s.start], I) for o in prev_auths):
                 continue
+            # An implicit reading cannot be the evidence that licenses the next one: in
+            # "Cons. Stato, Sez. II, n. 1244/2020, e Sez. IV, n. 1471/2006" the first bare
+            # section is dropped as Cassazione, and the second must not then treat it as
+            # Cassazione context and defect to a real but unrelated Cassazione ruling.
             has_cass_context = re.search(r"\bcass(?:azione)?\b|corte\s+di\s+cassazione", prefix, I) \
-                or any(o.value == "CORTE_CASS" for o in prev_auths)
+                or any(o.value == "CORTE_CASS" and not o.attrs.get("implicit_sez_cass")
+                       for o in prev_auths)
             has_other_court = any(o.value != "CORTE_CASS" for o in prev_auths)
             if has_other_court and not has_cass_context:
                 continue

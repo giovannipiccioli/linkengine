@@ -71,8 +71,8 @@ EXPECTED_URNS = {
         "urn:nir:stato:legge:2009;94~art2-comma30",
     },
     "admin_tar_lazio_2026_2731.txt": {
-        "ECLI:IT:TARLAZ:2026:1283",
-        "ECLI:IT:TARLAZ:2026:4649",
+        "ECLI:IT:TARLAZ:2026:1283SENT",
+        "ECLI:IT:TARLAZ:2026:4649SENT",
         "urn:nir:stato:decreto.legislativo:2010;104:2~art30",
         "urn:nir:stato:decreto.legislativo:2010;104:2~art55",
     },
@@ -89,7 +89,7 @@ EXPECTED_URNS = {
         "ECLI:IT:CASS:2016:13378CIV",
         "ECLI:IT:CASS:2018:10029CIV",
         "ECLI:IT:CASS:2022:4307CIV",
-        "ECLI:IT:CONSSTATO:2018:67",
+        "ECLI:IT:CDS:2018:67SENT",
         "ECLI:IT:CTPPA:2016:6084",
         "PRAX:AE:CIRC:2013:31",
         "PRAX:AE:RIS:2010:132/E",
@@ -168,7 +168,7 @@ EXPECTED_URNS = {
         "ECLI:IT:CASS:2019:16524CIV",
         "ECLI:IT:CASS:2020:8080CIV",
         "ECLI:IT:CASS:2022:11431CIV",
-        "ECLI:IT:CONSSTATO:2016:882",
+        "ECLI:IT:CDS:2016:882SENT",
         "ECLI:IT:CTPSI:2019:163",
         "ECLI:IT:CTRTOS:2018:1761",
         "ECLI:IT:CTRTOS:2018:1985",
@@ -601,7 +601,7 @@ FORBIDDEN_URNS = {
         "PRAX:AE:INT:2026:398",
     },
     "admin_consiglio_stato_2021_2023.txt": {
-        "ECLI:IT:CONSSTATO:2020:9292",
+        "ECLI:IT:CDS:2020:9292SENT",
     },
     "bdgt_sentenza_v28_898_2022.txt": {
         "urn:nir:stato:legge:2006;223~art36-comma2",

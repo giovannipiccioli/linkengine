@@ -8,6 +8,7 @@
 {"doc": "admin_consiglio_stato_2021_2023.txt", "urn": "urn:nir:stato:decreto.legge:2020;137~art25", "text": "art. 25 del d.l. n. 137 del 2020"}
 {"doc": "admin_consiglio_stato_2021_2023.txt", "urn": "urn:nir:stato:legge:2020;176", "text": "l. n. 176 del 2020"}
 {"doc": "admin_consiglio_stato_2021_2023.txt", "urn": "urn:nir:stato:decreto.legislativo:2010;104:2~art35-comma1-letc", "text": "art. 35, comma 1, lett. c), c.p.a"}
+{"doc": "admin_consiglio_stato_2021_2023.txt", "urn": "ECLI:IT:TARMI:2020:1529SENT", "text": "sentenza n. 1529 del 5 agosto 2020 del Tribunale amministrativo regionale per la Lombardia, sede di Milano"}
 {"doc": "admin_tar_sicilia_2021_2023.txt", "urn": "urn:nir:stato:decreto.legislativo:2000;267~art143-comma11", "text": "art.143, comma 11° del D. Lgs. n°267/2000"}
 {"doc": "admin_tar_sicilia_2021_2023.txt", "urn": "urn:nir:stato:legge:2009;94~art2-comma30", "text": "legge 15 luglio 2009, n°94, art.2, comma 30"}
 {"doc": "admin_tar_sicilia_2021_2023.txt", "urn": "urn:nir:stato:decreto.legge:2020;137~art25", "text": "art. 25 del D.L. n. 137/2020"}
@@ -197,7 +198,7 @@
 {"doc": "bdgt_sentenza_z01_745_2022.txt", "urn": "urn:nir:stato:regio.decreto:1933;215~art21", "text": "art. 21 \ndel rd n. 215/1933"}
 {"doc": "bdgt_sentenza_z01_745_2022.txt", "urn": "urn:nir:stato:regio.decreto:1933;215~art1", "text": "artt. \n1 e ss. del rd n. 215/1933"}
 {"doc": "bdgt_sentenza_z01_745_2022.txt", "urn": "urn:nir:regione.toscana:legge:1994;34", "text": "legge regionale toscana n. 34/1994"}
-{"doc": "bdgt_sentenza_z01_745_2022.txt", "urn": "ECLI:IT:CONSSTATO:2016:882", "text": "Consiglio di Stato con \nla sentenza n. 882/2016"}
+{"doc": "bdgt_sentenza_z01_745_2022.txt", "urn": "ECLI:IT:CDS:2016:882SENT", "text": "Consiglio di Stato con \nla sentenza n. 882/2016"}
 {"doc": "bdgt_sentenza_z01_745_2022.txt", "urn": "urn:nir:regione.toscana:legge:2012;79~art22", "text": "art. 22 della legge regionale \ntoscana n. 79/2012"}
 {"doc": "bdgt_sentenza_z01_745_2022.txt", "urn": "urn:nir:regione.toscana:legge:2012;79~art22", "text": "artt. 22"}
 {"doc": "bdgt_sentenza_z01_745_2022.txt", "urn": "urn:nir:regione.toscana:legge:2012;79~art23", "text": "23"}
@@ -291,7 +292,7 @@
 {"doc": "bdgt_sentenza_z46_8121_2022.txt", "urn": "PRAX:AE:RIS:2016:58/E", "text": "Agenzia delle\nEntrate (Risoluzione n. 58/E del 20 luglio 2016"}
 {"doc": "bdgt_sentenza_z46_8121_2022.txt", "urn": "DM2012-07-05", "text": "D.M. 5 luglio 2012"}
 {"doc": "bdgt_sentenza_z46_8121_2022.txt", "urn": "urn:nir:presidente.repubblica:decreto:1973;600~art43", "text": "art 43 del D.P.R. 600/1973"}
-{"doc": "bdgt_sentenza_z46_8121_2022.txt", "urn": "ECLI:IT:CONSSTATO:2018:67", "text": "n. 67/2018 del\nConsiglio di Stato"}
+{"doc": "bdgt_sentenza_z46_8121_2022.txt", "urn": "ECLI:IT:CDS:2018:67SENT", "text": "n. 67/2018 del\nConsiglio di Stato"}
 {"doc": "prassi_ae_interpello_2025_26.txt", "urn": "urn:nir:stato:decreto.legge:2020;34~art121", "text": "articolo 121 del decreto legge n. 34 del 2020"}
 {"doc": "prassi_ae_interpello_2025_26.txt", "urn": "urn:nir:stato:decreto.legge:2024;39", "text": "decreto legge n. 39 del 2024"}
 {"doc": "prassi_ae_interpello_2025_26.txt", "urn": "urn:nir:stato:decreto.legge:2020;34~art119", "text": "articolo 119 del decreto legge 19 maggio 2020, n. 34"}
@@ -676,9 +677,9 @@
 {"doc": "law_dl_18_2020_art_26.txt", "urn": "urn:nir:stato:decreto.legge:2020;19~art1-comma2-lete", "text": "e), del decreto-legge 25 marzo 2020, n. 19"}
 {"doc": "prassi_ae_circolare_2001_22.txt", "urn": "urn:nir:stato:legge:1991;413~art11-comma2", "text": "art. 11, comma 2, della legge n. 413 del 30 dicembre 1991"}
 {"doc": "prassi_ae_circolare_2001_22.txt", "urn": "ECLI:IT:CASS:1999:2442CIV", "text": "Corte di\n Cassazione, la quale, con la sentenza n. 2442 del 18 marzo 1999"}
-{"doc": "prassi_ae_circolare_2001_22.txt", "urn": "ECLI:IT:TARLAZ:2000:2323", "text": "TAR del\n Lazio con ordinanze del 5 marzo 2000, n. 2323"}
-{"doc": "prassi_ae_circolare_2001_22.txt", "urn": "ECLI:IT:CONSSTATO:2000:1913", "text": "Consiglio di Stato con ordinanze del 18 aprile 2000, n. 1913 e del"}
-{"doc": "prassi_ae_circolare_2001_22.txt", "urn": "ECLI:IT:CONSSTATO:2000:3655", "text": "14 luglio\n 2000, n. 3655"}
+{"doc": "prassi_ae_circolare_2001_22.txt", "urn": "ECLI:IT:TARLAZ:2000:2323OCAU", "text": "TAR del\n Lazio con ordinanze del 5 marzo 2000, n. 2323"}
+{"doc": "prassi_ae_circolare_2001_22.txt", "urn": "ECLI:IT:CDS:2000:1913OCAU", "text": "Consiglio di Stato con ordinanze del 18 aprile 2000, n. 1913 e del"}
+{"doc": "prassi_ae_circolare_2001_22.txt", "urn": "ECLI:IT:CDS:2000:3655OCAU", "text": "14 luglio\n 2000, n. 3655"}
 {"doc": "prassi_ae_circolare_2001_22.txt", "urn": "urn:nir:stato:legge:1998;431", "text": "legge 9 dicembre 1998, n. 431"}
 {"doc": "prassi_ae_circolare_2001_22.txt", "urn": "urn:nir:stato:legge:1998;431", "text": "l. n.\n 431 del 1998"}
 {"doc": "prassi_ae_circolare_2001_22.txt", "urn": "urn:nir:presidente.repubblica:decreto:1973;600~art36bis", "text": "artt. 36-bis\n"}

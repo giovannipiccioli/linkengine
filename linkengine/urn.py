@@ -376,12 +376,22 @@ def _court_ecli(row, year, number):
             val = AUTONOMOUS_TAX_CITY_TO_GEO.get(val, val)
         if _g(row, 'authority') in _TWO_LETTER_GEO and len(val) > 2:
             return None
+        if _g(row, 'authority') == "TRIB_AMM_REG":
+            val = catalog.TAR_SEAT.get(val)          # the seat, not the region
+        elif _g(row, 'authority') == "TRIB_REG_GIUST_AMM":
+            val = catalog.TRGA_SEAT.get(AUTONOMOUS_TAX_CITY_TO_GEO.get(val, val))
+        if not val:
+            return None
         geo = val
     suffix = ""
     if _g(row, 'authority') == "CORTE_CASS":
         suffix = _cass_chamber_suffix(row)
     elif _g(row, 'authority') == "CORTE_CONTI":
         suffix = _corte_conti_suffix(row)
+        if not suffix:
+            return None
+    elif _g(row, 'authority') in catalog.ADMIN_AUTHORITIES:
+        suffix = _admin_type_suffix(row)
         if not suffix:
             return None
     return f"ECLI:IT:{prefix}{geo}:{year}:{number}{suffix}"
@@ -402,6 +412,26 @@ def _corte_conti_suffix(row) -> str:
     if base in catalog.CORTE_CONTI_CONTROLLO and '-' not in section:
         return ""
     return section
+
+
+def _admin_type_suffix(row) -> str:
+    """The document-type component of an administrative ECLI — "…:2023:459SENT".
+
+    Each type numbers independently, so this is part of the identity rather than a label:
+    41.5% of court+year+number triples in the Council's archive carry more than one type.
+    The citation names a family and the family has several members, so the code is the
+    commonest member of the one it names, unless the citation qualifies it ("sentenza breve",
+    "ordinanza collegiale"), and a citation naming no type at all is read as a sentenza.
+
+    Getting the type wrong costs an identifier, not a wrong decision: the court, the year and
+    the number stay right, so the result is a reference that resolves to nothing rather than
+    to somebody else's ruling. See ``catalog.ADMIN_DOCTYPE`` for the measured cost.
+    """
+    doctype, text = _g(row, 'doc-type'), _g(row, 'text')
+    for pattern, code in catalog.ADMIN_DOCTYPE_QUALIFIED.get(doctype, ()):
+        if re.search(pattern, text, re.I):
+            return code
+    return catalog.ADMIN_DOCTYPE.get(doctype, "")
 
 
 def _cass_chamber_suffix(row) -> str:
@@ -548,6 +578,9 @@ def _ecli_to_text(body):
         number, suffix = number[:-3], " penale"
     if court_geo == "CONT":
         return _corte_conti_to_text(year, number)
+    admin = _admin_to_text(court_geo, year, number)
+    if admin:
+        return admin
     for prefix in catalog.ECLI_PREFIXES:
         if court_geo.startswith(prefix):
             name, geo_kind = catalog.ECLI_PREFIX_TO_COURT[prefix]
@@ -562,6 +595,34 @@ def _ecli_to_text(body):
                     place = f" di {city_name(geo_code)}"
             return f"{name}{suffix}{place} n. {number}/{year}"
     return f"{court_geo} n. {number}/{year}"
+
+
+_ADMIN_TYPE_NAME = {"SENT": "sentenza", "SENB": "sentenza breve", "OCAU": "ordinanza",
+                    "OCOL": "ordinanza", "DDEC": "decreto", "PDEF": "parere"}
+_TAR_SEAT_NAME = {v: k for k, v in catalog.TAR_SEAT.items()}
+
+
+def _admin_to_text(court_geo, year, number):
+    """"TARBS"/"459SENT" -> "TAR Brescia, sentenza n. 459/2023"; "" when not administrative."""
+    m = re.fullmatch(r'(\d+)([A-Z]+)', number)
+    if not m:
+        return ""
+    num, kind = m.group(1), m.group(2)
+    doc = _ADMIN_TYPE_NAME.get(kind)
+    if not doc:
+        return ""
+    if court_geo == "CDS":
+        name = "Consiglio di Stato"
+    elif court_geo == "CGARS":
+        name = "CGARS"
+    elif court_geo.startswith("TRGA"):
+        name = f"TRGA {city_name(court_geo[4:])}"
+    elif court_geo.startswith("TAR"):
+        seat = _TAR_SEAT_NAME.get(court_geo[3:])
+        name = f"TAR {city_name(seat)}" if seat else f"TAR {court_geo[3:]}"
+    else:
+        return ""
+    return f"{name}, {doc} n. {num}/{year}"
 
 
 def _corte_conti_to_text(year, number):

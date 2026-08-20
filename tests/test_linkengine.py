@@ -1391,14 +1391,17 @@ def test_allegato_abbreviation_and_pre1900_act():
 # These fill the feature fields (authority/region/section/number/year/doc-date) even when no
 # identifier is built; the recognition fields below are still filled.
 
-def test_tar_fills_region_section_number_year():
+def test_tar_fills_seat_section_number_year():
+    """A TAR identifier names the seat that decided, so the row carries that seat: the
+    region named on its own resolves to it, and a sezione staccata overrides it."""
     r = _one("T.A.R. Lazio, sez. II, n. 1234/2020")
     assert r["ref-type"] == "caselaw" and r["authority"] == "TRIB_AMM_REG"
-    assert r["region"] == "LAZ" and r["section"] == "2"
+    assert r["city"] == "RM" and r["section"] == "2"
     assert r["number"] == "1234" and r["year"] == "2020"
     r2 = _one("TAR Campania n. 50/2019")
-    assert r2["authority"] == "TRIB_AMM_REG" and r2["region"] == "CAM"
+    assert r2["authority"] == "TRIB_AMM_REG" and r2["city"] == "NA"
     assert r2["number"] == "50" and r2["year"] == "2019"
+    assert _one("TAR Campania, sezione staccata di Salerno, n. 50/2019")["city"] == "SA"
 
 
 def test_dpcm_date_only_builds_urn():
@@ -1472,7 +1475,7 @@ def test_series_segmentation_each_partition_to_its_own_act():
 def test_sentenza_authority_number_reclaim():
     # number hugging an authority already on a SENT anchor joins that pronouncement
     assert _urns("sentenza della Corte Costituzionale n. 348/2007") == ["ECLI:IT:COST:2007:348"]
-    assert _urns("ordinanza del Consiglio di Stato n. 567/2018") == ["ECLI:IT:CONSSTATO:2018:567"]
+    assert _urns("ordinanza del Consiglio di Stato n. 567/2018") == ["ECLI:IT:CDS:2018:567OCAU"]
     # a legislation alias in the same span keeps its own partition, separate from the ECLI
     assert _urns("art. 2697 c.c. e sentenza della Corte Cost. n. 200/2020") == [
         "ECLI:IT:COST:2020:200", "urn:nir:stato:regio.decreto:1942;262:2~art2697"]

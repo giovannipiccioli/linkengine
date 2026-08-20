@@ -316,6 +316,18 @@ decision of the current court. `document_year` is optional; when supplied, a cit
 an unresolved candidate instead of receiving an impossible identifier. Set `regional_law_region`
 when the regional-law fallback should differ from the deciding court's region.
 
+The administrative courts identify a decision by its **document type** as well as its number:
+each type numbers independently, so `sentenza n. 459/2023` and `ordinanza n. 459/2023` of the
+same TAR are different rulings. The type is read from the citation's own word —
+`ECLI:IT:TARBS:2023:459SENT`, `ECLI:IT:CDS:2023:1251PDEF` — and a citation that names none is
+read as a sentenza — right for 85% of the identifiers built from a sample of real decisions,
+and wrong in a way that costs a dead reference rather than the wrong ruling, since the court,
+year and number are never guessed. A TAR identifier names the **seat** that decided, not the region: `TAR
+Lombardia, sezione staccata di Brescia` is `TARBS`, and a region named on its own means its
+seat (`TAR Sicilia` -> `TARPA`, Palermo), because a sezione staccata is spelled out when it is
+the one deciding. The Consiglio di Stato is `CDS`, the Sicilian appeal instance is `CGARS`, and
+Trentino-Alto Adige has no TAR but the `TRGA`, in Trento and Bolzano.
+
 The Corte dei conti resolves its section from the citation, in whatever order it arrives —
 `Sez. III App.`, `Prima Sezione Centrale d'Appello` and `Terza Sezione giurisdizionale
 centrale d'appello` are read as sections, and so are `Sez. contr. Lombardia`, `Sezioni
@@ -408,12 +420,20 @@ The behavior is pinned by **hand-verified gold sets** (`tests/gold/`), scored by
 - `gold_normativa_eu.jsonl` — 32 sourced excerpts covering 31 EU legislative units and 29 acts,
   including well-known and fixed-seed ordinary regulations, directives, and decisions from
   1958–2025. Complete external citations are also checked for exact equality with standard mode.
-- `gold_corte_conti_docs.jsonl` — 13 whole Corte dei conti decisions (regional and central
+- `gold_corte_conti_docs.jsonl` — 20 whole Corte dei conti decisions (regional and central
   giurisdizionale, appello Sicilia, Sezioni riunite, regional and central controllo, Sezione
-  delle Autonomie), with every citation of the Court read out of them by hand and checked
-  against the Court's archive. Scored as an evaluation — precision and recall over the
-  identifiers, gated below the current score — because recall is bounded by how these
-  documents cite, not by the parser alone.
+  delle Autonomie), 99 citations of the Court read out of them by hand and checked against the
+  Court's archive.
+- `gold_giustizia_amm_docs.jsonl` — 26 whole administrative decisions (Consiglio di Stato, ten
+  TAR seats, CGARS, TRGA Trento and Bolzano; sentenze, sentenze brevi, ordinanze and pareri),
+  100 citations checked against the Council's 2.8M-entry archive.
+
+  Both are scored as evaluations — precision and recall over the identifiers, gated at the
+  measured score rather than at perfection. They state what each citation *should* resolve to,
+  including where the engine cannot get there, so the gap is visible instead of absent: a
+  citation saying "sentenza" cannot tell an ordinary ruling from one filed as a *sentenza
+  breve*, and a Corte dei conti decision rarely restates its own number next to the section
+  that decided it.
 - `gold_normativa_novelle.jsonl` — 33 real amendment clauses and editorial notes from 14 famous
   and ordinary Italian legislative units, across 22 patterns and seven source years. Supported
   cases are exact regression gates; 12 named limitation cases preserve the semantic result and

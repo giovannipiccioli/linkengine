@@ -190,7 +190,7 @@
 {"cat": "jur", "text": "le Sezioni Riunite, con la deliberazione n. 25/2011", "refs": [{"doc-type": "DEL", "authority": "CORTE_CONTI", "section": "SSRRCO", "urn": ""}]}
 {"cat": "jur", "text": "decisione n. 7/2007/QM delle Sezioni Riunite", "refs": [{"doc-type": "DECIS", "authority": "CORTE_CONTI", "section": "SSR", "urn": "ECLI:IT:CONT:2007:7SSR"}]}
 {"cat": "jur", "text": "Tribunale di Milano n. 500/2020", "refs": [{"authority": "TRIB", "urn": "ECLI:IT:TRIBMI:2020:500"}]}
-{"cat": "jur", "text": "Consiglio di Stato n. 1234/2021", "refs": [{"authority": "CONS_STATO", "urn": "ECLI:IT:CONSSTATO:2021:1234"}]}
+{"cat": "jur", "text": "Consiglio di Stato n. 1234/2021", "refs": [{"authority": "CONS_STATO", "urn": "ECLI:IT:CDS:2021:1234SENT"}]}
 {"cat": "prassi", "text": "risposta a interpello n. 342 del 13 maggio 2021", "refs": [{"doc-type": "INTERPELLO", "urn": "PRAX:AE:INT:2021:342"}]}
 {"cat": "jur", "text": "Cass. n. 08508/2019", "refs": [{"ref-type": "caselaw", "authority": "CORTE_CASS", "number": "8508", "year": "2019", "urn": "ECLI:IT:CASS:2019:8508CIV"}]}
 {"cat": "jur", "text": "CASSAZIONE sesta sez. civ., n. 20213/2015", "refs": [{"authority": "CORTE_CASS", "section": "6CIV", "number": "20213", "year": "2015", "urn": "ECLI:IT:CASS:2015:20213CIV"}]}
@@ -218,7 +218,7 @@
 {"cat": "jur", "text": "Cassazione 1998, n. 4775", "refs": [{"ref-type": "caselaw", "authority": "CORTE_CASS", "number": "4775", "year": "1998", "urn": "ECLI:IT:CASS:1998:4775CIV"}]}
 {"cat": "jur", "text": "Cass. S.U. 1990 n. 11490", "refs": [{"section": "UNITE", "number": "11490", "year": "1990", "urn": "ECLI:IT:CASS:1990:11490CIV"}]}
 {"cat": "reg", "text": "art. 1 L.R. n. 2/1971 Toscana", "refs": [{"region": "toscana", "number": "2", "year": "1971", "partition": "articolo-1", "urn": "urn:nir:regione.toscana:legge:1971;2~art1"}]}
-{"cat": "jur", "text": "T.A.R. Lombardia sez. II 29 marzo 1995 n. 466", "refs": [{"authority": "TRIB_AMM_REG", "region": "LOM", "section": "2", "number": "466", "year": "1995", "urn": "ECLI:IT:TARLOM:1995:466"}]}
+{"cat": "jur", "text": "T.A.R. Lombardia sez. II 29 marzo 1995 n. 466", "refs": [{"authority": "TRIB_AMM_REG", "city": "MI", "section": "2", "number": "466", "year": "1995", "urn": "ECLI:IT:TARMI:1995:466SENT"}]}
 {"cat": "cgue", "text": "cause riunite C-216 e 222/99", "refs": [{"case-number": "C-216/1999", "urn": "CELEX:61999CJ0216"}]}
 {"cat": "alias", "text": "Voce 15.13 della Tariffa doganale comune", "refs": [{"ref-scope": "comunitario", "alias": "TARIFFA_DOGANALE_COM", "urn": "TARIFFA_DOGANALE_COM"}]}
 {"cat": "cgue", "text": "sentenza CGUE 19 giugno 1973, 77/72", "refs": [{"ref-type": "caselaw", "authority": "CGUE", "number": "77", "urn": "CELEX:61972CJ0077"}]}
@@ -323,3 +323,7 @@
 {"cat": "fp", "text": "il valore del TCE nelle acque sotterranee non supera la soglia", "refs": []}
 {"cat": "jur", "text": "ai sensi dell'art. 6 CEDU e della CEDU, sentenza Zullo c. Italia, ricorso n. 64897/01", "refs": [{"alias": "CONV_EU_DIR_UOMO", "urn": "CONV_EU_DIR_UOMO~art6"}, {"authority": "CEDU", "urn": "CEDU:2001:64897"}]}
 {"cat": "fp", "text": "il ricorso n. 1234/2020 R.G. proposto dalla società contribuente", "refs": []}
+{"cat": "jur", "text": "TAR Lombardia, sezione staccata di Brescia, sentenza n. 459/2023", "refs": [{"ref-type": "caselaw", "authority": "TRIB_AMM_REG", "city": "BS", "doc-type": "SENT", "number": "459", "year": "2023", "urn": "ECLI:IT:TARBS:2023:459SENT"}]}
+{"cat": "jur", "text": "Consiglio di Stato, parere n. 1251/2023", "refs": [{"ref-type": "caselaw", "authority": "CONS_STATO", "doc-type": "PARERE", "urn": "ECLI:IT:CDS:2023:1251PDEF"}]}
+{"cat": "jur", "text": "Consiglio di Stato, sez. VII, sentenza n. 855/2023", "refs": [{"authority": "CONS_STATO", "section": "7", "urn": "ECLI:IT:CDS:2023:855SENT"}]}
+{"cat": "jur", "text": "T.R.G.A. Trento, sentenza n. 198/2023", "refs": [{"authority": "TRIB_REG_GIUST_AMM", "doc-type": "SENT", "urn": "ECLI:IT:TRGATN:2023:198SENT"}]}

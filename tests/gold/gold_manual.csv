@@ -74,8 +74,8 @@ Cassazione civile, sez. V, 14 maggio 2020, n. 8967|ECLI:IT:CASS:2020:8967CIV|jur
 Corte cost. n. 200/2019|ECLI:IT:COST:2019:200|jur|corte cost
 Corte costituzionale n. 24 del 2017|ECLI:IT:COST:2017:24|jur|corte cost full
 Corte cost., sent. n. 10 del 2015|ECLI:IT:COST:2015:10|jur|corte cost
-Consiglio di Stato n. 100/2021|ECLI:IT:CONSSTATO:2021:100|jur|cons stato
-Cons. Stato, sez. IV, n. 250/2020|ECLI:IT:CONSSTATO:2020:250|jur|cons stato abbrev
+Consiglio di Stato, sentenza n. 100/2021|ECLI:IT:CDS:2021:100SENT|jur|cons stato
+Cons. Stato, sez. IV, sent. n. 250/2020|ECLI:IT:CDS:2020:250SENT|jur|cons stato abbrev
 C.T.R. Lombardia n. 100/2021|ECLI:IT:CTRLOM:2021:100|jur|ctr region
 C.T.R. Lombardia n. 50/2020|ECLI:IT:CTRLOM:2020:50|jur|ctr region
 Commissione Tributaria Regionale del Lazio n. 2291/2022|ECLI:IT:CTRLAZ:2022:2291|jur|ctr full
@@ -129,7 +129,7 @@ raccomandazione 2003/361/CE|CELEX:32003H0361|eu|EU recommendation -> letter H
 regolamento (CE) n. 1083/2006|CELEX:32006R1083|eu|EU regulation, "(CE)" form
 cause riunite C-1/20 e C-2/20|CELEX:62020CJ0001|eu|joined cases -> single celex (smallest)
 sentenza del Tribunale UE T-456/19|CELEX:62019TJ0456|eu|General Court (T-) -> TJ
-Consiglio di Stato, sez. IV, n. 567/2019|ECLI:IT:CONSSTATO:2019:567|jur|Consiglio di Stato ECLI
+Consiglio di Stato, sez. IV, sentenza n. 567/2019|ECLI:IT:CDS:2019:567SENT|jur|Consiglio di Stato ECLI
 Corte dei conti, Sezione Giurisdizionale per la Regione Abruzzo, sentenza n. 91/2020|ECLI:IT:CONT:2020:91SGABR|jur|corte conti, sezione giurisdizionale regionale
 Tribunale di Milano, ord. 15 marzo 2021, n. 99|ECLI:IT:TRIBMI:2021:99|jur|tribunale ordinanza + capoluogo targa
 Corte cost., sentenza n. 10/2020|ECLI:IT:COST:2020:10|jur|Corte Costituzionale ECLI
@@ -176,7 +176,7 @@ decreto del Presidente del Consiglio dei Ministri n. 5/2021|urn:nir:presidente.c
 art. 269 c.p.c. e dell'art. 14, comma 3, del dlgs. n. 546/1992|urn:nir:stato:regio.decreto:1940;1443:1~art269 urn:nir:stato:decreto.legislativo:1992;546~art14-comma3|norm|partition right-binds to 'del <act>'
 art. 5 del codice civile e art. 3 del d.lgs. 546/1992|urn:nir:stato:regio.decreto:1942;262:2~art5 urn:nir:stato:decreto.legislativo:1992;546~art3|norm|two genitive-bound partitions to distinct acts
 sentenza della Corte Costituzionale n. 348/2007|ECLI:IT:COST:2007:348|jur|number reclaimed onto sentenza+authority
-ordinanza del Consiglio di Stato n. 567/2018|ECLI:IT:CONSSTATO:2018:567|jur|sentenza/ordinanza + authority + number binding
+ordinanza del Consiglio di Stato n. 567/2018|ECLI:IT:CDS:2018:567OCAU|jur|ordinanza -> OCAU, il tipo fa parte dell'identificativo
 Sezioni Unite, sentenze n. 2281/1990 e n. 13446/1991|ECLI:IT:CASS:1990:2281CIV ECLI:IT:CASS:1991:13446CIV|jur|Sezioni Unite -> CORTE_CASS, multi-number split
 le Sezioni Unite, sent. n. 5678/2014|ECLI:IT:CASS:2014:5678CIV|jur|SS.UU. standalone authority
 sentenza C. Cost. n. 188 del 2018|ECLI:IT:COST:2018:188|jur|'C. Cost.' + number -> Corte Cost (not the Constitution)
@@ -249,7 +249,7 @@ Dir. 69/335/CEE|CELEX:31969L0335|eu|old directive year/number
 Cassazione 1998, n. 4775|ECLI:IT:CASS:1998:4775CIV|jur|cass year-first n.
 Cass. S.U. 1990 n. 11490|ECLI:IT:CASS:1990:11490CIV|jur|cass S.U. year-first
 art. 1 L.R. n. 2/1971 Toscana|urn:nir:regione.toscana:legge:1971;2~art1|reg|region after number
-T.A.R. Lombardia sez. II 29 marzo 1995 n. 466|ECLI:IT:TARLOM:1995:466|jur|TAR ecli
+T.A.R. Lombardia sez. II 29 marzo 1995 n. 466|ECLI:IT:TARMI:1995:466SENT|jur|TAR: la regione da sola vale la sua sede (Milano)
 Corte di Giustizia CE 15 settembre 1998, cause riunite C-279, 280 e 281/96|CELEX:61996CJ0279|eu|cause riunite single smallest
 sentenza CGUE 19 giugno 1973, 77/72|CELEX:61972CJ0077|eu|cgue authority + bare number (no causa)
 Corte di Giustizia dell'Unione Europea n. 456/2018|CELEX:62018CJ0456|eu|cgue full name + n.
@@ -298,3 +298,32 @@ deliberazioni LOMBARDIA/164/2019/PAR|ECLI:IT:CONT:2019:164SRCLOM-PAR|jur|regione
 Sezione controllo Marche deliberazione n. 18/2016/PAR|ECLI:IT:CONT:2016:18SRCMAR-PAR|jur|sezione dal testo, tipo dalla catena
 Delibera n. 13/2012/SSR della Sezione del controllo per la Regione Sardegna|ECLI:IT:CONT:2012:13SRCSAR-SSR|jur|SSR qui e' il TIPO, non la sezione
 Sezione regionale di controllo per l'Emilia-Romagna, deliberazione n. 182/2023/PRSE|ECLI:IT:CONT:2023:182SRCEMR-PRSE|jur|Emilia-Romagna: codice EMR (l'archivio della Corte scrive ERO)
+T.A.R. Lazio, Roma, sez. II, sentenza n. 20031/2023|ECLI:IT:TARLAZ:2023:20031SENT|jur|TAR: regione + sede, Roma resta LAZ
+TAR Lombardia, sezione staccata di Brescia, sentenza n. 459/2023|ECLI:IT:TARBS:2023:459SENT|jur|sezione staccata: la sede decide il codice
+TAR Campania, Napoli, sez. VI, sentenza n. 6890/2022|ECLI:IT:TARNA:2022:6890SENT|jur|sede accanto alla regione
+Tribunale Amministrativo Regionale per la Campania sezione staccata di Salerno, sentenza n. 718/2018|ECLI:IT:TARSA:2018:718SENT|jur|forma per esteso
+TAR Sicilia, sezione staccata di Catania, sentenza n. 375/2022|ECLI:IT:TARCT:2022:375SENT|jur|Catania, non Palermo
+TAR Brescia, sentenza n. 405/2021|ECLI:IT:TARBS:2021:405SENT|jur|sede da sola, senza regione
+Tar Catania, sentenza 1433 del 2018|ECLI:IT:TARCT:2018:1433SENT|jur|sede da sola, numero senza 'n.'
+TAR Puglia, Lecce, sez. III, sentenza n. 890/2023|ECLI:IT:TARLE:2023:890SENT|jur|Lecce e' sezione staccata di Bari
+TAR Toscana, sez. I, sentenza n. 967/2023|ECLI:IT:TARTOS:2023:967SENT|jur|regione con una sola sede: codice regionale
+TAR Campania, sentenza n. 4280 del 5 ottobre 2020|ECLI:IT:TARNA:2020:4280SENT|jur|regione da sola: vale la sua sede (Napoli)
+sentenza breve del TAR Sicilia n. 2028/2022|ECLI:IT:TARPA:2022:2028SENB|jur|'sentenza breve' e' SENB, non SENT
+Consiglio di Stato, sez. VII, sentenza n. 855/2023|ECLI:IT:CDS:2023:855SENT|jur|Consiglio di Stato: CDS, la sezione non entra nell'ECLI
+Cons. Stato, ad. plen., sent. n. 1/2022|ECLI:IT:CDS:2022:1SENT|jur|adunanza plenaria
+Cons. Stato, sez. V, sentenza n. 10641 del 5 dicembre 2022|ECLI:IT:CDS:2022:10641SENT|jur|data estesa dopo il numero
+Consiglio di Stato, parere n. 1251/2023|ECLI:IT:CDS:2023:1251PDEF|jur|sede consultiva: parere -> PDEF
+C.G.A.R.S., sentenza n. 296/2023|ECLI:IT:CGARS:2023:296SENT|jur|Consiglio di giustizia amministrativa siciliano
+CGARS, ordinanza cautelare n. 306/2022|ECLI:IT:CGARS:2022:306OCAU|jur|ordinanza -> OCAU
+T.R.G.A. Trento, sentenza n. 198/2023|ECLI:IT:TRGATN:2023:198SENT|jur|in Trentino non c'e' un TAR ma il TRGA
+TAR Trentino-Alto Adige, Bolzano, sentenza n. 231/2023|ECLI:IT:TRGABZ:2023:231SENT|jur|sezione autonoma di Bolzano
+Corte dei conti, Sez. II, n. 100/2020, e Sez. III, n. 200/2021|ECLI:IT:CONT:2020:100APP2|jur|elenco: la seconda sezione non deve passare alla Cassazione
+TAR Lombardia, Sez. staccata Brescia, n. 401/2020|ECLI:IT:TARBS:2020:401SENT|jur|'Sez. staccata' senza 'di'
+Cons. Stato, Sez. III n. 8663/2022|ECLI:IT:CDS:2022:8663SENT|jur|come la cita la Corte dei conti
+Tar Sicilia - sede di Palermo, sentenza n. 2967/2020|ECLI:IT:TARPA:2020:2967SENT|jur|'sede di' invece di 'sezione staccata di'
+T.A.R. Abruzzo, Pescara, 10.1.2007, n. 45|ECLI:IT:TARPE:2007:45SENT|jur|sede staccata di Pescara, data prima del numero
+T.A.R. Valle d'Aosta, sez. I, 18/07/2022, n. 37|ECLI:IT:TARVDA:2022:37SENT|jur|regione con una sola sede
+T.A.R. Lazio, Roma, II, 5.11.2009, n. 10868|ECLI:IT:TARLAZ:2009:10868SENT|jur|sezione in numero romano senza 'sez.'
+Corte dei conti, Sez. Giur. Liguria, n. 103/2021|ECLI:IT:CONT:2021:103SGLIG|jur|'Sez. Giur.' abbreviato
+Corte dei conti, Sezione I app., 9 settembre 2022, n. 423|ECLI:IT:CONT:2022:423APP1|jur|'Sezione I app.' con data estesa
+Sezione Controllo Piemonte n. 29/2016/PAR|ECLI:IT:CONT:2016:29SRCPIE-PAR|jur|'Sezione Controllo <regione>' + tipo
