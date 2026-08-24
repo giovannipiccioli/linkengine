@@ -1049,6 +1049,11 @@ _CGT_GRADE = re.compile(
 # bare "CGT 1 <geo>" / "CGT 2 <geo>" with no "grado": accept the digit/roman as the grade only
 # when a geo immediately follows (so "CGT 126/2024" is not read as grade 126).
 _CGT_GRADE_BARE = re.compile(r"^[\s,.:;)\-–—]*(?:(?P<p>1|i)|(?P<s>2|ii))\s*[°ª]?[\s,.:;)\-–—]+", I)
+# …or when the decision number turns up further on, which is the other way to know the digit
+# is not itself that number: as a number/year pair ("CGT 2 214/2024") or behind an explicit
+# marker ("CGT 2 sentenza n. 123"). With neither — and no geo — the digit IS the number, so
+# "CGT 2 del 2024" stays decision 2 of 2024.
+_CGT_GRADE_BARE_NUMBERED = re.compile(r"\bn(?:um(?:ero)?)?\.?\s*\d|\d+\s*/\s*\d{2,4}\b", I)
 
 
 def _cgt_second_grade_geo(kind, code):
@@ -1297,7 +1302,9 @@ def _cgt_resolve(text: str, pos: int):
         mb = _CGT_GRADE_BARE.match(win)
         if mb:
             k2, code2, _ = _geo_after(text, pos + mb.end(), "either")
-            if k2:                          # only a grade if a real geo follows the digit
+            # a grade only once the digit is ruled out as the decision number: either a geo
+            # follows it, or the number itself shows up later in the citation
+            if k2 or _CGT_GRADE_BARE_NUMBERED.search(win[mb.end():]):
                 grade = "primo" if mb.group("p") else "secondo"
                 off = mb.end()
     base = pos + off

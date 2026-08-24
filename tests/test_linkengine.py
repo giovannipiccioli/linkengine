@@ -180,6 +180,38 @@ def test_modern_and_historical_tax_court_authorities_are_distinct():
         assert _one(text)["authority"] == authority
 
 
+def test_placeless_cgt_grade_digit_is_read_when_the_number_is_elsewhere():
+    """"CGT 2 n. 123/2024" states its grade even though no place follows the digit.
+
+    The digit may only be taken for the grade once it is ruled out as the decision
+    number, which a place settles ("CGT 2 Lazio") and so does the number turning up
+    later in the citation.
+    """
+    for text in ("CGT 2 123/2024", "CGT 2 n. 123/2024", "CGT 2, n. 123/2024",
+                 "CGT 2 sez. 5 n. 123/2024", "CGT 2 sentenza n. 123"):
+        row = _one(text)
+        assert row["authority"] == "CORTE_GIUST_TRIBUT_2", text
+        assert row["number"] == "123", text
+    for text in ("CGT 1 123/2024", "CGT 1 n. 123/2024"):
+        row = _one(text)
+        assert row["authority"] == "CORTE_GIUST_TRIBUT_1", text
+        assert row["number"] == "123", text
+
+
+def test_placeless_cgt_digit_stays_the_decision_number_when_it_is_the_only_one():
+    """With no place and no other number, the digit IS the number, not the grade.
+
+    "CGT 2 del 2024" is decision 2 of 2024 — reading its "2" as a second-grade marker
+    would lose the number the citation is made of.
+    """
+    for text in ("CGT 2 del 2024", "CGT 2/2024", "CGT n. 2 del 2024",
+                 "CGT sentenza n. 2 del 2024"):
+        row = _one(text)
+        assert row["number"] == "2", text
+        assert row["authority"] == "CORTE_GIUST_TRIBUT_1", text
+    assert _one("CGT 126/2024")["number"] == "126"
+
+
 def test_trento_bolzano_second_grade_tax_court_ecli_exception():
     cases = {
         "CGT 2 Bolzano n. 1234/2020":
