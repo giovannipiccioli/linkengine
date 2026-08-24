@@ -257,3 +257,22 @@ def test_merito_document_gold():
     assert tp + fn >= 24, f"merito document gold shrank ({tp + fn})"
     assert precision >= 0.90, f"merito precision fell to {precision:.3f}"
     assert recall >= 0.90, f"merito recall fell to {recall:.3f}"
+
+
+@pytest.mark.skipif(not _has("gold_cassazione_docs.jsonl"),
+                    reason="Cassazione document gold missing")
+def test_cassazione_document_gold():
+    """Every Cassazione ruling cited in fourteen of its own decisions, civil and penal.
+
+    The two standing false positives are one citation form, not two mistakes: a penal
+    citation gives the date of the UDIENZA, and the number belongs to the year the decision
+    was deposited, which is the next one. Nothing in "Sez. III, 24 novembre 2010, n. 3833"
+    says 2011, so the engine reads the year it is given and the gold records what the Court's
+    own archive says.
+    """
+    tp, fp, fn = goldeval.score_document_gold(os.path.join(G, "gold_cassazione_docs.jsonl"))
+    precision = tp / max(tp + fp, 1)
+    recall = tp / max(tp + fn, 1)
+    assert tp + fn >= 170, f"Cassazione document gold shrank ({tp + fn})"
+    assert precision >= 0.97, f"Cassazione precision fell to {precision:.3f}"
+    assert recall >= 0.88, f"Cassazione recall fell to {recall:.3f}"

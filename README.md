@@ -1,5 +1,7 @@
 # linkengine
 
+*[Versione italiana](README.it.md)*
+
 **Recognize, parse and normalize Italian legal citations into stable identifiers.**
 
 `linkengine` reads free Italian legal text and turns every citation it finds — a law, a
@@ -436,12 +438,12 @@ The behavior is pinned by **hand-verified gold sets** (`tests/gold/`), scored by
 - `gold_partitions.csv` — deep article/comma/lettera/numero partition chains;
 - `gold_precision.csv` — full-sentence excerpts scored as an exact set (false positives count);
 - `gold_fields.jsonl` — per citation: the expected segmentation **and** every recognition field.
-- `gold_normativa.jsonl` — 73 sourced excerpts covering 70 distinct legislative units and 65
-  acts (famous statutes plus ordinary acts, with the random samples selected using fixed seeds),
+- `gold_normativa.jsonl` — 81 sourced excerpts covering as many distinct legislative units and
+  dozens of acts (famous statutes plus ordinary acts, with the random samples selected using fixed seeds),
   spanning 1940–2025, 45 distinct years, seven act types, and five issuing authorities. A few
   unsupported constructions remain as measured limitations; the gate protects broad accuracy
   without requiring every pattern to be parsed.
-- `gold_normativa_eu.jsonl` — 32 sourced excerpts covering 31 EU legislative units and 29 acts,
+- `gold_normativa_eu.jsonl` — 37 sourced excerpts covering EU legislative units and acts,
   including well-known and fixed-seed ordinary regulations, directives, and decisions from
   1958–2025. Complete external citations are also checked for exact equality with standard mode.
 - `gold_corte_conti_docs.jsonl` — 20 whole Corte dei conti decisions (regional and central
@@ -466,7 +468,8 @@ The behavior is pinned by **hand-verified gold sets** (`tests/gold/`), scored by
 - **whole-document golds** — every ruling of one court family cited in a real decision, read
   by hand and checked against that court's own archive: `gold_corte_conti_docs.jsonl` (20
   documents, 99 citations), `gold_giustizia_amm_docs.jsonl` (26 / 100),
-  `gold_corte_cost_docs.jsonl` (15 / 141) and `gold_merito_docs.jsonl` (9 / 7). They list the
+  `gold_corte_cost_docs.jsonl` (15 / 163), `gold_merito_docs.jsonl` (22 / 24) and
+  `gold_cassazione_docs.jsonl` (14 / 176). They list the
   citations the engine cannot reach as well as the ones it can, so recall records how far the
   recognition gets rather than how much was asked of it; precision is the half gated tightly.
   The merito judgments were pseudonymized before being added: the ministry replaces the

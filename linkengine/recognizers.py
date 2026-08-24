@@ -294,6 +294,11 @@ def _order_num_year(a: str, b: str):
         return b, a
     if len(b) == 2 and valid_year(b):
         return a, norm_year(b)        # "602/73" -> number 602, year 1973 (IT, year last)
+    # A 4-digit first part wins above, which reads "n. 2020/17" as year 2020 number 17 where
+    # Italian practice means number 2020 of 2017. Left alone deliberately: the same shape is
+    # how the EU numbers its acts -- "direttiva 2014/24", "2008/9/CE" -- and nothing inside
+    # the token separates them. Measured on the gold, 18 citations depend on the EU reading
+    # and one on the Italian one, and the context that would decide is not visible here.
     if len(a) == 2 and valid_year(a):
         return b, norm_year(a)        # "90/435" -> number 435, year 1990 (old EU dir, year first)
     return None

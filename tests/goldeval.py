@@ -214,6 +214,8 @@ DOCUMENT_GOLDS = {
     "gold_merito_docs.jsonl": (
         r"^ECLI:IT:(TRIB|CAPP|ASS|GDP)", "MERITO CIVILE",
         "every Tribunale or Corte d'appello ruling cited", ""),
+    "gold_cassazione_docs.jsonl": (
+        r"^ECLI:IT:CASS:", "CASSAZIONE", "every ruling of the Court cited", "CORTE_CASS"),
 }
 
 
@@ -232,7 +234,8 @@ def score_document_gold(path, verbose=False):
     for entry in gold:
         text = open(os.path.join(docs_dir, entry["doc"]), encoding="utf-8").read()
         context = DocumentContext(authority=authority,
-                                  cc_section=entry.get("cc-section", "")) if authority else None
+                                  cc_section=entry.get("cc-section", ""),
+                                  chamber=entry.get("chamber", "")) if authority else None
         produced = {norm_urn(r["urn"]) for r in LinkEngine().extract(text, context=context).rows
                     if family.match(r["urn"])}
         expected = {norm_urn(r["urn"]) for r in entry["refs"]}
