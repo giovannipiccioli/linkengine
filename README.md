@@ -344,15 +344,21 @@ when the regional-law fallback should differ from the deciding court's region.
 
 The administrative courts identify a decision by its **document type** as well as its number:
 each type numbers independently, so `sentenza n. 459/2023` and `ordinanza n. 459/2023` of the
-same TAR are different rulings. The type is read from the citation's own word —
-`ECLI:IT:TARBS:2023:459SENT`, `ECLI:IT:CDS:2023:1251PDEF` — and a citation that names none is
-read as a sentenza — right for 85% of the identifiers built from a sample of real decisions,
-and wrong in a way that costs a dead reference rather than the wrong ruling, since the court,
-year and number are never guessed. A TAR identifier names the **seat** that decided, not the region: `TAR
+same TAR are different rulings. The type is read from the citation's own words, qualifiers
+included — `ECLI:IT:TARBS:2023:459SENT`, `ECLI:IT:CDS:2023:1251PDEF`, `decreto cautelare` ->
+`DCAU` — and a citation that names none is read as a sentenza, right for 85% of the identifiers
+built from a sample of real decisions. The court, year and number are never guessed, but a
+wrong type is not always a dead reference: 41.5% of court+year+number triples carry more than
+one type. The Consiglio di Stato's **Adunanza plenaria** (`Ad. Plen.`, `A.P.`) has series of
+its own, `APLE` and `OPLE`: `Cons. Stato, Ad. Plen., n. 1/2022` is `ECLI:IT:CDS:2022:1APLE`,
+while `…:2022:1SENT` is a Sezione VI ruling (the archive files 28 of 264 plenaria sentenze as
+`SENT` all the same). A TAR identifier names the **seat** that decided, not the region: `TAR
 Lombardia, sezione staccata di Brescia` is `TARBS`, and a region named on its own means its
 seat (`TAR Sicilia` -> `TARPA`, Palermo), because a sezione staccata is spelled out when it is
-the one deciding. The Consiglio di Stato is `CDS`, the Sicilian appeal instance is `CGARS`, and
-Trentino-Alto Adige has no TAR but the `TRGA`, in Trento and Bolzano.
+the one deciding. The Consiglio di Stato is `CDS` (`Cons. St.` included), the Sicilian appeal
+instance is `CGARS`, and Trentino-Alto Adige has no TAR but the `TRGA`, in Trento with an
+autonomous section in Bolzano — named by its seat, by region and seat in either order, or by
+the region alone, which means Trento.
 
 The Corte dei conti resolves its section from the citation, in whatever order it arrives —
 `Sez. III App.`, `Prima Sezione Centrale d'Appello` and `Terza Sezione giurisdizionale

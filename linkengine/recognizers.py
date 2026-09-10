@@ -24,7 +24,7 @@ from .geo import (AUTONOMOUS_TAX_CITY_TO_GEO, CITY_RE, REGION_RE,
                   REGION_NAME_TO_CODE, city_code, region_urn as _region_urn)
 from .catalog import (CORTE_CONTI_CONTROLLO, CORTE_CONTI_DELIB_TYPES,
                       CORTE_CONTI_GIUR_RUBRICS, CORTE_CONTI_SECTIONS,
-                      TAR_REGION_SEAT, TAR_SEAT)
+                      TAR_REGION_SEAT, TAR_SEAT, TRGA_SEAT)
 from .aliases import EU_ALIASES, INTL_ALIASES, recognize_aliases as _recognize_aliases
 from .act_kinds import DOCTYPE_PATTERNS as ACT_KIND_PATTERNS
 from .conventions import recognize_conventions
@@ -239,8 +239,10 @@ _MONTH_DATE_AFTER_NUM_YEAR = re.compile(
     r"^\s+(?:" + "|".join(MONTHS) + r")\s+\d{4}\b", I)
 # self-identifying CJEU case id: the dash is REQUIRED ("C-439/04", "T-45/20"). Without it a
 # stray "C 198/01" (e.g. in a GUUE reference "(2014/C 198/01)") is NOT a case — only the dash
-# distinguishes a case number from a column/series notation.
-_CASE_CGUE = re.compile(r"\b([CT])\s?[\-‑]\s?(\d{1,4})\s*/\s*(\d{2,4})\b")
+# distinguishes a case number from a column/series notation. Case-insensitive: users type
+# "c-73/95" in a search box. The dash and the year check carry the disambiguation, so
+# lowercase costs nothing ("lett. c-1/2" has no valid year and is rejected anyway).
+_CASE_CGUE = re.compile(r"\b([CT])\s?[\-‑]\s?(\d{1,4})\s*/\s*(\d{2,4})\b", I)
 # Older CJEU citations sometimes omit the C-/T- prefix but carry an ECLI tail:
 # "Bouchereau, 30/77, EU:C:1977:172". The EU:C year must agree with the number/year token.
 _BARE_CGUE_ECLI = re.compile(
@@ -783,7 +785,9 @@ _COURT_PATTERNS = [
     # "C. Cost." (Corte abbreviated to "C.") -> the Court, not the COST/'Cost.' alias; the
     # overlapping alias is dropped by _resolve_overlaps, so "C. Cost. n. 188/2018" -> ECLI.
     (r"\bc\.\s?cost(?:ituzionale)?\b\.?", "CORTE_COST", None),
-    (r"consiglio\s+di\s+stato|cons\.?\s+stato", "CONS_STATO", None),
+    # "Cons. St." is the commonest abbreviation of the Council; unread, it left a following
+    # "sez. IV, n. 4/2018" to the Cassazione.
+    (r"consiglio\s+di\s+stato|cons\.?\s+stato|\bcons\.\s*st\.(?!\w)", "CONS_STATO", None),
     # Corte dei conti. The section is the identifying part of its ECLI, so the court
     # keyword resolves it forward ("Corte dei conti, Sez. III App.") and, failing that,
     # backward ("Sezione giurisdizionale ... della Corte dei conti").
@@ -811,12 +815,13 @@ _COURT_PATTERNS = [
     # TAR — the identifier names the SEAT that decided, so the geo is resolved by _tar_resolve
     (r"tribunale\s+amministrativo\s+regionale|\bt\.?\s?a\.?\s?r\.?\b", "TRIB_AMM_REG", "tar"),
     # ...and the two courts that are not TARs: the Sicilian appeal instance and the Trentino
-    # tribunal, which sits in Trento with an autonomous section in Bolzano.
+    # tribunal, which sits in Trento with an autonomous section in Bolzano. Its place is read
+    # like a TAR's (`_tar_resolve`), so region and seat may come in either order.
     (r"consiglio\s+di\s+giustizia\s+amministrativa(?:\s+per\s+la\s+regione\s+siciliana)?"
      r"|\bc\.?\s?g\.?\s?a\.?\s?r\.?\s?s\.?(?!\w)|\bc\.?\s?g\.?\s?a\.?(?=\s*[,.]?\s*(?:sez|sent|ord|n[.°]|\d))",
      "CGARS", None),
     (r"tribunale\s+regionale\s+di\s+giustizia\s+amministrativa|\bt\.?\s?r\.?\s?g\.?\s?a\.?\b",
-     "TRIB_REG_GIUST_AMM", "city"),
+     "TRIB_REG_GIUST_AMM", "tar"),
     (r"tribunale\s+di\s+sorveglianza", "TRIBUNALE_SORVEGLIANZA", "city"),
     # "Tribunale Ordinario di Roma" is the court's own formal name, and the one its
     # judgments are published under.
@@ -1248,32 +1253,50 @@ def _corte_conti_before(text: str, start: int):
 # The seat is what a TAR identifier names — "TARBS" is Brescia, "TARNA" Napoli — and a
 # citation reaches it three ways: by the seat alone ("TAR Brescia"), by the region alone
 # ("TAR Sicilia", which means its seat, Palermo), or by both, in either order and with a
-# sezione staccata spelled out in between.
+# sezione staccata spelled out in between -- or, for the TRGA, its sezione autonoma (Bolzano).
 _TAR_SEAT_LEAD = re.compile(
     r"^[\s,.;:()\-–—]*(?:sezione\s+staccata(?:\s+di)?\s*|sez\.?\s*stacc\w*\.?(?:\s*di)?\s*"
-    r"|sede\s+(?:staccata\s+)?di\s+)?", I)
+    r"|sede\s+(?:staccata\s+)?di\s+"
+    r"|sez(?:ione|\.)?\s*aut(?:onoma|\.)\s*(?:(?:di|per\s+la\s+provincia\s+di)\s+)?)?", I)
 
 
 _TAR_LEAD = re.compile(r"^[\s,.;:()\-–—]*(?:per\s+(?:la|il|l['’]\s*|le|lo)?\s*)?", I)
 
 
-def _tar_resolve(text: str, pos: int):
-    """Which administrative tribunal decided, and where it sits -> (authority, attrs, end)."""
+# The Consiglio di Stato's Adunanza plenaria, right after the court keyword: "Ad. Plen.",
+# "ad. pl.", "A.P.", "Adunanza plenaria". It numbers its rulings in series of its own
+# (catalog.ADMIN_PLENARIA_DOCTYPE), so it is kept as the section "AP"; and the court span
+# covers it, so that a capitalised "Ad. Plen." is not taken for the end of a sentence.
+_CDS_PLENARIA = re.compile(
+    r"^[\s,]*(?:ad(?:unanza)?\.?\s*pl(?:en(?:aria)?)?\.?(?!\w)|a\.\s?p\.)", I)
+
+
+def _tar_resolve(text: str, pos: int, authority: str = "TRIB_AMM_REG"):
+    """Which administrative tribunal decided, and where it sits -> (authority, attrs, end).
+
+    `authority` is the court the keyword named, a TAR or the Trentino TRGA, and stands when no
+    place follows it. A place decides otherwise: Trento and Bolzano are the TRGA's whatever the
+    keyword ("TAR Trento" is loose usage for it), every other seat a TAR's."""
     lead = _TAR_LEAD.match(text[pos:pos + 12])
     pos += lead.end() if lead else 0
-    kind, code, end = _geo_after(text, pos, "either")
+    seat_lead = _TAR_SEAT_LEAD.match(text[pos:pos + 48])      # "…, sezione autonoma di Bolzano"
+    kind, code, end = _geo_after(text, pos + seat_lead.end(), "either")
     if kind == "city":
-        return ("TRIB_AMM_REG", {"city": code} if code in TAR_SEAT else {},
-                end if code in TAR_SEAT else pos)
+        # Trento and Bolzano resolve to their comune codes; the TRGA table is keyed by province
+        if AUTONOMOUS_TAX_CITY_TO_GEO.get(code, code) in TRGA_SEAT:
+            return "TRIB_REG_GIUST_AMM", {"city": code}, end
+        if code in TAR_SEAT:
+            return "TRIB_AMM_REG", {"city": code}, end
+        return authority, {}, pos
     if kind != "region":
-        return "TRIB_AMM_REG", {}, pos
+        return authority, {}, pos
     seat = TAR_REGION_SEAT.get(code, "")
-    lead = _TAR_SEAT_LEAD.match(text[end:end + 34])
-    k2, c2, e2 = _geo_after(text, end + (lead.end() if lead else 0), "city")
+    lead = _TAR_SEAT_LEAD.match(text[end:end + 48])
+    k2, c2, e2 = _geo_after(text, end + lead.end(), "city")
     if k2 == "city" and (c2 in TAR_SEAT or code == "TAA"):
         seat, end = c2, e2                      # the sezione staccata that actually decided
-    if code == "TAA":                           # no TAR there: the TRGA, Trento or Bolzano
-        return "TRIB_REG_GIUST_AMM", {"city": seat} if seat else {}, end
+    if code == "TAA":                           # no TAR there: the TRGA, in Trento unless its
+        return "TRIB_REG_GIUST_AMM", {"city": seat or "TN"}, end   # Bolzano section is named
     return "TRIB_AMM_REG", {"city": seat} if seat else {}, end
 
 
@@ -1335,6 +1358,10 @@ def recognize_authorities(text: str) -> List[Span]:
             sec = _section_after(text, m.end())
             if sec:
                 attrs["section"] = sec
+            if value == "CONS_STATO":
+                plenaria = _CDS_PLENARIA.match(text[m.end():m.end() + 30])
+                if plenaria:
+                    attrs["section"], end = "AP", m.end() + plenaria.end()
             # Cassazione sections use the chamber "<n>CIV/PEN" / "UNITE" form (item 3): the
             # match itself may be "Sezioni Unite"/"SS.UU.", else parse what follows the keyword.
             if value == "CORTE_CASS":
@@ -1366,7 +1393,7 @@ def recognize_authorities(text: str) -> List[Span]:
                     else:
                         attrs.pop("section", None)
             elif want == "tar":
-                value, geo_attrs, end = _tar_resolve(text, m.end())
+                value, geo_attrs, end = _tar_resolve(text, m.end(), value)
                 attrs.update(geo_attrs)
             elif want == "cgt":
                 value, geo_attrs, end = _cgt_resolve(text, m.end())

@@ -327,3 +327,5 @@
 {"cat": "jur", "text": "Consiglio di Stato, parere n. 1251/2023", "refs": [{"ref-type": "caselaw", "authority": "CONS_STATO", "doc-type": "PARERE", "urn": "ECLI:IT:CDS:2023:1251PDEF"}]}
 {"cat": "jur", "text": "Consiglio di Stato, sez. VII, sentenza n. 855/2023", "refs": [{"authority": "CONS_STATO", "section": "7", "urn": "ECLI:IT:CDS:2023:855SENT"}]}
 {"cat": "jur", "text": "T.R.G.A. Trento, sentenza n. 198/2023", "refs": [{"authority": "TRIB_REG_GIUST_AMM", "doc-type": "SENT", "urn": "ECLI:IT:TRGATN:2023:198SENT"}]}
+{"cat": "jur", "text": "Cons. Stato, Ad. Plen., 22 ottobre 2021, n. 17", "refs": [{"authority": "CONS_STATO", "section": "AP", "urn": "ECLI:IT:CDS:2021:17APLE"}]}
+{"cat": "jur", "text": "T.R.G.A. Trentino-Alto Adige, Bolzano, sentenza n. 102/2022", "refs": [{"authority": "TRIB_REG_GIUST_AMM", "doc-type": "SENT", "urn": "ECLI:IT:TRGABZ:2022:102SENT"}]}

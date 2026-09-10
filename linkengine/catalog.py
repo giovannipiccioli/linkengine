@@ -87,9 +87,10 @@ TRGA_SEAT = {"TN": "TN", "BZ": "BZ"}
 #
 # Measured over 272 identifiers built from 106 real decisions: 85.3% are exactly right and
 # 11.8% carry the wrong type, most of them a sentenza breve read as an ordinary sentenza,
-# which no citation saying only "sentenza" can distinguish. That cost buys the other 85%, and
-# it is the cheap kind of wrong: the court, the year and the number are never guessed, so a
-# wrong type resolves to nothing rather than to somebody else's ruling.
+# which no citation saying only "sentenza" can distinguish. That cost buys the other 85%. It is
+# not always a harmless miss: the court, the year and the number are never guessed, but with
+# 41.5% of triples shared by several types a wrong type can still name another ruling -- which
+# is why every qualifier a citation spells out is read.
 ADMIN_DOCTYPE = {"SENT": "SENT", "ORD": "OCAU", "DECR": "DDEC", "PARERE": "PDEF", "": "SENT"}
 # ...and the qualifiers a citation does spell out when they apply, which settle the family.
 # Checked in order, before the default above.
@@ -97,7 +98,17 @@ ADMIN_DOCTYPE_QUALIFIED = {
     "SENT": ((r"sentenz\w*\s+brev", "SENB"), (r"in\s+forma\s+semplificata", "SENB")),
     "ORD":  ((r"ordinanz\w*\s+collegial", "OCOL"), (r"ordinanz\w*\s+presidenzial", "OPRE")),
     "PARERE": ((r"parer\w*\s+interlocutori", "PINTE"),),
+    # a decreto is decisorio (DDEC, 88% of them) unless the citation says which other one
+    "DECR": ((r"decret\w*\s+cautelar", "DCAU"), (r"decret\w*\s+presidenzial", "DPRE"),
+             (r"decret\w*\s+collegial", "DCOL"), (r"decret\w*\s+ingiuntiv", "DING")),
 }
+# The Consiglio di Stato's Adunanza plenaria numbers its rulings in series of its own, filed
+# APLE (sentenze) and OPLE (ordinanze). Its sentenza n. 1/2022 is ECLI:IT:CDS:2022:1APLE, while
+# ...:2022:1SENT is a Sezione VI ruling: 209 of the 236 plenaria sentenze filed APLE have such
+# a SENT twin in an ordinary section, so reading the plenaria as a plain sentenza named
+# somebody else's decision. 28 plenaria sentenze (2006-2025) are filed SENT all the same;
+# they are what this rule gets wrong.
+ADMIN_PLENARIA_DOCTYPE = {"SENT": "APLE", "OCAU": "OPLE", "OCOL": "OPLE"}
 ADMIN_AUTHORITIES = {"CONS_STATO", "TRIB_AMM_REG", "TRIB_REG_GIUST_AMM", "CGARS"}
 
 

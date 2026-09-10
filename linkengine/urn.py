@@ -414,6 +414,11 @@ def _corte_conti_suffix(row) -> str:
     return section
 
 
+# "decreto" is a doc-type of legislation, never read as one next to a court, so an administrative
+# decree reaches _admin_type_suffix with no doc-type at all: the citation's own word says it.
+_ADMIN_DECREE = re.compile(r"\bdecr(?:et[oi]\b|\.)", re.I)
+
+
 def _admin_type_suffix(row) -> str:
     """The document-type component of an administrative ECLI — "…:2023:459SENT".
 
@@ -421,17 +426,24 @@ def _admin_type_suffix(row) -> str:
     41.5% of court+year+number triples in the Council's archive carry more than one type.
     The citation names a family and the family has several members, so the code is the
     commonest member of the one it names, unless the citation qualifies it ("sentenza breve",
-    "ordinanza collegiale"), and a citation naming no type at all is read as a sentenza.
+    "ordinanza collegiale", "decreto cautelare"), and a citation naming no type at all is
+    read as a sentenza. The Adunanza plenaria of the Consiglio di Stato (section "AP") has
+    series of its own, APLE and OPLE.
 
-    Getting the type wrong costs an identifier, not a wrong decision: the court, the year and
-    the number stay right, so the result is a reference that resolves to nothing rather than
-    to somebody else's ruling. See ``catalog.ADMIN_DOCTYPE`` for the measured cost.
+    A wrong type keeps the court, year and number right, but with that many triples shared it
+    can still name another ruling. See ``catalog.ADMIN_DOCTYPE`` for the measured cost.
     """
     doctype, text = _g(row, 'doc-type'), _g(row, 'text')
-    for pattern, code in catalog.ADMIN_DOCTYPE_QUALIFIED.get(doctype, ()):
+    if not doctype and _ADMIN_DECREE.search(text):
+        doctype = "DECR"
+    code = catalog.ADMIN_DOCTYPE.get(doctype, "")
+    for pattern, qualified in catalog.ADMIN_DOCTYPE_QUALIFIED.get(doctype, ()):
         if re.search(pattern, text, re.I):
-            return code
-    return catalog.ADMIN_DOCTYPE.get(doctype, "")
+            code = qualified
+            break
+    if _g(row, 'authority') == "CONS_STATO" and _g(row, 'section') == "AP":
+        code = catalog.ADMIN_PLENARIA_DOCTYPE.get(code, code)
+    return code
 
 
 def _cass_chamber_suffix(row) -> str:
@@ -597,8 +609,11 @@ def _ecli_to_text(body):
     return f"{court_geo} n. {number}/{year}"
 
 
-_ADMIN_TYPE_NAME = {"SENT": "sentenza", "SENB": "sentenza breve", "OCAU": "ordinanza",
-                    "OCOL": "ordinanza", "DDEC": "decreto", "PDEF": "parere"}
+_ADMIN_TYPE_NAME = {"SENT": "sentenza", "SENB": "sentenza breve", "APLE": "sentenza",
+                    "OCAU": "ordinanza", "OCOL": "ordinanza", "OPRE": "ordinanza",
+                    "OPLE": "ordinanza", "DDEC": "decreto", "DCAU": "decreto", "DPRE": "decreto",
+                    "DCOL": "decreto", "DING": "decreto ingiuntivo", "PDEF": "parere",
+                    "PINTE": "parere"}
 _TAR_SEAT_NAME = {v: k for k, v in catalog.TAR_SEAT.items()}
 
 
@@ -612,7 +627,7 @@ def _admin_to_text(court_geo, year, number):
     if not doc:
         return ""
     if court_geo == "CDS":
-        name = "Consiglio di Stato"
+        name = "Consiglio di Stato" + (", Adunanza plenaria" if kind in ("APLE", "OPLE") else "")
     elif court_geo == "CGARS":
         name = "CGARS"
     elif court_geo.startswith("TRGA"):

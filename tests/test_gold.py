@@ -202,14 +202,15 @@ def test_corte_conti_document_gold():
 @pytest.mark.skipif(not _has("gold_giustizia_amm_docs.jsonl"),
                     reason="giustizia amministrativa document gold missing")
 def test_giustizia_amministrativa_document_gold():
-    """Every TAR / Consiglio di Stato / CGARS decision cited in fourteen real documents.
+    """Every TAR / Consiglio di Stato / CGARS / TRGA decision cited in 26 real documents.
 
     The gold states what each citation should resolve to, including where the engine cannot
-    get there, so the floors sit at the measured score rather than at perfection. Almost
-    every gap is one thing: a citation says "sentenza" and the ruling is filed as a *sentenza
-    breve*, which no citation saying only "sentenza" distinguishes. That costs an identifier,
-    never a wrong ruling — court, year and number are read, not guessed.
-    Run `python -m tests.goldeval -v` to see each one.
+    get there, so the floors sit at the measured score rather than at perfection. Most gaps
+    are one thing: a citation says "sentenza" and the ruling is filed as a *sentenza breve*,
+    which no citation saying only "sentenza" distinguishes. Two more are plenaria sentenze
+    the archive files as SENT rather than APLE (2015/5, 2020/15). Court, year and number are
+    read, not guessed, but a wrong type can still name another ruling, as many numbers are
+    shared by several types. Run `python -m tests.goldeval -v` to see each one.
     """
     tp, fp, fn = goldeval.score_document_gold(
         os.path.join(G, "gold_giustizia_amm_docs.jsonl"))

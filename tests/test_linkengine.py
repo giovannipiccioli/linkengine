@@ -1436,6 +1436,63 @@ def test_tar_fills_seat_section_number_year():
     assert _one("TAR Campania, sezione staccata di Salerno, n. 50/2019")["city"] == "SA"
 
 
+# --- giustizia amministrativa: the adunanza plenaria, decreti, the TRGA, "Cons. St." -----
+# Every identifier below is a real decision, checked in the Council's own archive.
+
+def test_adunanza_plenaria_has_series_of_its_own():
+    """The plenaria files its sentenze as APLE and its ordinanze as OPLE; read as a plain
+    sentenza, n. 1/2022 would be ...:2022:1SENT, which is a Sezione VI ruling."""
+    assert _urns("Cons. Stato, Ad. Plen., 22 ottobre 2021, n. 17") == ["ECLI:IT:CDS:2021:17APLE"]
+    assert _urns("Cons. St., A.P., n. 4/2018") == ["ECLI:IT:CDS:2018:4APLE"]
+    assert _urns("Cons. Stato, Ad. Plen., ordinanza n. 2/2025") == ["ECLI:IT:CDS:2025:2OPLE"]
+    # the plenaria carries over to the whole list of numbers, as a section does
+    assert _urns("Cons. Stato, ad. plen., sent. n. 2 del 2016, n. 2 del 2020") == [
+        "ECLI:IT:CDS:2016:2APLE", "ECLI:IT:CDS:2020:2APLE"]
+    assert _one("Consiglio di Stato, Adunanza plenaria, sentenza n. 7/2020")["section"] == "AP"
+    # an ordinary section, or none at all, stays a plain sentenza
+    assert _urns("Cons. Stato, sez. IV, sentenza n. 250/2020") == ["ECLI:IT:CDS:2020:250SENT"]
+    assert _urns("Consiglio di Stato n. 1234/2021") == ["ECLI:IT:CDS:2021:1234SENT"]
+
+
+def test_admin_decree_reads_its_qualifier():
+    assert _urns("Consiglio di Stato, sez. V, decreto cautelare n. 1000/2024") == [
+        "ECLI:IT:CDS:2024:1000DCAU"]
+    assert _urns("TAR Lazio, decreto presidenziale n. 1/2023") == ["ECLI:IT:TARLAZ:2023:1DPRE"]
+    assert _urns("TAR Calabria, Catanzaro, decreto collegiale n. 60/2019") == [
+        "ECLI:IT:TARCZ:2019:60DCOL"]
+    assert _urns("TAR Lazio, decreto n. 9/2023") == ["ECLI:IT:TARLAZ:2023:9DDEC"]   # decisorio
+    # only the administrative courts carry a type in their identifier
+    assert _urns("Tribunale di Milano, decreto ingiuntivo n. 124/2020") == [
+        "ECLI:IT:TRIBMI:2020:124"]
+    assert _urns("Corte di Giustizia Tributaria di primo grado di Milano, decreto n. 5/2024") == [
+        "ECLI:IT:CGT1MI:2024:5"]
+
+
+def test_trga_region_and_seat_in_either_order():
+    """Trentino-Alto Adige has no TAR but the TRGA, in Trento with an autonomous section in
+    Bolzano; the region named on its own means Trento."""
+    assert _urns("T.R.G.A. Trentino-Alto Adige, Bolzano, sentenza n. 102/2022") == [
+        "ECLI:IT:TRGABZ:2022:102SENT"]
+    assert _urns("Tribunale regionale di giustizia amministrativa del Trentino-Alto Adige, "
+                 "sezione autonoma di Bolzano, sentenza n. 58/2022") == [
+        "ECLI:IT:TRGABZ:2022:58SENT"]
+    assert _urns("T.R.G.A. Trentino-Alto Adige, sentenza n. 2/2023") == [
+        "ECLI:IT:TRGATN:2023:2SENT"]
+    assert _urns("TAR Trento, sentenza n. 1/2023") == ["ECLI:IT:TRGATN:2023:1SENT"]
+
+
+def test_cons_st_is_the_council_not_the_cassazione():
+    assert _urns("Cons. St., sez. IV, n. 28/2018") == ["ECLI:IT:CDS:2018:28SENT"]
+    assert _urns("Cons. St. n. 27/2018") == ["ECLI:IT:CDS:2018:27SENT"]
+
+
+def test_admin_identifiers_read_back_as_text():
+    from linkengine import urn_to_text
+    assert urn_to_text("ECLI:IT:CDS:2021:17APLE") == (
+        "Consiglio di Stato, Adunanza plenaria, sentenza n. 17/2021")
+    assert urn_to_text("ECLI:IT:TARLAZ:2023:1DPRE") == "TAR Roma, decreto n. 1/2023"
+
+
 def test_dpcm_date_only_builds_urn():
     r = _one("D.P.C.M. 11 marzo 2020")
     assert r["ref-type"] == "legislation"

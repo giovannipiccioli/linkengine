@@ -361,15 +361,21 @@ regione dell'autorità giudicante.
 Le autorità della giustizia amministrativa identificano una decisione con il **tipo di
 provvedimento** oltre che con il numero: ciascun tipo ha una propria numerazione, sicché `sentenza
 n. 459/2023` e `ordinanza n. 459/2023` dello stesso TAR sono provvedimenti diversi. Il tipo si
-ricava dalla parola usata nella citazione — `ECLI:IT:TARBS:2023:459SENT`,
-`ECLI:IT:CDS:2023:1251PDEF` — e una citazione che non lo indichi è letta come sentenza: esatto per
-l'85% degli identificativi costruiti su un campione di decisioni reali, ed errato in un modo che
-costa un riferimento inesistente anziché il provvedimento sbagliato, poiché autorità, anno e numero
-non vengono mai presunti. Un identificativo di TAR indica la **sede** che ha deciso, non la
-regione: `TAR Lombardia, sezione staccata di Brescia` è `TARBS`, e una regione indicata da sola
-vale la sua sede (`TAR Sicilia` → `TARPA`, Palermo), perché la sezione staccata viene esplicitata
-quando è quella che ha deciso. Il Consiglio di Stato è `CDS`, il giudice d'appello siciliano è
-`CGARS`, e il Trentino-Alto Adige non ha un TAR ma il `TRGA`, a Trento e a Bolzano.
+ricava dalle parole della citazione, qualificazioni comprese — `ECLI:IT:TARBS:2023:459SENT`,
+`ECLI:IT:CDS:2023:1251PDEF`, `decreto cautelare` → `DCAU` — e una citazione che non lo indichi è
+letta come sentenza: esatto per l'85% degli identificativi costruiti su un campione di decisioni
+reali. Autorità, anno e numero non vengono mai presunti, ma un tipo errato non dà sempre un
+riferimento inesistente: il 41,5% delle terne autorità+anno+numero corrisponde a più tipi.
+L'**Adunanza plenaria** del Consiglio di Stato (`Ad. Plen.`, `A.P.`) ha serie proprie, `APLE` e
+`OPLE`: `Cons. Stato, Ad. Plen., n. 1/2022` è `ECLI:IT:CDS:2022:1APLE`, mentre `…:2022:1SENT` è
+una sentenza della Sezione VI (l'archivio registra comunque come `SENT` 28 delle 264 sentenze
+della plenaria). Un identificativo di TAR indica la **sede** che ha deciso, non la regione: `TAR
+Lombardia, sezione staccata di Brescia` è `TARBS`, e una regione indicata da sola vale la sua
+sede (`TAR Sicilia` → `TARPA`, Palermo), perché la sezione staccata viene esplicitata quando è
+quella che ha deciso. Il Consiglio di Stato è `CDS` (anche come `Cons. St.`), il giudice
+d'appello siciliano è `CGARS`, e il Trentino-Alto Adige non ha un TAR ma il `TRGA`, a Trento con
+una sezione autonoma a Bolzano — indicato per sede, per regione e sede in qualunque ordine, o
+per sola regione, che vale Trento.
 
 La Corte dei conti risolve la propria sezione dalla citazione, in qualunque ordine essa si
 presenti: `Sez. III App.`, `Prima Sezione Centrale d'Appello` e `Terza Sezione giurisdizionale

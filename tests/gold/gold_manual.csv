@@ -310,7 +310,7 @@ TAR Toscana, sez. I, sentenza n. 967/2023|ECLI:IT:TARTOS:2023:967SENT|jur|region
 TAR Campania, sentenza n. 4280 del 5 ottobre 2020|ECLI:IT:TARNA:2020:4280SENT|jur|regione da sola: vale la sua sede (Napoli)
 sentenza breve del TAR Sicilia n. 2028/2022|ECLI:IT:TARPA:2022:2028SENB|jur|'sentenza breve' e' SENB, non SENT
 Consiglio di Stato, sez. VII, sentenza n. 855/2023|ECLI:IT:CDS:2023:855SENT|jur|Consiglio di Stato: CDS, la sezione non entra nell'ECLI
-Cons. Stato, ad. plen., sent. n. 1/2022|ECLI:IT:CDS:2022:1SENT|jur|adunanza plenaria
+Cons. Stato, ad. plen., sent. n. 1/2022|ECLI:IT:CDS:2022:1APLE|jur|adunanza plenaria: serie propria APLE (2022:1SENT e' una sentenza della Sez. VI)
 Cons. Stato, sez. V, sentenza n. 10641 del 5 dicembre 2022|ECLI:IT:CDS:2022:10641SENT|jur|data estesa dopo il numero
 Consiglio di Stato, parere n. 1251/2023|ECLI:IT:CDS:2023:1251PDEF|jur|sede consultiva: parere -> PDEF
 C.G.A.R.S., sentenza n. 296/2023|ECLI:IT:CGARS:2023:296SENT|jur|Consiglio di giustizia amministrativa siciliano
@@ -327,3 +327,18 @@ T.A.R. Lazio, Roma, II, 5.11.2009, n. 10868|ECLI:IT:TARLAZ:2009:10868SENT|jur|se
 Corte dei conti, Sez. Giur. Liguria, n. 103/2021|ECLI:IT:CONT:2021:103SGLIG|jur|'Sez. Giur.' abbreviato
 Corte dei conti, Sezione I app., 9 settembre 2022, n. 423|ECLI:IT:CONT:2022:423APP1|jur|'Sezione I app.' con data estesa
 Sezione Controllo Piemonte n. 29/2016/PAR|ECLI:IT:CONT:2016:29SRCPIE-PAR|jur|'Sezione Controllo <regione>' + tipo
+Cons. Stato, Ad. Plen., 22 ottobre 2021, n. 17|ECLI:IT:CDS:2021:17APLE|jur|adunanza plenaria: serie propria APLE; 'Ad. Plen.' maiuscolo non chiude la frase
+Consiglio di Stato, Adunanza plenaria, sentenza n. 7/2020|ECLI:IT:CDS:2020:7APLE|jur|adunanza plenaria per esteso
+Cons. St., A.P., n. 4/2018|ECLI:IT:CDS:2018:4APLE|jur|'Cons. St.' e 'A.P.'
+Cons. Stato, ad. plen., sent. n. 2 del 2016, n. 2 del 2020, n. 3 del 2020|ECLI:IT:CDS:2016:2APLE ECLI:IT:CDS:2020:2APLE ECLI:IT:CDS:2020:3APLE|jur|la plenaria vale per tutta la serie di numeri
+Cons. Stato, Ad. Plen., ordinanza n. 2/2025|ECLI:IT:CDS:2025:2OPLE|jur|ordinanza della plenaria: OPLE
+Consiglio di Stato, sez. V, decreto cautelare n. 1000/2024|ECLI:IT:CDS:2024:1000DCAU|jur|decreto cautelare -> DCAU
+TAR Lazio, decreto presidenziale n. 1/2023|ECLI:IT:TARLAZ:2023:1DPRE|jur|decreto presidenziale -> DPRE
+TAR Calabria, Catanzaro, decreto collegiale n. 60/2019|ECLI:IT:TARCZ:2019:60DCOL|jur|decreto collegiale -> DCOL
+TAR Sicilia, Catania, decreto decisorio n. 3500/2019|ECLI:IT:TARCT:2019:3500DDEC|jur|decreto decisorio -> DDEC
+TAR Lazio, decreto n. 9/2023|ECLI:IT:TARLAZ:2023:9DDEC|jur|decreto senza qualifica: decisorio
+T.R.G.A. Trentino-Alto Adige, Bolzano, sentenza n. 102/2022|ECLI:IT:TRGABZ:2022:102SENT|jur|TRGA: la regione prima della sede
+Tribunale regionale di giustizia amministrativa del Trentino-Alto Adige, sezione autonoma di Bolzano, sentenza n. 58/2022|ECLI:IT:TRGABZ:2022:58SENT|jur|TRGA per esteso, sezione autonoma
+T.R.G.A. Trentino-Alto Adige, sede di Trento, sentenza n. 3/2023|ECLI:IT:TRGATN:2023:3SENT|jur|TRGA: sede di Trento
+Cons. St., sez. IV, n. 28/2018|ECLI:IT:CDS:2018:28SENT|jur|'Cons. St.' e' il Consiglio di Stato, non la Cassazione
+Tribunale di Milano, decreto ingiuntivo n. 124/2020|ECLI:IT:TRIBMI:2020:124|jur|il decreto di un tribunale ordinario non ha tipo nell'ECLI
