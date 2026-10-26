@@ -118,9 +118,9 @@ circolare AdE n. 9/E del 2021|PRAX:AE:CIRC:2021:9|prassi|circolare
 risoluzione dell'Agenzia delle Entrate n. 200/E/2008|PRAX:AE:RIS:2008:200/E|prassi|risoluzione
 circolare n. 1/E del 2018|PRAX:AE:CIRC:2018:1|prassi|circolare
 Risoluzione Agenzia delle Entrate n. 75/E del 2019|PRAX:AE:RIS:2019:75/E|prassi|risoluzione
-Convenzione Italia-Francia, art. 15|urn:nir:stato:legge:1992;20~art15|conv|doppia imposizione -> ratification law (Italy-France)
-art. 19 Convenzione contro le doppie imposizioni tra Italia e Spagna|urn:nir:stato:legge:1980;663~art19|conv|treaty, country after; ratification law
-Convenzione Italia-Turchia contro la doppia imposizione, artt. 15 e 23|urn:nir:stato:legge:1993;195~art15 urn:nir:stato:legge:1993;195~art23|conv|treaty + two articles
+Convenzione Italia-Francia, art. 15|urn:nir:stato:legge:1992;20:1~art15|conv|doppia imposizione -> treaty annex (Italy-France)
+art. 19 Convenzione contro le doppie imposizioni tra Italia e Spagna|urn:nir:stato:legge:1980;663:1~art19|conv|treaty, country after; ratification annex
+Convenzione Italia-Turchia contro la doppia imposizione, artt. 15 e 23|urn:nir:stato:legge:1993;195:1~art15 urn:nir:stato:legge:1993;195:1~art23|conv|treaty + two articles; default annex assumption
 L. reg. Campania n. 28 del 2003|urn:nir:regione.campania:legge:2003;28|reg|legge regionale + region name
 art. 13 l. reg. Campania 26 luglio 2002 n. 15|urn:nir:regione.campania:legge:2002;15~art13|reg|legge regionale + date + article
 L. Regione Campania n. 4/2007|urn:nir:regione.campania:legge:2007;4|reg|"L. Regione" form
@@ -239,9 +239,9 @@ art. 7 L. n° 212/2000|urn:nir:stato:legge:2000;212~art7|norm|n° degree marker
 art. 1, comma 186, L 197/2022|urn:nir:stato:legge:2022;197~art1-comma186|norm|dot-less L
 art. 249 codice procedura civile|urn:nir:stato:regio.decreto:1940;1443:1~art249|alias|c.p.c. no-di
 art. 206 cod. strada|urn:nir:stato:decreto.legislativo:1992;285~art206|alias|cod. strada abbrev
-Convenzione Italia-Svizzera 1976, art. 4|urn:nir:stato:legge:1978;943~art4|conv|CH ratification
-Convenzione Italia-Gran Bretagna, art. 24|urn:nir:stato:legge:1990;329~art24|conv|gran bretagna
-art. 12 Convenzione italo-austriaca 16 novembre 1971|urn:nir:stato:legge:1984;762~art12|conv|austriaca adjective
+Convenzione Italia-Svizzera 1976, art. 4|urn:nir:stato:legge:1978;943:1~art4|conv|CH ratification annex
+Convenzione Italia-Gran Bretagna, art. 24|urn:nir:stato:legge:1990;329:1~art24|conv|gran bretagna
+art. 12 Convenzione italo-austriaca 16 novembre 1971|urn:nir:stato:legge:1984;762:1~art12|conv|austriaca adjective
 Cassazione Sez. Unite nn. 26636 e 26637 del 18.12.2009|ECLI:IT:CASS:2009:26636CIV ECLI:IT:CASS:2009:26637CIV|jur|nn plural list + date
 Tariffa Doganale Comune|TARIFFA_DOGANALE_COM|alias|special self-urn
 art. 6 n. 2 Convenzione di Bruxelles 27 settembre 1968|CELEX:41998A0126~art6-num2|conv|bruxelles alias

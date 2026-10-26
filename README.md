@@ -61,6 +61,41 @@ aliases — is baked in, so no network or external service is needed.
 
 ---
 
+## Bilateral tax treaties
+
+A named treaty resolves to the annex of its Italian ratification law containing the
+Italian text. The annex is included even when no article is cited:
+
+| Citation | URN |
+|---|---|
+| `Convenzione Italia-Francia, art. 15` | `urn:nir:stato:legge:1992;20:1~art15` |
+| `Convenzione Italia-India, art. 15` | `urn:nir:stato:legge:1995;319:2~art15` |
+| `Convenzione Italia-Giappone` | `urn:nir:stato:legge:1972;855:1` |
+| `Convenzione Italia-Cina` | `urn:nir:stato:legge:2024;182:1` |
+| `Convenzione Italia-Cina del 1986` | `urn:nir:stato:legge:1989;376:1` |
+
+The Normattiva audit of 2026-10-26 covers 30 treaties. The Italian text for
+[India](https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:1995-07-14;319:2~art1),
+[Greece](https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:1989-12-30;445:2~art1) and
+[Czechoslovakia](https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:1983-05-02;303:2~art1)
+(including both successor-state names) uses `:2`. Other mapped treaties use `:1`;
+for unaudited treaties this is a default assumption, not a verified source fact.
+Countries without a ratification law in the table still produce no URN.
+
+Japan's Convention maps to law **855/1972**. A protocol qualified as **1980/1981**, or
+ratified by law **413/1981**, keeps its separate identity. China defaults to the new
+**2019** agreement, law **182/2024**. Treaty dates **1986/1989** and references to law
+**376/1989** qualifying the treaty name select the historical agreement. The judgment's
+year or a tax period does not select the version. The old Chinese agreement is a scanned
+attachment on Normattiva: an article identifier does not guarantee article text is
+available in a consuming corpus.
+
+Direct citations to a law (e.g. `art. 1 della legge 20/1992`) keep their own identifiers
+without an implicit annex. These rules apply to new extractions; LinkEngine does not
+migrate corpus identities or previously indexed references.
+
+---
+
 ## Install
 
 ```bash

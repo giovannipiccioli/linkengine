@@ -159,6 +159,7 @@ def _resolve_overlaps(spans):
     # a budget law ("legge finanziaria 2008") subsumes the plain "legge" doctype and the bare
     # year that otherwise match inside it.
     budget = [s for s in spans if s.attrs.get("budget")]
+    treaties = [s for s in spans if s.entity == Entity.DOCTYPE and s.attrs.get("treaty")]
     explicit_num_year = [s for s in spans
                          if s.entity == Entity.NUM_YEAR and not s.attrs.get("budget")]
     duplicate_budget = {
@@ -176,6 +177,13 @@ def _resolve_overlaps(spans):
     out = []
     for s in spans:
         if id(s) in duplicate_budget:
+            continue
+        # A treaty's signing date belongs to its name, not to the ratification law.
+        # Keep the resolved identity and discard generic numerics inside that name.
+        if (not s.attrs.get("treaty")
+                and s.entity in (Entity.DOCTYPE, Entity.NUMBER, Entity.NUM_YEAR,
+                                 Entity.YEAR, Entity.DATE)
+                and any(t.start <= s.start and s.end <= t.end for t in treaties)):
             continue
         # A quoted attachment slug is an opaque identifier. Words such as ``note``, ``art``
         # or ``cp`` inside it must not become competing doctypes, partitions or code aliases.
@@ -632,6 +640,11 @@ class LinkEngine:
         parts.sort(key=lambda s: -PARTITION_RANK.get(s.entity, 0))
         if parts:
             row["partition"] = "_".join(_partition_token(s) for s in parts)
+        # Named treaties carry the annex as part of their identity, including when
+        # no article is cited. Preserve an explicit annex instead of adding a second one.
+        if doctype and doctype.attrs.get("annex") and not ref.of(Entity.ALLEGATO):
+            row["partition"] = "_".join(filter(None, (
+                "allegato-" + doctype.attrs["annex"], row["partition"])))
 
         # classification
         is_caselaw = (row["authority"] in CASELAW_AUTH) or row["doc-type"] == "SENT" or \

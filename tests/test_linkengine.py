@@ -1022,13 +1022,13 @@ def test_leading_article_number_before_act():
 
 
 # --- convenzioni doppia imposizione, leggi regionali, caselaw section ---------
-def test_convenzione_doppia_imposizione_to_ratification_law():
-    # the treaty resolves to the Italian ratification law (Italy-France -> legge 20/1992)
-    assert _urns("Convenzione Italia-Francia, art. 15") == ["urn:nir:stato:legge:1992;20~art15"]
+def test_convenzione_doppia_imposizione_to_ratification_annex():
+    # The treaty resolves to the annex containing its text, not the ratification law body.
+    assert _urns("Convenzione Italia-Francia, art. 15") == ["urn:nir:stato:legge:1992;20:1~art15"]
     assert _urns("art. 19 Convenzione contro le doppie imposizioni tra Italia e Spagna") == [
-        "urn:nir:stato:legge:1980;663~art19"]
+        "urn:nir:stato:legge:1980;663:1~art19"]
     # Italy-Switzerland (1976) -> ratification law l. 943/1978
-    assert _urns("Convenzione tra Italia e Svizzera") == ["urn:nir:stato:legge:1978;943"]
+    assert _urns("Convenzione tra Italia e Svizzera") == ["urn:nir:stato:legge:1978;943:1"]
     # a country with no ratification law in the table yields no URN
     assert _urns("Convenzione tra Italia e San Marino") == []
 
@@ -1209,7 +1209,7 @@ def test_letto_word_not_read_as_letter():
     # "letto" (read) must not be parsed as "lett" + letter o
     assert _urns("art. 15 della Convenzione Italia-Francia, letto unitamente all'art. 23 "
                  "del TUIR") == ["urn:nir:presidente.repubblica:decreto:1986;917~art23",
-                                 "urn:nir:stato:legge:1992;20~art15"]
+                                 "urn:nir:stato:legge:1992;20:1~art15"]
 
 
 def test_directive_and_cgue_case_in_adjacent_sentences_stay_separate():

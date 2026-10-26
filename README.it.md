@@ -65,6 +65,41 @@ alias normativi — sono incorporati, quindi non serve alcuna rete né alcun ser
 
 ---
 
+## Convenzioni contro le doppie imposizioni
+
+Una convenzione nominata identifica l'allegato della legge di ratifica che contiene il
+testo italiano. L'allegato compare anche quando non è citato un articolo:
+
+| Citazione | URN |
+|---|---|
+| `Convenzione Italia-Francia, art. 15` | `urn:nir:stato:legge:1992;20:1~art15` |
+| `Convenzione Italia-India, art. 15` | `urn:nir:stato:legge:1995;319:2~art15` |
+| `Convenzione Italia-Giappone` | `urn:nir:stato:legge:1972;855:1` |
+| `Convenzione Italia-Cina` | `urn:nir:stato:legge:2024;182:1` |
+| `Convenzione Italia-Cina del 1986` | `urn:nir:stato:legge:1989;376:1` |
+
+La verifica su Normattiva del 26 ottobre 2026 copre 30 convenzioni. Il testo italiano di
+[India](https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:1995-07-14;319:2~art1),
+[Grecia](https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:1989-12-30;445:2~art1) e
+[Cecoslovacchia](https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:1983-05-02;303:2~art1)
+(anche sotto i nomi dei due Stati successori) usa `:2`. Per le altre convenzioni mappate si
+usa `:1`; per quelle non verificate è un'assunzione predefinita, non una verifica della fonte.
+I Paesi senza legge di ratifica nella tabella restano senza URN.
+
+Per il Giappone la Convenzione è quella della legge **855/1972**. Il protocollo qualificato
+come del **1980/1981**, o ratificato dalla legge **413/1981**, mantiene un'identità separata.
+Per la Cina il riferimento senza data è il nuovo accordo del **2019**, legge **182/2024**.
+Le date del **1986/1989** e i richiami alla legge **376/1989** collegati al nome della
+convenzione selezionano l'accordo storico. Non si deduce la versione dall'anno della sentenza
+o dal periodo d'imposta. Il vecchio testo cinese è grafico su Normattiva: un identificativo
+di articolo non garantisce che il relativo testo sia disponibile nel corpus.
+
+Le leggi citate direttamente (ad esempio `art. 1 della legge 20/1992`) conservano i propri
+identificativi senza allegato implicito. Queste regole riguardano le nuove estrazioni:
+LinkEngine non migra il corpus né i riferimenti già indicizzati.
+
+---
+
 ## Installazione
 
 ```bash

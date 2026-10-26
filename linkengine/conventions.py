@@ -3,13 +3,19 @@ Convenzioni contro la doppia imposizione (bilateral tax treaties Italy ↔ anoth
 
 These are cited as "Convenzione Italia-Francia", "Convenzione contro le doppie imposizioni
 tra Italia e Spagna", "Convenzione Italo Tedesca", etc. The standard identifier is the
-**Italian ratification law** (a `legge`), so e.g. Italy–France resolves to
-`urn:nir:stato:legge:1992;20`.
+**annex to the Italian ratification law** (a `legge`), so e.g. Italy–France resolves to
+`urn:nir:stato:legge:1992;20:1`.
 
 The country→code and code→ratification-law tables below are internalized from the project's
 ``conv_doppia_imp_parsing.py`` (NOT imported, to keep linkengine dependency-free). Only
-countries with a known ratification law produce a URN; others (e.g. Switzerland, Holy See)
+countries with a known ratification law produce a URN; others (e.g. San Marino, Holy See)
 are recognized as a treaty but left without an identifier, matching the source module.
+
+The Italian-text annexes were checked on Normattiva for 30 treaties (2026-10-26).
+Unverified treaties default to annex 1; India, Greece and Czechoslovakia use annex 2.
+China defaults to the 2019 agreement (law 182/2024), while explicit references to the
+1986 agreement or law 376/1989 retain the historical identity. Availability of article
+text in the corpus is separate from the identity of the cited treaty.
 """
 from __future__ import annotations
 
@@ -26,7 +32,8 @@ COUNTRIES = {
     "bulgaria": "BGR", "danimarca": "DNK", "finlandia": "FIN", "francia": "FRA",
     "francese": "FRA", "germania": "DEU", "tedesca": "DEU", "regno unito": "GBR",
     "gran bretagna": "GBR", "britannica": "GBR", "austriaca": "AUT", "svizzero": "CHE", 
-    "slovacca": "SVK", "ceca": "CZE",
+    "slovacca": "SVK", "ceca": "CZE", "repubblica slovacca": "SVK",
+    "cecoslovacchia": "CZE",
     "grecia": "GRC", "irlanda": "IRL", "islanda": "ISL", "liechtenstein": "LIE",
     "lussemburgo": "LUX", "malta": "MLT", "monaco": "MCO", "norvegia": "NOR",
     "paesi bassi": "NLD", 'regno dei paesi bassi': "NLD", "polonia": "POL", "portogallo": "PRT", "portoghese": "PRT",
@@ -36,8 +43,8 @@ COUNTRIES = {
     "slovenia": "SVN", "bosnia-erzegovina": "BIH", "moldova": "MDA", "slovacchia": "SVK",
     "bielorussia": "BLR", "repubblica ceca": "CZE", "montenegro": "MNE", "serbia": "SRB",
     "serba": "SRB", "arabia saudita": "SAU", "bangladesh": "BGD", "sri lanka": "LKA",
-    "cina": "CHN", "cipro": "CYP", "corea del sud": "KOR", "emirati arabi uniti": "ARE",
-    "filippine": "PHL", "giappone": "JPN", "giordania": "JOR", "india": "IND",
+    "cina": "CHN", "cinese": "CHN", "cipro": "CYP", "corea del sud": "KOR", "emirati arabi uniti": "ARE",
+    "filippine": "PHL", "giappone": "JPN", "giapponese": "JPN", "giordania": "JOR", "india": "IND",
     "indonesia": "IDN", "israele": "ISR", "kuwait": "KWT", "libano": "LBN",
     "malaysia": "MYS", "oman": "OMN", "pakistan": "PAK", "qatar": "QAT", "singapore": "SGP",
     "siria": "SYR", "thailandia": "THA", "turchia": "TUR", "vietnam": "VNM",
@@ -60,8 +67,8 @@ RATIFICA = {
     "ROU": (78, 2017), "ESP": (663, 1980), "SWE": (439, 1982), "UKR": (169, 2002),
     "HUN": (509, 1980), "EST": (427, 1999), "LVA": (73, 2008), "LTU": (31, 1999),
     "HRV": (75, 2009), "SVN": (768, 2009), "MDA": (8, 2011), "MNE": (974, 1984),
-    "SAU": (159, 2009), "BGD": (301, 1995), "LKA": (314, 1989), "CHN": (376, 1989),
-    "KOR": (15, 2014), "ARE": (309, 1997), "PHL": (312, 1989), "JPN": (413, 1981),
+    "SAU": (159, 2009), "BGD": (301, 1995), "LKA": (314, 1989), "CHN": (182, 2024),
+    "KOR": (15, 2014), "ARE": (309, 1997), "PHL": (312, 1989), "JPN": (855, 1972),
     "JOR": (160, 2009), "IND": (319, 1995), "IDN": (707, 1994), "ISR": (371, 1997),
     "KWT": (53, 1992), "LBN": (87, 2011), "MYS": (607, 1985), "OMN": (50, 2002),
     "PAK": (313, 1989), "QAT": (118, 2010), "SGP": (575, 1978), "SYR": (130, 2004),
@@ -77,17 +84,69 @@ RATIFICA = {
     "CHE": (943, 1978), "SVK": (303, 1983), "CZE": (303, 1983),
 }
 
+# Official annex of the Italian treaty text, keyed by act rather than country so
+# successor states and historical versions share the same numbering.
+ANNEX_OVERRIDES = {(445, 1989): 2, (319, 1995): 2, (303, 1983): 2}
+_CHINA_HISTORICAL = (376, 1989)
+_JAPAN_PROTOCOL = (413, 1981)
+
 _CONV_KW_RE = re.compile(r"\b(?:convenzione|accordo|trattato)\b", I)
 _ITAL_RE = re.compile(r"\bital(?:ia|o|ian[ao])\b", I)
 # match the longest country names first ("regno unito" before "unito" fragments)
 _COUNTRY_RE = re.compile(
     r"\b(" + "|".join(re.escape(c) for c in sorted(COUNTRIES, key=len, reverse=True)) + r")\b", I)
 
+# Only dates that qualify the treaty name are version cues. An unrelated year in
+# the surrounding discussion (e.g. a tax period or a judgment) must not select it.
+_DATE_TEXT = (
+    r"(?:(?:\d{1,2}\s+(?:gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|"
+    r"settembre|ottobre|novembre|dicembre)\s+)|(?:\d{1,2}[./-]\d{1,2}[./-]))?\d{4}"
+)
+_TREATY_DATE_RE = re.compile(
+    r"\b(?:del(?:l['’]anno)?|(?:firmat[oa]|stipulat[oa]|sottoscritt[oa]|fatt[oa])"
+    r"(?:\s+a\s+(?:Pechino|Tokyo))?\s+il)\s+(" + _DATE_TEXT + r")\b", I)
+_BARE_DATE_RE = re.compile(r"(" + _DATE_TEXT + r")\b", I)
+_RATIFICATION_RE = re.compile(
+    r"^[\s,(]*(?:(?:ratificat[oa](?:\s+e\s+res[oa]\s+esecutiv[oa])?|"
+    r"res[oa]\s+esecutiv[oa]|approvat[oa])\s+)?"
+    r"(?:(?:con(?:\s+la)?|dalla|con\s+l[’'])\s*)?(?:legge|l\.)\s*"
+    r"(?:(?:n\.?\s*)?(\d+)\s*/\s*(\d{4})\b|"
+    r"(" + _DATE_TEXT + r")\s*,?\s*n\.?\s*(\d+)\b|"
+    r"(?:n\.?\s*)?(\d+)\s+del\s+(" + _DATE_TEXT + r")\b)", I)
+_PROTOCOL_PREFIX_RE = re.compile(
+    r"\bprotocollo(?:\s+modificativo)?(?:\s+del\s+" + _DATE_TEXT + r")?\s+"
+    r"(?:alla|della|di\s+modifica\s+della)\s*$", I)
+
+
+def _version_cues(text: str, start: int, end: int):
+    """Return the treaty year, ratification law and end of the date-qualified name.
+
+    The law itself stays outside the name span: an explicit citation to the law
+    remains a separate reference to the ratification act, without a treaty annex.
+    """
+    named_date = _TREATY_DATE_RE.search(text[start:end])
+    tail = text[end:end + 180]
+    stripped = tail.lstrip(" ,(")
+    trailing_date = _TREATY_DATE_RE.match(stripped) or _BARE_DATE_RE.match(stripped)
+    if trailing_date:
+        named_date = trailing_date
+        end += len(tail) - len(stripped) + trailing_date.end()
+        tail = stripped[trailing_date.end():]
+    year = int(named_date.group(1)[-4:]) if named_date else None
+    ratification = _RATIFICATION_RE.match(tail)
+    law = None
+    if ratification:
+        num1, year1, date2, num2, num3, date3 = ratification.groups()
+        law = (int(num1 or num2 or num3), int(year1 or (date2 or date3)[-4:]))
+    return year, law, end
+
 
 def recognize_conventions(text: str) -> List[Span]:
-    """Emit a (DOCTYPE L + NUM_YEAR) pair for each Italy↔country tax treaty whose ratification
-    law is known. The article partition attaches to it downstream, so
-    "Convenzione Italia-Giappone, art. 15" -> ``urn:nir:stato:legge:1981;413~art15``."""
+    """Emit a law identity with its treaty annex; articles attach downstream.
+
+    "Convenzione Italia-Giappone, art. 15" -> ``urn:nir:stato:legge:1972;855:1~art15``.
+    The annex travels on the identity span so every article in a list inherits it.
+    """
     spans: List[Span] = []
     for km in _CONV_KW_RE.finditer(text):
         win = text[km.start(): km.start() + 95]
@@ -96,12 +155,30 @@ def recognize_conventions(text: str) -> List[Span]:
         cm = _COUNTRY_RE.search(win)
         if not cm:
             continue
-        nl = RATIFICA.get(COUNTRIES.get(cm.group(1).lower(), ""))
+        country = COUNTRIES.get(cm.group(1).lower(), "")
+        nl = RATIFICA.get(country)
         if not nl:
             continue
-        num, yr = nl
         s, e = km.start(), km.start() + cm.end()
-        spans.append(Span(s, e, Entity.DOCTYPE, "L", text[s:e], {"scope": "nazionale"}))
+        cited_year, cited_law, e = _version_cues(text, s, e)
+        if country == "CHN":
+            if cited_law in {_CHINA_HISTORICAL, RATIFICA["CHN"]}:
+                nl = cited_law
+            elif cited_year in {1986, 1989}:
+                nl = _CHINA_HISTORICAL
+        elif country == "JPN":
+            # The 1980 protocol is not the Convention ratified by law 855/1972.
+            prefix_start = max(0, s - 100)
+            protocol = _PROTOCOL_PREFIX_RE.search(text[prefix_start:s])
+            if protocol:
+                protocol_start = prefix_start + protocol.start()
+                cited_year, cited_law, e = _version_cues(text, protocol_start, e)
+                if cited_year in {1980, 1981} or cited_law == _JAPAN_PROTOCOL:
+                    s, nl = protocol_start, _JAPAN_PROTOCOL
+        num, yr = nl
+        spans.append(Span(s, e, Entity.DOCTYPE, "L", text[s:e],
+                          {"scope": "nazionale", "treaty": "1",
+                           "annex": str(ANNEX_OVERRIDES.get(nl, 1))}))
         spans.append(Span(s, e, Entity.NUM_YEAR, f"{num}/{yr}", text[s:e],
-                          {"number": str(num), "year": str(yr)}))
+                          {"number": str(num), "year": str(yr), "treaty": "1"}))
     return spans
