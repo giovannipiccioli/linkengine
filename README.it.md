@@ -44,7 +44,7 @@ alias normativi — sono incorporati, quindi non serve alcuna rete né alcun ser
 - **Partizioni** — articoli, commi, paragrafi, lettere, numeri e punti delle pronunce della Corte
   di giustizia vengono analizzati e accodati all'identificativo (`~art14-comma4-letb-num1`).
 - **Alias e abbreviazioni** — codici e testi unici sia per denominazione estesa *sia* per
-  abbreviazione (`codice civile`/`c.c.`, `c.p.c.`, `TUIR`, `GDPR`, `Cost.`, …), convenzioni contro
+  abbreviazione (`codice civile`/`c.c.`, `c.p.c.`, `legge fallimentare`/`l. fall.`/`L.F.`, `TUIR`, `GDPR`, `Cost.`, …), convenzioni contro
   le doppie imposizioni (`Convenzione Italia-Francia`) e leggi finanziarie e di bilancio annuali
   (`legge finanziaria 2008`, `legge di bilancio 2023`).
 - **`urn_to_text`** — la mappa inversa: da un identificativo canonico a una citazione leggibile

@@ -272,7 +272,10 @@ def _legislation_urn(row):
     nir = build_nir(_g(row, 'doc-type'), _g(row, 'authority'), _ns(row, 'number'),
                     _ns(row, 'year'), part, ministry=_g(row, 'ministry'))
     if nir:
-        return nir
+        # a text that is an annex of its decree, cited through the decree with a partition
+        # ("art. 216 r.d. 267/1942"), is the alias act: one identifier for both citation forms
+        code = part and catalog.ALIAS_BY_DECREE.get(nir.split('~')[0][len("urn:nir:"):])
+        return alias_nir(code, part) if code else nir
     date_only_prefix = _DATE_ONLY_DECREE_PREFIX.get(
         (_g(row, 'doc-type'), _g(row, 'authority')))
     if date_only_prefix and _g(row, 'doc-date'):

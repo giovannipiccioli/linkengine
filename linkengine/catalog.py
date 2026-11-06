@@ -262,3 +262,14 @@ def _build_alias_base_to_name():
 
 
 ALIAS_BASE_TO_NAME = _build_alias_base_to_name()   # "stato:regio.decreto:1942;262:2" -> "codice civile"
+
+
+def _build_alias_by_decree():
+    """Decree base (year-only, no annex) -> alias, for the aliases whose text is an annex of its
+    decree and is also cited through the decree's number (``Alias.via_decree``)."""
+    import re
+    from .aliases import ALIASES
+    return {_year_only_base(re.sub(r":\d+$", "", a.nir)): a.code for a in ALIASES if a.via_decree}
+
+
+ALIAS_BY_DECREE = _build_alias_by_decree()         # "stato:regio.decreto:1942;267" -> "LEGGE_FALL"

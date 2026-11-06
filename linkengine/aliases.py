@@ -12,7 +12,14 @@ registry, carrying everything that defines it:
   the URN layer trims it to the year;
 * ``celex`` — its CELEX id for EU acts that are a single regulation/treaty/charter;
 * ``display`` — its human name for ``urn_to_text``;
-* ``scope`` — ``"national"`` / ``"eu"`` / ``"intl"``.
+* ``scope`` — ``"national"`` / ``"eu"`` / ``"intl"``;
+* ``via_decree`` — the text is an annex of the decree that approves it and is also cited
+  through that decree's number (``art. 216 r.d. 267/1942`` is ``art. 216 l. fall.``): the
+  decree form then resolves to the same identifier as the alias form.
+
+An alias is a reference on its own only under its exact ``display`` name; an abbreviation
+(``c.c.``, ``L.F.``) needs a partition (``art. 2697 c.c.``), so a bare ``L.F.`` such as a
+party's initials is not read as a citation (see ``assembler._valid``).
 
 To add or edit an alias, change its one record here — the per-field maps consumed elsewhere
 (``ALIAS_NIR`` / ``ALIAS_DISPLAY`` / ``ALIAS_CELEX`` / ``EU_ALIASES`` / ``INTL_ALIASES`` /
@@ -41,6 +48,7 @@ class Alias:
     nir: str = ""                                 # urn:nir act base (national)
     celex: str = ""                               # CELEX id (eu single act)
     display: str = ""                             # human name for urn_to_text
+    via_decree: bool = False                      # also cited as "art. N <decree number>" (see above)
 
 
 # ── The registry — one record per alias, recognition order preserved ────────────
@@ -112,9 +120,13 @@ ALIASES: List[Alias] = [
     Alias("COD_BENI_CULT", nir="stato:decreto.legislativo:2004-01-22;42", display="codice dei beni culturali",
           patterns=(r"codice\s+dei\s+beni\s+culturali",)),
 
-    # — legge fallimentare, statuti, ordinamento penitenziario —
+    # — legge fallimentare (annex 1 of R.D. 267/1942), statuti, ordinamento penitenziario.
+    #   Full name, "l. fall." / "legge fall." / "legge fallim.", and the initials "L.F." / "LF";
+    #   the period of an abbreviation belongs to it, the one closing the sentence after
+    #   "legge fallimentare" does not. —
     Alias("LEGGE_FALL", nir="stato:regio.decreto:1942-03-16;267:1", display="legge fallimentare",
-          patterns=(r"legge\s+fallimentare|\bl\.?\s?fall\.?",)),
+          via_decree=True,
+          patterns=(r"\bl(?:egge)?\.?\s*(?:fallimentare|fall(?:im)?\b\.?)|\bl\.?\s?f\.?\b",)),
     Alias("STATUTO_LAVORATORI", nir="stato:legge:1970-05-20;300", display="Statuto dei lavoratori",
           patterns=(r"statuto\s+dei\s+lavoratori",)),
     # "statuto del contribuente" = legge 212/2000. Matches "del contribuente" / "dei diritti del/dei

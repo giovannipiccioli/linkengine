@@ -43,7 +43,7 @@ aliases — is baked in, so no network or external service is needed.
 - **Partitions** — articles, commi, paragrafi, lettere, numeri and CJEU punti are parsed and
   appended to the identifier (`~art14-comma4-letb-num1`).
 - **Aliases & abbreviations** — codes and consolidated texts by full name *and* abbreviation
-  (`codice civile`/`c.c.`, `c.p.c.`, `TUIR`, `GDPR`, `Cost.`, …), tax treaties
+  (`codice civile`/`c.c.`, `c.p.c.`, `legge fallimentare`/`l. fall.`/`L.F.`, `TUIR`, `GDPR`, `Cost.`, …), tax treaties
   (`Convenzione Italia-Francia`), and annual budget laws (`legge finanziaria 2008`,
   `legge di bilancio 2023`).
 - **`urn_to_text`** — the inverse map: a canonical identifier back to a readable citation

@@ -533,7 +533,7 @@ EXPECTED_URNS = {
         "urn:nir:stato:decreto.legislativo:2019;14",
         "urn:nir:stato:decreto.legislativo:2019;14~art240",
         "urn:nir:stato:regio.decreto:1942;262:2~art1273",
-        "urn:nir:stato:regio.decreto:1942;267~art124",
+        "urn:nir:stato:regio.decreto:1942;267:1~art124",
         "urn:nir:presidente.repubblica:decreto:1986;131~art21-comma2",
     },
     "prassi_dogane_circolare_2017_8.txt": {

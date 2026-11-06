@@ -342,3 +342,15 @@ Tribunale regionale di giustizia amministrativa del Trentino-Alto Adige, sezione
 T.R.G.A. Trentino-Alto Adige, sede di Trento, sentenza n. 3/2023|ECLI:IT:TRGATN:2023:3SENT|jur|TRGA: sede di Trento
 Cons. St., sez. IV, n. 28/2018|ECLI:IT:CDS:2018:28SENT|jur|'Cons. St.' e' il Consiglio di Stato, non la Cassazione
 Tribunale di Milano, decreto ingiuntivo n. 124/2020|ECLI:IT:TRIBMI:2020:124|jur|il decreto di un tribunale ordinario non ha tipo nell'ECLI
+art. 216 della legge fallimentare|urn:nir:stato:regio.decreto:1942;267:1~art216|norm|legge fallimentare: full name
+art. 67 l. fall.|urn:nir:stato:regio.decreto:1942;267:1~art67|norm|legge fallimentare: l. fall.
+art. 98 legge fall.|urn:nir:stato:regio.decreto:1942;267:1~art98|norm|legge fallimentare: 'legge fall.' (abbreviation of the full name)
+art. 161, comma 8, legge fallim.|urn:nir:stato:regio.decreto:1942;267:1~art161-comma8|norm|legge fallimentare: 'legge fallim.'
+art. 223, comma 1, L.F.|urn:nir:stato:regio.decreto:1942;267:1~art223-comma1|norm|legge fallimentare: initials L.F. after a partition
+art. 26 LF|urn:nir:stato:regio.decreto:1942;267:1~art26|norm|legge fallimentare: LF without dots
+art. 67, comma 3, lett. d), l.f.|urn:nir:stato:regio.decreto:1942;267:1~art67-comma3-letd|norm|legge fallimentare: lowercase l.f. + lettera
+L.F., art. 15|urn:nir:stato:regio.decreto:1942;267:1~art15|norm|legge fallimentare: initials before the article
+artt. 216 e 223 L.F.|urn:nir:stato:regio.decreto:1942;267:1~art216 urn:nir:stato:regio.decreto:1942;267:1~art223|norm|legge fallimentare: article list
+art. 216 del R.D. 16 marzo 1942, n. 267|urn:nir:stato:regio.decreto:1942;267:1~art216|norm|the L.F. cited through its decree is the annex
+art. 124 r.d. n. 267/1942|urn:nir:stato:regio.decreto:1942;267:1~art124|norm|the L.F. cited through its decree is the annex
+art. 5 del d.lgs. 18 agosto 2000, n. 267|urn:nir:stato:decreto.legislativo:2000;267~art5|norm|TUEL: same number as the L.F., another act
