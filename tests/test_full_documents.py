@@ -113,7 +113,7 @@ EXPECTED_URNS = {
         "urn:nir:stato:decreto.legislativo:1997;446~art52",
         "urn:nir:stato:decreto.legislativo:1997;446~art59",
         "urn:nir:stato:decreto.legislativo:2000;267~art48",
-        "urn:nir:stato:decreto.legge:2005;203~art11quater-comma16",
+        "urn:nir:stato:decreto.legge:2005;203~art11quaterdecies-comma16",  # was read as 11-quater
         "urn:nir:stato:decreto.legge:2006;223~art36-comma2",
         "urn:nir:stato:legge:2006;248",
         "urn:nir:stato:legge:2000;212~art7",

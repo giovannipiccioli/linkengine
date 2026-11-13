@@ -45,7 +45,7 @@ def test_legge_full_word_and_date():
 def test_legge_abbreviation_with_latin_partition():
     r = _one("art. 10 bis, l. n. 212/2000")
     assert r["doc-type"] == "L"
-    assert r["partition"] == "articolo-10-bis"
+    assert r["partition"] == "articolo-10bis"
     assert _urn(r) == "urn:nir:stato:legge:2000;212~art10bis"
 
 

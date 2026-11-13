@@ -20,7 +20,7 @@ from . import catalog
 from .geo import (AUTONOMOUS_TAX_CITY_TO_GEO, AUTONOMOUS_TAX_GEO_NAMES, city_name,
                   region_name)
 from .normalize import (build_nir, build_regional_nir, build_celex, build_celex_caselaw,
-                        normattiva_url, partition_to_locator)
+                        normattiva_url, partition_to_locator, LATIN_ORDINAL)
 from .aliases import ALIAS_NIR, ALIAS_CELEX, alias_nir
 from .act_kinds import display_name_for_nir
 
@@ -495,6 +495,8 @@ _LOC_LABEL = {"art": "art.", "comma": "comma", "let": "let.", "num": "num.",
               "cons": "considerando", "all": "allegato", "allegato": "allegato"}
 # longest first so "comma"/"allegato" win over a bare prefix scan
 _LOC_PREFIX_RE = re.compile(r'^(allegato|comma|cons|art|let|num|all)(.*)$')
+# Identifiers glue the ordinal (``art6bis``); a citation prints it hyphenated ("art. 6-bis").
+_GLUED_ORDINAL_RE = re.compile(r'^(\d+|[a-z])(' + LATIN_ORDINAL + r')', re.I)
 
 
 def _render_locator(locator: str, num_label: str = "num.", deep_num_label: str = "") -> str:
@@ -524,7 +526,8 @@ def _render_locator(locator: str, num_label: str = "num.", deep_num_label: str =
             seen_num = True
         else:
             label = _LOC_LABEL[prefix]
-        parts.append(f"{label} {m.group(2)}".strip())
+        value = _GLUED_ORDINAL_RE.sub(r'\1-\2', m.group(2))
+        parts.append(f"{label} {value}".strip())
         previous_prefix = prefix
     return " ".join(parts)
 

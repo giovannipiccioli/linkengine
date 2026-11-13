@@ -12,7 +12,7 @@ import re
 from typing import Callable, List, Optional
 
 from .model import Entity, Span, MONTHS
-from .normalize import norm_latin_suffix, norm_year, valid_date, valid_year
+from .normalize import norm_year, valid_date, valid_year
 from .special_cases import (
     is_agenzia_composite_number_prefix,
     protocol_is_provvedimento_number,

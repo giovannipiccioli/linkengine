@@ -218,7 +218,43 @@ def valid_date(day: str, month: str, year: str):
     return y if y and 1 <= d <= 31 and 1 <= m <= 12 else None
 
 
-def norm_latin_suffix(value: str) -> str:
-    """``"2 ter"`` / ``"2-ter"`` -> ``"2-ter"``; ``"2"`` -> ``"2"``."""
-    v = value.strip().lower().replace("\u00ad", "-").replace(" ", "-")
-    return re.sub(r"-+", "-", v)
+# \u2500\u2500 Partition numbers \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+# Italian legislation inserts a provision between two others with a Latin ordinal, written
+# with a hyphen, a space or nothing: "2-bis", "2 ter", "2409-noviesdecies", "69-vicies semel",
+# and composed ("796-quinquies bis"). Recent drafting adds a dotted level after the ordinal
+# ("380-bis.1", "19-bis.1"). The same applies to commi ("comma 3-bis") and lettere ("a-bis").
+#
+# Identifiers spell every partition number GLUED and lowercase (``art380bis.1-comma3bis-
+# letabis``). This is the URN-NIR form and the only one Normattiva resolves: ``~art6bis``
+# opens art. 6-bis, while ``~art6-bis`` silently opens art. 6. The hyphen stays free for its
+# one job, separating partitions. The VELEGART corpus (``utils/nir.py``) imports
+# ``partition_number`` from here, so citations and stored units share a single spelling.
+#
+# An ordinal word is an optional multiplier prefix plus a base, so the observed spellings
+# compose: quater+decies, duode+vicies, unde+tricies, vicies+semel. The trailing guard stops
+# "ter" from matching inside "terzo".
+_ORDINAL_PREFIX = (r"(?:un|uni|duo|duode|unde|ter|quater|quin|quinquies|se|sex|sexies|"
+                   r"sept|septen|septies|octo|octies|novo|novies)")
+_ORDINAL_BASE = (r"(?:semel|bis|ter|quater|quinquies|sexies|septies|octies|novies|nonies|"
+                 r"decies|vicies|vices|tricies)")
+_ORDINAL_WORD = _ORDINAL_PREFIX + r"?" + _ORDINAL_BASE
+SUFFIX_SEP = r"[-\s\u00ad]?"
+LATIN_ORDINAL = (r"(?:" + _ORDINAL_WORD + r"(?:" + SUFFIX_SEP + _ORDINAL_WORD + r")*"
+                 r"(?![a-z]))")
+# A partition number as written in text: digits, an optional ordinal, and the dotted level
+# that only ever follows an ordinal. A plain "606.1" is not one: in judgments it is shorthand
+# for "art. 606, comma 1" (measured on the Cassazione corpus), so it stays two partitions.
+PARTITION_NUMBER = r"\d+(?:" + SUFFIX_SEP + LATIN_ORDINAL + r"(?:\.\d+)?)?"
+
+
+def partition_number(value: str) -> str:
+    """Canonical spelling of a partition number: lowercase, separators dropped, ``/`` read as
+    the dotted level. Idempotent, and total: it never rejects a value.
+
+    >>> [partition_number(v) for v in ("2 ter", "2-TER", "380-bis.1", "69-vicies semel")]
+    ['2ter', '2ter', '380bis.1', '69viciessemel']
+    >>> [partition_number(v) for v in ("314/2", "a-bis)", "1.", "II")]
+    ['314.2', 'abis', '1', 'ii']
+    """
+    v = re.sub(r"[^0-9a-z.]+", "", str(value).lower().replace("/", "."))
+    return re.sub(r"\.{2,}", ".", v).strip(".")

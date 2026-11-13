@@ -12,7 +12,7 @@ import re
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from .model import Entity, PARTITION_RANK, Reference, Span
-from .normalize import partition_to_locator
+from .normalize import PARTITION_NUMBER, partition_number, partition_to_locator
 from .normativa import ATTACHED_ATTR, CURRENT_ATTR, INTERNAL_ATTR
 
 
@@ -27,16 +27,11 @@ _AMENDMENT = re.compile(
 _HAS_DISPOSED = re.compile(r"\bha\s+disposto\b", re.I)
 _CLAUSE_CUT = re.compile(r";|\.\s+(?=[A-ZÀ-Ü])|\n\s*\n")
 _ARTICLE_HEADING = re.compile(
-    r"^\s*(?:art(?:icolo)?\.\s*)?(\d+(?:[-\s]?(?:bis|ter|quater|quinquies|"
-    r"sexies|septies|octies|novies|decies))?)\s*(?:\([^)]{0,100}\))?\s*"
+    r"^\s*(?:art(?:icolo)?\.\s*)?(" + PARTITION_NUMBER + r")\s*(?:\([^)]{0,100}\))?\s*"
     r"(?:[.:–—-]\s*)?",
     re.I,
 )
-_COMMA_HEADING = re.compile(
-    r"^\s*(\d+(?:[-\s]?(?:bis|ter|quater|quinquies|sexies|septies|octies|"
-    r"novies|decies))?)\.\s+",
-    re.I,
-)
+_COMMA_HEADING = re.compile(r"^\s*(" + PARTITION_NUMBER + r")\.\s+", re.I)
 
 _IDENTITY_FIELDS = (
     "ref-type", "ref-scope", "alias", "doc-type", "authority", "ministry", "region",
@@ -281,20 +276,20 @@ class NovellaScopes:
             opening = self.text[quote.inner_start:min(quote.inner_end, quote.inner_start + 180)]
             heading = _ARTICLE_HEADING.match(opening)
             explicit_article = bool(re.match(r"^\s*art", opening, re.I))
-            suffixed_article = bool(heading and "-" in heading.group(1))
+            suffixed_article = bool(heading and not heading.group(1).isdigit())
             rubric_article = bool(heading and "(" in opening[:heading.end() + 2])
             if heading and (explicit_article or suffixed_article or rubric_article):
                 article = Span(quote.inner_start, quote.inner_start + heading.end(),
-                               Entity.ARTICLE, heading.group(1))
+                               Entity.ARTICLE, partition_number(heading.group(1)))
                 tail = opening[heading.end():]
                 comma_heading = _COMMA_HEADING.match(tail.lstrip(" .:–—-"))
                 comma = (Span(quote.inner_start, quote.inner_start, Entity.COMMA,
-                              comma_heading.group(1)) if comma_heading else None)
+                              partition_number(comma_heading.group(1))) if comma_heading else None)
             else:
                 comma_heading = _COMMA_HEADING.match(opening)
                 if comma_heading and article is not None:
                     comma = Span(quote.inner_start, quote.inner_start, Entity.COMMA,
-                                 comma_heading.group(1))
+                                 partition_number(comma_heading.group(1)))
 
         pieces = []
         if article is not None:

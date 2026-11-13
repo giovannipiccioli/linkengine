@@ -35,7 +35,7 @@ import re
 from typing import List
 
 from .model import Entity, Span
-from .normalize import norm_latin_suffix
+from .normalize import LATIN_ORDINAL, PARTITION_NUMBER, SUFFIX_SEP, partition_number
 
 I = re.IGNORECASE
 
@@ -47,18 +47,17 @@ RANK = {
     Entity.NUMERO: 5, Entity.PUNTO: 5, Entity.PERIODO: 6,
 }
 
-_LATIN = r"(?:bis|ter|quater|quinquies|sexies|septies|octies|nonies|decies)"
-_SUFFIX_SEP = r"[-\s\u00ad]?"
-_NUMV = r"\d+(?:" + _SUFFIX_SEP + _LATIN + r")?"
+# value grammar and spelling: see the "Partition numbers" section of normalize.py
+_NUMV = PARTITION_NUMBER
 # a numeric value OR a range (`5-7`, `5 a 8`): the range alternative comes first so `5-7`
 # is read as a range, while `2-bis` (suffix, not a second number) still falls to _NUMV.
 _NUMV_OR_RANGE = r"(?:\d+\s*(?:[-–]|a)\s*\d+|" + _NUMV + r")"
 # a letter value is a *standalone* letter: the `(?![a-z])` guard stops the list from eating
 # the first letter of a following word ("lett. b), del d.P.R." must not yield letter "d").
-_LETV = r"[a-z](?![a-z'’])(?:" + _SUFFIX_SEP + _LATIN + r")?\)?"
+_LETV = r"[a-z](?![a-z'’])(?:" + SUFFIX_SEP + LATIN_ORDINAL + r")?\)?"
 _SEP = r"(?:\s*[,;]\s*|\s+(?:e|ed)\s+)"
 _NUMV_RE = re.compile(_NUMV, I)
-_LETV_RE = re.compile(r"[a-z](?![a-z'’])(?:" + _SUFFIX_SEP + _LATIN + r")?\)?", I)
+_LETV_RE = re.compile(_LETV, I)
 _SEP_RE = re.compile(_SEP, I)
 _RANGE_RE = re.compile(r"(\d+)\s*([-–]|a)\s*(\d+)", I)   # "5-7" / "5 a 8" -> expand inclusive
 _MAX_RANGE = 30          # guard: wider ranges keep only the two endpoints
@@ -84,15 +83,15 @@ _CE_TOKEN_RE = re.compile(r"\s+CE\b")   # case-sensitive on purpose
 
 # (entity, head-with-value-list regex, value-token regex, value normalizer)
 _LIST_PATTERNS = [
-    (Entity.CONSIDERANDO, r"\bconsiderand[oi]\s*" + _NUMLIST, _NUMV_RE, norm_latin_suffix),
-    (Entity.ARTICLE, r"\bart(?:icol[oi]|t)?[\.,]?\s*" + _NUMLIST_CE, _NUMV_RE, norm_latin_suffix),
-    (Entity.COMMA, r"\b(?:commi|comma|co\.|c\.(?=\s*\d))\s*" + _NUMLIST, _NUMV_RE, norm_latin_suffix),
-    (Entity.PARAGRAPH, r"\b(?:paragraf[oi]|par\.|§)\s*" + _NUMLIST, _NUMV_RE, norm_latin_suffix),
-    (Entity.PUNTO, r"\bpunt[oi]\s*" + _NUMLIST, _NUMV_RE, norm_latin_suffix),
+    (Entity.CONSIDERANDO, r"\bconsiderand[oi]\s*" + _NUMLIST, _NUMV_RE, partition_number),
+    (Entity.ARTICLE, r"\bart(?:icol[oi]|t)?[\.,]?\s*" + _NUMLIST_CE, _NUMV_RE, partition_number),
+    (Entity.COMMA, r"\b(?:commi|comma|co\.|c\.(?=\s*\d))\s*" + _NUMLIST, _NUMV_RE, partition_number),
+    (Entity.PARAGRAPH, r"\b(?:paragraf[oi]|par\.|§)\s*" + _NUMLIST, _NUMV_RE, partition_number),
+    (Entity.PUNTO, r"\bpunt[oi]\s*" + _NUMLIST, _NUMV_RE, partition_number),
     # a real separator (era/ere, ".", or whitespace) must follow "lett"/"let" so the common
     # words "letto"/"letta"/"lette"/"letti" are not read as "lett" + a letter value.
     (Entity.LETTER, r"\blett?(?:er[ae]\s*|\.\s*|\s+)(" + _LETV + r"(?:" + _SEP + _LETV + r")*)",
-     _LETV_RE, lambda v: norm_latin_suffix(v.rstrip(")"))),
+     _LETV_RE, partition_number),
 ]
 _LIST_COMPILED = [(e, re.compile(p, I), vr, fn) for e, p, vr, fn in _LIST_PATTERNS]
 
@@ -246,7 +245,7 @@ def recognize_elements(text: str) -> List[Span]:
                 break
         if not has_deeper:
             continue
-        spans.append(Span(start, end, Entity.ARTICLE, norm_latin_suffix(m.group(1)), text[start:end]))
+        spans.append(Span(start, end, Entity.ARTICLE, partition_number(m.group(1)), text[start:end]))
     for m in _ORD_COMMA.finditer(text):
         spans.append(Span(m.start(), m.end(), Entity.COMMA, ORDINALS[m.group(1).lower()], m.group(0)))
     for m in _NUM_ORD_COMMA.finditer(text):
@@ -268,7 +267,7 @@ def recognize_elements(text: str) -> List[Span]:
                    and _ATTACHMENT_ACT_AFTER.match(text[m.end():m.end() + 16])
                    and not _ANNEX_CONNECTOR_AFTER.match(text[m.end():m.end() + 16]))
         spans.append(Span(m.start(), m.end(), Entity.ALLEGATO,
-                          m.group(1) if compact else norm_latin_suffix(m.group(1)), m.group(0),
+                          m.group(1) if compact else partition_number(m.group(1)), m.group(0),
                           {"attachment_locator": "compact"} if compact else {}))
 
     base = _nonoverlap(spans)
@@ -279,7 +278,7 @@ def recognize_elements(text: str) -> List[Span]:
     for m in _NUMERO.finditer(text):
         if any(0 <= m.start() - e <= 8 and re.fullmatch(r"[\s,;()\.]*", text[e:m.start()])
                for e in ends):
-            _emit_list(text, m, Entity.NUMERO, _NUMV_RE, norm_latin_suffix, spans)
+            _emit_list(text, m, Entity.NUMERO, _NUMV_RE, partition_number, spans)
     return _nonoverlap(spans)
 
 

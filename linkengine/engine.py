@@ -31,11 +31,11 @@ from .recognizers import RECOGNIZERS
 
 import re as _re2
 from .aliases import ALIAS_NIR
-from .normalize import norm_latin_suffix as _nls
+from .normalize import LATIN_ORDINAL, SUFFIX_SEP, partition_number as _nls
 from .urn import build_urn, compat_url
 
 _BARE_CODE_NUM = _re2.compile(
-    r"(?<![\w./])(\d{1,4}(?:[-\s\u00ad]?(?:bis|ter|quater|quinquies|sexies))?)"
+    r"(?<![\w./])(\d{1,4}(?:" + SUFFIX_SEP + LATIN_ORDINAL + r"(?:\.\d+)?)?)"
     r"\s*,?\s*(?:del(?:l[ao'’])?(?:la|le|lo|li|gli|i)?\s+)?$", _re2.I)
 _CODE_PART = {Entity.CONSIDERANDO, Entity.ARTICLE, Entity.COMMA, Entity.LETTER,
               Entity.NUMERO, Entity.PARAGRAPH, Entity.PERIODO, Entity.PUNTO}

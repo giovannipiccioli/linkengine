@@ -23,6 +23,7 @@ from .aliases import (ALIAS_DISPLAY, ALIAS_NIR, SELF_VALID_ALIASES,
 from .catalog import (AGENCY_DOCTYPES, CASELAW_AUTH, CONDITIONAL_AGENCY_DOCTYPES,
                       COURT_EXTRA_DOCTYPES)
 from .model import Entity, Reference, Span
+from .normalize import PARTITION_NUMBER
 from .partitions import RANK as PARTITION_DEPTH, segment, _resolve_backward
 
 # Partition→act pairing connectors. A partition *run* (a contiguous block of partition spans
@@ -970,8 +971,7 @@ def _line_heading(text: str, group: List[Span]) -> bool:
     line_end = text.find("\n", article.end)
     line = text[line_start:line_end if line_end >= 0 else len(text)].strip()
     return not text[line_start:article.start].strip() and bool(re.fullmatch(
-        r"art(?:icolo)?t?\.?\s*\d+(?:[-\s]?(?:bis|ter|quater|quinquies|sexies|"
-        r"septies|octies|novies|decies))?\.?",
+        r"art(?:icolo)?t?\.?\s*" + PARTITION_NUMBER + r"\.?",
         line,
         re.I,
     ))
@@ -987,8 +987,7 @@ def _quoted_article_heading(text: str, group: List[Span]) -> bool:
         return False
     tail = text[article.end:article.end + 150]
     return bool(re.match(
-        r"\s*(?:\([^)]{0,100}\))?\s*(?:[.:–—-]\s*)?(?:-\s*)?\d+"
-        r"(?:[-\s]?(?:bis|ter|quater|quinquies|sexies))?\.\s+",
+        r"\s*(?:\([^)]{0,100}\))?\s*(?:[.:–—-]\s*)?(?:-\s*)?" + PARTITION_NUMBER + r"\.\s+",
         tail,
         re.I,
     ))
