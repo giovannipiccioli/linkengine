@@ -212,7 +212,7 @@ DOCUMENT_GOLDS = {
         r"^ECLI:IT:COST:", "CORTE COSTITUZIONALE", "every ruling of the Court cited",
         "CORTE_COST"),
     "gold_merito_docs.jsonl": (
-        r"^ECLI:IT:(TRIB|CAPP|ASS|GDP)", "MERITO CIVILE",
+        r"^ECLI:IT:(TRIB|TMIN|CAPP|ASS|GDP)", "MERITO CIVILE",
         "every Tribunale or Corte d'appello ruling cited", ""),
     "gold_cassazione_docs.jsonl": (
         r"^ECLI:IT:CASS:", "CASSAZIONE", "every ruling of the Court cited", "CORTE_CASS"),

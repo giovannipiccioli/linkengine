@@ -372,17 +372,19 @@ def _court_ecli(row, year, number):
             return None
         if _g(row, 'authority') in catalog.SECOND_GRADE_TAX_AUTHORITIES and val == "TAA":
             return None
+        # "di L'Aquila" (A345) and "dell'Aquila" identify the same civil court.
+        if val == "A345" and prefix in {"TRIB", "CAPP", "TMIN"}:
+            val = "AQ"
+        if geo_kind == "city":
+            val = AUTONOMOUS_TAX_CITY_TO_GEO.get(val, val)
         if _g(row, 'authority') in catalog.FIRST_GRADE_TAX_AUTHORITIES:
             val = _TAX_CITY_CODE_FIXUP.get(val, val)
-            # Trento/Bolzano first-grade tax courts: map the cadastral city code to the
-            # BZ/TN province component (the second-grade path does this at line ~509).
-            val = AUTONOMOUS_TAX_CITY_TO_GEO.get(val, val)
         if _g(row, 'authority') in _TWO_LETTER_GEO and len(val) > 2:
             return None
         if _g(row, 'authority') == "TRIB_AMM_REG":
             val = catalog.TAR_SEAT.get(val)          # the seat, not the region
         elif _g(row, 'authority') == "TRIB_REG_GIUST_AMM":
-            val = catalog.TRGA_SEAT.get(AUTONOMOUS_TAX_CITY_TO_GEO.get(val, val))
+            val = catalog.TRGA_SEAT.get(val)
         if not val:
             return None
         geo = val
@@ -611,6 +613,9 @@ def _ecli_to_text(body):
                     place = f" {region_name(geo_code)}"
                 elif geo_kind == "city":
                     place = f" di {city_name(geo_code)}"
+                    if court_geo in catalog.DETACHED_COURT_PARENT:
+                        parent = catalog.DETACHED_COURT_PARENT[court_geo]
+                        place = f" di {parent}, sezione distaccata{place}"
             return f"{name}{suffix}{place} n. {number}/{year}"
     return f"{court_geo} n. {number}/{year}"
 

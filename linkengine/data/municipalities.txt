@@ -528,6 +528,7 @@ A634 barbianello
 A635 barbiano
 A637 barbona
 A638 barcellona pozzo gotto
+A638 barcellona pozzo di gotto
 A639 barchi
 A640 barcis
 A643 bard
@@ -576,6 +577,7 @@ A699 basiglio
 A700 basiliano
 A702 bassano bresciano
 A703 bassano grappa
+A703 bassano del grappa
 A706 bassano teverina
 A704 bassano romano
 A707 bassiano
@@ -6488,6 +6490,7 @@ H974 sanluri
 I048 sannazzaro de burgondi
 I053 sannicandro bari
 I059 sannicola
+I138 san remo
 I138 sanremo
 I155 sansepolcro
 I168 santa brigida
@@ -6583,6 +6586,7 @@ I280 sant'angelo scala
 I279 sant'angelo esca
 I273 sant'angelo alife
 I281 sant'angelo lombardi
+I281 sant'angelo dei lombardi
 I282 sant'angelo pesco
 I283 sant'angelo brolo
 I275 sant'angelo piove sacco
@@ -7656,6 +7660,7 @@ L624 valli pasubio
 L625 vallinfreda
 L626 vallio terme
 L628 vallo lucania
+L628 vallo della lucania
 L627 vallo nera
 L629 vallo torinese
 L631 valloriate

@@ -20,6 +20,8 @@ COURTS = {
     "CONS_STATO":              {"ecli": "CDS",       "geo": None,     "name": "Consiglio di Stato"},
     "CORTE_CONTI":             {"ecli": "CONT",      "geo": None,     "name": "Corte dei Conti"},
     "TRIB":                    {"ecli": "TRIB",      "geo": "city",   "name": "Tribunale"},
+    "TRIB_MINORENNI":           {"ecli": "TMIN",      "geo": "city",   "name": "Tribunale per i minorenni"},
+    "TRIB_NAPOLI_NORD":         {"ecli": "TRIBNAN",   "geo": None,     "name": "Tribunale di Napoli Nord"},
     "COMM_TRIBUT_REG":         {"ecli": "CTR",       "geo": "region", "name": "Commissione Tributaria Regionale"},
     "CORTE_GIUST_TRIBUT_2":    {"ecli": "CGT2",      "geo": "region", "name": "Corte di Giustizia Tributaria di secondo grado"},
     "COMM_TRIBUT_PROV":        {"ecli": "CTP",       "geo": "city",   "name": "Commissione Tributaria Provinciale"},
@@ -40,6 +42,12 @@ COURTS = {
     "CGARS":                   {"ecli": "CGARS",     "geo": None,
                                 "name": "Consiglio di Giustizia Amministrativa per la Regione Siciliana"},
 }
+# The branch seat identifies the decision. Keep its parent for the full judicial name.
+DETACHED_COURT_PARENT = {
+    "CAPPSS": "Cagliari", "CAPPTA": "Lecce", "CAPPBZ": "Trento",
+    "TRIBG912": "Livorno", "TRIBE606": "Barcellona Pozzo di Gotto", "TRIBE329": "Napoli",
+}
+
 # every court is a case-law authority; "THIS_COURT" (a self-reference resolved to the document's
 # own authority) is one too. This is THE set — assembler and the eval dispatch derive from it.
 CASELAW_AUTH = set(COURTS) | {"THIS_COURT"}

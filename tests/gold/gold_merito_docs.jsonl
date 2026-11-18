@@ -9,15 +9,15 @@
 // The parties were pseudonymized at source; names, birth data, addresses and house numbers
 // that survived that are replaced here with role placeholders.
 // Scored by tests.goldeval.score_document_gold.
-{"doc": "merito_capp_ancona_2024_1144.txt", "refs": [{"urn": "ECLI:IT:TRIBAP:2023:301", "text": "sentenza n. 301/2023 del 19 maggio 2023 resa dal Tribunale d"}]}
-{"doc": "merito_capp_firenze_2024_697.txt", "refs": [{"urn": "ECLI:IT:TRIBLU:2020:423", "text": "sentenza n. 423/2020 emessa dal Tribunale di Lucca"}]}
-{"doc": "merito_capp_laquila_2022_660.txt", "refs": [{"urn": "ECLI:IT:TRIBAQ:2019:450", "text": "sentenza n. 450/19 ... del Tribunale di L'Aquila (anno a due cifre)"}]}
+{"doc": "merito_capp_ancona_2024_1144.txt", "refs": [{"urn": "ECLI:IT:CAPPAN:2024:1144", "text": "CORTE DI APPELLO DI ANCONA - 1144/2024"}, {"urn": "ECLI:IT:TRIBAP:2023:301", "text": "sentenza n. 301/2023 del 19 maggio 2023 resa dal Tribunale d"}]}
+{"doc": "merito_capp_firenze_2024_697.txt", "refs": [{"urn": "ECLI:IT:CAPPFI:2024:697", "text": "CORTE DI APPELLO DI FIRENZE - 697/2024"}, {"urn": "ECLI:IT:TRIBLU:2020:423", "text": "sentenza n. 423/2020 emessa dal Tribunale di Lucca"}]}
+{"doc": "merito_capp_laquila_2022_660.txt", "refs": [{"urn": "ECLI:IT:CAPPAQ:2022:660", "text": "Corte D'Appello di L'Aquila - 660/2022"}, {"urn": "ECLI:IT:TRIBAQ:2019:450", "text": "sentenza n. 450/19 ... del Tribunale di L'Aquila (anno a due cifre)"}]}
 {"doc": "merito_capp_milano_2019_1621.txt", "refs": [{"urn": "ECLI:IT:CAPPMI:2019:1621", "text": "Corte D'Appello di Milano - 1621/2019 Data pubblicazione: 30"}, {"urn": "ECLI:IT:TRIBMI:2017:2020", "text": "sentenza del Tribunale di Milano n. 2020/2017"}]}
-{"doc": "merito_capp_milano_2024_729.txt", "refs": [{"urn": "ECLI:IT:TRIBMI:2023:247", "text": "sentenza n. 247/2023 pubblicata il 16.1.2023, il Tribunale d"}]}
-{"doc": "merito_capp_napoli_2024_3690.txt", "refs": [{"urn": "ECLI:IT:TRIBI234:2022:1153", "text": "sentenza n. 1153/2022 emessa dal Tribunale di Santa Maria Ca"}]}
+{"doc": "merito_capp_milano_2024_729.txt", "refs": [{"urn": "ECLI:IT:CAPPMI:2024:729", "text": "CORTE DI APPELLO DI MILANO - 729/2024"}, {"urn": "ECLI:IT:TRIBMI:2023:247", "text": "sentenza n. 247/2023 pubblicata il 16.1.2023, il Tribunale d"}]}
+{"doc": "merito_capp_napoli_2024_3690.txt", "refs": [{"urn": "ECLI:IT:CAPPNA:2024:3690", "text": "CORTE DI APPELLO DI NAPOLI - 3690/2024"}, {"urn": "ECLI:IT:TRIBI234:2022:1153", "text": "sentenza n. 1153/2022 emessa dal Tribunale di Santa Maria Ca"}, {"urn": "ECLI:IT:CAPPTO:2019:243", "text": "C. App. Torino 6.2.2019 n. 243"}]}
 {"doc": "merito_capp_reggiocalabria_2019_869.txt", "refs": [{"urn": "ECLI:IT:CAPPRC:2019:869", "text": "Corte D'Appello di Reggio Calabria - 869/2019 Data pubblicaz"}, {"urn": "ECLI:IT:TRIBG288:2008:200", "text": "sentenza n. 200/08 del Tribunale di Palmi emessa il 13 marzo"}]}
-{"doc": "merito_capp_trento_2024_12.txt", "refs": [{"urn": "ECLI:IT:TRIBL378:2022:391", "text": "sentenza 391/2022 del Tribunale di Trento"}]}
-{"doc": "merito_capp_venezia_2024_1744.txt", "refs": [{"urn": "ECLI:IT:TRIBVR:2024:126", "text": "sentenza n. 126 emessa il 3/5/24 dal Tribunale di Verona"}]}
+{"doc": "merito_capp_trento_2024_12.txt", "refs": [{"urn": "ECLI:IT:CAPPTN:2024:12", "text": "CORTE DI APPELLO DI TRENTO - 12/2024"}, {"urn": "ECLI:IT:TRIBTN:2022:391", "text": "sentenza 391/2022 del Tribunale di Trento"}]}
+{"doc": "merito_capp_venezia_2024_1744.txt", "refs": [{"urn": "ECLI:IT:CAPPVE:2024:1744", "text": "CORTE DI APPELLO DI VENEZIA - 1744/2024"}, {"urn": "ECLI:IT:TRIBVR:2024:126", "text": "sentenza n. 126 emessa il 3/5/24 dal Tribunale di Verona"}]}
 {"doc": "merito_trib_cosenza_2019_2162.txt", "refs": [{"urn": "ECLI:IT:TRIBCS:2019:2162", "text": "Tribunale Ordinario di Cosenza - 2162/2019 Data pubblicazion"}]}
 {"doc": "merito_trib_cuneo_2022_934.txt", "refs": [{"urn": "ECLI:IT:TRIBCN:2022:934", "text": "Tribunale Ordinario di Cuneo - 934/2022 Data pubblicazione: "}]}
 {"doc": "merito_trib_firenze_2022_3465.txt", "refs": [{"urn": "ECLI:IT:TRIBFI:2022:3465", "text": "Tribunale Ordinario di Firenze - 3465/2022 Data pubblicazion"}]}

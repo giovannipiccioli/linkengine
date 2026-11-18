@@ -763,7 +763,10 @@ _COURT_PATTERNS = [
     (r"cort[e'’]?\.?\s*giust(?:izia)?\.?\s*trib(?:utaria)?\.?", "CGT", "cgt"),
     (r"\bc\.?\s?g\.?\s?t\.?\b", "CGT", "cgt"),
     (r"corte\s+d['’]?\s?assise\s+d['’]?\s?appello", "CORTE_ASSISE_APPELLO", "city"),
-    (r"corte\s+d['’]?\s?appello", "CORTE_APPELLO", "city"),
+    (r"corte\s+(?:di\s+|d['’]?\s*)appello\b", "CORTE_APPELLO", "city"),
+    # Shortened appeal-court names need an explicit seat ("C. App. Roma").
+    (r"\b(?:corte\s+|c\.\s*)(?:di\s+|d['’]\s*)?(?:app\.|appello\b)",
+     "CORTE_APPELLO", "named_city"),
     (r"corte\s+d['’]?\s?assise", "CORTE_ASSISE", "city"),
     (r"corte\s+di\s+cassazione", "CORTE_CASS", None),
     # "Sezioni Unite" / "SS.UU." (the Cassazione's united sections): cited on their own as a
@@ -823,6 +826,8 @@ _COURT_PATTERNS = [
     (r"tribunale\s+regionale\s+di\s+giustizia\s+amministrativa|\bt\.?\s?r\.?\s?g\.?\s?a\.?\b",
      "TRIB_REG_GIUST_AMM", "tar"),
     (r"tribunale\s+di\s+sorveglianza", "TRIBUNALE_SORVEGLIANZA", "city"),
+    (r"tribunale\s+per\s+i\s+minor(?:enni|i)\b(?:\s*-\s*)?", "TRIB_MINORENNI", "city"),
+    (r"tribunale(?:\s+ordinario)?\s+(?:di\s+)?napoli\s+nord\b", "TRIB_NAPOLI_NORD", None),
     # "Tribunale Ordinario di Roma" is the court's own formal name, and the one its
     # judgments are published under.
     (r"tribunale(?!\s+amministrativo|\s+superiore)(?:\s+ordinario)?", "TRIB", "city"),
@@ -888,7 +893,7 @@ def _geo_after(text: str, pos: int, want: str):
     win = text[pos:pos + 55]
     lead = _GEO_LEAD.match(win)
     off = lead.end() if lead else 0
-    sub = win[off:].translate(_ACCENTS)
+    sub = win[off:].translate(_ACCENTS).replace("’", "'")
     if want in ("region", "either"):
         # tolerate a hyphen between region-name words ("Emilia-Romagna", "Friuli-Venezia Giulia");
         # hyphen->space is length-preserving so the match offset still maps back into `sub`.
@@ -902,6 +907,25 @@ def _geo_after(text: str, pos: int, want: str):
             if code:
                 return "city", code, pos + off + m.end()
     return None, None, pos
+
+
+_APPEAL_PETITION = re.compile(r"\bvoglia\s+(?:la\s+|l['’]\s*(?:ill|ecc)\.ma\s+)$", I)
+
+# BDP labels identify the issuing seat after these qualifiers. Read only a qualifier
+# immediately following the first city, so two independent citations stay independent.
+_DETACHED_SEAT = re.compile(r"\s*,?\s*(?:sezione|sez\.)\s+distaccata\s+di\s+", I)
+_FORMER_SEAT = re.compile(r"\s+ex\s+tribunale\s+di\s+", I)
+
+
+def _civil_seat_after(text, pos, authority):
+    kind, code, end = _geo_after(text, pos, "city")
+    if kind and authority in {"TRIB", "CORTE_APPELLO"}:
+        qualifier = _DETACHED_SEAT.match(text, end)
+        if not qualifier and authority == "TRIB":
+            qualifier = _FORMER_SEAT.match(text, end)
+        if qualifier:
+            kind, code, end = _geo_after(text, qualifier.end(), "city")
+    return kind, code, end
 
 
 # case-law section just after a court keyword ("Cass. sez. trib.", "C.T.R. … Sez. V"). For
@@ -1354,6 +1378,11 @@ def recognize_authorities(text: str) -> List[Span]:
                     and _PROCEDURAL_CASSAZIONE_BEFORE.search(
                         text[max(0, m.start() - 24):m.start()]):
                 continue
+            # "Voglia l’Ill.ma Corte ... riformare la sentenza del Tribunale":
+            # the appeal court is being petitioned, not cited as the issuing court.
+            if value == "CORTE_APPELLO" and _APPEAL_PETITION.search(
+                    text[max(0, m.start() - 32):m.start()]):
+                continue
             end, attrs = m.end(), {}
             sec = _section_after(text, m.end())
             if sec:
@@ -1398,6 +1427,12 @@ def recognize_authorities(text: str) -> List[Span]:
             elif want == "cgt":
                 value, geo_attrs, end = _cgt_resolve(text, m.end())
                 attrs.update(geo_attrs)
+            elif value in {"TRIB", "CORTE_APPELLO", "TRIB_MINORENNI"}:
+                kind, code, end = _civil_seat_after(text, m.end(), value)
+                if kind:
+                    attrs["city"] = code
+                elif want == "named_city":
+                    continue
             elif want:
                 geo_want = "either" if want == "cgt_region" else want
                 kind, code, new_end = _geo_after(text, m.end(), geo_want)

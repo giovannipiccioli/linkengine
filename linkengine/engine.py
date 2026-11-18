@@ -47,6 +47,24 @@ _CODE_SUBPART = {Entity.COMMA, Entity.LETTER, Entity.NUMERO, Entity.PARAGRAPH,
 PRASSI_DOCTYPES = set(AGENCY_DOCTYPES)
 
 
+def civil_court_ecli(name, year, number):
+    """Resolve a full tribunal or appeal-court name and decision year/number to an ECLI.
+
+    For example, civil_court_ecli("Tribunale di Napoli Nord", 2025, 2) returns
+    "ECLI:IT:TRIBNAN:2025:2". An incomplete office or decision returns None.
+    """
+    if not name or not (str(year).strip().isdecimal() and str(number).strip().isdecimal()):
+        return None
+    # In uppercase office labels the final apostrophe can stand for an accent (FORLI').
+    name = name.strip().rstrip("'’")
+    for span in RZ.recognize_authorities(name):
+        if span.start == 0 and span.end == len(name) and span.value in {
+                "TRIB", "TRIB_NAPOLI_NORD", "TRIB_MINORENNI", "CORTE_APPELLO"}:
+            return build_urn({"ref-type": "caselaw", "authority": span.value, **span.attrs,
+                              "year": year, "number": number}) or None
+    return None
+
+
 def _partition_token(span: Span) -> str:
     """Serialize one recognized partition into the feature-row representation."""
     attachment_kind = span.attrs.get("attachment_locator") if span.entity == Entity.ALLEGATO else ""

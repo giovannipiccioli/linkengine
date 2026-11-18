@@ -262,11 +262,11 @@ def test_trentino_alto_adige_second_grade_tax_court_needs_province():
     assert row["urn"] == ""
 
 
-def test_autonomous_tax_court_geo_does_not_change_other_courts():
+def test_bolzano_court_uses_province_in_ecli():
     row = _one("Tribunale di Bolzano n. 1234/2020")
     assert row["authority"] == "TRIB"
     assert row["city"] == "A952"
-    assert row["urn"] == "ECLI:IT:TRIBA952:2020:1234"
+    assert row["urn"] == "ECLI:IT:TRIBBZ:2020:1234"
 
 
 def test_tax_court_rga_number_is_docket_not_citation():

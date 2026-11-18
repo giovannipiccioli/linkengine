@@ -128,7 +128,7 @@ REGION_CODE_TO_URN = {
 
 # Unlike every other second-grade tax court, Trentino-Alto Adige has one court for each
 # autonomous province. The generic city resolver yields cadastral codes for these cities;
-# only a second-grade tax-court reference translates them to its ECLI province component.
+# court ECLIs use their province components. Municipal identifiers keep the cadastral codes.
 AUTONOMOUS_TAX_CITY_TO_GEO = {"L378": "TN", "A952": "BZ"}
 AUTONOMOUS_TAX_GEO_NAMES = {"TN": "Trento", "BZ": "Bolzano"}
 
@@ -149,8 +149,7 @@ def city_code(name: str):
     if upper in PROVINCE_NAME_TO_CODE.values() or upper in MUNICIPALITY_NAME_TO_CODE.values():
         return upper
     n = strip_accents(name)
-    # Trento and Bolzano use their cadastral city codes outside the tax-court-specific ECLI
-    # path. Their TN/BZ province components are applied later only for tax-court references.
+    # Municipal identifiers use the cadastral code. Court ECLIs convert it to TN/BZ.
     if n in {"trento", "bolzano"}:
         return MUNICIPALITY_NAME_TO_CODE.get(n)
     return PROVINCE_NAME_TO_CODE.get(n) or MUNICIPALITY_NAME_TO_CODE.get(n)
