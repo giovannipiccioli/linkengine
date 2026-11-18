@@ -25,6 +25,11 @@ It is **pure Python, zero runtime dependencies** (standard library only), and se
 all reference data — courts, document types, regions, the ~8 000 Italian comuni, legislative
 aliases — is baked in, so no network or external service is needed.
 
+The [Excel court authority index](linkengine/data/court_authorities.xlsx) lists every
+catalog key, its identifier format and an example produced by the library. Filter the
+detail sheets by office, territory, section or decision type. Update the workbook when
+the court catalog or its identifier rules change.
+
 ---
 
 ## Features

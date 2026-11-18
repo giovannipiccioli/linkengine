@@ -33,7 +33,7 @@ Repository = "https://github.com/your-org/linkengine"
 packages = ["linkengine"]
 
 [tool.setuptools.package-data]
-linkengine = ["data/*.txt"]
+linkengine = ["data/*.txt", "data/court_authorities.xlsx"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

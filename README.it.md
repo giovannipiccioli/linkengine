@@ -26,6 +26,11 @@ for ref in engine.extract("Visto l'art. 2697 c.c. e la Cass. n. 100/2020, si app
 dati di riferimento — autorità giudiziarie, tipi di atto, regioni, gli ~8 000 comuni italiani, gli
 alias normativi — sono incorporati, quindi non serve alcuna rete né alcun servizio esterno.
 
+Il [repertorio Excel delle autorità giudiziarie](linkengine/data/court_authorities.xlsx)
+riporta per ogni chiave del catalogo il formato dell’identificativo e un esempio prodotto
+dalla libreria. I fogli di dettaglio sono filtrabili per ufficio, territorio, sezione o
+tipo di provvedimento. Aggiornare il repertorio quando cambiano il catalogo o le regole di codifica.
+
 ---
 
 ## Funzionalità
