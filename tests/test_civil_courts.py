@@ -158,3 +158,277 @@ def test_named_and_detached_courts_render_the_judicial_name():
     assert urn_to_text("ECLI:IT:TRIBNAN:2025:2") == "Tribunale di Napoli Nord n. 2/2025"
     assert urn_to_text("ECLI:IT:CAPPSS:2025:2") == (
         "Corte d'Appello di Cagliari, sezione distaccata di Sassari n. 2/2025")
+
+
+# ── Registers: each register of a court numbers on its own ───────────────────────────────
+# A tribunale or corte d'appello keeps several registers (contenzioso, lavoro, volontaria
+# giurisdizione, ...) and each numbers its sentenze from 1 every year, so one ECLI could name
+# two decisions. The register is a suffix on the number; the contenzioso register is the
+# default and adds nothing (see catalog.CIVIL_REGISTERS).
+from linkengine import catalog  # noqa: E402
+
+BDP_RUOLI = {   # every ruolo of the BDP drop-down (read 2026-11-24) -> expected suffix; None = unresolved
+    "GENERALE DEGLI AFFARI CIVILI CONTENZIOSI": "",
+    "CONTROVERSIE IN MATERIA DI LAVORO, PREV., ASSIST. OBBLIG.": "LAV",
+    "GENERALE DEGLI AFFARI DI VOLONTARIA GIURISDIZIONE": "VG",
+    "PROCEDIMENTI SPECIALI SOMMARI": "PS",
+    "CONTROVERSIE AGRARIE": "AG",
+    "GENERALE DELLE ESECUZIONI CIVILI": "ESE",
+    "GENERALE DELLE ESPROPRIAZIONI IMMOBILIARI": "ESP",
+    "GENERALE DEGLI AFFARI AMMINISTRATIVI, STRAGIUDIZIALI E NON CONTENZIOSI": "NC",
+    "MINORENNI": "",
+    # returned no decision when queried: whether it numbers with the contenzioso register
+    # is unknown, so it must not silently take its identifiers
+    "GENERALE DEGLI AFFARI CIVILI CONTENZIOSI (CARTABIA)": None,
+}
+
+
+@pytest.mark.parametrize("ruolo, suffix", BDP_RUOLI.items(), ids=[r[:28] for r in BDP_RUOLI])
+@pytest.mark.parametrize("court, code", (("Tribunale di Milano", "TRIBMI"), ("Corte di Appello di Roma", "CAPPRM"),
+                                         ("TRIBUNALE DI NAPOLI NORD", "TRIBNAN"), ("CORTE DI APPELLO DI L'AQUILA", "CAPPAQ")))
+def test_bdp_ruolo_gives_the_register_suffix(ruolo, suffix, court, code):
+    expected = None if suffix is None else f"ECLI:IT:{code}:2025:123{suffix}"
+    assert civil_court_ecli(court, 2025, 123, ruolo) == expected
+
+
+@pytest.mark.parametrize("register", ("", None, "AC"))
+def test_contenzioso_is_the_default_and_adds_nothing(register):
+    assert civil_court_ecli("Tribunale di Milano", 2025, 123, register) == "ECLI:IT:TRIBMI:2025:123"
+
+
+@pytest.mark.parametrize("code", sorted(catalog.CIVIL_REGISTERS))
+def test_register_codes_are_accepted_as_they_are(code):
+    assert civil_court_ecli("Tribunale di Milano", 2025, 123, code) == f"ECLI:IT:TRIBMI:2025:123{code}"
+
+
+@pytest.mark.parametrize("register", ("LAVORO", "lav", "CIV", "SEZIONE LAVORO", "123", "GENERALE", "Lavoro e previdenza"))
+def test_unknown_register_resolves_to_nothing_not_to_a_neighbour(register):
+    assert civil_court_ecli("Tribunale di Milano", 2025, 123, register) is None
+
+
+def test_every_bdp_register_code_has_a_name_and_every_ruolo_a_known_code():
+    assert {code for code in catalog.BDP_RUOLO_REGISTER.values() if code} <= set(catalog.CIVIL_REGISTERS)
+    assert set(catalog.CIVIL_REGISTERS) <= {code for code in catalog.BDP_RUOLO_REGISTER.values()}
+
+
+@pytest.mark.parametrize("office", OFFICES, ids=[row["ufficio"] for row in OFFICES])
+def test_every_bdp_office_takes_the_labour_suffix(office):
+    name = office["ufficio"] + (" DI FIRENZE" if office["ufficio"] == "TRIBUNALE PER I MINORENNI" else "")
+    assert civil_court_ecli(name, 2025, 123, "LAV") == f"ECLI:IT:{office['court_code']}:2025:123LAV"
+
+
+def test_the_register_keeps_a_court_number_from_clashing_with_itself():
+    ecli = {r: civil_court_ecli("Tribunale di Milano", 2024, 1234, r) for r in
+            ("", "LAV", "VG", "PS", "AG")}
+    assert len(set(ecli.values())) == len(ecli)
+
+
+# ── Citations of a labour decision, as they are usually written ──────────────────────────
+LABOUR_CITATIONS = (
+    # tribunale: full name
+    "Tribunale di Milano, sez. lav., 10 marzo 2020, n. 1234",
+    "Tribunale di Milano, sezione lavoro, sentenza n. 1234/2020",
+    "Tribunale di Milano, Sezione Lavoro, sent. n. 1234/2020",
+    "Tribunale di Milano - Sezione Lavoro - sentenza n. 1234 del 2020",
+    "Tribunale di Milano, sez. lavoro, sentenza del 10 marzo 2020, n. 1234",
+    "Tribunale ordinario di Milano, sezione lavoro, sent. n. 1234/2020",
+    "Tribunale di Milano, sezione lavoro e previdenza, sent. n. 1234/2020",
+    "Tribunale di Milano, sezione controversie di lavoro, sentenza n. 1234/2020",
+    "Tribunale di Milano, in funzione di giudice del lavoro, sentenza n. 1234/2020",
+    # tribunale: "Trib." (the usual abbreviation)
+    "Trib. Milano, sez. lav., 10 marzo 2020, n. 1234",
+    "Trib. Milano, sez. lav., sent. n. 1234/2020",
+    "Trib. Milano, Sez. Lav., 10.3.2020, n. 1234",
+    "Trib. Milano, sez. lav., sent. 10/03/2020 n. 1234",
+    "Trib. Milano, sez. lav., 10/3/2020, n. 1234",
+    "Trib. Milano sez. lav. n. 1234/2020",
+    "Trib. Milano, sez. lav., n. 1234/20",
+    "Trib. Milano - sez. lavoro - sentenza n. 1234 del 2020",
+    "Trib. di Milano, sez. lav., sent. n. 1234/2020",
+    "Trib. Milano (sez. lav.), sent. n. 1234/2020",
+    # a numbered or spelled-out section before "lavoro"
+    "Trib. Milano, sez. II lav., sent. n. 1234/2020",
+    "Trib. Milano, II sez. lav., sent. n. 1234/2020",
+    "Trib. Milano, sez. 2 lav., sent. n. 1234/2020",
+    "Tribunale di Milano, seconda sezione lavoro, sentenza n. 1234/2020",
+    "Tribunale di Milano, sezione II lavoro, sentenza n. 1234/2020",
+    "Tribunale di Milano, sezione seconda civile - lavoro, sentenza n. 1234/2020",
+    # the judge instead of the section
+    "Trib. Milano, Giudice del lavoro, sentenza n. 1234/2020",
+    "Trib. Milano - Giudice del lavoro - sentenza n. 1234/2020",
+    "Tribunale di Milano (Giudice del lavoro), sentenza n. 1234/2020",
+    "Trib. Milano (lav.), n. 1234/2020",
+    # the section before the court, as in running text
+    "la sezione lavoro del Tribunale di Milano, con sentenza n. 1234/2020",
+    "il Giudice del lavoro del Tribunale di Milano, con sentenza n. 1234/2020",
+    "Sez. lav. del Tribunale di Milano, sent. n. 1234/2020",
+    "la sezione lavoro presso il Tribunale di Milano, con sentenza n. 1234/2020",
+)
+
+
+@pytest.mark.parametrize("text", LABOUR_CITATIONS)
+def test_labour_citation_of_a_tribunale(text):
+    assert urns(text) == ["ECLI:IT:TRIBMI:2020:1234LAV"]
+
+
+APPEAL_LABOUR_CITATIONS = (
+    "Corte d'Appello di Milano, sez. lav., sent. n. 1234/2020",
+    "Corte di Appello di Milano, sezione lavoro, 10 marzo 2020, n. 1234",
+    "Corte d'appello di Milano, Sez. Lavoro, sentenza n. 1234 del 2020",
+    "Corte d’Appello di Milano - Sezione Lavoro - sentenza n. 1234/2020",
+    "Corte App. Milano, sez. lav., n. 1234/2020",
+    "C. App. Milano, sez. lav., 10 marzo 2020, n. 1234",
+    "C. d'App. Milano, sez. lav., n. 1234/2020",
+    "Corte d'Appello di Milano, sez. lav., 10.3.2020, n. 1234",
+    "Corte d'Appello di Milano, in funzione di giudice del lavoro, sentenza n. 1234/2020",
+    "la sezione lavoro della Corte d'appello di Milano, con sentenza n. 1234/2020",
+    "Corte d'appello di Milano, sez. lav., n. 1234/2020",
+)
+
+
+@pytest.mark.parametrize("text", APPEAL_LABOUR_CITATIONS)
+def test_labour_citation_of_a_corte_d_appello(text):
+    assert urns(text) == ["ECLI:IT:CAPPMI:2020:1234LAV"]
+
+
+@pytest.mark.parametrize("text, expected", (
+    ("Trib. Napoli Nord, sez. lav., n. 5/2023", "ECLI:IT:TRIBNAN:2023:5LAV"),
+    ("Tribunale di Napoli Nord, sezione lavoro, sent. n. 5/2023", "ECLI:IT:TRIBNAN:2023:5LAV"),
+    ("Trib. Roma, sez. IV lav., sent. n. 7/2022", "ECLI:IT:TRIBRM:2022:7LAV"),
+    ("Tribunale di Roma, quarta sezione lavoro, sentenza n. 7/2022", "ECLI:IT:TRIBRM:2022:7LAV"),
+    ("Trib. L'Aquila, sez. lav., n. 7/2022", "ECLI:IT:TRIBAQ:2022:7LAV"),
+    ("Trib. Reggio Emilia, sez. lav., n. 7/2022", "ECLI:IT:TRIBRE:2022:7LAV"),
+    ("Corte d'Appello di Roma, sezione lavoro, 22/6/2020, n. 3796", "ECLI:IT:CAPPRM:2020:3796LAV"),
+))
+def test_labour_citation_other_courts(text, expected):
+    assert urns(text) == [expected]
+
+
+# ── ...and the citations that must keep the bare number ──────────────────────────────────
+BARE_CITATIONS = (
+    "Tribunale di Milano n. 1234/2020",
+    "Tribunale di Milano, sentenza n. 1234/2020",
+    "Tribunale di Milano, sentenza 10 marzo 2020, n. 1234",
+    "Trib. Milano n. 1234/2020",
+    "Trib. Milano, sent. n. 1234/2020",
+    "Trib. Milano, 10 marzo 2020, n. 1234",
+    "Trib. Milano, 10.3.2020, n. 1234",
+    "Trib. di Milano n. 1234/2020",
+    # benches of the contenzioso register: the section does not change the number
+    "Tribunale di Milano, sezione II civile, sentenza n. 1234/2020",
+    "Trib. Milano, sez. II civ., n. 1234/2020",
+    "Trib. Milano, sez. I, n. 1234/2020",
+    "Tribunale di Milano, sezione specializzata in materia di impresa, sent. n. 1234/2020",
+    "Tribunale di Milano, sez. fallimentare, sent. n. 1234/2020",
+    "Tribunale di Milano, sezione immigrazione, sent. n. 1234/2020",
+    # "lavoro" in the subject, not in the court's name
+    "Tribunale di Milano, sentenza n. 1234/2020, in materia di lavoro",
+    "Tribunale di Milano, sentenza n. 1234/2020 sul contratto di lavoro subordinato",
+    "Tribunale di Milano n. 1234/2020 (licenziamento per giusta causa)",
+)
+
+
+@pytest.mark.parametrize("text", BARE_CITATIONS)
+def test_citation_without_a_register_keeps_the_bare_number(text):
+    assert urns(text) == ["ECLI:IT:TRIBMI:2020:1234"]
+
+
+@pytest.mark.parametrize("text, expected", (
+    ("Corte d'Appello di Milano, sentenza n. 1234/2020", "ECLI:IT:CAPPMI:2020:1234"),
+    ("Corte d'Appello di Milano, sezione II civile, sentenza n. 1234/2020", "ECLI:IT:CAPPMI:2020:1234"),
+    ("C. App. Milano, sez. I civ., n. 1234/2020", "ECLI:IT:CAPPMI:2020:1234"),
+))
+def test_appeal_citation_without_a_register_keeps_the_bare_number(text, expected):
+    assert urns(text) == [expected]
+
+
+# ── Neighbouring citations do not lend each other their section ──────────────────────────
+@pytest.mark.parametrize("text, expected", (
+    ("Trib. Milano n. 1234/2020 e Trib. Roma, sez. lav., n. 55/2021",
+     ["ECLI:IT:TRIBMI:2020:1234", "ECLI:IT:TRIBRM:2021:55LAV"]),
+    ("Trib. Milano, sez. lav., n. 1234/2020 e Trib. Roma n. 55/2021",
+     ["ECLI:IT:TRIBMI:2020:1234LAV", "ECLI:IT:TRIBRM:2021:55"]),
+    ("Trib. Milano, sez. lav., n. 1234/2020; Trib. Roma, sez. lav., n. 55/2021",
+     ["ECLI:IT:TRIBMI:2020:1234LAV", "ECLI:IT:TRIBRM:2021:55LAV"]),
+    ("Trib. Milano, sent. n. 1234/2020; Cass., sez. lav., n. 5/2020",
+     ["ECLI:IT:TRIBMI:2020:1234", "ECLI:IT:CASS:2020:5CIV"]),
+    ("Cass., sez. lav., n. 5/2020; Trib. Milano n. 1234/2020",
+     ["ECLI:IT:CASS:2020:5CIV", "ECLI:IT:TRIBMI:2020:1234"]),
+    ("Cass. civ., sez. lav., 10 marzo 2020, n. 5; Trib. Milano, sez. lav., n. 1234/2020",
+     ["ECLI:IT:CASS:2020:5CIV", "ECLI:IT:TRIBMI:2020:1234LAV"]),
+    ("Trib. Milano n. 1234/2020, confermata da Corte d'Appello di Milano, sez. lav., n. 77/2021",
+     ["ECLI:IT:TRIBMI:2020:1234", "ECLI:IT:CAPPMI:2021:77LAV"]),
+))
+def test_each_citation_takes_its_own_section(text, expected):
+    assert urns(text) == expected
+
+
+# ── "Trib." abbreviates tributaria too: it must not read tax courts as a tribunale ───────
+@pytest.mark.parametrize("text", (
+    "Comm. trib. Milano n. 1234/2020",
+    "Comm. trib. reg. Milano n. 1234/2020",
+    "Commissione trib. Milano, sent. n. 1234/2020",
+    "Cass., sez. trib. Milano n. 1234/2020",
+    "sez. trib. Milano, sentenza n. 1234/2020",
+    "Corte giust. trib. Milano, sent. n. 1234/2020",
+))
+def test_trib_before_a_city_inside_a_tax_court_is_not_a_tribunale(text):
+    assert not any(":TRIB" in u for u in urns(text))
+
+
+@pytest.mark.parametrize("text, expected", (
+    ("Comm. trib. prov. di Milano, sentenza n. 100/2015", "ECLI:IT:CTPMI:2015:100"),
+    ("C.T.P. Milano, sent. n. 100/2015", "ECLI:IT:CTPMI:2015:100"),
+    ("Cass., sez. trib., n. 5000/2019", "ECLI:IT:CASS:2019:5000CIV"),
+    ("Cass. civ., sez. lav., n. 5000/2019", "ECLI:IT:CASS:2019:5000CIV"),
+))
+def test_other_courts_are_unchanged(text, expected):
+    assert urns(text) == [expected]
+
+
+@pytest.mark.parametrize("text", ("Trib. n. 1234/2020", "Trib. sez. lav. n. 1234/2020", "il Trib. ha deciso, n. 1234/2020",
+                                  "Trib. sup. acque, n. 12/2024"))
+def test_trib_without_a_seat_is_not_a_tribunale(text):
+    assert not any(":TRIBMI" in u or ":TRIBRM" in u for u in urns(text))
+
+
+# ── Writing a labour identifier back as a citation ───────────────────────────────────────
+@pytest.mark.parametrize("urn, text", (
+    ("ECLI:IT:TRIBMI:2020:1234LAV", "Tribunale di Milano, sezione lavoro n. 1234/2020"),
+    ("ECLI:IT:CAPPNA:2021:55LAV", "Corte d'Appello di Napoli, sezione lavoro n. 55/2021"),
+    ("ECLI:IT:TRIBNAN:2023:5LAV", "Tribunale di Napoli Nord, sezione lavoro n. 5/2023"),
+    ("ECLI:IT:TRIBMI:2020:1234", "Tribunale di Milano n. 1234/2020"),
+))
+def test_labour_identifier_renders_and_reads_back(urn, text):
+    assert urn_to_text(urn) == text
+    assert urns(text) == [urn]
+
+
+@pytest.mark.parametrize("code, name", sorted(catalog.CIVIL_REGISTERS.items()))
+def test_every_register_renders_by_name(code, name):
+    assert urn_to_text(f"ECLI:IT:TRIBMI:2020:1234{code}") == f"Tribunale di Milano, {name} n. 1234/2020"
+    assert urn_to_text(f"ECLI:IT:CAPPRM:2020:1234{code}") == f"Corte d'Appello di Roma, {name} n. 1234/2020"
+
+
+def test_register_suffix_is_not_taken_for_a_civil_court_it_does_not_belong_to():
+    # a number that merely ends in letters on another court is left alone
+    assert urn_to_text("ECLI:IT:CASS:2020:1234CIV") == "Cassazione civile n. 1234/2020"
+    assert urn_to_text("ECLI:IT:CONT:2023:89SGCAL").startswith("Corte dei Conti")
+
+
+# ── Known gaps ───────────────────────────────────────────────────────────────────────────
+@pytest.mark.xfail(strict=True, reason="Known gap: only the labour register is read from a citation; the "
+                   "others (volontaria giurisdizione, sommari, agrarie) are rendered but never recognised.")
+def test_volontaria_giurisdizione_reads_back():
+    assert urns(urn_to_text("ECLI:IT:TRIBMI:2020:1234VG")) == ["ECLI:IT:TRIBMI:2020:1234VG"]
+
+
+@pytest.mark.xfail(strict=True, reason="Known gap: 'App.' alone does not name a corte d'appello (see "
+                   "test_appeal_court_precision), so a labour citation written that way is not read.")
+def test_app_alone_with_a_labour_section():
+    assert urns("App. Milano, sez. lav., n. 1234/2020") == ["ECLI:IT:CAPPMI:2020:1234LAV"]
+
+
+@pytest.mark.xfail(strict=True, reason="Known gap: the judge's title without any court name is not a court.")
+def test_giudice_del_lavoro_without_a_court_name():
+    assert urns("Giudice del lavoro di Milano, sent. n. 1234/2020") == ["ECLI:IT:TRIBMI:2020:1234LAV"]

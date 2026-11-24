@@ -124,6 +124,51 @@ ADMIN_PLENARIA_DOCTYPE = {"SENT": "APLE", "OCAU": "OPLE", "OCOL": "OPLE"}
 ADMIN_AUTHORITIES = {"CONS_STATO", "TRIB_AMM_REG", "TRIB_REG_GIUST_AMM", "CGARS"}
 
 
+# ── Civil merits registers ────────────────────────────────────────────────────
+# A tribunale or corte d'appello keeps several registers (ruoli) and each numbers its
+# decisions on its own, so "Tribunale di Milano n. 1234/2024" can name two different
+# sentenze: one of the contenzioso register and one of the lavoro register. Measured on
+# 662,139 decisions: 11.8% shared their ECLI with another one, and 97% of those pairs are
+# told apart by the register alone (lavoro against contenzioso above all).
+#
+# The register is a suffix on the NUMBER, the way the Cassazione appends CIV/PEN and the
+# Corte dei conti its section ("…:2024:1234LAV"). The CNR-ITTIG proposal of 2014 for an
+# Italian ECLI puts the register code in the same place ("ECLI:IT:TRBMI:2008:S12AC", AC =
+# affari contenziosi); the proposal was never adopted, so the codes are ours. The contenzioso
+# register is the default and carries NO suffix: a citation that names no register ("Trib.
+# Milano n. 1234/2020") is read as contenzioso, as a bare "Cass. n." is read as civil, and the
+# identifiers already in use stay valid.
+CIVIL_REGISTERS = {
+    "LAV": "sezione lavoro",                      # lavoro, previdenza, assistenza: one series
+    "VG": "volontaria giurisdizione",             # includes the procedimenti unitari (CCII)
+    "PS": "procedimenti speciali sommari",
+    "AG": "controversie agrarie",
+    "ESE": "esecuzioni civili",
+    "ESP": "espropriazioni immobiliari",
+    "NC": "affari non contenziosi",
+}
+# The BDP `ruolo` of a decision -> its register code ("" = contenzioso, the default). A ruolo
+# that is not listed has not been verified to number apart from or together with another, so
+# it resolves to no identifier rather than to a possibly wrong one: the "(CARTABIA)"
+# contenzioso register returned no decision when queried on 2026-11-24.
+BDP_RUOLO_REGISTER = {
+    "GENERALE DEGLI AFFARI CIVILI CONTENZIOSI": "",
+    "MINORENNI": "",
+    "CONTROVERSIE IN MATERIA DI LAVORO, PREV., ASSIST. OBBLIG.": "LAV",
+    "GENERALE DEGLI AFFARI DI VOLONTARIA GIURISDIZIONE": "VG",
+    "PROCEDIMENTI SPECIALI SOMMARI": "PS",
+    "CONTROVERSIE AGRARIE": "AG",
+    "GENERALE DELLE ESECUZIONI CIVILI": "ESE",
+    "GENERALE DELLE ESPROPRIAZIONI IMMOBILIARI": "ESP",
+    "GENERALE DEGLI AFFARI AMMINISTRATIVI, STRAGIUDIZIALI E NON CONTENZIOSI": "NC",
+}
+CIVIL_COURT_AUTHORITIES = {"TRIB", "TRIB_NAPOLI_NORD", "TRIB_MINORENNI", "CORTE_APPELLO"}
+# No document-type suffix: ordinanze and decreti are almost never numbered in the BDP (1 of
+# 820 and 0 of 542 in bd_civile), so every numbered identifier is a sentenza. The one numbered
+# ordinanza seen (Tribunale di Bologna 1741/2025, among sentenze numbered 2,145 that day) has a
+# series of its own, which is why a BDP ordinanza or decreto gets no number-based identifier.
+
+
 # ── Corte dei conti sections ──────────────────────────────────────────────────
 # The Corte dei conti ECLI carries its section as a suffix on the decision NUMBER
 # ("ECLI:IT:CONT:2023:89SGCAL"), the way the Cassazione carries CIV/PEN — not as an ECLI

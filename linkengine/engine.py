@@ -13,7 +13,8 @@ from typing import Dict, List, Optional
 
 from . import normalize as NZ
 from .aliases import ALIAS_CELEX, alias_nir
-from .catalog import (AGENCY_DOCTYPES, CONDITIONAL_AGENCY_DOCTYPES, COURTS,
+from .catalog import (AGENCY_DOCTYPES, BDP_RUOLO_REGISTER, CIVIL_REGISTERS,
+                      CONDITIONAL_AGENCY_DOCTYPES, COURTS,
                       CORTE_CONTI_CONTROLLO, CORTE_CONTI_CONTROLLO_DOCTYPES,
                       CORTE_CONTI_GIUR_DOCTYPES,
                       CORTE_CONTI_SECTIONS,
@@ -47,22 +48,45 @@ _CODE_SUBPART = {Entity.COMMA, Entity.LETTER, Entity.NUMERO, Entity.PARAGRAPH,
 PRASSI_DOCTYPES = set(AGENCY_DOCTYPES)
 
 
-def civil_court_ecli(name, year, number):
+def civil_court_ecli(name, year, number, register=""):
     """Resolve a full tribunal or appeal-court name and decision year/number to an ECLI.
 
     For example, civil_court_ecli("Tribunale di Napoli Nord", 2025, 2) returns
     "ECLI:IT:TRIBNAN:2025:2". An incomplete office or decision returns None.
+
+    ``register`` names the register the decision was numbered in, because each register of a
+    court numbers on its own: the BDP ``ruolo`` label, or its code ("LAV", "VG", ...; see
+    ``catalog.CIVIL_REGISTERS``). Empty means the contenzioso register, the default, which
+    adds nothing: civil_court_ecli("Tribunale di Milano", 2024, 55, "LAV") returns
+    "ECLI:IT:TRIBMI:2024:55LAV". A register that is not known returns None rather than a
+    number that may belong to another register. The number is a sentenza's: ordinanze and
+    decreti are not numbered in the BDP and have no identifier of this form.
     """
     if not name or not (str(year).strip().isdecimal() and str(number).strip().isdecimal()):
+        return None
+    register = (register or "").strip()
+    section = catalog_register(register)
+    if section is None:
         return None
     # In uppercase office labels the final apostrophe can stand for an accent (FORLI').
     name = name.strip().rstrip("'’")
     for span in RZ.recognize_authorities(name):
         if span.start == 0 and span.end == len(name) and span.value in {
                 "TRIB", "TRIB_NAPOLI_NORD", "TRIB_MINORENNI", "TRIB_SUP_ACQUE", "CORTE_APPELLO"}:
-            return build_urn({"ref-type": "caselaw", "authority": span.value, **span.attrs,
+            attrs = {**span.attrs, "section": section} if section else span.attrs
+            return build_urn({"ref-type": "caselaw", "authority": span.value, **attrs,
                               "year": year, "number": number}) or None
     return None
+
+
+def catalog_register(register):
+    """The register code of a BDP ``ruolo`` label or of a code ("LAV"): "" for the default
+    contenzioso register, None for one that is not known."""
+    if register in ("", "AC"):
+        return ""
+    if register in CIVIL_REGISTERS:
+        return register
+    return BDP_RUOLO_REGISTER.get(register.upper())
 
 
 def _partition_token(span: Span) -> str:

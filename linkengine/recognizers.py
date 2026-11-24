@@ -827,12 +827,16 @@ _COURT_PATTERNS = [
      "TRIB_REG_GIUST_AMM", "tar"),
     (r"tribunale\s+di\s+sorveglianza", "TRIBUNALE_SORVEGLIANZA", "city"),
     (r"tribunale\s+per\s+i\s+minor(?:enni|i)\b(?:\s*-\s*)?", "TRIB_MINORENNI", "city"),
-    (r"tribunale(?:\s+ordinario)?\s+(?:di\s+)?napoli\s+nord\b", "TRIB_NAPOLI_NORD", None),
+    (r"(?:tribunale|trib\.)(?:\s*ordinario|\s*ord\.)?\s+(?:di\s+)?napoli\s+nord\b", "TRIB_NAPOLI_NORD", None),
     (r"trib(?:unale|\.)?\s*sup(?:eriore|\.)\s*(?:delle\s+)?acque(?:\s+pubbl(?:iche\b|\.))?"
      r"|\bt\.?\s?s\.?\s?a\.?\s?p\.?(?!\w)", "TRIB_SUP_ACQUE", None),
     # "Tribunale Ordinario di Roma" is the court's own formal name, and the one its
     # judgments are published under.
     (r"tribunale(?!\s+amministrativo|\s+superiore)(?:\s+ordinario)?", "TRIB", "city"),
+    # "Trib. Milano" is how a tribunale is cited in practice. The abbreviation also ends
+    # "Comm. trib." and "sez. trib.", so it needs an explicit seat after it (named_city) and
+    # no tax-court or section word right before it (_TAX_TRIB_BEFORE).
+    (r"trib\.(?:\s*ord\.)?", "TRIB", "named_city"),
     (r"giudice\s+di\s+pace", "GIUDICE_PACE", "city"),
     # comune (for a delibera comunale -> DEL:CO{city}); "di <City>" is required by the geo step
     (r"comune\s+di", "COMUNE", "city"),
@@ -958,7 +962,11 @@ def _roman(s: str):
 
 
 def _section_after(text: str, pos: int) -> str:
-    m = _SEZ_SEARCH.search(text[pos:pos + 45])
+    window = text[pos:pos + 45]
+    brk = _CITATION_BREAK.search(window)          # the next citation's section is not ours
+    if brk:
+        window = window[:brk.start()]
+    m = _SEZ_SEARCH.search(window)
     if not m:
         return ""
     raw = m.group(1).lower()
@@ -966,6 +974,37 @@ def _section_after(text: str, pos: int) -> str:
         return _SEZ_NORM[raw]
     r = _roman(raw)                # "V" -> "5", "XVII" -> "17"
     return str(r) if r else raw
+
+
+_CIVIL_COURTS = {"TRIB", "CORTE_APPELLO", "TRIB_MINORENNI", "TRIB_NAPOLI_NORD"}
+_TAX_TRIB_BEFORE = re.compile(
+    r"(?:comm(?:issione)?|sez(?:ione)?|giust(?:izia)?|c\.?\s?g\.?\s?t)\.?\s*(?:(?:prov|reg)\w*\.?\s*)?$", I)
+_ORD_SEZ = r"(?:[ivxlcdm]{1,4}|\d{1,2}|prima|seconda|terza|quarta|quinta|sesta)"
+_LAB_SEC = (rf"(?:sez(?:ione|\.)?\.?\s*(?:n\.?\s*)?(?:{_ORD_SEZ}\s*)?(?:civ(?:ile|\.)?\s*[-–,]?\s*)?lav(?:oro|\.)?(?!\w)"
+            rf"|{_ORD_SEZ}\s*[°ª]?\s*sez(?:ione|\.)?\.?\s*(?:civ(?:ile|\.)?\s*[-–,]?\s*)?lav(?:oro|\.)?(?!\w)"
+            r"|sez(?:ione|\.)?\.?\s*(?:per\s+le\s+)?controversie\s+(?:in\s+materia\s+)?(?:di\s+)?lavoro"
+            r"|giudice\s+del\s+lavoro|g\.\s?d\.\s?l\.)")
+_LABOUR_ANYWHERE = re.compile(
+    r"giudice\s+del\s+lavoro|controversie\s+(?:in\s+materia\s+)?(?:di\s+)?lavoro|g\.\s?d\.\s?l\.", I)
+_LABOUR_AFTER = re.compile(r"[\s,;(–-]*" + _LAB_SEC + r"|\s*\(\s*lav(?:oro|\.)?\s*\)", I)
+_LABOUR_BEFORE = re.compile(_LAB_SEC + r"\s*,?\s*(?:del(?:la|l['’])?|presso\s+(?:il|la)|dell['’]?)\s*$", I)
+_CITATION_BREAK = re.compile(r";|\bcass|\bcorte\b|\btribunale\b|\btrib\.|\bcomm\b", I)
+
+
+def _labour_section(text: str, start: int, end: int) -> str:
+    """"lav" when the citation of the tribunale or corte d'appello at ``start``..``end`` names
+    the labour section, after the court ("Trib. Milano, sez. lav.", "sez. IV lavoro",
+    "Giudice del lavoro") or before it ("la sezione lavoro del Tribunale di Milano")."""
+    window = text[end:end + 60]
+    brk = _CITATION_BREAK.search(window)
+    if brk:
+        window = window[:brk.start()]
+    if (_LABOUR_AFTER.match(window) or re.search(r"[,(–-]\s*" + _LAB_SEC, window[:50], I)
+            or _LABOUR_ANYWHERE.search(window[:50])):
+        return "lav"
+    if _LABOUR_BEFORE.search(text[max(0, start - 45):start]):
+        return "lav"
+    return ""
 
 
 # Cassazione sezione: the section field combines the chamber NUMBER with its kind, and it
@@ -1380,6 +1419,9 @@ def recognize_authorities(text: str) -> List[Span]:
                     and _PROCEDURAL_CASSAZIONE_BEFORE.search(
                         text[max(0, m.start() - 24):m.start()]):
                 continue
+            if value == "TRIB" and m.group(0).lower().startswith("trib.") and _TAX_TRIB_BEFORE.search(
+                    text[max(0, m.start() - 40):m.start()]):
+                continue
             # "Voglia l’Ill.ma Corte ... riformare la sentenza del Tribunale":
             # the appeal court is being petitioned, not cited as the issuing court.
             if value == "CORTE_APPELLO" and _APPEAL_PETITION.search(
@@ -1453,6 +1495,11 @@ def recognize_authorities(text: str) -> List[Span]:
                         value, attrs["city"], end = "COMM_TRIBUT_PROV", code, new_end
                     else:
                         value = "COMM_TRIBUT_PROV"
+            if value in _CIVIL_COURTS and _labour_section(text, m.start(), end):
+                # the labour section decides the register (see urn._civil_register_suffix),
+                # so it is read wherever the citation puts it: "Trib. Roma, sez. IV lav.",
+                # "Trib. Roma - Giudice del lavoro", "la sezione lavoro del Tribunale di Roma"
+                attrs["section"] = "lav"
             spans.append(Span(m.start(), end, Entity.AUTHORITY, value,
                               text[m.start():end], attrs))
     for pat, value in _OTHER_AUTH_COMPILED:

@@ -399,7 +399,23 @@ def _court_ecli(row, year, number):
         suffix = _admin_type_suffix(row)
         if not suffix:
             return None
+    elif _g(row, 'authority') in catalog.CIVIL_COURT_AUTHORITIES:
+        suffix = _civil_register_suffix(row)
     return f"ECLI:IT:{prefix}{geo}:{year}:{number}{suffix}"
+
+
+def _civil_register_suffix(row) -> str:
+    """The register that follows the number of a tribunale or corte d'appello ECLI
+    ("…:2024:1234LAV"); empty for the contenzioso register.
+
+    The contenzioso register is the default and adds nothing. The register comes from the
+    section the citation names ("sez. lav." -> LAV) or, for a structured record, from the
+    register code itself; any other section ("sezione II civile") is a bench of the same
+    register and changes nothing."""
+    section = _g(row, 'section')
+    code = "LAV" if section.lower() in ("lav", "lavoro") else section.upper()
+    register = code if code in catalog.CIVIL_REGISTERS else ""
+    return register
 
 
 def _corte_conti_suffix(row) -> str:
@@ -591,8 +607,11 @@ def _ecli_to_text(body):
     court_geo, year, number = parts[0], parts[1], parts[2]
     if court_geo.startswith("COST"):
         return f"Corte Costituzionale n. {number}/{year}"
-    suffix = ""
-    if number.endswith("CIV"):
+    suffix, after_place = "", ""
+    civil = _civil_register_to_text(court_geo, number)
+    if civil:
+        number, after_place = civil
+    elif number.endswith("CIV"):
         number, suffix = number[:-3], " civile"
     elif number.endswith("PEN"):
         number, suffix = number[:-3], " penale"
@@ -616,8 +635,20 @@ def _ecli_to_text(body):
                     if court_geo in catalog.DETACHED_COURT_PARENT:
                         parent = catalog.DETACHED_COURT_PARENT[court_geo]
                         place = f" di {parent}, sezione distaccata{place}"
-            return f"{name}{suffix}{place} n. {number}/{year}"
+            return f"{name}{suffix}{place}{after_place} n. {number}/{year}"
     return f"{court_geo} n. {number}/{year}"
+
+
+def _civil_register_to_text(court_geo, number):
+    """"TRIBMI"/"1234LAV" -> ("1234", ", sezione lavoro"); None when the number carries no
+    register, or the court is not a tribunale or corte d'appello."""
+    if not court_geo.startswith(("TRIB", "TMIN", "CAPP")):
+        return None
+    codes = "|".join(sorted(catalog.CIVIL_REGISTERS, key=len, reverse=True))
+    m = re.fullmatch(rf'(\d+)({codes})', number)
+    if not m:
+        return None
+    return m.group(1), ", " + catalog.CIVIL_REGISTERS[m.group(2)]
 
 
 _ADMIN_TYPE_NAME = {"SENT": "sentenza", "SENB": "sentenza breve", "APLE": "sentenza",
