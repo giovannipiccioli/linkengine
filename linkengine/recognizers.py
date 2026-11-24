@@ -828,6 +828,8 @@ _COURT_PATTERNS = [
     (r"tribunale\s+di\s+sorveglianza", "TRIBUNALE_SORVEGLIANZA", "city"),
     (r"tribunale\s+per\s+i\s+minor(?:enni|i)\b(?:\s*-\s*)?", "TRIB_MINORENNI", "city"),
     (r"tribunale(?:\s+ordinario)?\s+(?:di\s+)?napoli\s+nord\b", "TRIB_NAPOLI_NORD", None),
+    (r"trib(?:unale|\.)?\s*sup(?:eriore|\.)\s*(?:delle\s+)?acque(?:\s+pubbl(?:iche\b|\.))?"
+     r"|\bt\.?\s?s\.?\s?a\.?\s?p\.?(?!\w)", "TRIB_SUP_ACQUE", None),
     # "Tribunale Ordinario di Roma" is the court's own formal name, and the one its
     # judgments are published under.
     (r"tribunale(?!\s+amministrativo|\s+superiore)(?:\s+ordinario)?", "TRIB", "city"),

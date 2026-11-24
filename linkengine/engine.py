@@ -59,7 +59,7 @@ def civil_court_ecli(name, year, number):
     name = name.strip().rstrip("'’")
     for span in RZ.recognize_authorities(name):
         if span.start == 0 and span.end == len(name) and span.value in {
-                "TRIB", "TRIB_NAPOLI_NORD", "TRIB_MINORENNI", "CORTE_APPELLO"}:
+                "TRIB", "TRIB_NAPOLI_NORD", "TRIB_MINORENNI", "TRIB_SUP_ACQUE", "CORTE_APPELLO"}:
             return build_urn({"ref-type": "caselaw", "authority": span.value, **span.attrs,
                               "year": year, "number": number}) or None
     return None

@@ -94,6 +94,65 @@ def test_structured_record_needs_a_decision_number(number):
     assert civil_court_ecli("Tribunale di Trento", 2025, number) is None
 
 
+@pytest.mark.parametrize("name", (
+    "TRIBUNALE SUPERIORE DELLE ACQUE PUBBLICHE", "Tribunale superiore delle acque pubbliche",
+))
+def test_superior_water_court_record(name):
+    assert civil_court_ecli(name, 2024, 12) == "ECLI:IT:TSAP:2024:12"
+
+
+@pytest.mark.parametrize("name", ("TRIBUNALE SUPERIORE DELLE ACQUE PUBBLICHE DI ROMA", "TRIBUNALE SUPERIORE"))
+def test_superior_water_court_record_needs_its_exact_name(name):
+    assert civil_court_ecli(name, 2024, 12) is None
+
+
+def test_superior_water_court_record_needs_a_number():
+    assert civil_court_ecli("TRIBUNALE SUPERIORE DELLE ACQUE PUBBLICHE", 2024, None) is None
+
+
+@pytest.mark.parametrize("text", (
+    "Tribunale Superiore delle Acque Pubbliche, sentenza n. 12/2024",
+    "Tribunale superiore acque, sent. n. 12/2024",
+    "Tribunale superiore delle acque, n. 12/2024",
+    "T.S.A.P. n. 12/2024", "TSAP, sentenza n. 12/2024", "T. S. A. P., sent. n. 12/2024",
+    "Trib. sup. acque pubbl., n. 12/2024", "Trib. sup. acque, sentenza n. 12/2024",
+    "Tribunale superiore delle acque pubbliche, sent. 3 marzo 2024, n. 12",
+    "sentenza del Tribunale superiore delle acque pubbliche n. 12 del 2024",
+    "TSAP 3 marzo 2024 n. 12",
+))
+def test_superior_water_court_citations(text):
+    row, = ENGINE.extract(text).rows
+    assert (row["authority"], row["city"], row["urn"]) == ("TRIB_SUP_ACQUE", "", "ECLI:IT:TSAP:2024:12")
+
+
+def test_superior_water_court_renders_and_reads_back():
+    urn = "ECLI:IT:TSAP:2024:12"
+    assert urn_to_text(urn) == "Tribunale Superiore delle Acque Pubbliche n. 12/2024"
+    assert urns(urn_to_text(urn)) == [urn]
+
+
+@pytest.mark.parametrize("text", (
+    "TSAPP n. 12/2024",                                  # another word
+    "il Tribunale superiore ha deciso, n. 12/2024",      # no court named
+    "ricorso al Tribunale superiore delle acque pubbliche",  # no decision
+))
+def test_superior_water_court_precision(text):
+    assert all("TSAP" not in u for u in urns(text))
+    assert all(row["authority"] != "TRIB" for row in ENGINE.extract(text).rows)
+
+
+def test_regional_water_court_is_not_the_superior_court():
+    assert all("TSAP" not in u for u in urns(
+        "Tribunale regionale delle acque pubbliche di Roma, sentenza n. 12/2024"))
+
+
+@pytest.mark.xfail(strict=True, reason="Known gap: the regional water courts have no authority of "
+                   "their own, so one sitting at a Corte d'appello takes that court's numbering.")
+def test_regional_water_court_is_not_the_appeal_court():
+    assert urns("Tribunale regionale delle acque pubbliche presso la Corte d'appello di Napoli, "
+                "n. 45/2024") == []
+
+
 def test_named_and_detached_courts_render_the_judicial_name():
     assert urns("Tribunale Napoli Nord n. 2/2025") == ["ECLI:IT:TRIBNAN:2025:2"]
     assert urn_to_text("ECLI:IT:TRIBNAN:2025:2") == "Tribunale di Napoli Nord n. 2/2025"

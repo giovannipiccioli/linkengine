@@ -22,6 +22,10 @@ COURTS = {
     "TRIB":                    {"ecli": "TRIB",      "geo": "city",   "name": "Tribunale"},
     "TRIB_MINORENNI":           {"ecli": "TMIN",      "geo": "city",   "name": "Tribunale per i minorenni"},
     "TRIB_NAPOLI_NORD":         {"ecli": "TRIBNAN",   "geo": None,     "name": "Tribunale di Napoli Nord"},
+    # One national court in Rome. TSAP is this library's code: no official ECLI prefix is
+    # published for it.
+    "TRIB_SUP_ACQUE":           {"ecli": "TSAP",      "geo": None,
+                                 "name": "Tribunale Superiore delle Acque Pubbliche"},
     "COMM_TRIBUT_REG":         {"ecli": "CTR",       "geo": "region", "name": "Commissione Tributaria Regionale"},
     "CORTE_GIUST_TRIBUT_2":    {"ecli": "CGT2",      "geo": "region", "name": "Corte di Giustizia Tributaria di secondo grado"},
     "COMM_TRIBUT_PROV":        {"ecli": "CTP",       "geo": "city",   "name": "Commissione Tributaria Provinciale"},
