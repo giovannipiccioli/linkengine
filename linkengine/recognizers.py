@@ -767,6 +767,12 @@ _COURT_PATTERNS = [
     # Shortened appeal-court names need an explicit seat ("C. App. Roma").
     (r"\b(?:corte\s+|c\.\s*)(?:di\s+|d['’]\s*)?(?:app\.|appello\b)",
      "CORTE_APPELLO", "named_city"),
+    # "App. Milano" and "CdA Milano" are how an appeal court is cited in practice. Both need an
+    # explicit seat, and "App." not a section word right before it (_APP_BEFORE_SKIP: the Corte
+    # dei conti's "Sez. I App."). "CdA" is read only in this capitalisation, since the
+    # consiglio di amministrazione is the same abbreviation in lower case.
+    (r"\bapp\.", "CORTE_APPELLO", "named_city"),
+    (r"(?-i:\bC\.?\s?d\.?\s?A\b\.?)", "CORTE_APPELLO", "named_city"),
     (r"corte\s+d['’]?\s?assise", "CORTE_ASSISE", "city"),
     (r"corte\s+di\s+cassazione", "CORTE_CASS", None),
     # "Sezioni Unite" / "SS.UU." (the Cassazione's united sections): cited on their own as a
@@ -977,6 +983,13 @@ def _section_after(text: str, pos: int) -> str:
 
 
 _CIVIL_COURTS = {"TRIB", "CORTE_APPELLO", "TRIB_MINORENNI", "TRIB_NAPOLI_NORD"}
+# "App." already inside "Corte App." / "C. App." (the longer pattern reads those), or the
+# section of a Corte dei conti ("Sez. I App.", "sez. giur. App. Sicilia")
+_APP_BEFORE_SKIP = re.compile(
+    r"(?:corte|c|sez(?:ione)?|centr|giur(?:isd)?|cont|d['’])\.?\s*(?:(?:[ivxlc]{1,4}|\d{1,2})\.?\s*)?$", I)
+# a procedimento unitario is numbered with the volontaria giurisdizione, which a citation is
+# not read as: it must not be taken for a contenzioso decision of the same number
+_UNITARY_CITATION = re.compile(r"proc(?:edimento|\.)?\s*unitario|\bp\.\s?u\.\s*(?:n\.?\s*)?\d", I)
 _TAX_TRIB_BEFORE = re.compile(
     r"(?:comm(?:issione)?|sez(?:ione)?|giust(?:izia)?|c\.?\s?g\.?\s?t)\.?\s*(?:(?:prov|reg)\w*\.?\s*)?$", I)
 _ORD_SEZ = r"(?:[ivxlcdm]{1,4}|\d{1,2}|prima|seconda|terza|quarta|quinta|sesta)"
@@ -986,7 +999,8 @@ _LAB_SEC = (rf"(?:sez(?:ione|\.)?\.?\s*(?:n\.?\s*)?(?:{_ORD_SEZ}\s*)?(?:civ(?:il
             r"|giudice\s+del\s+lavoro|g\.\s?d\.\s?l\.)")
 _LABOUR_ANYWHERE = re.compile(
     r"giudice\s+del\s+lavoro|controversie\s+(?:in\s+materia\s+)?(?:di\s+)?lavoro|g\.\s?d\.\s?l\.", I)
-_LABOUR_AFTER = re.compile(r"[\s,;(–-]*" + _LAB_SEC + r"|\s*\(\s*lav(?:oro|\.)?\s*\)", I)
+_LABOUR_AFTER = re.compile(r"[\s,;(–-]*" + _LAB_SEC + r"|\s*\(\s*lav(?:oro|\.)?\s*\)"
+                           r"|\s*[,–-]\s*(?:lav\.|lavoro\s*[,;)])", I)
 _LABOUR_BEFORE = re.compile(_LAB_SEC + r"\s*,?\s*(?:del(?:la|l['’])?|presso\s+(?:il|la)|dell['’]?)\s*$", I)
 _CITATION_BREAK = re.compile(r";|\bcass|\bcorte\b|\btribunale\b|\btrib\.|\bcomm\b", I)
 
@@ -1422,6 +1436,9 @@ def recognize_authorities(text: str) -> List[Span]:
             if value == "TRIB" and m.group(0).lower().startswith("trib.") and _TAX_TRIB_BEFORE.search(
                     text[max(0, m.start() - 40):m.start()]):
                 continue
+            if value == "CORTE_APPELLO" and m.group(0).lower().startswith("app") and _APP_BEFORE_SKIP.search(
+                    text[max(0, m.start() - 24):m.start()]):
+                continue
             # "Voglia l’Ill.ma Corte ... riformare la sentenza del Tribunale":
             # the appeal court is being petitioned, not cited as the issuing court.
             if value == "CORTE_APPELLO" and _APPEAL_PETITION.search(
@@ -1495,6 +1512,9 @@ def recognize_authorities(text: str) -> List[Span]:
                         value, attrs["city"], end = "COMM_TRIBUT_PROV", code, new_end
                     else:
                         value = "COMM_TRIBUT_PROV"
+            if value in _CIVIL_COURTS and _UNITARY_CITATION.search(
+                    _CITATION_BREAK.split(text[end:end + 40])[0]):
+                continue
             if value in _CIVIL_COURTS and _labour_section(text, m.start(), end):
                 # the labour section decides the register (see urn._civil_register_suffix),
                 # so it is read wherever the citation puts it: "Trib. Roma, sez. IV lav.",

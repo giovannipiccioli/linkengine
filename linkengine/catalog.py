@@ -138,29 +138,31 @@ ADMIN_AUTHORITIES = {"CONS_STATO", "TRIB_AMM_REG", "TRIB_REG_GIUST_AMM", "CGARS"
 # register is the default and carries NO suffix: a citation that names no register ("Trib.
 # Milano n. 1234/2020") is read as contenzioso, as a bare "Cass. n." is read as civil, and the
 # identifiers already in use stay valid.
+#
+# A suffix names a NUMBER SERIES, not a BDP ruolo: it exists only where two decisions of one
+# court and year were seen to share a number because the series are separate. Measured on the
+# 2024-26 decisions (hex family), the share whose court, year and number a bare contenzioso
+# decision also holds: lavoro 16%, procedure concorsuali CCI 21%, against 0.0-0.1% for the
+# contenzioso materie themselves. The possessory and eviction-validation sentences, which the
+# BDP files under the "procedimenti speciali sommari" ruolo, sit at 0.3% and 0.0% with
+# median numbers on the contenzioso curve: they are numbered with the contenzioso register and
+# take no suffix. Add a code only on such evidence; adding one later changes no identifier
+# that exists, while a wrong one cannot be taken back.
 CIVIL_REGISTERS = {
     "LAV": "sezione lavoro",                      # lavoro, previdenza, assistenza: one series
     "VG": "volontaria giurisdizione",             # includes the procedimenti unitari (CCII)
-    "PS": "procedimenti speciali sommari",
-    "AG": "controversie agrarie",
-    "ESE": "esecuzioni civili",
-    "ESP": "espropriazioni immobiliari",
-    "NC": "affari non contenziosi",
 }
 # The BDP `ruolo` of a decision -> its register code ("" = contenzioso, the default). A ruolo
-# that is not listed has not been verified to number apart from or together with another, so
-# it resolves to no identifier rather than to a possibly wrong one: the "(CARTABIA)"
-# contenzioso register returned no decision when queried on 2026-11-24.
+# that is not listed has not been measured, so it resolves to no identifier rather than to a
+# possibly wrong one: the agrarie, esecuzioni, espropriazioni and non contenziosi ruoli hold
+# almost no sentenze (6,327, 17, 2 and 14 of 6.5 million decisions in 2016-26), and the
+# "(CARTABIA)" contenzioso ruolo returned no decision when queried on 2026-11-24.
 BDP_RUOLO_REGISTER = {
     "GENERALE DEGLI AFFARI CIVILI CONTENZIOSI": "",
     "MINORENNI": "",
     "CONTROVERSIE IN MATERIA DI LAVORO, PREV., ASSIST. OBBLIG.": "LAV",
     "GENERALE DEGLI AFFARI DI VOLONTARIA GIURISDIZIONE": "VG",
-    "PROCEDIMENTI SPECIALI SOMMARI": "PS",
-    "CONTROVERSIE AGRARIE": "AG",
-    "GENERALE DELLE ESECUZIONI CIVILI": "ESE",
-    "GENERALE DELLE ESPROPRIAZIONI IMMOBILIARI": "ESP",
-    "GENERALE DEGLI AFFARI AMMINISTRATIVI, STRAGIUDIZIALI E NON CONTENZIOSI": "NC",
+    "PROCEDIMENTI SPECIALI SOMMARI": "",          # numbered with the contenzioso register
 }
 CIVIL_COURT_AUTHORITIES = {"TRIB", "TRIB_NAPOLI_NORD", "TRIB_MINORENNI", "CORTE_APPELLO"}
 # No document-type suffix: ordinanze and decreti are almost never numbered in the BDP (1 of

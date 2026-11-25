@@ -55,7 +55,7 @@ def civil_court_ecli(name, year, number, register=""):
     "ECLI:IT:TRIBNAN:2025:2". An incomplete office or decision returns None.
 
     ``register`` names the register the decision was numbered in, because each register of a
-    court numbers on its own: the BDP ``ruolo`` label, or its code ("LAV", "VG", ...; see
+    court numbers on its own: the BDP ``ruolo`` label, or its code ("LAV" or "VG"; see
     ``catalog.CIVIL_REGISTERS``). Empty means the contenzioso register, the default, which
     adds nothing: civil_court_ecli("Tribunale di Milano", 2024, 55, "LAV") returns
     "ECLI:IT:TRIBMI:2024:55LAV". A register that is not known returns None rather than a
