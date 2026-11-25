@@ -412,6 +412,22 @@ that omits it stays unresolved. The rubrics that decorate a *giurisdizionale* ci
 (`n. 7/2007/QM`, `n. 11/2023/RGC`, `n. 653/2013-A`) are not part of the identifier and are
 dropped.
 
+The civil courts of merito (Tribunale, Corte d'appello, Tribunale per i minorenni) are
+identified by court, year and the number of the *sentenza*: `ECLI:IT:TRIBMI:2024:3912`. A court
+keeps several registers that number apart, so where two were measured to share numbers the
+register is a suffix on the number, as the Cassazione's `CIV`/`PEN`: **`LAV`** (lavoro, previdenza,
+assistenza) and **`VG`** (volontaria giurisdizione, in practice the procedimenti unitari). The
+contenzioso register is the default and carries none, which is also how a citation that names no
+register is read. `Trib. Milano, sez. lav., n. 1234/2020` is `ECLI:IT:TRIBMI:2020:1234LAV`, and so
+are `Tribunale di Milano, sezione lavoro`, `giudice del lavoro`, `App. Milano, sez. lav.`,
+`CdA Milano, sez. lav.` and `Trib. Milano, lav.`. Only `LAV` is read from text: a procedimento
+unitario (`P.U. n. 123/2024`) gets no identifier rather than a contenzioso one, and `VG` is built
+only from a record. `civil_court_ecli(name, year, number, register)` takes the BDP `ruolo` or a
+code; a ruolo not measured (agrarie, esecuzioni, espropriazioni, non contenziosi, Cartabia) returns
+`None`, because adding a code later changes no existing identifier but a wrong one cannot be taken
+back. Ordinanze and decreti are not numbered in the BDP and have no identifier of this form.
+`urn_to_text` renders `…:2020:1234LAV` as "Tribunale di Milano, sezione lavoro n. 1234/2020".
+
 For the second-grade tax courts of Trentino-Alto Adige, include `city="Trento"` or
 `city="Bolzano"` in the context. Their ECLIs use the autonomous-province components `CGT2TN`
 and `CGT2BZ`; a context naming only the region is intentionally insufficient.

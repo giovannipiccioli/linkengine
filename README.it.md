@@ -428,6 +428,23 @@ dalla catena separata da barre comunque essa sia scritta (`9/SEZAUT/2009/INPR`, 
 Le sigle che accompagnano una citazione *giurisdizionale* (`n. 7/2007/QM`, `n. 11/2023/RGC`,
 `n. 653/2013-A`) non fanno parte dell'identificativo e vengono scartate.
 
+I giudici civili di merito (Tribunale, Corte d'appello, Tribunale per i minorenni) sono
+identificati da ufficio, anno e numero della *sentenza*: `ECLI:IT:TRIBMI:2024:3912`. Un ufficio tiene
+più registri che numerano in modo autonomo: dove due registri sono risultati condividere i numeri, il
+registro è un suffisso del numero, come `CIV`/`PEN` della Cassazione: **`LAV`** (lavoro,
+previdenza, assistenza) e **`VG`** (volontaria giurisdizione, in pratica i procedimenti unitari). Il
+registro contenzioso è quello predefinito e non porta suffisso, ed è così che si legge anche una
+citazione che non indica alcun registro. `Trib. Milano, sez. lav., n. 1234/2020` è
+`ECLI:IT:TRIBMI:2020:1234LAV`, e lo sono anche `Tribunale di Milano, sezione lavoro`, `giudice del
+lavoro`, `App. Milano, sez. lav.`, `CdA Milano, sez. lav.` e `Trib. Milano, lav.`. Dal testo si legge
+solo `LAV`: un procedimento unitario (`P.U. n. 123/2024`) non riceve alcun identificativo, invece di
+uno contenzioso, e `VG` si costruisce solo da un record. `civil_court_ecli(nome, anno, numero,
+registro)` accetta il `ruolo` della BDP o un codice; un ruolo non misurato (agrarie, esecuzioni,
+espropriazioni, non contenziosi, Cartabia) restituisce `None`, perché aggiungere un codice in seguito
+non cambia gli identificativi esistenti, mentre uno sbagliato non si può ritirare. Ordinanze e decreti
+non sono numerati nella BDP e non hanno un identificativo di questa forma. `urn_to_text` rende
+`…:2020:1234LAV` come «Tribunale di Milano, sezione lavoro n. 1234/2020».
+
 Per le corti di giustizia tributaria di secondo grado del Trentino-Alto Adige si includa
 `city="Trento"` o `city="Bolzano"` nel contesto. I loro ECLI usano le componenti delle province
 autonome `CGT2TN` e `CGT2BZ`; un contesto che indichi soltanto la regione è, intenzionalmente,
