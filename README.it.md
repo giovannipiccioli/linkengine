@@ -105,6 +105,35 @@ LinkEngine non migra il corpus né i riferimenti già indicizzati.
 
 ---
 
+## Corte EDU (Strasburgo)
+
+Una sentenza della Corte europea dei diritti dell'uomo si cita con le parti, non con numero e
+anno: `Corte EDU, Grande Camera, sentenza 23 febbraio 2017, de Tommaso c. Italia`. Il suo
+identificatore è l'ECLI ufficiale, `ECLI:CE:ECHR:2017:0223JUD004339509`: una stringa per
+sentenza, quindi due citazioni indicano la stessa sentenza se e solo se gli identificatori
+sono uguali.
+
+```python
+engine.extract("Corte EDU, 4 marzo 2014, Grande Stevens e altri c. Italia").rows[0]["urn"]
+#  -> 'ECLI:CE:ECHR:2014:0304JUD001864010'
+```
+
+* **Come si trova.** Un connettore (`c.`, `c/`, `contro`, `v.`, `vs`, e la `/` delle corti UE) tra
+  un nome e uno Stato; il ricorrente si legge verso sinistra, la data da entrambi i lati, il numero
+  di ricorso, l'ordinale (`Scoppola c. Italia (n. 2)`) e le parole sulla Corte. Le citazioni della
+  CGUE (`Commissione c. Italia, C-123/20`) non si leggono.
+* **Come si risolve.** L'ECLI è funzione della data e del primo numero di ricorso. Altrimenti il
+  campo `parties` (`de-tommaso:ITA`) e la data si cercano in `data/echr_judgments.tsv.gz`, una riga
+  per sentenza dei metadati HUDOC (`tools/build_echr_index.py` lo ricostruisce).
+* **Quando non c'è `urn`.** Nessuna sentenza o più d'una (caso con sentenza di Camera e di Grande
+  Camera citato senza data), un ricorso assente dal dizionario (decisione di irricevibilità,
+  rapporto della Commissione), una data che non corrisponde. I candidati di una citazione ambigua
+  sono in `result.references[i].attrs["candidates"]`.
+* Un candidato debole (senza Corte, data né numero di ricorso) si tiene solo se il dizionario ne
+  indica la sentenza.
+
+---
+
 ## Installazione
 
 ```bash
@@ -568,14 +597,14 @@ della ricerca, si prega di citare la versione specifica utilizzata.
 
 Formato di citazione consigliato:
 
-Piccioli, Giovanni. linkengine: legal citation recognition and normalization for Italian legal documents. Version 1.0.0. https://github.com/giovannipiccioli/linkengine
+Piccioli, Giovanni. linkengine: legal citation recognition and normalization for Italian legal documents. Version 1.1.0. https://github.com/giovannipiccioli/linkengine
 
 ```bibtex
 @software{linkengine_2026,
   author       = {Piccioli, Giovanni},
   title        = {linkengine: legal citation recognition and normalization for Italian legal documents},
   year         = {2026},
-  version      = {1.0.0},
+  version      = {1.1.0},
   url          = {https://github.com/giovannipiccioli/linkengine},
   note         = {Python library}
 }

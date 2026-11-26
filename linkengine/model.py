@@ -67,12 +67,13 @@ MONTHS = {
 }
 
 # The feature-row schema: the recognition fields the engine fills. The canonical ``urn`` is
-# appended after normalization. ``empty_row`` seeds every field to "".
+# appended after normalization. ``parties`` is the lookup key of a Corte EDU citation written with
+# the names of the parties ("de-tommaso:ITA"), empty for everything else. ``empty_row`` seeds every field to "".
 FEATURE_FIELDS: List[str] = [
     "id", "ref-type", "ref-scope", "text", "context", "alias", "partition",
     "doc-type", "authority", "ministry", "region", "city", "section", "other-authority",
     "eu-acronym", "number", "year", "full-number", "case-number", "doc-date",
-    "rv-number", "url",
+    "rv-number", "url", "parties",
 ]
 
 

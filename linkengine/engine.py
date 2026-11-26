@@ -11,6 +11,7 @@ from __future__ import annotations
 
 from typing import Dict, List, Optional
 
+from . import echr, echr_citations
 from . import normalize as NZ
 from .aliases import ALIAS_CELEX, alias_nir
 from .catalog import (AGENCY_DOCTYPES, BDP_RUOLO_REGISTER, CIVIL_REGISTERS,
@@ -87,6 +88,51 @@ def catalog_register(register):
     if register in CIVIL_REGISTERS:
         return register
     return BDP_RUOLO_REGISTER.get(register.upper())
+
+
+def _echr_row(c) -> Dict[str, str]:
+    """The feature row of a Corte EDU citation written with the names of the parties."""
+    row = empty_row()
+    row.update({"text": c.surface, "context": c.surface, "ref-type": "caselaw",
+                "ref-scope": "internazionale", "authority": "CEDU",
+                "doc-type": "" if c.decision else "SENT", "doc-date": c.date,
+                "section": "GC" if c.chamber == "GC" else "", "parties": c.parties})
+    if c.appnos:                                  # the first application, as number and year
+        number, yy = c.appnos[0].split("/")
+        row["number"] = str(int(number))
+        row["year"] = str((1900 if int(yy) >= 59 else 2000) + int(yy))
+    return row
+
+
+def _add_echr_citations(text, rows, refs):
+    """Add the Corte EDU citations the party-name recognizer finds.
+
+    A citation replaces the row the generic recognizers made of the same words (the "ricorso
+    n." form), and is skipped when it would overlap a row of any other kind. One whose court,
+    date and application number are all unstated (a "weak" candidate: "X c. Italia" and
+    nothing else) is kept only when the dictionary names its judgment."""
+    found = echr_citations.find_citations(text)
+    if not found:
+        return rows, refs
+    pairs = list(zip(rows, refs))
+    for c in found:
+        clash = [p for p in pairs if p[1].start < c.end and c.start < p[1].end]
+        if any(p[0]["authority"] != "CEDU" for p in clash):
+            continue
+        row = _echr_row(c)
+        row["urn"] = build_urn(row)
+        row["url"] = compat_url(row["urn"])
+        if not row["urn"] and c.confidence == "weak":
+            continue
+        pairs = [p for p in pairs if p not in clash]
+        ref = Reference(start=c.start, end=c.end, attrs={"text": c.surface, "context": c.surface})
+        if not row["urn"]:
+            hits = echr.resolve_row(row).candidates
+            if hits:
+                ref.attrs["candidates"] = [j.ecli for j in hits]
+        pairs.append((row, ref))
+    pairs.sort(key=lambda p: (p[1].start, p[1].end))
+    return [p[0] for p in pairs], [p[1] for p in pairs]
 
 
 def _partition_token(span: Span) -> str:
@@ -511,6 +557,8 @@ class LinkEngine:
                 and (not refs[i].attrs.get(INTERNAL_ATTR) or bool(row["urn"]))]
         rows = [rows[i] for i in keep]
         refs = [refs[i] for i in keep]
+        if normativa_context is None:
+            rows, refs = _add_echr_citations(text, rows, refs)
         for citation_id, row in enumerate(rows, 1):
             row["id"] = str(citation_id)
         return ExtractResult(rows=rows, references=refs, spans=spans, trace=trace)

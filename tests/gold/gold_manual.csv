@@ -269,10 +269,9 @@ art. 12 delle disposizioni sulla legge in generale|urn:nir:stato:regio.decreto:1
 art. 78 Regolamento CE 2913/1992|CELEX:31992R2913~art78|eu|CE non parentesizzato dopo doctype
 art. 8 Convenzione EDU|CONV_EU_DIR_UOMO~art8|alias|variante "Convenzione EDU"
 art. 234 TCE|CELEX:12002E/TXT~art234|alias|TCE = trattato CE, guardia maiuscole + art <= 314
-Corte EDU sentenza 5 ottobre 2000, ricorso n. 33804/96|CEDU:1996:33804|jur|Corte EDU, urn custom CEDU:anno-ricorso:numero
-Corte EDU, sentenza 23 ottobre 2003, ricorso n. 39758/98|CEDU:1998:39758|jur|Corte EDU
-CEDU, sentenza Riccardi Pizzati c. Italia, ricorso n. 62361/00|CEDU:2000:62361|jur|CEDU + sentenza = corte, non convenzione
-CEDU, sentenza Zullo c. Italia, ricorso n. 64897/01|CEDU:2001:64897|jur|CEDU + sentenza = corte
+Corte EDU sentenza 5 ottobre 2000, ricorso n. 33804/96|ECLI:CE:ECHR:2000:1005JUD003380496|jur|Corte EDU: date + application number = the ECLI
+CEDU, sentenza 29 marzo 2006, Riccardi Pizzati c. Italia, ricorso n. 62361/00|ECLI:CE:ECHR:2006:0329JUD006236100|jur|CEDU + sentenza = corte, non convenzione; two judgments of the application, the date picks one
+CEDU, sentenza 29 marzo 2006, Zullo c. Italia, ricorso n. 64897/01|ECLI:CE:ECHR:2006:0329JUD006489701|jur|CEDU + sentenza = corte, non convenzione
 Sezione Prima Centrale sent. n. 151/2021|ECLI:IT:CONT:2021:151APP1|jur|sezione centrale, ordinale prima del nome
 Sezione Terza Centrale sent. n. 24/2021|ECLI:IT:CONT:2021:24APP3|jur|sezione centrale terza
 Sez. II App., n. 14/2024|ECLI:IT:CONT:2024:14APP2|jur|sezione d'appello abbreviata, senza il nome della corte

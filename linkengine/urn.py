@@ -23,6 +23,7 @@ from .normalize import (build_nir, build_regional_nir, build_celex, build_celex_
                         normattiva_url, partition_to_locator, LATIN_ORDINAL)
 from .aliases import ALIAS_NIR, ALIAS_CELEX, alias_nir
 from .act_kinds import display_name_for_nir
+from . import echr
 
 _CASE_ID_RE = re.compile(r"([ct])\D*(\d+)\s*/\s*(\d{4})", re.I)
 
@@ -316,6 +317,8 @@ def _eu_urn(row):
 def _caselaw_urn(row):
     """Case law: a CJEU judgment cited by case id -> sector-6 CELEX; otherwise an ECLI built
     from authority + geo + number/year (recovered from doc-date/full-number/text when absent)."""
+    if _g(row, 'authority') == "CEDU":
+        return _cedu_urn(row)
     case = _g(row, 'case-number')
     if case:
         m = _CASE_ID_RE.search(case)
@@ -339,14 +342,6 @@ def _caselaw_urn(row):
         return None
     if _g(row, 'authority') == "CORTE_COST":
         return f"ECLI:IT:COST:{year}:{number}"
-    # Corte EDU: the case identifier is the Strasbourg *application* number ("ricorso
-    # n. 33804/96" -> CEDU:1996:33804). Only a number introduced by "ricorso" is that pair;
-    # a bare "Corte EDU n. 123/2020" is a judgment number and stays unresolved rather than
-    # being mislabelled as an application.
-    if _g(row, 'authority') == "CEDU":
-        if 'ricorso' not in _g(row, 'text').lower():
-            return None
-        return f"CEDU:{year}:{number}"
     # CGUE with the authority clearly stated but no "C-"/"causa": a bare "n. 123/2020" (or
     # "77/72") IS the case number -> sector-6 CELEX (default kind: Court of Justice).
     if _g(row, 'authority') == "CGUE":
@@ -356,6 +351,20 @@ def _caselaw_urn(row):
         loc = partition_to_locator(_g(row, 'partition'), ('punto', 'comma'))
         return celex + (f"~{loc}" if loc else "")
     return _court_ecli(row, year, number)
+
+
+def _cedu_urn(row):
+    """Corte EDU: the judgment's ECLI, or nothing.
+
+    The identifier is the ECLI, one string per judgment, so two citations name the same
+    judgment exactly when their identifiers are equal. It comes from the dictionary of
+    judgments (``echr``) -- by the application number, or by the parties and the date -- or,
+    never, from a guess: a citation that fits no judgment or several (a case with a chamber
+    and a Grand Chamber judgment cited without a date) has no ``urn``. A bare "Corte EDU n.
+    123/2020" is a judgment number, not an application, and stays unresolved."""
+    if not _g(row, 'parties') and 'ricorso' not in _g(row, 'text').lower():
+        return None
+    return echr.resolve_row(row).ecli or None
 
 
 def _court_ecli(row, year, number):
@@ -560,6 +569,8 @@ def urn_to_text(urn: str) -> str:
     urn = urn.strip()
     if urn.startswith("ECLI:IT:"):
         return _ecli_to_text(urn[len("ECLI:IT:"):])
+    if urn.startswith("ECLI:CE:ECHR:"):
+        return echr.ecli_to_text(urn) or urn
     if urn.startswith("urn:nir:"):
         return _nir_to_text(urn[len("urn:nir:"):])
     if urn.startswith("CELEX:"):

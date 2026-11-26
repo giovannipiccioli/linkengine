@@ -37,7 +37,7 @@ COURTS = {
     "GIUDICE_PACE":            {"ecli": "GDP",       "geo": "city",   "name": "Giudice di Pace"},
     "TRIBUNALE_SORVEGLIANZA":  {"ecli": "TRIBSORV",  "geo": "city",   "name": "Tribunale di Sorveglianza"},
     "CGUE":                    {"ecli": None,        "geo": None,     "name": "Corte di Giustizia UE"},
-    "CEDU":                    {"ecli": None,        "geo": None,     "name": " Corte europea dei diritti dell'uomo"},
+    "CEDU":                    {"ecli": None,        "geo": None,     "name": "Corte europea dei diritti dell'uomo"},
     # The administrative courts. A TAR ECLI names the SEAT that decided, not the region:
     # "TARBS" is Brescia, "TARNA" Napoli. The Trentino tribunals are a separate court, and
     # the Sicilian appeal instance is the CGA, not the Consiglio di Stato.

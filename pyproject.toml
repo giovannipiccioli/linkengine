@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "linkengine"
-version = "1.0.0"
+version = "1.1.0"
 description = "Recognize, parse and normalize Italian legal citations into stable identifiers (URN-NIR / ECLI / CELEX / PRAX)."
 readme = "README.md"
 license = { text = "Apache-2.0" }
@@ -33,7 +33,7 @@ Repository = "https://github.com/your-org/linkengine"
 packages = ["linkengine"]
 
 [tool.setuptools.package-data]
-linkengine = ["data/*.txt", "data/court_authorities.xlsx"]
+linkengine = ["data/*.txt", "data/*.tsv.gz", "data/court_authorities.xlsx"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

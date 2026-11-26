@@ -41,6 +41,7 @@ the court catalog or its identifier rules change.
   | case law (Italian courts) | `Cass. civ. n. 29036/2021` | `ECLI:IT:CASS:2021:29036CIV` |
   | EU acts & CJEU case law | `direttiva 2006/112/CE`, `causa C-123/20` | `CELEX:32006L0112`, `CELEX:62020CJ0123` |
   | tax-authority practice | `Circolare AdE n. 25/E/2020` | `PRAX:AE:CIRC:2020:25` |
+  | Strasbourg case law | `Corte EDU, 23 febbraio 2017, de Tommaso c. Italia` | `ECLI:CE:ECHR:2017:0223JUD004339509` |
 
 - **Segmentation** — a sentence with several citations is split into one reference each, and
   ranges/lists are expanded (`artt. 15-18 DPR 600/73` → four articles; `cause riunite C-1/20 e
@@ -98,6 +99,46 @@ available in a consuming corpus.
 Direct citations to a law (e.g. `art. 1 della legge 20/1992`) keep their own identifiers
 without an implicit annex. These rules apply to new extractions; LinkEngine does not
 migrate corpus identities or previously indexed references.
+
+---
+
+## Corte EDU (Strasbourg)
+
+A judgment of the European Court of Human Rights is cited by its parties, not by a number and
+a year: `Corte EDU, Grande Camera, sentenza 23 febbraio 2017, de Tommaso c. Italia`. Its
+identifier is the official ECLI, `ECLI:CE:ECHR:2017:0223JUD004339509` — one string per
+judgment, so two citations name the same judgment exactly when their identifiers are equal.
+
+```python
+engine.extract("Corte EDU, 4 marzo 2014, Grande Stevens e altri c. Italia").rows[0]["urn"]
+#  -> 'ECLI:CE:ECHR:2014:0304JUD001864010'
+urn_to_text("ECLI:CE:ECHR:2014:0304JUD001864010")
+#  -> 'Corte EDU, sentenza 4 marzo 2014, Grande Stevens e altri c. Italia, ricorso n. 18640/10'
+```
+
+* **How it is found.** A connector (`c.`, `c/`, `contro`, `v.`, `vs`, and the EU courts' `/`)
+  after a name and before a state is the anchor; the applicant is read leftwards, the date from
+  either side, the application number (`ricorso n. 43395/09`), the Court's own ordinal
+  (`Scoppola c. Italia (n. 2)`) and the court words around it. CJEU citations
+  (`Commissione c. Italia, C-123/20`) and a state against a state without a court named are
+  not read.
+* **How it is resolved.** The ECLI is a function of the delivery date and the first application
+  number, so a citation with both needs no data. Otherwise the row's `parties` field
+  (`de-tommaso:ITA`: first applicant folded to ASCII, the Court's ordinal, the respondent's HUDOC code)
+  and its date are looked up in `data/echr_judgments.tsv.gz`, one line per judgment of the HUDOC
+  metadata. `tools/build_echr_index.py <folder of echr_*.csv>` rebuilds it.
+* **When there is no `urn`.** A citation that fits no judgment or several (a case with a chamber
+  and a Grand Chamber judgment cited without a date), an application the dictionary does not hold
+  (an admissibility decision, a Commission report), or a date that matches none of the case's
+  judgments. The row keeps its fields; the candidates of an ambiguous one are in
+  `result.references[i].attrs["candidates"]`. "Decisione" is not read as an admissibility decision
+  (Italian prose uses it for judgments); `(dec.)` and "decisione sulla ricevibilità" are.
+* **A weak candidate** — no court named, no date, no application number — is kept only if the
+  dictionary names its judgment (`Ferrazzini c. Italia` yes, "le amichevoli contro l'Irlanda" no).
+  A pseudonymisation placeholder (`Per_1 c. Portogallo, 29/11/2005`) resolves by date and state.
+* Measured on 2,764 Italian CJEU citations that print the ECLI next to the parties: 2,725 give
+  exactly that ECLI, 2 another (the document's own slips), 37 none. `tests/gold/gold_echr.jsonl` holds
+  59 real citations from the Italian corpora.
 
 ---
 
@@ -478,6 +519,7 @@ rows with `urn`
 | `assembler.py` | group spans into references (binding, splitting, segmentation) |
 | `engine.py` | `LinkEngine` — runs the pipeline and fills the recognition fields |
 | `urn.py` | `build_urn(row)` and the standalone `urn_to_text(urn)` renderer |
+| `echr.py`, `echr_citations.py` | Corte EDU: the dictionary of judgments and the ECLI lookup; the recognizer of citations written with the parties' names |
 | `catalog.py` | the knowledge base: courts (ECLI prefix / geo / name), doc-type names, alias display names |
 | `aliases.py` | one record per legislative alias (recognition + nir/celex + display + scope) |
 | `conventions.py`, `budget_laws.py` | parametrized law lookups (tax treaties; annual budget laws) |
@@ -562,14 +604,14 @@ If you use linkengine in academic work, technical reports, datasets, benchmarks,
 
 Recommended citation pattern:
 
-Piccioli, Giovanni. linkengine: legal citation recognition and normalization for Italian legal documents. Version 1.0.0. https://github.com/giovannipiccioli/linkengine
+Piccioli, Giovanni. linkengine: legal citation recognition and normalization for Italian legal documents. Version 1.1.0. https://github.com/giovannipiccioli/linkengine
 
 ```bibtex
 @software{linkengine_2026,
   author       = {Piccioli, Giovanni},
   title        = {linkengine: legal citation recognition and normalization for Italian legal documents},
   year         = {2026},
-  version      = {1.0.0},
+  version      = {1.1.0},
   url          = {https://github.com/giovannipiccioli/linkengine},
   note         = {Python library}
 }

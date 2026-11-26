@@ -321,7 +321,7 @@
 {"cat": "alias", "text": "art. 6 codice deontologico forense, art. 22 codice deontologico forense", "refs": [{"alias": "COD_DEONT_FORENSE", "urn": ""}, {"alias": "COD_DEONT_FORENSE", "urn": ""}]}
 {"cat": "eu", "text": "art. 78 Regolamento CE n. 2913/1992", "refs": [{"doc-type": "REG", "eu-acronym": "CE", "urn": "CELEX:31992R2913~art78"}]}
 {"cat": "fp", "text": "il valore del TCE nelle acque sotterranee non supera la soglia", "refs": []}
-{"cat": "jur", "text": "ai sensi dell'art. 6 CEDU e della CEDU, sentenza Zullo c. Italia, ricorso n. 64897/01", "refs": [{"alias": "CONV_EU_DIR_UOMO", "urn": "CONV_EU_DIR_UOMO~art6"}, {"authority": "CEDU", "urn": "CEDU:2001:64897"}]}
+{"cat": "jur", "text": "ai sensi dell'art. 6 CEDU e della CEDU, sentenza 29 marzo 2006, Zullo c. Italia, ricorso n. 64897/01", "refs": [{"alias": "CONV_EU_DIR_UOMO", "urn": "CONV_EU_DIR_UOMO~art6"}, {"authority": "CEDU", "urn": "ECLI:CE:ECHR:2006:0329JUD006489701"}]}
 {"cat": "fp", "text": "il ricorso n. 1234/2020 R.G. proposto dalla società contribuente", "refs": []}
 {"cat": "jur", "text": "TAR Lombardia, sezione staccata di Brescia, sentenza n. 459/2023", "refs": [{"ref-type": "caselaw", "authority": "TRIB_AMM_REG", "city": "BS", "doc-type": "SENT", "number": "459", "year": "2023", "urn": "ECLI:IT:TARBS:2023:459SENT"}]}
 {"cat": "jur", "text": "Consiglio di Stato, parere n. 1251/2023", "refs": [{"ref-type": "caselaw", "authority": "CONS_STATO", "doc-type": "PARERE", "urn": "ECLI:IT:CDS:2023:1251PDEF"}]}
