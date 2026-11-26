@@ -157,7 +157,7 @@ ACT_KINDS: Tuple[ActKind, ...] = (
     ),
     ActKind(
         "LC", "legge costituzionale", ("LC", ""), ("stato", "legge.costituzionale"),
-        patterns=(r"\blegge\s+costituzionale\b",),
+        patterns=(r"\blegge\s+costituzionale\b", r"\bl(?:egge)?\.?\s*cost\.(?=\s*(?:n\.?\s*)?\d)"),
     ),
     ActKind(
         "RD", "regio decreto", ("RD", ""), ("stato", "regio.decreto"),
@@ -190,10 +190,9 @@ ACT_KINDS: Tuple[ActKind, ...] = (
     ActKind(
         "L", "legge", ("L", ""), ("stato", "legge"),
         patterns=(
-            r"\bl\.\s*n[.°]*(?=\s*\d)",
-            r"\bl\.(?=\s*\d)",
+            r"\bl\.(?=\s*(?:n[.°]*\s*)?\d)",       # "l. 241/1990", "l. n. 241/1990" (the "n." is the number's)
             r"\bl\s+(?=\d{1,5}\s*/\s*\d{2,4}\b)",
-            r"\blegg[ei]\b(?!\s+(?:regional|(?:della\s+)?regione))",
+            r"\blegg[ei]\b(?!\s+(?:regional|provincial|(?:della\s+)?(?:regione|provincia)|prov\b))",
         ),
     ),
 )

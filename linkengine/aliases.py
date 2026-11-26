@@ -56,6 +56,12 @@ class Alias:
 # by length (see recognizers._nonoverlap), so a longer name always wins over a shorter one
 # regardless of position. The grouping (disposizioni d'attuazione, then codici, then testi
 # unici, then EU acts) mirrors how a reader scans the text.
+def _statuto(name: str) -> str:
+    """"Statuto [speciale] [della|del|per la|per il] [Regione [autonoma]] <name>"."""
+    return (r"statuto(?:\s+speciale)?(?:\s+(?:della|del|dello|per\s+la|per\s+il|per\s+l['’]\s?))?"
+            r"(?:\s+regione(?:\s+autonoma)?(?:\s+(?:della|del))?)?\s+(?:" + name + r")\b")
+
+
 ALIASES: List[Alias] = [
     # — disposizioni di attuazione (before the plain codes) —
     Alias("DISP_ATT_COD_PROC_CIV", nir="stato:regio.decreto:1941-08-25;1368:1",
@@ -133,37 +139,26 @@ ALIASES: List[Alias] = [
     # contribuente/i" / bare "contribuente".
     Alias("STATUTO_CONTRIB", nir="stato:legge:2000-07-27;212", display="Statuto del contribuente",
           patterns=(r"statuto\s+(?:del\s+|dei\s+diritti\s+de[il]\s+)?contribuent[ei]",)),
-    # Statuti delle regioni a autonomia speciale, approvati con legge costituzionale.
+    # Statuti delle regioni a autonomia speciale, approvati con legge costituzionale. The
+    # article and "Regione" are optional: "Statuto speciale per la Sardegna", "Statuto speciale
+    # Trentino-Alto Adige", "Statuto della Regione siciliana" are all cited.
     Alias("STATUTO_REG_SICILIA", nir="stato:legge.costituzionale:1948-02-26;2",
           display="Statuto della Regione Siciliana",
-          patterns=(r"statuto(?:\s+speciale)?\s+(?:della\s+)?regione\s+(?:sicilia|siciliana)\b",)),
+          patterns=(_statuto(r"sicilia|siciliana"),)),
     Alias("STATUTO_REG_SARDEGNA", nir="stato:legge.costituzionale:1948-02-26;3",
           display="Statuto speciale della Sardegna",
-          patterns=(r"statuto(?:\s+speciale)?\s+(?:della\s+)?regione\s+(?:sardegna|sarda)\b",
-                    r"statuto\s+speciale\s+della\s+sardegna\b")),
+          patterns=(_statuto(r"sardegna|sarda"),)),
     Alias("STATUTO_REG_VALLE_AOSTA", nir="stato:legge.costituzionale:1948-02-26;4",
           display="Statuto speciale della Valle d'Aosta",
-          patterns=(
-              r"statuto(?:\s+speciale)?\s+(?:della\s+)?regione(?:\s+autonoma)?\s+"
-              r"valle\s+d['’]\s*aosta\b",
-              r"statuto\s+speciale\s+(?:della|per\s+la)\s+valle\s+d['’]\s*aosta\b",
-          )),
+          patterns=(_statuto(r"valle\s+d['’]\s*aosta"),)),
     Alias("STATUTO_REG_TRENTINO_ALTO_ADIGE",
           nir="stato:legge.costituzionale:1948-02-26;5",
           display="Statuto speciale del Trentino-Alto Adige",
-          patterns=(
-              r"statuto(?:\s+speciale)?\s+(?:della\s+)?regione(?:\s+autonoma)?\s+"
-              r"trentino[\s-]+alto\s+adige\b",
-              r"statuto\s+speciale\s+(?:del|per\s+il)\s+trentino[\s-]+alto\s+adige\b",
-          )),
+          patterns=(_statuto(r"trentino[\s-]+alto\s+adige"),)),
     Alias("STATUTO_REG_FRIULI_VENEZIA_GIULIA",
           nir="stato:legge.costituzionale:1963-01-31;1",
           display="Statuto speciale del Friuli-Venezia Giulia",
-          patterns=(
-              r"statuto(?:\s+speciale)?\s+(?:della\s+)?regione(?:\s+autonoma)?\s+"
-              r"friuli[\s-]+venezia\s+giulia\b",
-              r"statuto\s+speciale\s+(?:del|per\s+il)\s+friuli[\s-]+venezia\s+giulia\b",
-          )),
+          patterns=(_statuto(r"friuli[\s-]+venezia\s+giulia"),)),
     Alias("ORDIN_PENIT", nir="stato:legge:1975-07-26;354", display="ordinamento penitenziario",
           patterns=(r"ordinamento\s+penitenziario",)),
 
@@ -248,9 +243,14 @@ ALIASES: List[Alias] = [
           patterns=(r"trattato\s+c\.?e\.?c\.?a\.?\b",)),
     # trattato CEE (Roma 1957) before CE (Maastricht) so "CEE" is not read as "CE".
     Alias("TRATTATO_CEE", "eu", celex="CELEX:11957E/TXT",             # trattato CEE (Roma 1957)
-          patterns=(r"trattato\s+(?:c\.?e\.?e\.?|che\s+istituisce\s+la\s+comunit[aà]\s+economica\s+europea)\b",)),
+          patterns=(r"trattato\s+(?:c\.?e\.?e\.?|che\s+istituisce\s+la\s+comunit[aà]\s+economica\s+europea)\b",
+                    # "Trattato di Roma" and "Trattato istitutivo della CEE"
+                    r"trattato\s+di\s+roma\b",
+                    r"trattato\s+istitutivo\s+(?:della\s+|dell['’]\s?)?(?:c\.?e\.?e\.?\b|"
+                    r"comunit[aà]\s+economica\s+europea\b)")),
     Alias("TRATTATO_CE", "eu", celex="CELEX:12002E/TXT",              # trattato CE (Maastricht, cons. 2002)
-          patterns=(r"trattato\s+(?:c\.?e\.?|che\s+istituisce\s+la\s+comunit[aà]\s+europea)\b",)),
+          patterns=(r"trattato\s+(?:c\.?e\.?|che\s+istituisce\s+la\s+comunit[aà]\s+europea)\b",
+                    r"trattato\s+istitutivo\s+(?:della\s+)?(?:c\.?e\.?\b|comunit[aà]\s+europea\b)")),
     Alias("CARTA_DIR_FOND_UE", "eu", celex="CELEX:12012P/TXT",        # Carta dei diritti fondamentali UE
           patterns=(r"carta\s+dei\s+diritti\s+fondamentali|\bc\.?d\.?f\.?u\.?e\.?\b",)),
     Alias("GDPR", "eu", celex="CELEX:32016R0679",                    # reg. (UE) 2016/679
@@ -270,6 +270,10 @@ ALIASES: List[Alias] = [
     # (recognizers._COURT_PATTERNS), not the convention — hence the negative lookahead.
     Alias("CONV_EU_DIR_UOMO", "intl",
           patterns=(r"convenzione\s+europea\s+dei\s+diritti\s+dell['’]?\s?uomo"
+                    # the official title; "Protocollo ... alla Convenzione per la salvaguardia"
+                    # is a protocol, whose articles are not the Convention's
+                    r"|(?<!alla\s)convenzione\s+(?:europea\s+)?per\s+la\s+salvaguardia\s+dei\s+diritti\s+"
+                    r"dell['’]?\s?uomo(?:\s+e\s+delle\s+libert[aà]\s+fondamentali)?"
                     r"|convenzione\s+e\.?d\.?u\.?\b"
                     r"|\bc\.?e\.?d\.?u\.?\b(?!\s*,?\s*(?:sentenz|ordinanz|decision|sent\.|ord\.))",)),
     Alias("TARIFFA_DOGANALE_COM", "eu", display="tariffa doganale comune",

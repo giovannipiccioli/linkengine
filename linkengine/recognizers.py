@@ -315,6 +315,9 @@ def _norm_rv(base: str, suffix: str = "") -> str:
     return base
 
 
+_YEAR_FIRST = re.compile(r"(?<=\blegge\s)((?:18|19|20)\d{2})\s*,?\s*n[.°]?\s*(\d{1,5})\b(?!\s*/)", I)
+
+
 def recognize_numbers(text: str) -> List[Span]:
     spans: List[Span] = []
     taken: List[tuple] = []   # (start,end) ranges already consumed
@@ -351,6 +354,16 @@ def recognize_numbers(text: str) -> List[Span]:
                           m.group(0), {"number": num, "year": yr, "full": full,
                                        "prax_number": "1", "df": "1"}))
         taken.append((m.start(), m.end()))
+
+    # 0c-bis) "legge 1958, n. 311": the year before the number (the Corte costituzionale's
+    # older style); the claimed span is "1958, n. 311".
+    for m in _YEAR_FIRST.finditer(text):
+        if not free(m.start(1), m.end(2)):
+            continue
+        yr, num = m.group(1), m.group(2)
+        spans.append(Span(m.start(1), m.end(2), Entity.NUM_YEAR, f"{num}/{yr}",
+                          text[m.start(1):m.end(2)], {"number": num, "year": yr}))
+        taken.append((m.start(1), m.end(2)))
 
     # 0d) "cause riunite ..." -> ONE case (smallest number; the trailing year is shared). Must
     # run before the per-case handlers so they don't split the joined run.
@@ -703,7 +716,31 @@ def recognize_doctypes(text: str, *, ocr_accommodations: bool = True) -> List[Sp
             if code == "REG" and re.search(r"europe[oi]", m.group(0), I):
                 attrs["eu_hint"] = "1"
             spans.append(Span(m.start(), m.end(), Entity.DOCTYPE, code, m.group(0), attrs))
+    spans += _testi_unici(text)
     return _nonoverlap(spans)
+
+
+_TU_DATED = re.compile(
+    r"(?<![\w.])(?:t\.\s?u\.|t\.u\b|testo\s+unico)(?=\s+(?:del\s+)?\d{1,2}\s+(?:" +
+    "|".join(MONTHS) + r")\s+(\d{4}))", I)
+
+
+def _testi_unici(text: str) -> List[Span]:
+    """A "T.U. 18 giugno 1931, n. 773" names no kind of act, but its year does: a regio decreto
+    up to 1943, a d.P.R. from 1948 to 1990 (later testi unici are cited as d.lgs. or d.P.R. by
+    name). The years in between (luogotenenziali and provisional-state acts) stay unread."""
+    spans = []
+    for m in _TU_DATED.finditer(text):
+        year = int(m.group(1))
+        if year <= 1943:
+            code, auth = "RD", ""
+        elif 1948 <= year <= 1990:
+            code, auth = "DECR", "PRES_REP"
+        else:
+            continue
+        spans.append(Span(m.start(), m.end(), Entity.DOCTYPE, code, m.group(0),
+                          {"authority": auth, "scope": "nazionale"}))
+    return spans
 
 
 # ---------------------------------------------------------------------------
@@ -1564,10 +1601,15 @@ def recognize_aliases(text: str) -> List[Span]:
 _LREG_MARKER = re.compile(
     r"\bl(?:egge)?\.?\s*(?:della\s+)?(?:regional[ei]|region[ei]|reg\b)\.?"
     r"|\bl\.?\s?r\.?(?!\w)", I)
+# the name is matched on text whose hyphens and typographic apostrophes are plain (same length):
+# "Friuli-Venezia Giulia", "Valle d’Aosta"; "Regione autonoma ...", "Valle d'Aosta/Vallée d'Aoste"
+# and the demonyms "siciliana" / "sarda" are read too.
+_REGION_DEMONYM = {"siciliana": "sicilia", "sarda": "sardegna"}
 _REGION_NAMES_RE = re.compile(
-    r"^[\s,.:]*(?:della\s+|regione\s+)?(" +
-    "|".join(sorted((re.escape(k) for k in REGION_NAME_TO_CODE), key=len, reverse=True)) +
-    r")\b", I)
+    r"^[\s,.:]*(?:della\s+|regione\s+)?(?:autonoma\s+)?(?:della\s+)?(" +
+    "|".join(sorted((re.escape(k) for k in list(REGION_NAME_TO_CODE) + list(_REGION_DEMONYM)),
+                    key=len, reverse=True)) +
+    r")\b(?:/vall[eé]e\s+d'aoste\b)?", I)
 # the region may instead appear shortly after, in a "(Regione Lombardia)" tail, or simply
 # trailing the number ("L.R. n. 2/1971 Toscana") — search for a bare region name in a window.
 _REGION_ALT = "|".join(sorted((re.escape(k) for k in REGION_NAME_TO_CODE), key=len, reverse=True))
@@ -1582,9 +1624,11 @@ def recognize_regional_laws(text: str) -> List[Span]:
     spans = []
     for m in _LREG_MARKER.finditer(text):
         end, ru = m.end(), ""
-        rm = _REGION_NAMES_RE.match(text[m.end():])
+        rest = text[m.end():m.end() + 80].replace("-", " ").replace("’", "'")
+        rm = _REGION_NAMES_RE.match(rest)
         if rm:
-            ru = _region_urn(rm.group(1)) or ""
+            name = rm.group(1).lower()
+            ru = _region_urn(_REGION_DEMONYM.get(name, name)) or ""
             end = m.end() + rm.end()
         else:
             win = text[m.end():m.end() + 45].replace("-", " ")    # tolerate "Emilia-Romagna"

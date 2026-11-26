@@ -597,14 +597,14 @@ della ricerca, si prega di citare la versione specifica utilizzata.
 
 Formato di citazione consigliato:
 
-Piccioli, Giovanni. linkengine: legal citation recognition and normalization for Italian legal documents. Version 1.1.0. https://github.com/giovannipiccioli/linkengine
+Piccioli, Giovanni. linkengine: legal citation recognition and normalization for Italian legal documents. Version 1.1.1. https://github.com/giovannipiccioli/linkengine
 
 ```bibtex
 @software{linkengine_2026,
   author       = {Piccioli, Giovanni},
   title        = {linkengine: legal citation recognition and normalization for Italian legal documents},
   year         = {2026},
-  version      = {1.1.0},
+  version      = {1.1.1},
   url          = {https://github.com/giovannipiccioli/linkengine},
   note         = {Python library}
 }
